@@ -10,7 +10,7 @@ parameters:
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -66,3 +66,24 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+easy_admin:
+    site_name: 'Le Même En Mieux'
+    entities:
+        Recommendation:
+            class: AppBundle\Entity\Recommendation
+            form:
+                fields:
+                    - title
+                    - description
+                    - sourceLabel
+                    - sourceUrl
+                    - sourceDescription
+                    - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
+                    - { property: 'alternatives', type: 'collection', type_options: {entry_type: 'AppBundle\Form\AlternativeType', allow_add: true, allow_delete: true, by_reference: false} }
+        MatchingContext:
+            class: AppBundle\Entity\MatchingContext
+            disabled_actions: ['new', 'delete', 'edit']
+        Alternative:
+            class: AppBundle\Entity\Alternative
+            disabled_actions: ['new', 'delete', 'edit']

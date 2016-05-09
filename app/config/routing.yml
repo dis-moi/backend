@@ -1,3 +1,8 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
+easy_admin_bundle:
+    resource: "@AppBundle/Controller/AdminController.php" # <-- ADD this line
+    type:     annotation
+    prefix:   /admin

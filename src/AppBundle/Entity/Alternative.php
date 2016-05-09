@@ -22,7 +22,7 @@ class Alternative
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Recommendation")
+     * @ORM\ManyToOne(targetEntity="Recommendation", inversedBy="alternatives")
      */
     private $recommendation;
 
@@ -152,5 +152,10 @@ class Alternative
     public function getRecommendation()
     {
         return $this->recommendation;
+    }
+
+    public function __toString()
+    {
+        return (is_null($this->getLabel())) ? 'you must set a label' : $this->getLabel();
     }
 }

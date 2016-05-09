@@ -22,7 +22,7 @@ class MatchingContext
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Recommendation", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Recommendation", inversedBy="matchingContexts", fetch="EAGER")
      */
     private $recommendation;
 
@@ -152,5 +152,10 @@ class MatchingContext
     public function getRecommendation()
     {
         return $this->recommendation;
+    }
+
+    public function __toString()
+    {
+        return (is_null($this->getDescription())) ? 'you must set a description' : $this->getDescription();
     }
 }

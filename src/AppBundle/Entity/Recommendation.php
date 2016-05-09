@@ -22,14 +22,14 @@ class Recommendation
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Alternative", mappedBy="recommendation")
+     * @ORM\OneToMany(targetEntity="Alternative", mappedBy="recommendation", cascade={"persist"})
      */
-    private $alternative;
+    private $alternatives;
 
     /**
-     * @ORM\OneToMany(targetEntity="MatchingContext", mappedBy="recommendation")
+     * @ORM\OneToMany(targetEntity="MatchingContext", mappedBy="recommendation", cascade={"persist"})
      */
-    private $matchingContext;
+    private $matchingContexts;
 
     /**
      * @var string
@@ -232,8 +232,8 @@ class Recommendation
      */
     public function __construct()
     {
-        $this->alternative = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->matchingContext = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->alternatives = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->matchingContexts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -245,7 +245,7 @@ class Recommendation
      */
     public function addAlternative(\AppBundle\Entity\Alternative $alternative)
     {
-        $this->alternative[] = $alternative;
+        $this->alternatives[] = $alternative;
 
         return $this;
     }
@@ -257,7 +257,7 @@ class Recommendation
      */
     public function removeAlternative(\AppBundle\Entity\Alternative $alternative)
     {
-        $this->alternative->removeElement($alternative);
+        $this->alternatives->removeElement($alternative);
     }
 
     /**
@@ -265,9 +265,9 @@ class Recommendation
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAlternative()
+    public function getAlternatives()
     {
-        return $this->alternative;
+        return $this->alternatives;
     }
 
     /**
@@ -279,7 +279,7 @@ class Recommendation
      */
     public function addMatchingContext(\AppBundle\Entity\MatchingContext $matchingContext)
     {
-        $this->matchingContext[] = $matchingContext;
+        $this->matchingContexts[] = $matchingContext;
 
         return $this;
     }
@@ -291,7 +291,7 @@ class Recommendation
      */
     public function removeMatchingContext(\AppBundle\Entity\MatchingContext $matchingContext)
     {
-        $this->matchingContext->removeElement($matchingContext);
+        $this->matchingContexts->removeElement($matchingContext);
     }
 
     /**
@@ -299,8 +299,8 @@ class Recommendation
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getMatchingContext()
+    public function getMatchingContexts()
     {
-        return $this->matchingContext;
+        return $this->matchingContexts;
     }
 }
