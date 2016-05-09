@@ -22,7 +22,7 @@ class MatchingContext
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Recommendation")
+     * @ORM\ManyToOne(targetEntity="Recommendation", fetch="EAGER")
      */
     private $recommendation;
 
