@@ -82,9 +82,9 @@ easy_admin:
                     - { property: 'source', type: 'AppBundle\Form\SourceType' }
         MatchingContext:
             class: AppBundle\Entity\MatchingContext
-            disabled_actions: ['new', 'delete', 'edit']
+            disabled_actions: ['new', 'edit']
         Alternative:
             class: AppBundle\Entity\Alternative
-            disabled_actions: ['new', 'delete', 'edit']
+            disabled_actions: ['new', 'edit']
         Filter:
             class: AppBundle\Entity\Filter

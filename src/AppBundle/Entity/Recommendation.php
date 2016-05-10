@@ -46,7 +46,7 @@ class Recommendation
     private $title;
 
     /**
-     * @ORM\OneToOne(targetEntity="Source", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Source", cascade={"persist"}, fetch="EAGER")
      */
     private $source;
 
@@ -136,6 +136,8 @@ class Recommendation
      */
     public function addAlternative(\AppBundle\Entity\Alternative $alternative)
     {
+        $alternative->setRecommendation($this);
+
         $this->alternatives[] = $alternative;
 
         return $this;
@@ -170,6 +172,8 @@ class Recommendation
      */
     public function addMatchingContext(\AppBundle\Entity\MatchingContext $matchingContext)
     {
+        $matchingContext->setRecommendation($this);
+
         $this->matchingContexts[] = $matchingContext;
 
         return $this;
@@ -204,6 +208,8 @@ class Recommendation
      */
     public function setSource(\AppBundle\Entity\Source $source = null)
     {
+        $source->setRecommendation($this);
+
         $this->source = $source;
 
         return $this;
@@ -251,5 +257,10 @@ class Recommendation
     public function getFilters()
     {
         return $this->filters;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }
