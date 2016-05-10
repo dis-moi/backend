@@ -28,8 +28,15 @@ class Recommendation
 
     /**
      * @ORM\OneToMany(targetEntity="MatchingContext", mappedBy="recommendation", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $matchingContexts;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Filter", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $filters;
 
     /**
      * @var string
@@ -39,25 +46,9 @@ class Recommendation
     private $title;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="sourceUrl", type="string", length=255)
+     * @ORM\OneToOne(targetEntity="Source", cascade={"persist"})
      */
-    private $sourceUrl;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="sourceDescription", type="string", length=255, nullable=true)
-     */
-    private $sourceDescription;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="sourceLabel", type="string", length=255)
-     */
-    private $sourceLabel;
+    private $source;
 
     /**
      * @var string
@@ -65,14 +56,6 @@ class Recommendation
      * @ORM\Column(name="description", type="string", length=255)
      */
     private $description;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="sourceType", type="string", length=255)
-     */
-    private $sourceType;
-
 
     /**
      * Get id
@@ -108,78 +91,7 @@ class Recommendation
         return $this->title;
     }
 
-    /**
-     * Set sourceUrl
-     *
-     * @param string $sourceUrl
-     *
-     * @return Recommendation
-     */
-    public function setSourceUrl($sourceUrl)
-    {
-        $this->sourceUrl = $sourceUrl;
-
-        return $this;
-    }
-
-    /**
-     * Get sourceUrl
-     *
-     * @return string
-     */
-    public function getSourceUrl()
-    {
-        return $this->sourceUrl;
-    }
-
-    /**
-     * Set sourceDescription
-     *
-     * @param string $sourceDescription
-     *
-     * @return Recommendation
-     */
-    public function setSourceDescription($sourceDescription)
-    {
-        $this->sourceDescription = $sourceDescription;
-
-        return $this;
-    }
-
-    /**
-     * Get sourceDescription
-     *
-     * @return string
-     */
-    public function getSourceDescription()
-    {
-        return $this->sourceDescription;
-    }
-
-    /**
-     * Set sourceLabel
-     *
-     * @param string $sourceLabel
-     *
-     * @return Recommendation
-     */
-    public function setSourceLabel($sourceLabel)
-    {
-        $this->sourceLabel = $sourceLabel;
-
-        return $this;
-    }
-
-    /**
-     * Get sourceLabel
-     *
-     * @return string
-     */
-    public function getSourceLabel()
-    {
-        return $this->sourceLabel;
-    }
-
+    
     /**
      * Set description
      *
@@ -204,29 +116,7 @@ class Recommendation
         return $this->description;
     }
 
-    /**
-     * Set sourceType
-     *
-     * @param string $sourceType
-     *
-     * @return Recommendation
-     */
-    public function setSourceType($sourceType)
-    {
-        $this->sourceType = $sourceType;
 
-        return $this;
-    }
-
-    /**
-     * Get sourceType
-     *
-     * @return string
-     */
-    public function getSourceType()
-    {
-        return $this->sourceType;
-    }
     /**
      * Constructor
      */
@@ -234,6 +124,7 @@ class Recommendation
     {
         $this->alternatives = new \Doctrine\Common\Collections\ArrayCollection();
         $this->matchingContexts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->filters = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -302,5 +193,63 @@ class Recommendation
     public function getMatchingContexts()
     {
         return $this->matchingContexts;
+    }
+
+    /**
+     * Set source
+     *
+     * @param \AppBundle\Entity\Source $source
+     *
+     * @return Recommendation
+     */
+    public function setSource(\AppBundle\Entity\Source $source = null)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    /**
+     * Get source
+     *
+     * @return \AppBundle\Entity\Source
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * Add filter
+     *
+     * @param \AppBundle\Entity\Filter $filter
+     *
+     * @return Recommendation
+     */
+    public function addFilter(\AppBundle\Entity\Filter $filter)
+    {
+        $this->filters[] = $filter;
+
+        return $this;
+    }
+
+    /**
+     * Remove filter
+     *
+     * @param \AppBundle\Entity\Filter $filter
+     */
+    public function removeFilter(\AppBundle\Entity\Filter $filter)
+    {
+        $this->filters->removeElement($filter);
+    }
+
+    /**
+     * Get filters
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFilters()
+    {
+        return $this->filters;
     }
 }

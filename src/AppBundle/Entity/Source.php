@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MatchingContext
+ * Source
  *
- * @ORM\Table(name="matching_context")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\MatchingContextRepository")
+ * @ORM\Table(name="source")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\SourceRepository")
  */
-class MatchingContext
+class Source
 {
     /**
      * @var int
@@ -22,23 +22,31 @@ class MatchingContext
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Recommendation", inversedBy="matchingContexts", fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="Recommendation")
      */
     private $recommendation;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="urlRegex", type="string", length=255)
+     * @ORM\Column(name="label", type="string", length=255)
      */
-    private $urlRegex;
+    private $label;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="string", length=255)
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=255)
+     */
+    private $url;
+
 
     /**
      * Get id
@@ -51,27 +59,27 @@ class MatchingContext
     }
 
     /**
-     * Set urlRegex
+     * Set label
      *
-     * @param string $urlRegex
+     * @param string $label
      *
-     * @return MatchingContext
+     * @return Source
      */
-    public function setUrlRegex($urlRegex)
+    public function setLabel($label)
     {
-        $this->urlRegex = $urlRegex;
+        $this->label = $label;
 
         return $this;
     }
 
     /**
-     * Get urlRegex
+     * Get label
      *
      * @return string
      */
-    public function getUrlRegex()
+    public function getLabel()
     {
-        return $this->urlRegex;
+        return $this->label;
     }
 
     /**
@@ -79,7 +87,7 @@ class MatchingContext
      *
      * @param string $description
      *
-     * @return MatchingContext
+     * @return Source
      */
     public function setDescription($description)
     {
@@ -99,27 +107,27 @@ class MatchingContext
     }
 
     /**
-     * Set expirationDate
+     * Set url
      *
-     * @param \DateTime $expirationDate
+     * @param string $url
      *
-     * @return MatchingContext
+     * @return Source
      */
-    public function setExpirationDate($expirationDate)
+    public function setUrl($url)
     {
-        $this->expirationDate = $expirationDate;
+        $this->url = $url;
 
         return $this;
     }
 
     /**
-     * Get expirationDate
+     * Get url
      *
-     * @return \DateTime
+     * @return string
      */
-    public function getExpirationDate()
+    public function getUrl()
     {
-        return $this->expirationDate;
+        return $this->url;
     }
 
     /**
@@ -127,7 +135,7 @@ class MatchingContext
      *
      * @param \AppBundle\Entity\Recommendation $recommendation
      *
-     * @return MatchingContext
+     * @return Source
      */
     public function setRecommendation(\AppBundle\Entity\Recommendation $recommendation = null)
     {
@@ -148,6 +156,6 @@ class MatchingContext
 
     public function __toString()
     {
-        return (is_null($this->getDescription())) ? 'you must set a description' : $this->getDescription();
+        return $this->getLabel();
     }
 }

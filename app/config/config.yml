@@ -76,14 +76,15 @@ easy_admin:
                 fields:
                     - title
                     - description
-                    - sourceLabel
-                    - sourceUrl
-                    - sourceDescription
+                    - filters
                     - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
                     - { property: 'alternatives', type: 'collection', type_options: {entry_type: 'AppBundle\Form\AlternativeType', allow_add: true, allow_delete: true, by_reference: false} }
+                    - { property: 'source', type: 'AppBundle\Form\SourceType' }
         MatchingContext:
             class: AppBundle\Entity\MatchingContext
             disabled_actions: ['new', 'delete', 'edit']
         Alternative:
             class: AppBundle\Entity\Alternative
             disabled_actions: ['new', 'delete', 'edit']
+        Filter:
+            class: AppBundle\Entity\Filter
