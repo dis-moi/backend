@@ -71,3 +71,16 @@ Set the Symfony environment to prod by adding the `SYMFONY_ENV` key with the `pr
 
 Because a deployment should be indepotent Clever cloud doesn't provide an access to the command line of your server.
 So to be able to update the schema or to seed the database you'll have to use the [Doctrine Migration bundle](http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html).
+
+Don't forget to add the migrate command in you composer.json post-install and post-update hook (don't forget the no-iteractive):
+
+```
+"post-install-cmd": [
+            ...
+            "php bin/console doctrine:migration:migrate"
+        ],
+        "post-update-cmd": [
+            ...
+            "php bin/console doctrine:migration:migrate"
+        ]
+```
