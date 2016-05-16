@@ -44,10 +44,30 @@ Note: these information are for your **development environment**, production env
 
 ### Configuring PHP
 
-Because of [an obscure behavior](http://stackoverflow.com/questions/13784116/setting-environment-variables-with-the-built-in-php-web-server), you'll need to set the `variables_order` directive to `EGPCS` in your php.ini
+In order to be able to access environment variable from the built-in php server and because of [an obscure behavior](http://stackoverflow.com/questions/13784116/setting-environment-variables-with-the-built-in-php-web-server),
+you'll need to set the `variables_order` directive to `EGPCS` in your php.ini
 
 ### Launching Symfony with Node Foreman
 
 Now you can use any of the symfony using `foreman run` with all the configured variable injected in the project:
 `foreman run php bin/console server:run`
 
+## Installation on clever cloud
+
+Before starting, you need to create a `mysql addon on clever cloud`.
+Then open the `Environment variables` from your application menu, you have to add the corresponding environment variables:
+
+```
+SYMFONY__DATABASE__USER=user
+SYMFONY__DATABASE__PASSWORD=pass
+SYMFONY__DATABASE__NAME=symfony
+SYMFONY__DATABASE__HOST=host
+SYMFONY__DATABASE__PORT=3306
+```
+
+Set the Symfony environment to prod by adding the `SYMFONY_ENV` key with the `prod` value.
+
+## Using doctrine migration
+
+Because a deployment should be indepotent Clever cloud doesn't provide an access to the command line of your server.
+So to be able to update the schema or to seed the database you'll have to use the [Doctrine Migration bundle](http://symfony.com/doc/current/bundles/DoctrineMigrationsBundle/index.html).

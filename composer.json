@@ -29,7 +29,8 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "sensio/generator-bundle": "^3.0",
         "javiereguiluz/easyadmin-bundle": "^1.12",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "doctrine/doctrine-migrations-bundle": "^1.1"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",
