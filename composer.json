@@ -66,8 +66,5 @@
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         }
-    },
-    "config": {
-        "bin-dir": "bin"
     }
 }

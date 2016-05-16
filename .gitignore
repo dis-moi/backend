@@ -15,5 +15,4 @@
 /vendor/
 /web/bundles/
 .idea
-bin/
 *.php~
