@@ -1,8 +1,5 @@
 {
   "deploy": {
     "webroot": "/web"
-  },
-  "hooks": {
-    "postDeploy": "php bin/console doctrine:migration:migrate"
   }
 }

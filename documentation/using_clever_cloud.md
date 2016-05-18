@@ -77,10 +77,10 @@ Don't forget to add the migrate command in you composer.json post-install and po
 ```
 "post-install-cmd": [
             ...
-            "php bin/console doctrine:migration:migrate"
+            "php bin/console doctrine:migration:migrate --allow-no-migration --no-interaction"
         ],
         "post-update-cmd": [
             ...
-            "php bin/console doctrine:migration:migrate"
+            "php bin/console doctrine:migration:migrate --allow-no-migration --no-interaction"
         ]
 ```

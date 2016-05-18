@@ -32,6 +32,9 @@ framework:
     http_method_override: true
     assets: ~
 
+sensio_framework_extra:
+    request: { converters: true }
+
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"
@@ -72,6 +75,15 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: AppBundle\Entity\User
+
+fos_rest:
+    versioning: true
+    routing_loader:
+        default_format: json
+    format_listener:
+        enabled: true
+        rules:
+            - { path: '^/admin', stop: true }
 
 easy_admin:
     site_name: 'Le Même En Mieux'
