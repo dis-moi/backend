@@ -77,13 +77,15 @@ fos_user:
     user_class: AppBundle\Entity\User
 
 fos_rest:
-    versioning: true
     routing_loader:
         default_format: json
     format_listener:
         enabled: true
         rules:
-            - { path: '^/admin', stop: true }
+            - { path: '^/api', priorities: ['json'], fallback_format: 'json' }
+            - { path: '^/', stop: true }
+    view:
+        view_response_listener: 'force'
 
 easy_admin:
     site_name: 'Le Même En Mieux'

@@ -8,16 +8,54 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Alternative;
+use AppBundle\Entity\Recommendation;
+use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-class ApiController
+class ApiController extends FOSRestController
 {
-    public function getMatchingContextsAction()
+
+    /**
+     * @Route("/matchingcontexts")
+     * @View()
+     */
+    public function getMatchingcontextsAction()
     {
-        return 'matchingContext';
+        $matchingContexts = $this->getDoctrine()
+            ->getRepository('AppBundle:MatchingContext')
+            ->findAll();
+
+        if (!$matchingContexts) {
+            throw $this->createNotFoundException(
+                'No matching contexts exists'
+            );
+        }
+
+        return $matchingContexts;
     }
 
-    public function getAlternativeAction($slug)
+    /**
+     * @Route("/alternative/{id}")
+     * @ParamConverter("alternative", class="AppBundle:Alternative")
+     * @View()
+     */
+    public function getAlternativeAction(Alternative $alternative)
     {
-        return $slug;
+        return $alternative;
+    }
+
+    /**
+     * @Route("/recommendation/{id}")
+     * @ParamConverter("recommendation", class="AppBundle:Recommendation")
+     * @View()
+     */
+    public function getRecommendationAction(Recommendation $recommendation)
+    {
+        return $recommendation;
     }
 }

@@ -5,11 +5,12 @@ app:
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
-api:
-    type:     rest
-    resource: \AppBundle\Controller\ApiController
+api_v1:
+    resource: "@AppBundle/Controller/ApiController.php"
+    type:     annotation
+    prefix:   /api/v1
 
 easy_admin_bundle:
-    resource: "@AppBundle/Controller/AdminController.php" # <-- ADD this line
+    resource: "@AppBundle/Controller/AdminController.php"
     type:     annotation
     prefix:   /admin
