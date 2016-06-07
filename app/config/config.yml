@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi:             ~
@@ -88,18 +88,23 @@ fos_rest:
         view_response_listener: 'force'
 
 easy_admin:
+    design:
+        assets:
+            css:
+                - 'css/admin.css'
     site_name: 'Le Même En Mieux'
     entities:
         Recommendation:
             class: AppBundle\Entity\Recommendation
+            label: 'Customers'
             form:
                 fields:
                     - title
                     - description
                     - filters
+                    - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
                     - { property: 'alternatives', type: 'collection', type_options: {entry_type: 'AppBundle\Form\AlternativeType', allow_add: true, allow_delete: true, by_reference: false} }
-                    - { property: 'source', type: 'AppBundle\Form\SourceType' }
         MatchingContext:
             class: AppBundle\Entity\MatchingContext
             disabled_actions: ['new', 'edit']

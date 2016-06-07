@@ -15,9 +15,8 @@ class AlternativeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('urlToRedirect')
             ->add('label')
-            ->add('description')
+            ->add('urlToRedirect')
         ;
     }
     

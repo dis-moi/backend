@@ -16,8 +16,8 @@ class MatchingContextType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('urlRegex')
             ->add('description')
+            ->add('urlRegex')
         ;
     }
     

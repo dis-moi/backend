@@ -1,0 +1,20 @@
+.field-matching_context > label.col-sm-2.control-label, .field-alternative > label.col-sm-2.control-label{
+    display: none;
+}
+
+.form-group.field-collection {
+    margin-top: 25px;
+}
+
+.field-collection-action {
+    width: 85%;
+    float: left;
+}
+
+.form-group.field-source {
+    margin-top: 25px;
+}
+
+body.edit textarea#recommendation_description {
+    min-height: 100px;
+}

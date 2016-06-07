@@ -16,7 +16,6 @@ class SourceType extends AbstractType
     {
         $builder
             ->add('label')
-            ->add('description')
             ->add('url')
         ;
     }
