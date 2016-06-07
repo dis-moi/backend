@@ -32,7 +32,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "doctrine/doctrine-migrations-bundle": "^1.1",
         "friendsofsymfony/rest-bundle": "^1.7",
-        "jms/serializer-bundle": "^1.1"
+        "jms/serializer-bundle": "^1.1",
+        "ocramius/proxy-manager": "^2.0.2"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",
