@@ -51,6 +51,11 @@ class Recommendation
     private $source;
 
     /**
+     * @ORM\OneToOne(targetEntity="Contributor", cascade={"persist"}, fetch="EAGER")
+     */
+    private $contributor;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="description", type="text")
@@ -223,6 +228,32 @@ class Recommendation
     public function getSource()
     {
         return $this->source;
+    }
+
+    /**
+     * Set contributor
+     *
+     * @param \AppBundle\Entity\Contributor
+     *
+     * @return Recommendation
+     */
+    public function setContributor(\AppBundle\Entity\Contributor $contributor = null)
+    {
+        $contributor->setRecommendation($this);
+
+        $this->contributor = $contributor;
+
+        return $this;
+    }
+
+    /**
+     * Get contributor
+     *
+     * @return \AppBundle\Entity\Contributor
+     */
+    public function getContributor()
+    {
+        return $this->contributor;
     }
 
     /**

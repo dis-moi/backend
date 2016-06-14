@@ -87,6 +87,13 @@ fos_rest:
     view:
         view_response_listener: 'force'
 
+vich_uploader:
+    db_driver: orm
+    mappings:
+        contributor_avatars:
+            uri_prefix:         /uploads/avatars
+            upload_destination: %kernel.root_dir%/../web/uploads/avatars
+
 easy_admin:
     design:
         assets:
@@ -96,11 +103,12 @@ easy_admin:
     entities:
         Recommendation:
             class: AppBundle\Entity\Recommendation
-            label: 'Customers'
+            label: 'Recommendation'
             form:
                 fields:
                     - title
                     - description
+                    - contributor
                     - filters
                     - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
@@ -117,3 +125,10 @@ easy_admin:
             class: AppBundle\Entity\User
             form:
                 fields: ['enabled', 'username', 'email', 'roles', 'lastLogin']
+        Contributor:
+            class: AppBundle\Entity\Contributor
+            form:
+                fields:
+                  - name
+                  - organization
+                  - { property: 'imageFile', type: 'vich_image' }
