@@ -46,9 +46,9 @@ class Contributor
     protected $updatedAt;
 
     /**
-     * @ORM\OneToOne(targetEntity="Recommendation")
+     * @ORM\OneToMany(targetEntity="Recommendation", mappedBy="contributor")
      */
-    private $recommendation;
+    private $recommendations;
 
     /**
      * Get id
@@ -148,33 +148,73 @@ class Contributor
         return $this->image;
     }
 
+    public function __toString()
+    {
+        return $this->organization.' | '.$this->name;
+    }
     /**
-     * Set recommendation
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->recommendations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set updatedAt
      *
-     * @param \AppBundle\Entity\Recommendation $recommendation
+     * @param \DateTime $updatedAt
      *
      * @return Contributor
      */
-    public function setRecommendation(\AppBundle\Entity\Recommendation $recommendation = null)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->recommendation = $recommendation;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
     /**
-     * Get recommendation
+     * Get updatedAt
      *
-     * @return \AppBundle\Entity\Recommendation
+     * @return \DateTime
      */
-    public function getRecommendation()
+    public function getUpdatedAt()
     {
-        return $this->recommendation;
+        return $this->updatedAt;
     }
 
-    public function __toString()
+    /**
+     * Add recommendation
+     *
+     * @param \AppBundle\Entity\Recommendation $recommendation
+     *
+     * @return Contributor
+     */
+    public function addRecommendation(\AppBundle\Entity\Recommendation $recommendation)
     {
-        return $this->organization.' | '.$this->name;
+        $this->recommendations[] = $recommendation;
+
+        return $this;
+    }
+
+    /**
+     * Remove recommendation
+     *
+     * @param \AppBundle\Entity\Recommendation $recommendation
+     */
+    public function removeRecommendation(\AppBundle\Entity\Recommendation $recommendation)
+    {
+        $this->recommendations->removeElement($recommendation);
+    }
+
+    /**
+     * Get recommendations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRecommendations()
+    {
+        return $this->recommendations;
     }
 }
-

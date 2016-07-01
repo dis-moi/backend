@@ -51,7 +51,7 @@ class Recommendation
     private $source;
 
     /**
-     * @ORM\OneToOne(targetEntity="Contributor", cascade={"persist"}, fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity="Contributor", inversedBy="recommendations", cascade={"persist"}, fetch="EAGER")
      */
     private $contributor;
 
@@ -231,32 +231,6 @@ class Recommendation
     }
 
     /**
-     * Set contributor
-     *
-     * @param \AppBundle\Entity\Contributor
-     *
-     * @return Recommendation
-     */
-    public function setContributor(\AppBundle\Entity\Contributor $contributor = null)
-    {
-        $contributor->setRecommendation($this);
-
-        $this->contributor = $contributor;
-
-        return $this;
-    }
-
-    /**
-     * Get contributor
-     *
-     * @return \AppBundle\Entity\Contributor
-     */
-    public function getContributor()
-    {
-        return $this->contributor;
-    }
-
-    /**
      * Add filter
      *
      * @param \AppBundle\Entity\Filter $filter
@@ -293,5 +267,29 @@ class Recommendation
     public function __toString()
     {
         return $this->getTitle();
+    }
+
+    /**
+     * Set contributor
+     *
+     * @param \AppBundle\Entity\Contributor $contributor
+     *
+     * @return Recommendation
+     */
+    public function setContributor(\AppBundle\Entity\Contributor $contributor = null)
+    {
+        $this->contributor = $contributor;
+
+        return $this;
+    }
+
+    /**
+     * Get contributor
+     *
+     * @return \AppBundle\Entity\Contributor
+     */
+    public function getContributor()
+    {
+        return $this->contributor;
     }
 }
