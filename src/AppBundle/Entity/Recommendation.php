@@ -46,7 +46,7 @@ class Recommendation
     private $title;
 
     /**
-     * @ORM\OneToOne(targetEntity="Source", cascade={"persist"}, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="Source", mappedBy="recommendation", cascade={"persist"}, fetch="EAGER", orphanRemoval=true)
      */
     private $source;
 
@@ -96,7 +96,7 @@ class Recommendation
         return $this->title;
     }
 
-    
+
     /**
      * Set description
      *
