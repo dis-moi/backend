@@ -63,6 +63,8 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        filters:
+          matching_context_private_filter: AppBundle\Doctrine\MatchingContextPrivateFilter
 
 # Swiftmailer Configuration
 swiftmailer:
