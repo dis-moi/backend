@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Recommendation
 {
+    const VISIBILITY_PUBLIC = "public";
+    const VISIBILITY_PRIVATE = "private";
     /**
      * @var int
      *
@@ -20,6 +22,9 @@ class Recommendation
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /** @ORM\Column(name="visibility", type="string") */
+    private $visibility;
 
     /**
      * @ORM\OneToMany(targetEntity="Alternative", mappedBy="recommendation", cascade={"persist"})
@@ -96,7 +101,7 @@ class Recommendation
         return $this->title;
     }
 
-    
+
     /**
      * Set description
      *
@@ -291,5 +296,24 @@ class Recommendation
     public function getContributor()
     {
         return $this->contributor;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVisibility(){
+      return $this->visibility;
+    }
+
+    /**
+     * @param string $visibility
+     * @return Recommendation
+     */
+    public function setVisibility($visibility){
+      if (!in_array($visibility, array(self::VISIBILITY_PUBLIC, self::VISIBILITY_PRIVATE))) {
+        throw new \InvalidArgumentException("Invalid visibility");
+      }
+      $this->visibility = $visibility;
+      return $this;
     }
 }
