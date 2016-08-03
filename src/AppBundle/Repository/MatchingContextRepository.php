@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Enumerator\VisibilityEnumerator;
 
 /**
  * MatchingContextRepository
@@ -11,10 +12,9 @@ namespace AppBundle\Repository;
 class MatchingContextRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findAllPrivate(){
+        $query = sprintf('SELECT mc FROM AppBundle:MatchingContext mc JOIN mc.recommendation r WHERE r.visibility = \'%s\'', VisibilityEnumerator::PRIVATE_VISIBILITY());
         return $this->getEntityManager()
-                    ->createQuery(
-                        'SELECT mc FROM AppBundle:MatchingContext mc JOIN mc.recommendation r WHERE r.visibility = \'private\''
-                    )
+                    ->createQuery($query)
                     ->getResult();
     }
 }

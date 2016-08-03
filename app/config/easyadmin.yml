@@ -14,7 +14,7 @@ easy_admin:
                     - description
                     - contributor
                     - filters
-                    - { property: 'visibility', type: 'choice', type_options: {choices:{'Private': 'private', 'Public': 'public'}} }
+                    - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
                     - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
                     - { property: 'alternatives', type: 'collection', type_options: {entry_type: 'AppBundle\Form\AlternativeType', allow_add: true, allow_delete: true, by_reference: false} }

@@ -3,6 +3,7 @@ namespace AppBundle\Doctrine;
 
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Filter\SQLFilter;
+use AppBundle\Enumerator\VisibilityEnumerator;
 
 class MatchingContextPublicFilter extends SQLFilter
 {
@@ -12,6 +13,6 @@ class MatchingContextPublicFilter extends SQLFilter
            return '';
        }
 
-       return 'visibility = \'public\'';
+       return sprintf('visibility = \'%s\'', (string) VisibilityEnumerator::PUBLIC_VISIBILITY());
   }
 }

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Enumerator\VisibilityEnumerator;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,8 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Recommendation
 {
-    const VISIBILITY_PUBLIC = "public";
-    const VISIBILITY_PRIVATE = "private";
     /**
      * @var int
      *
@@ -306,14 +305,13 @@ class Recommendation
     }
 
     /**
-     * @param string $visibility
+     * @param VisibilityEnumerator $visibility
+     * @throw InvalidArgumentException
      * @return Recommendation
      */
-    public function setVisibility($visibility){
-      if (!in_array($visibility, array(self::VISIBILITY_PUBLIC, self::VISIBILITY_PRIVATE))) {
-        throw new \InvalidArgumentException("Invalid visibility");
-      }
-      $this->visibility = $visibility;
-      return $this;
+    public function setVisibility(VisibilityEnumerator $visibility){
+        $this->visibility = $visibility->getValue();
+
+        return $this;
     }
 }
