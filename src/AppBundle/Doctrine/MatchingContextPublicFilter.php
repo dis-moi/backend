@@ -13,6 +13,6 @@ class MatchingContextPublicFilter extends SQLFilter
            return '';
        }
 
-       return sprintf('visibility = \'%s\'', RecommendationVisibility::PUBLIC_VISIBILITY()->getValue());
+       return sprintf('visibility = \'%s\'', RecommendationVisibility::PUBLIC_VISIBILITY);
   }
 }
