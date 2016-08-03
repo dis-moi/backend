@@ -1,0 +1,7 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% block body_javascript %}
+    <script id="lmem-draft-recommendations" type="application/json">
+      {{ preview_data|serialize('json') }}
+    </script>
+{% endblock %}
