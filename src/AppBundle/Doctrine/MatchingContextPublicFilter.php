@@ -4,7 +4,7 @@ namespace AppBundle\Doctrine;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Filter\SQLFilter;
 
-class MatchingContextPrivateFilter extends SQLFilter
+class MatchingContextPublicFilter extends SQLFilter
 {
   public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias)
   {
@@ -12,6 +12,6 @@ class MatchingContextPrivateFilter extends SQLFilter
            return '';
        }
 
-       return 'visibility = \'private\'';
+       return 'visibility = \'public\'';
   }
 }

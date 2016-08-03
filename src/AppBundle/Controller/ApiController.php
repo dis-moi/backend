@@ -20,9 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class ApiController extends FOSRestController
 {
 
-    public function __construct(){
-
-    }
     /**
      * @Route("/matchingcontexts")
      * @View()
@@ -32,7 +29,7 @@ class ApiController extends FOSRestController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $em->getFilters()
-            ->enable('matching_context_private_filter');
+            ->enable('matching_context_public_filter');
 
         $matchingContexts = $this->getDoctrine()
             ->getRepository('AppBundle:MatchingContext')
