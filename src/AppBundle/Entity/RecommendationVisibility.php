@@ -10,4 +10,8 @@ class RecommendationVisibility extends Enum {
     static function getDefault(){
         return self::PRIVATE_VISIBILITY();
     }
+
+    public function __toString(){
+        return self::getValue();
+    }
 }
