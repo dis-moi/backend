@@ -9,10 +9,10 @@ class MatchingContextPublicFilter extends SQLFilter
 {
   public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias)
   {
-       if ($targetEntity->getReflectionClass()->name != 'AppBundle\Entity\MatchingContext') {
+       if ($targetEntity->getReflectionClass()->getName() != 'AppBundle\Entity\MatchingContext') {
            return '';
        }
 
-       return sprintf('visibility = \'%s\'', (string) RecommendationVisibility::PUBLIC_VISIBILITY());
+       return sprintf('visibility = \'%s\'', RecommendationVisibility::PUBLIC_VISIBILITY()->getValue());
   }
 }
