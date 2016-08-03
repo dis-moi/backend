@@ -14,7 +14,7 @@ class StringToVisibilityTransformer implements DataTransformerInterface
     public function transform($visibilityString)
     {
         if (null === $visibilityString) {
-            return RecommendationVisibility::PRIVATE_VISIBILITY;
+            return RecommendationVisibility::getDefault();
         }
 
         return RecommendationVisibility::get($visibilityString);

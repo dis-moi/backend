@@ -21,7 +21,7 @@ class VisibilityType extends AbstractType
                 'Private' => RecommendationVisibility::PRIVATE_VISIBILITY(),
                 'Public' => RecommendationVisibility::PUBLIC_VISIBILITY()
             ),
-            'empty_data' =>  RecommendationVisibility::PRIVATE_VISIBILITY()
+            'empty_data' =>  RecommendationVisibility::getDefault()
         ));
     }
 
