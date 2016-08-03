@@ -1,34 +1,34 @@
 <?php
 namespace AppBundle\Form\DataTransformer;
 
-use AppBundle\Enumerator\VisibilityEnumerator;
+use AppBundle\Entity\RecommendationVisibility;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class StringToVisibilityTransformer implements DataTransformerInterface
 {
     /**
      * @param  string $visibilityString
-     * @return VisibilityEnumerator
+     * @return RecommendationVisibility
      * @throw InvalidArgumentException
      */
     public function transform($visibilityString)
     {
         if (null === $visibilityString) {
-            return VisibilityEnumerator::PRIVATE_VISIBILITY;
+            return RecommendationVisibility::PRIVATE_VISIBILITY;
         }
 
-        return VisibilityEnumerator::get($visibilityString);
+        return RecommendationVisibility::get($visibilityString);
     }
 
     /**
-     * Ensure giving to the Recommendation Entity a VisibilityEnumerator Instance
+     * Ensure giving to the Recommendation Entity a RecommendationVisibility Instance
      *
-     * @param  VisibilityEnumerator $visibility
-     * @return VisibilityEnumerator|null
+     * @param  RecommendationVisibility $visibility
+     * @return RecommendationVisibility|null
      * @throw InvalidArgumentException
      */
     public function reverseTransform($visibility)
     {
-        return VisibilityEnumerator::get($visibility);
+        return RecommendationVisibility::get($visibility);
     }
 }

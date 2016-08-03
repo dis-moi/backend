@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Enumerator\VisibilityEnumerator;
+use AppBundle\Entity\RecommendationVisibility;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -305,11 +305,11 @@ class Recommendation
     }
 
     /**
-     * @param VisibilityEnumerator $visibility
+     * @param RecommendationVisibility $visibility
      * @throw InvalidArgumentException
      * @return Recommendation
      */
-    public function setVisibility(VisibilityEnumerator $visibility){
+    public function setVisibility(RecommendationVisibility $visibility){
         $this->visibility = $visibility->getValue();
 
         return $this;

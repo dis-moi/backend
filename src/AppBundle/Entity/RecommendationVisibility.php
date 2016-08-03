@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle\Enumerator;
+namespace AppBundle\Entity;
 use MabeEnum\Enum;
 
-class VisibilityEnumerator extends Enum {
+class RecommendationVisibility extends Enum {
     const PUBLIC_VISIBILITY = 'public';
     const PRIVATE_VISIBILITY = 'private';
 }

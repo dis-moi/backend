@@ -2,7 +2,7 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Enumerator\VisibilityEnumerator;
+use AppBundle\Entity\RecommendationVisibility;
 use AppBundle\Form\DataTransformer\StringToVisibilityTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,10 +18,10 @@ class VisibilityType extends AbstractType
     {
         $resolver->setDefaults(array(
             'choices' => array(
-                'Private' => VisibilityEnumerator::PRIVATE_VISIBILITY(),
-                'Public' => VisibilityEnumerator::PUBLIC_VISIBILITY()
+                'Private' => RecommendationVisibility::PRIVATE_VISIBILITY(),
+                'Public' => RecommendationVisibility::PUBLIC_VISIBILITY()
             ),
-            'empty_data' =>  VisibilityEnumerator::PRIVATE_VISIBILITY()
+            'empty_data' =>  RecommendationVisibility::PRIVATE_VISIBILITY()
         ));
     }
 
