@@ -13,8 +13,8 @@ class MatchingContextRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findAllPrivate(){
         return $this->getEntityManager()
-                    ->createQuery('SELECT mc FROM AppBundle:MatchingContext mc JOIN mc.recommendation r WHERE r.visibility = ?1')
-                    ->setParameter(1, RecommendationVisibility::PRIVATE_VISIBILITY()->getValue())
+                    ->createQuery('SELECT mc FROM AppBundle:MatchingContext mc JOIN mc.recommendation r WHERE r.visibility = :private_visibility')
+                    ->setParameter('private_visibility', RecommendationVisibility::PRIVATE_VISIBILITY()->getValue())
                     ->getResult();
     }
 }
