@@ -298,10 +298,13 @@ class Recommendation
     }
 
     /**
-     * @return string
+     * @return RecommendationVisibility
      */
     public function getVisibility(){
-      return $this->visibility;
+        if(!$this->visibility){
+            return RecommendationVisibility::getDefault();
+        }
+        return RecommendationVisibility::get($this->visibility);
     }
 
     /**
