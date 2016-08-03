@@ -12,9 +12,9 @@ use AppBundle\Enumerator\VisibilityEnumerator;
 class MatchingContextRepository extends \Doctrine\ORM\EntityRepository
 {
     public function findAllPrivate(){
-        $query = sprintf('SELECT mc FROM AppBundle:MatchingContext mc JOIN mc.recommendation r WHERE r.visibility = \'%s\'', VisibilityEnumerator::PRIVATE_VISIBILITY());
         return $this->getEntityManager()
-                    ->createQuery($query)
+                    ->createQuery('SELECT mc FROM AppBundle:MatchingContext mc JOIN mc.recommendation r WHERE r.visibility = ?1')
+                    ->setParameter(1, VisibilityEnumerator::PRIVATE_VISIBILITY()->getValue())
                     ->getResult();
     }
 }
