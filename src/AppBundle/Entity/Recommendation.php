@@ -22,7 +22,9 @@ class Recommendation
      */
     private $id;
 
-    /** @ORM\Column(name="visibility", type="string") */
+    /** 
+     * @ORM\Column(name="visibility", type="string") 
+     */
     private $visibility;
 
     /**
@@ -300,7 +302,8 @@ class Recommendation
     /**
      * @return RecommendationVisibility
      */
-    public function getVisibility(){
+    public function getVisibility()
+    {
         if(!$this->visibility){
             return RecommendationVisibility::getDefault();
         }
@@ -312,7 +315,8 @@ class Recommendation
      * @throw InvalidArgumentException
      * @return Recommendation
      */
-    public function setVisibility(RecommendationVisibility $visibility){
+    public function setVisibility(RecommendationVisibility $visibility)
+    {
         $this->visibility = $visibility->getValue();
 
         return $this;

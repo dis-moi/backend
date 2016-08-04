@@ -11,7 +11,8 @@ use AppBundle\Entity\RecommendationVisibility;
  */
 class MatchingContextRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findAllWithPrivateVisibility(){
+    public function findAllWithPrivateVisibility()
+    {
         return $this->findAllWithVisibility(RecommendationVisibility::PRIVATE_VISIBILITY());
     }
 
