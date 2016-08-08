@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\RecommendationVisibility;
 
 /**
  * MatchingContextRepository
@@ -10,4 +11,22 @@ namespace AppBundle\Repository;
  */
 class MatchingContextRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAllWithPrivateVisibility()
+    {
+        return $this->findAllWithVisibility(RecommendationVisibility::PRIVATE_VISIBILITY());
+    }
+
+    public function findAllWithPublicVisibility()
+    {
+        return $this->findAllWithVisibility(RecommendationVisibility::PUBLIC_VISIBILITY());
+
+    }
+
+    public function findAllWithVisibility(RecommendationVisibility $visibility)
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT mc FROM AppBundle:MatchingContext mc JOIN mc.recommendation r WHERE r.visibility = :visibility')
+            ->setParameter('visibility', $visibility->getValue())
+            ->getResult();
+    }
 }

@@ -28,17 +28,15 @@ class ApiController extends FOSRestController
     {
         $matchingContexts = $this->getDoctrine()
             ->getRepository('AppBundle:MatchingContext')
-            ->findAll();
+            ->findAllWithPublicVisibility();
 
-        if (!$matchingContexts) {
-            throw $this->createNotFoundException(
-                'No matching contexts exists'
-            );
-        }
+        if (!$matchingContexts) throw $this->createNotFoundException(
+            'No matching contexts exists'
+        );
 
         return $matchingContexts;
     }
-
+    
     /**
      * @Route("/alternative/{id}")
      * @ParamConverter("alternative", class="AppBundle:Alternative")

@@ -17,3 +17,4 @@
 .idea
 *.php~
 /web/uploads/
+.env_prod

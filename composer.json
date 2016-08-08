@@ -34,7 +34,8 @@
         "friendsofsymfony/rest-bundle": "^1.7",
         "jms/serializer-bundle": "^1.1",
         "ocramius/proxy-manager": "^2.0.2",
-        "vich/uploader-bundle": "^1.1"
+        "vich/uploader-bundle": "^1.1",
+        "marc-mabe/php-enum": "^2.2"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",

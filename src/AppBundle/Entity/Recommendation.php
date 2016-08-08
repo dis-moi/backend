@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\RecommendationVisibility;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -20,6 +21,11 @@ class Recommendation
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /** 
+     * @ORM\Column(name="visibility", type="string") 
+     */
+    private $visibility;
 
     /**
      * @ORM\OneToMany(targetEntity="Alternative", mappedBy="recommendation", cascade={"persist"})
@@ -96,7 +102,7 @@ class Recommendation
         return $this->title;
     }
 
-    
+
     /**
      * Set description
      *
@@ -291,5 +297,28 @@ class Recommendation
     public function getContributor()
     {
         return $this->contributor;
+    }
+
+    /**
+     * @return RecommendationVisibility
+     */
+    public function getVisibility()
+    {
+        if(!$this->visibility){
+            return RecommendationVisibility::getDefault();
+        }
+        return RecommendationVisibility::get($this->visibility);
+    }
+
+    /**
+     * @param RecommendationVisibility $visibility
+     * @throw InvalidArgumentException
+     * @return Recommendation
+     */
+    public function setVisibility(RecommendationVisibility $visibility)
+    {
+        $this->visibility = $visibility->getValue();
+
+        return $this;
     }
 }

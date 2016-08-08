@@ -2,6 +2,7 @@
 namespace AppBundle\Controller;
 
 use JavierEguiluz\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use JavierEguiluz\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
 
 class AdminController extends BaseAdminController
 {
@@ -19,4 +20,5 @@ class AdminController extends BaseAdminController
     {
         $this->get('fos_user.user_manager')->updateUser($user, false);
     }
+    
 }
