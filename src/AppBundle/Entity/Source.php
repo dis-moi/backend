@@ -22,7 +22,7 @@ class Source
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Recommendation")
+     * @ORM\OneToOne(targetEntity="Recommendation")     
      */
     private $recommendation;
 
