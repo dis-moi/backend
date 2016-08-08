@@ -22,8 +22,8 @@ class Recommendation
      */
     private $id;
 
-    /** 
-     * @ORM\Column(name="visibility", type="string") 
+    /**
+     * @ORM\Column(name="visibility", type="string", options={"default" : "private"})
      */
     private $visibility;
 
@@ -52,7 +52,7 @@ class Recommendation
     private $title;
 
     /**
-     * @ORM\OneToOne(targetEntity="Source", cascade={"persist"}, fetch="EAGER")
+     * @ORM\OneToOne(targetEntity="Source", mappedBy="recommendation", cascade={"persist"}, fetch="EAGER", orphanRemoval=true)
      */
     private $source;
 
@@ -136,6 +136,7 @@ class Recommendation
         $this->alternatives = new \Doctrine\Common\Collections\ArrayCollection();
         $this->matchingContexts = new \Doctrine\Common\Collections\ArrayCollection();
         $this->filters = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->visibility = RecommendationVisibility::getDefault();
     }
 
     /**
