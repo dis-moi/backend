@@ -1,7 +1,10 @@
 <?php
 
 namespace AppBundle\Repository;
+
+use AppBundle\Entity\Contributor;
 use AppBundle\Entity\RecommendationVisibility;
+use Proxies\__CG__\AppBundle\Entity\Organization;
 
 /**
  * MatchingContextRepository
@@ -19,13 +22,40 @@ class MatchingContextRepository extends \Doctrine\ORM\EntityRepository
     public function findAllWithPublicVisibility()
     {
         return $this->findAllWithVisibility(RecommendationVisibility::PUBLIC_VISIBILITY());
-
     }
 
     public function findAllWithVisibility(RecommendationVisibility $visibility)
     {
         return $this->getEntityManager()
             ->createQuery('SELECT mc FROM AppBundle:MatchingContext mc JOIN mc.recommendation r WHERE r.visibility = :visibility')
+            ->setParameter('visibility', $visibility->getValue())
+            ->getResult();
+    }
+
+    public function findAllWithOrganizationAndPrivateVisibility(Organization $organization)
+    {
+        return $this->findAllWithOrganizationAndVisibility($organization, RecommendationVisibility::PRIVATE_VISIBILITY());
+    }
+
+    public function findAllWithContributorAndPrivateVisibility(Contributor $contributor)
+    {
+        return $this->findAllWithContributorAndVisibility($contributor, RecommendationVisibility::PRIVATE_VISIBILITY());
+    }
+
+    public function findAllWithOrganizationAndVisibility(Organization $organization, RecommendationVisibility $visibility)
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT mc FROM AppBundle:MatchingContext mc JOIN mc.recommendation r JOIN r.contributor c JOIN c.organization o WHERE o.id = :organization_uid AND r.visibility = :visibility')
+            ->setParameter('organization_uid', $organization->getId())
+            ->setParameter('visibility', $visibility->getValue())
+            ->getResult();
+    }
+
+    public function findAllWithContributorAndVisibility(Contributor $contributor, RecommendationVisibility $visibility)
+    {
+        return $this->getEntityManager()
+            ->createQuery('SELECT mc FROM AppBundle:MatchingContext mc JOIN mc.recommendation r JOIN r.contributor c WHERE c.id = :contributor_uid AND r.visibility = :visibility')
+            ->setParameter('contributor_uid', $contributor->getId())
             ->setParameter('visibility', $visibility->getValue())
             ->getResult();
     }

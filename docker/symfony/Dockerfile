@@ -1,7 +1,7 @@
 FROM php:7.0
 
 RUN apt-get update
-RUN apt-get install -q -y  git zip libcurl4-gnutls-dev libmcrypt-dev libicu-dev g++
+RUN apt-get install -q -y  git zip libcurl4-gnutls-dev libmcrypt-dev libicu-dev g++ mysql-client
 
 RUN docker-php-ext-install pdo pdo_mysql curl json mcrypt intl bcmath pcntl
 
@@ -16,3 +16,7 @@ RUN echo "date.timezone = \"Europe/Paris\"" >> /usr/local/etc/php/php.ini
 RUN echo "intl.default_locale = \"fr\"" >> /usr/local/etc/php/php.ini
 
 VOLUME /var/www
+
+COPY docker_run.sh /tmp/docker_run.sh
+RUN chmod a+x /tmp/docker_run.sh
+CMD ["/tmp/docker_run.sh"]

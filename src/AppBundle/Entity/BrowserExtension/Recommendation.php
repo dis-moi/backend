@@ -35,3 +35,20 @@ class Source
         $this->label = $label;
     }
 }
+
+class Organization
+{
+    public $name;
+    public $description;
+
+
+    /**
+     * @param $name
+     * @param $description
+     */
+    public function __construct($name, $description)
+    {
+        $this->name = $name;
+        $this->description = $description;
+    }
+}

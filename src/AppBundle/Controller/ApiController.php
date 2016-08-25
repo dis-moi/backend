@@ -33,9 +33,11 @@ class ApiController extends FOSRestController
             ->getRepository('AppBundle:MatchingContext')
             ->findAllWithPublicVisibility();
 
-        if (!$matchingContexts) throw $this->createNotFoundException(
-            'No matching contexts exists'
-        );
+        if (!$matchingContexts) {
+            throw $this->createNotFoundException(
+                'No matching contexts exists'
+            );
+        }
 
         $factory = new MatchingContextFactory( function($id) {
             return $this->get('router')->generate('app_api_getrecommendation', ['id' => $id], Router::ABSOLUTE_URL);
@@ -44,16 +46,6 @@ class ApiController extends FOSRestController
         return array_map(function($matchingContext) use ($factory){
             return $factory->createFromMatchingContext($matchingContext);
         }, $matchingContexts);
-    }
-    
-    /**
-     * @Route("/alternative/{id}")
-     * @ParamConverter("alternative", class="AppBundle:Alternative")
-     * @View()
-     */
-    public function getAlternativeAction(Alternative $alternative)
-    {
-        return $alternative;
     }
 
     /**
