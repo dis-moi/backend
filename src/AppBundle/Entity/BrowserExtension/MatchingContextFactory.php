@@ -7,11 +7,8 @@ use AppBundle\Entity\MatchingContext as MatchingContextEntity;
 
 class MatchingContextFactory
 {
-    private $router;
-
     /**
      * MatchingContextFactory constructor.
-     * @param $router
      */
     public function __construct(callable $path_builder)
     {

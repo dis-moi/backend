@@ -2,12 +2,12 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\RecommendationVisibility;
+use AppBundle\Entity\ContributorRole;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VisibilityType extends AbstractType
+class RoleType extends AbstractType
 {
     /**
      * @param OptionsResolver $resolver
@@ -16,10 +16,10 @@ class VisibilityType extends AbstractType
     {
         $resolver->setDefaults(array(
             'choices' => array(
-                'Private' => RecommendationVisibility::PRIVATE_VISIBILITY(),
-                'Public' => RecommendationVisibility::PUBLIC_VISIBILITY()
+                'Auteur' => ContributorRole::AUTHOR_ROLE(),
+                'Editeur' => ContributorRole::EDITOR_ROLE(),
             ),
-            'empty_data' =>  RecommendationVisibility::getDefault()
+            'empty_data' =>  ContributorRole::getDefault()
         ));
     }
 

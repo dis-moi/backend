@@ -2,6 +2,9 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Organization;
+use AppBundle\Entity\Contributor;
+
 /**
  * RecommendationRepository
  *
@@ -10,4 +13,35 @@ namespace AppBundle\Repository;
  */
 class RecommendationRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function findWithContributor(Contributor $contributor)
+    {
+        return $this->createContributorFilteredQueryBuilder($contributor)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findWithOrganization(Organization $organization)
+    {
+        return $this->createOrganizationFilteredQueryBuilder($organization)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function createContributorFilteredQueryBuilder(Contributor $contributor)
+    {
+        return $this->createQueryBuilder('r')
+                ->join('r.contributor', 'c')
+                ->where('c.id = :contributor_id')
+                ->setParameter('contributor_id', $contributor->getId());
+    }
+
+    public function createOrganizationFilteredQueryBuilder(Organization $organization)
+    {
+        return $this->createQueryBuilder('r')
+            ->join('r.contributor', 'c')
+            ->join('c.organization', 'o')
+            ->where('o.id = :organization_id')
+            ->setParameter('organization_id', $organization->getId());
+    }
 }

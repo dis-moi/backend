@@ -25,13 +25,7 @@ class RecommendationFactory
         $this->avatarPathBuilder = $avatarPathBuilder;
     }
 
-    /**
-     * @param RecommendationEntity $recommendation
-     *
-     * @return Recommendation
-     */
-    public function createFromRecommendation(RecommendationEntity $recommendation)
-    {
+    public function createFromRecommendation(RecommendationEntity $recommendation) {
 
         $dto = new BrowserExtension\Recommendation();
 
@@ -50,12 +44,27 @@ class RecommendationFactory
         }
 
 
-        $dto->contributor = [
-            'image' => $this->avatarPathBuilder->__invoke($recommendation->getContributor()),
-            'name' => $recommendation->getContributor()->getName(),
-            'organization' => $recommendation->getContributor()->getOrganization()
-        ];
+        if(!is_null($recommendation->getContributor())) {
+            $dto->contributor = [
+                'image' => $this->avatarPathBuilder->__invoke($recommendation->getContributor()),
+                'name' => $recommendation->getContributor()->getName()
+            ];
+        } else {
+            $dto->contributor = [
+                'image' => '',
+                'name' => ''
+            ];
+        }
 
+        if(!is_null($recommendation->getContributor()) && !is_null($recommendation->getContributor()->getOrganization())){
+            $dto->contributor['organization'] = new BrowserExtension\Organization(
+                $recommendation->getContributor()->getOrganization()->getName(),
+                $recommendation->getContributor()->getOrganization()->getDescription()
+            );
+        } else {
+            $dto->contributor['organization'] = new BrowserExtension\Organization('','');
+        }
+        
         $dto->criteria = $recommendation->getCriteria()->map(function (CriterionEntity $e) {
             return [
                 'label' => $e->getLabel(),
