@@ -4,14 +4,15 @@ namespace AppBundle\Entity;
 
 use MabeEnum\Enum;
 
-class RecommendationVisibility extends Enum
+class ContributorRole extends Enum
 {
-    const PUBLIC_VISIBILITY = 'public';
-    const PRIVATE_VISIBILITY = 'private';
+    const SUPER_ADMIN_ROLE = 'super_admin';
+    const EDITOR_ROLE = 'editor';
+    const AUTHOR_ROLE = 'author';
 
     static function getDefault()
     {
-        return self::PRIVATE_VISIBILITY();
+        return self::AUTHOR_ROLE();
     }
 
     public function __toString()

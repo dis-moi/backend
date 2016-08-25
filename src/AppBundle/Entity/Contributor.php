@@ -25,6 +25,11 @@ class Contributor
     private $id;
 
     /**
+     * @ORM\Column(name="role", type="string", options={"default" : "author"})
+     */
+    private $role;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -32,11 +37,14 @@ class Contributor
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="organization", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Organization", inversedBy="contributors", cascade={"persist"})
      */
     private $organization;
+
+    /**
+     * @ORM\OneToOne(targetEntity="User", inversedBy="contributor", cascade={"persist","remove"}, fetch="EAGER")
+     */
+    private $user;
 
     /**
      * @var datetime $updatedAt
@@ -87,11 +95,11 @@ class Contributor
     /**
      * Set organization
      *
-     * @param string $organization
+     * @param \AppBundle\Entity\Organization $organization
      *
      * @return Contributor
      */
-    public function setOrganization($organization)
+    public function setOrganization(Organization $organization)
     {
         $this->organization = $organization;
 
@@ -101,7 +109,7 @@ class Contributor
     /**
      * Get organization
      *
-     * @return string
+     * @return Organization
      */
     public function getOrganization()
     {
@@ -109,7 +117,7 @@ class Contributor
     }
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @var string
      */
     private $image;
@@ -150,7 +158,7 @@ class Contributor
 
     public function __toString()
     {
-        return $this->organization.' | '.$this->name;
+        return $this->organization.' | '.$this->name.' | '.$this->role;
     }
     /**
      * Constructor
@@ -158,6 +166,7 @@ class Contributor
     public function __construct()
     {
         $this->recommendations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->role = ContributorRole::getDefault();
     }
 
     /**
@@ -216,5 +225,46 @@ class Contributor
     public function getRecommendations()
     {
         return $this->recommendations;
+    }
+
+    /**
+     * @return ContributorRole
+     */
+    public function getRole()
+    {
+        if (!$this->role) {
+            return ContributorRole::getDefault();
+        }
+        return ContributorRole::get($this->role);
+    }
+
+    /**
+     * @param ContributorRole $role
+     * @throw InvalidArgumentException
+     * @return Contributor
+     */
+    public function setRole(ContributorRole $role)
+    {
+        $this->role = $role->getValue();
+
+        return $this;
+    }
+
+    /**
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param \AppBundle\Entity\User $user
+     * @return Contributor
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+        return $this;
     }
 }

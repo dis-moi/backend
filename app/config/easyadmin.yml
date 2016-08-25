@@ -29,11 +29,26 @@ easy_admin:
         User:
             class: AppBundle\Entity\User
             form:
-                fields: ['enabled', 'username', 'email', 'roles', 'lastLogin']
+                fields:
+                    - 'enabled'
+                    - 'username'
+                    - 'email'
+                    - { property: 'isSuperAdmin', type: 'checkbox' }
+                    - 'lastLogin'
+                    - 'contributor'
         Contributor:
             class: AppBundle\Entity\Contributor
             form:
                 fields:
-                  - name
-                  - organization
-                  - { property: 'imageFile', type: 'vich_image' }
+                    - name
+                    - organization
+                    - { property: 'imageFile', type: 'vich_image' }
+                    - { property: 'user', type: 'AppBundle\Form\UserType' }
+                    - { property: 'role', type: 'AppBundle\Form\RoleType' }
+        Organization:
+            class: AppBundle\Entity\Organization
+            form:
+                fields:
+                    - name
+                    - description
+                    - { property: 'contributors', type: 'collection', type_options: {entry_type: 'AppBundle\Form\ContributorType', allow_add: true, allow_delete: true, by_reference: false} }

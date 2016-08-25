@@ -1,0 +1,6 @@
+#!/bin/bash
+export SYMFONY__DATABASE__USER=root
+export SYMFONY__DATABASE__PASSWORD=password
+export SYMFONY__DATABASE__NAME=craft
+export SYMFONY__DATABASE__HOST=172.16.1.3
+export SYMFONY__DATABASE__PORT=3306
