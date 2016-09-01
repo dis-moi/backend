@@ -4,6 +4,13 @@ parameters:
 #    parameter_name: value
 
 services:
+    browser_extension.matching_context_factory:
+          class: AppBundle\Entity\BrowserExtension\MatchingContextFactory
+          arguments: ["@router"]
+    browser_extension.recommendation_factory:
+          class: AppBundle\Entity\BrowserExtension\RecommendationFactory
+          arguments: ["@router", "@vich_uploader.templating.helper.uploader_helper"]
+#      arguments: ["@router", "@vich_uploader.templating.helper.uploader_helper"]
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

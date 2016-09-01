@@ -8,6 +8,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\DataTransferObject\BrowserExtensionMatchingContext;
+use AppBundle\DataTransferObject\BrowserExtensionRecommendation;
 use AppBundle\Entity\Alternative;
 use AppBundle\Entity\Recommendation;
 use FOS\RestBundle\Controller\Annotations\View;
@@ -19,13 +21,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ApiController extends FOSRestController
 {
-
     /**
      * @Route("/matchingcontexts")
      * @View()
      */
-    public function getMatchingcontextsAction()
-    {
+    public function getMatchingcontextsAction(){
         $matchingContexts = $this->getDoctrine()
             ->getRepository('AppBundle:MatchingContext')
             ->findAllWithPublicVisibility();
@@ -33,8 +33,11 @@ class ApiController extends FOSRestController
         if (!$matchingContexts) throw $this->createNotFoundException(
             'No matching contexts exists'
         );
+        $factory = $this->get('browser_extension.matching_context_factory');
 
-        return $matchingContexts;
+        return array_map(function($matchingContext) use ($factory){
+            return $factory->createFromMatchingContext($matchingContext);
+        }, $matchingContexts);
     }
     
     /**
@@ -54,6 +57,12 @@ class ApiController extends FOSRestController
      */
     public function getRecommendationAction(Recommendation $recommendation)
     {
-        return $recommendation;
+        $user = $this->getUser();
+        if(!$user && !$recommendation->hasPublicVisibility()){
+            throw $this->createAccessDeniedException();
+        }
+        $factory = $this->get('browser_extension.recommendation_factory');
+
+        return $factory->createFromRecommendation($recommendation);
     }
 }
