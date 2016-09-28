@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\DataTransferObject\BrowserExtensionMatchingContext;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -24,6 +25,10 @@ class AdminApiController extends FOSRestController
             'No matching contexts exists'
         );
 
-        return $matchingContexts;
+        $factory = $this->get('browser_extension.matching_context_factory');
+
+        return array_map(function($matchingContext) use ($factory){
+            return $factory->createFromMatchingContext($matchingContext);
+        }, $matchingContexts);
     }
 }

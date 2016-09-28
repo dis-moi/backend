@@ -322,4 +322,8 @@ class Recommendation
 
         return $this;
     }
+
+    public function hasPublicVisibility(){
+        return $this->getVisibility() === RecommendationVisibility::PUBLIC_VISIBILITY();
+    }
 }
