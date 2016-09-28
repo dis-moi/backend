@@ -13,66 +13,47 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class RecommendationFactory
 {
-    private $vich_helper;
-    private $router;
+    /**
+     * @var callable
+     */
+    private $avatarPathBuilder;
 
     /**
      * RecommendationFactory constructor.
-     * @param Router $router
-     * @param UploadHelper $vich_helper
      */
-    public function __construct(Router $router, UploaderHelper $vich_helper)
+    public function __construct(callable $avatarPathBuilder)
     {
-        $this->router = $router;
-        $this->vich_helper = $vich_helper;
-    }
-
-    private function getCurrentContributorImageUrl(Contributor $contributor)
-    {
-        $context = $this->router->getContext();
-        $port = $context->getHttpPort();
-        return sprintf('%s://%s%s%s',
-            $context->getScheme(),
-            $context->getHost(),
-            ($port == 80)? '' : ':'.$port,
-            $this->vich_helper->asset($contributor, 'imageFile')
-        );
-    }
-
-    private function getFlatContributor(Contributor $contributor){
-        return array(
-            'image' => $this->getCurrentContributorImageUrl($contributor),
-            'name' => $contributor->getName(),
-            'organization' => $contributor->getOrganization()
-        );
-    }
-
-    private function getFlatAlternative(Alternative $alternative){
-        return array(
-            'label' => $alternative->getLabel(),
-            'url_to_redirect' => $alternative->getUrlToRedirect()
-        );
-    }
-
-    private function getFlatFilter(Filter $filter){
-        return array(
-            'label' => $filter->getLabel(),
-            'description' => $filter->getDescription()
-        );
+        $this->avatarPathBuilder = $avatarPathBuilder;
     }
 
     public function createFromRecommendation(Recommendation $recommendation) {
-        return new BrowserExtension\Recommendation(
-            $this->getFlatContributor($recommendation->getContributor()),
-            $recommendation->getVisibility()->getValue(),
-            $recommendation->getTitle(),
-            $recommendation->getDescription(),
-            $recommendation->getAlternatives()->map(function($alternative){
-                return $this->getFlatAlternative($alternative);
-            }),
-            $recommendation->getFilters()->map(function($filter){
-                return $this->getFlatFilter($filter);
-            })
-        );
+
+        $dto = new BrowserExtension\Recommendation();
+
+        $dto->visibility = $recommendation->getVisibility()->getValue();
+        $dto->title = $recommendation->getTitle();
+        $dto->description = $recommendation->getDescription();
+
+        $dto->contributor = [
+            'image' => $this->avatarPathBuilder->__invoke($recommendation->getContributor()),
+            'name' => $recommendation->getContributor()->getName(),
+            'organization' => $recommendation->getContributor()->getOrganization()
+        ];
+
+        $dto->filters = $recommendation->getFilters()->map(function(Filter $e) {
+            return [
+                'label' => $e->getLabel(),
+                'description' => $e->getDescription()
+            ];
+        });
+
+        $dto->alternatives = $recommendation->getAlternatives()->map(function(Alternative $e){
+            return [
+                'label' => $e->getLabel(),
+                'url_to_redirect' => $e->getUrlToRedirect()
+            ];
+        });
+
+        return $dto;
     }
 }

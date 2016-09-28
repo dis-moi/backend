@@ -4,9 +4,6 @@ parameters:
 #    parameter_name: value
 
 services:
-    browser_extension.recommendation_factory:
-          class: AppBundle\Entity\BrowserExtension\RecommendationFactory
-          arguments: ["@router", "@vich_uploader.templating.helper.uploader_helper"]
 #      arguments: ["@router", "@vich_uploader.templating.helper.uploader_helper"]
 #    service_name:
 #        class: AppBundle\Directory\ClassName
