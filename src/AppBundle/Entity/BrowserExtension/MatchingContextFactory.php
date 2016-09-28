@@ -2,10 +2,8 @@
 
 namespace AppBundle\Entity\BrowserExtension;
 
-
 use AppBundle\Entity\MatchingContext;
 use AppBundle\Entity\BrowserExtension;
-use Symfony\Component\Routing\Router;
 
 class MatchingContextFactory
 {
@@ -15,23 +13,14 @@ class MatchingContextFactory
      * MatchingContextFactory constructor.
      * @param $router
      */
-    public function __construct($router)
+    public function __construct(callable $path_builder)
     {
-        $this->router = $router;
-    }
-
-    private function getCurrentRecommendationURL($recommendation_id)
-    {
-        return $this->router->generate('app_api_getrecommendation', array(
-            'id' => $recommendation_id
-        ), Router::ABSOLUTE_URL);
+        $this->pathBuilder = $path_builder;
     }
 
     public function createFromMatchingContext(MatchingContext $matchingContext) {
         return new BrowserExtension\MatchingContext(
-            $this->getCurrentRecommendationURL(
-                $matchingContext->getRecommendation()->getId()
-            ),
+            $this->pathBuilder->__invoke($matchingContext->getId()),
             $matchingContext->getUrlRegex()
         );
     }

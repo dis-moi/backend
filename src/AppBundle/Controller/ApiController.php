@@ -11,6 +11,7 @@ namespace AppBundle\Controller;
 use AppBundle\DataTransferObject\BrowserExtensionMatchingContext;
 use AppBundle\DataTransferObject\BrowserExtensionRecommendation;
 use AppBundle\Entity\Alternative;
+use AppBundle\Entity\BrowserExtension\MatchingContextFactory;
 use AppBundle\Entity\Recommendation;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
@@ -33,7 +34,10 @@ class ApiController extends FOSRestController
         if (!$matchingContexts) throw $this->createNotFoundException(
             'No matching contexts exists'
         );
-        $factory = $this->get('browser_extension.matching_context_factory');
+
+        $factory = new MatchingContextFactory( function($id) {
+            return $this->get('router')->generate('app_api_getrecommendation', ['id' => $id]);
+        });
 
         return array_map(function($matchingContext) use ($factory){
             return $factory->createFromMatchingContext($matchingContext);
