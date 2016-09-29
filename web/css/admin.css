@@ -18,3 +18,14 @@
 body.edit textarea#recommendation_description {
     min-height: 100px;
 }
+
+
+.navbar-custom-menu ul.navbar-nav .user-menu a.logout {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.8);
+    margin-left: 10px;
+}
+
+.nav>li>a.logout:hover, .nav>li>a.logout:active, .nav>li>a.logout:focus {
+    background-color: transparent;
+}
