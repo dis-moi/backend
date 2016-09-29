@@ -20,7 +20,7 @@ class MatchingContextFactory
 
     public function createFromMatchingContext(MatchingContext $matchingContext) {
         return new BrowserExtension\MatchingContext(
-            $this->pathBuilder->__invoke($matchingContext->getId()),
+            $this->pathBuilder->__invoke($matchingContext->getRecommendation()->getId()),
             $matchingContext->getUrlRegex()
         );
     }
