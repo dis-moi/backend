@@ -28,18 +28,18 @@ class Recommendation
     private $visibility;
 
     /**
-     * @ORM\OneToMany(targetEntity="Alternative", mappedBy="recommendation", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Alternative", mappedBy="recommendation", cascade={"persist", "remove"})
      */
     private $alternatives;
 
     /**
-     * @ORM\OneToMany(targetEntity="MatchingContext", mappedBy="recommendation", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="MatchingContext", mappedBy="recommendation", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $matchingContexts;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Filter", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Filter", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $filters;
@@ -321,5 +321,9 @@ class Recommendation
         $this->visibility = $visibility->getValue();
 
         return $this;
+    }
+
+    public function hasPublicVisibility(){
+        return $this->getVisibility() === RecommendationVisibility::PUBLIC_VISIBILITY();
     }
 }
