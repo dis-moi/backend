@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity\BrowserExtension;
 
-use AppBundle\Entity\MatchingContext;
 use AppBundle\Entity\BrowserExtension;
 
 class MatchingContextFactory

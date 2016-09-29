@@ -34,11 +34,16 @@ class RecommendationFactory
         $dto->title = $recommendation->getTitle();
         $dto->description = $recommendation->getDescription();
 
-        $dto->source = new Source(
-            "TODO",
-            $recommendation->getSource()->getUrl(),
-            $recommendation->getSource()->getLabel()
-        );
+        if(!is_null($recommendation->getSource())) {
+            $dto->source = new Source(
+                "TODO",
+                $recommendation->getSource()->getUrl(),
+                $recommendation->getSource()->getLabel()
+            );
+        } else {
+            $dto->source = new Source('', '', '');
+        }
+
 
         $dto->contributor = [
             'image' => $this->avatarPathBuilder->__invoke($recommendation->getContributor()),
