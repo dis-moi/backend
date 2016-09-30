@@ -39,11 +39,11 @@ class RecommendationFactory
         $dto->title = $recommendation->getTitle();
         $dto->description = $recommendation->getDescription();
 
-        if (!is_null($recommendation->getSource())) {
+        if (!is_null($recommendation->getResource())) {
             $dto->source = new Source(
                 "TODO",
-                $recommendation->getSource()->getUrl(),
-                $recommendation->getSource()->getLabel()
+                $recommendation->getResource()->getUrl(),
+                $recommendation->getResource()->getLabel()
             );
         } else {
             $dto->source = new Source('', '', '');
