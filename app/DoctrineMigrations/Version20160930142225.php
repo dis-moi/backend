@@ -33,6 +33,6 @@ class Version20160930142225 extends AbstractMigration
 
         $this->addSql('ALTER TABLE criterion RENAME filter');
         $this->addSql('ALTER TABLE recommendation_criterion RENAME recommendation_filter');
-        $this->addSql('ALTER TABLE recommendation_criterion CHANGE criterion_id filter_id INT NOT NULL');
+        $this->addSql('ALTER TABLE recommendation_filter CHANGE criterion_id filter_id INT NOT NULL');
     }
 }
