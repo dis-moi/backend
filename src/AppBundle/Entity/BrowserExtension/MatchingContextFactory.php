@@ -7,18 +7,24 @@ use AppBundle\Entity\MatchingContext as MatchingContextEntity;
 
 class MatchingContextFactory
 {
-    private $router;
 
     /**
      * MatchingContextFactory constructor.
-     * @param $router
+     *
+     * @param callable $path_builder
      */
     public function __construct(callable $path_builder)
     {
         $this->pathBuilder = $path_builder;
     }
 
-    public function createFromMatchingContext(MatchingContextEntity $matchingContext) {
+    /**
+     * @param MatchingContextEntity $matchingContext
+     *
+     * @return MatchingContext
+     */
+    public function createFromMatchingContext(MatchingContextEntity $matchingContext)
+    {
         return new BrowserExtension\MatchingContext(
             $this->pathBuilder->__invoke($matchingContext->getRecommendation()->getId()),
             $matchingContext->getUrlRegex()
