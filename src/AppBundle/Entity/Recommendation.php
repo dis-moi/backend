@@ -39,10 +39,10 @@ class Recommendation
     private $matchingContexts;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Filter", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="Criterion", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $filters;
+    private $criteria;
 
     /**
      * @var string
@@ -135,7 +135,7 @@ class Recommendation
     {
         $this->alternatives = new \Doctrine\Common\Collections\ArrayCollection();
         $this->matchingContexts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->filters = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->criteria = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visibility = RecommendationVisibility::getDefault();
     }
 
@@ -238,39 +238,42 @@ class Recommendation
     }
 
     /**
-     * Add filter
+     * Add criterion
      *
-     * @param \AppBundle\Entity\Filter $filter
+     * @param \AppBundle\Entity\Criterion $criterion
      *
      * @return Recommendation
      */
-    public function addFilter(\AppBundle\Entity\Filter $filter)
+    public function addCriterion(\AppBundle\Entity\Criterion $criterion)
     {
-        $this->filters[] = $filter;
+        $this->criteria[] = $criterion;
 
         return $this;
     }
 
     /**
-     * Remove filter
+     * Remove criterion
      *
-     * @param \AppBundle\Entity\Filter $filter
+     * @param \AppBundle\Entity\Criterion $criterion
      */
-    public function removeFilter(\AppBundle\Entity\Filter $filter)
+    public function removeCriterion(\AppBundle\Entity\Criterion $criterion)
     {
-        $this->filters->removeElement($filter);
+        $this->criteria->removeElement($criterion);
     }
 
     /**
-     * Get filters
+     * Get criteria
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getFilters()
+    public function getCriteria()
     {
-        return $this->filters;
+        return $this->criteria;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getTitle();
@@ -305,7 +308,7 @@ class Recommendation
      */
     public function getVisibility()
     {
-        if(!$this->visibility){
+        if (!$this->visibility) {
             return RecommendationVisibility::getDefault();
         }
         return RecommendationVisibility::get($this->visibility);
@@ -323,7 +326,11 @@ class Recommendation
         return $this;
     }
 
-    public function hasPublicVisibility(){
+    /**
+     * @return bool
+     */
+    public function hasPublicVisibility()
+    {
         return $this->getVisibility() === RecommendationVisibility::PUBLIC_VISIBILITY();
     }
 }

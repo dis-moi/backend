@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Filter
+ * Criterion
  *
- * @ORM\Table(name="filter")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\FilterRepository")
+ * @ORM\Table(name="criterion")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CriterionRepository")
  */
-class Filter
+class Criterion
 {
     /**
      * @var int
@@ -51,7 +51,7 @@ class Filter
      *
      * @param string $label
      *
-     * @return Filter
+     * @return Criterion
      */
     public function setLabel($label)
     {
@@ -75,7 +75,7 @@ class Filter
      *
      * @param string $description
      *
-     * @return Filter
+     * @return Criterion
      */
     public function setDescription($description)
     {

@@ -13,7 +13,7 @@ easy_admin:
                     - title
                     - description
                     - contributor
-                    - filters
+                    - criteria
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
                     - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
@@ -24,8 +24,8 @@ easy_admin:
         Alternative:
             class: AppBundle\Entity\Alternative
             disabled_actions: ['new', 'edit']
-        Filter:
-            class: AppBundle\Entity\Filter
+        Criterion:
+            class: AppBundle\Entity\Criterion
         User:
             class: AppBundle\Entity\User
             form:
