@@ -16,9 +16,9 @@ services:
   mysql:
     build: ./mysql
     environment:
-        MYSQL_USER: root
-        MYSQL_ROOT_PASSWORD: password
-        MYSQL_DATABASE: craft
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: craft
     container_name: craft_mysql
     networks:
           app_net:
