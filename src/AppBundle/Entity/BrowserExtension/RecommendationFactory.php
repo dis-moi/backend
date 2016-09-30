@@ -56,12 +56,13 @@ class RecommendationFactory
             'organization' => $recommendation->getContributor()->getOrganization()
         ];
 
-        $dto->filters = $recommendation->getCriteria()->map(function (CriterionEntity $e) {
+        $dto->criteria = $recommendation->getCriteria()->map(function (CriterionEntity $e) {
             return [
                 'label' => $e->getLabel(),
                 'description' => $e->getDescription()
             ];
         });
+        $dto->filters = $dto->criteria;
 
         $dto->alternatives = $recommendation->getAlternatives()->map(function (AlternativeEntity $e) {
             return [
