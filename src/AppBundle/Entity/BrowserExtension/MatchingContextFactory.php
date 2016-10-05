@@ -3,7 +3,7 @@
 namespace AppBundle\Entity\BrowserExtension;
 
 use AppBundle\Entity\BrowserExtension;
-use AppBundle\Entity\MatchingContext;
+use AppBundle\Entity\MatchingContext as MatchingContextEntity;
 
 class MatchingContextFactory
 {
@@ -18,7 +18,7 @@ class MatchingContextFactory
         $this->pathBuilder = $path_builder;
     }
 
-    public function createFromMatchingContext(MatchingContext $matchingContext) {
+    public function createFromMatchingContext(MatchingContextEntity $matchingContext) {
         return new BrowserExtension\MatchingContext(
             $this->pathBuilder->__invoke($matchingContext->getRecommendation()->getId()),
             $matchingContext->getUrlRegex()
