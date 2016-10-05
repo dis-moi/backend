@@ -26,7 +26,7 @@ class FilterType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Filter'
+            'data_class' => 'AppBundle\Entity\Criterion'
         ));
     }
 }
