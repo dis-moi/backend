@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Source
+ * Resource
  *
- * @ORM\Table(name="source")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\SourceRepository")
+ * @ORM\Table(name="resource")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ResourceRepository")
  */
-class Source
+class Resource
 {
     /**
      * @var int
@@ -63,7 +63,7 @@ class Source
      *
      * @param string $label
      *
-     * @return Source
+     * @return Resource
      */
     public function setLabel($label)
     {
@@ -87,7 +87,7 @@ class Source
      *
      * @param string $description
      *
-     * @return Source
+     * @return Resource
      */
     public function setDescription($description)
     {
@@ -111,7 +111,7 @@ class Source
      *
      * @param string $url
      *
-     * @return Source
+     * @return Resource
      */
     public function setUrl($url)
     {
@@ -135,7 +135,7 @@ class Source
      *
      * @param \AppBundle\Entity\Recommendation $recommendation
      *
-     * @return Source
+     * @return Resource
      */
     public function setRecommendation(\AppBundle\Entity\Recommendation $recommendation = null)
     {

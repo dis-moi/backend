@@ -39,11 +39,11 @@ class RecommendationFactory
         $dto->title = $recommendation->getTitle();
         $dto->description = $recommendation->getDescription();
 
-        if (!is_null($recommendation->getSource())) {
+        if (!is_null($recommendation->getResource())) {
             $dto->source = new Source(
                 "TODO",
-                $recommendation->getSource()->getUrl(),
-                $recommendation->getSource()->getLabel()
+                $recommendation->getResource()->getUrl(),
+                $recommendation->getResource()->getLabel()
             );
         } else {
             $dto->source = new Source('', '', '');
@@ -56,12 +56,13 @@ class RecommendationFactory
             'organization' => $recommendation->getContributor()->getOrganization()
         ];
 
-        $dto->filters = $recommendation->getCriteria()->map(function (CriterionEntity $e) {
+        $dto->criteria = $recommendation->getCriteria()->map(function (CriterionEntity $e) {
             return [
                 'label' => $e->getLabel(),
                 'description' => $e->getDescription()
             ];
         });
+        $dto->filters = $dto->criteria;
 
         $dto->alternatives = $recommendation->getAlternatives()->map(function (AlternativeEntity $e) {
             return [
