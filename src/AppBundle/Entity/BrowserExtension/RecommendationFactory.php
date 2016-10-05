@@ -6,7 +6,6 @@ use AppBundle\Entity\Recommendation as RecommendationEntity;
 use AppBundle\Entity\Criterion as CriterionEntity;
 use AppBundle\Entity\Alternative as AlternativeEntity;
 use AppBundle\Entity\BrowserExtension;
-use Symfony\Component\Routing\Router;
 
 class RecommendationFactory
 {
