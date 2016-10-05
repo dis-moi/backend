@@ -11,6 +11,7 @@ class Recommendation
     public $description;
     public $alternatives;
     public $source;
+    public $resource;
     public $criteria = array();
     public $filters = array();
 }
