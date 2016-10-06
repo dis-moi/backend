@@ -13,7 +13,6 @@ easy_admin:
                     - title
                     - description
                     - contributor
-                    - editor
                     - criteria
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
                     - { property: 'resource', type: 'AppBundle\Form\ResourceType' }
