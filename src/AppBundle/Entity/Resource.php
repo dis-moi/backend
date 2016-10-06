@@ -161,6 +161,25 @@ class Resource
         return $this->recommendation;
     }
 
+    /**
+     * @param Editor $editor
+     */
+    public function setEditor(Editor $editor)
+    {
+        $this->editor = $editor;
+    }
+
+    /**
+     * @return Editor
+     */
+    public function getEditor()
+    {
+        return $this->editor;
+    }
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getLabel();
