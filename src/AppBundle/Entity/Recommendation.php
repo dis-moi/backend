@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\RecommendationVisibility;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,9 +51,9 @@ class Recommendation
     private $title;
 
     /**
-     * @ORM\OneToOne(targetEntity="Source", mappedBy="recommendation", cascade={"persist"}, fetch="EAGER", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Resource", mappedBy="recommendation", cascade={"persist"}, fetch="EAGER", orphanRemoval=true)
      */
-    private $source;
+    private $resource;
 
     /**
      * @ORM\ManyToOne(targetEntity="Contributor", inversedBy="recommendations", cascade={"persist"}, fetch="EAGER")
@@ -212,29 +211,29 @@ class Recommendation
     }
 
     /**
-     * Set source
+     * Set Resource
      *
-     * @param \AppBundle\Entity\Source $source
+     * @param Resource $resource
      *
      * @return Recommendation
      */
-    public function setSource(\AppBundle\Entity\Source $source = null)
+    public function setResource(Resource $resource = null)
     {
-        $source->setRecommendation($this);
+        $resource->setRecommendation($this);
 
-        $this->source = $source;
+        $this->resource = $resource;
 
         return $this;
     }
 
     /**
-     * Get source
+     * Get Resource
      *
-     * @return \AppBundle\Entity\Source
+     * @return \AppBundle\Entity\Resource
      */
-    public function getSource()
+    public function getResource()
     {
-        return $this->source;
+        return $this->resource;
     }
 
     /**

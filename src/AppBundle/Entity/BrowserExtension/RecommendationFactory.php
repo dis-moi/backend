@@ -1,8 +1,10 @@
 <?php
 
 namespace AppBundle\Entity\BrowserExtension;
-use AppBundle\Entity;
 
+use AppBundle\Entity\Recommendation as RecommendationEntity;
+use AppBundle\Entity\Criterion as CriterionEntity;
+use AppBundle\Entity\Alternative as AlternativeEntity;
 use AppBundle\Entity\BrowserExtension;
 use Symfony\Component\Routing\Router;
 
@@ -23,7 +25,7 @@ class RecommendationFactory
         $this->avatarPathBuilder = $avatarPathBuilder;
     }
 
-    public function createFromRecommendation(Entity\Recommendation $recommendation) {
+    public function createFromRecommendation(RecommendationEntity $recommendation) {
 
         $dto = new BrowserExtension\Recommendation();
 
@@ -31,23 +33,30 @@ class RecommendationFactory
         $dto->title = $recommendation->getTitle();
         $dto->description = $recommendation->getDescription();
 
-        if(!is_null($recommendation->getSource())) {
-            $dto->source = new BrowserExtension\Source(
+        if (!is_null($recommendation->getResource())) {
+            $dto->source = new Source(
                 "TODO",
-                $recommendation->getSource()->getUrl(),
-                $recommendation->getSource()->getLabel()
+                $recommendation->getResource()->getUrl(),
+                $recommendation->getResource()->getLabel()
             );
         } else {
-            $dto->source = new BrowserExtension\Source('', '', '');
+            $dto->source = new Source('', '', '');
         }
 
 
-        $dto->contributor = [
-            'image' => $this->avatarPathBuilder->__invoke($recommendation->getContributor()),
-            'name' => $recommendation->getContributor()->getName()
-        ];
+        if(!is_null($recommendation->getContributor())) {
+            $dto->contributor = [
+                'image' => $this->avatarPathBuilder->__invoke($recommendation->getContributor()),
+                'name' => $recommendation->getContributor()->getName()
+            ];
+        } else {
+            $dto->contributor = [
+                'image' => '',
+                'name' => ''
+            ];
+        }
 
-        if(!is_null($recommendation->getContributor()->getOrganization())){
+        if(!is_null($recommendation->getContributor()) && !is_null($recommendation->getContributor()->getOrganization())){
             $dto->contributor['organization'] = new BrowserExtension\Organization(
                 $recommendation->getContributor()->getOrganization()->getName(),
                 $recommendation->getContributor()->getOrganization()->getDescription()
@@ -55,15 +64,16 @@ class RecommendationFactory
         } else {
             $dto->contributor['organization'] = new BrowserExtension\Organization('','');
         }
-
-        $dto->filters = $recommendation->getCriteria()->map(function (Entity\Criterion $e) {
+        
+        $dto->criteria = $recommendation->getCriteria()->map(function (CriterionEntity $e) {
             return [
                 'label' => $e->getLabel(),
                 'description' => $e->getDescription()
             ];
         });
+        $dto->filters = $dto->criteria;
 
-        $dto->alternatives = $recommendation->getAlternatives()->map(function(Entity\Alternative $e){
+        $dto->alternatives = $recommendation->getAlternatives()->map(function (AlternativeEntity $e) {
             return [
                 'label' => $e->getLabel(),
                 'url_to_redirect' => $e->getUrlToRedirect()
