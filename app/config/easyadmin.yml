@@ -13,6 +13,7 @@ easy_admin:
                     - title
                     - description
                     - contributor
+                    - editor
                     - criteria
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
                     - { property: 'resource', type: 'AppBundle\Form\ResourceType' }
@@ -37,3 +38,5 @@ easy_admin:
                   - name
                   - organization
                   - { property: 'imageFile', type: 'vich_image' }
+        Editor:
+            class: AppBundle\Entity\Editor
