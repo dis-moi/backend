@@ -14,6 +14,7 @@ use AppBundle\Entity\Recommendation;
 use AppBundle\Entity\Contributor;
 use AppBundle\Entity\BrowserExtension\RecommendationFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AdminApiController extends FOSRestController
 {
@@ -24,7 +25,7 @@ class AdminApiController extends FOSRestController
      */
     public function getRecommendationAction(Recommendation $recommendation, Request $request)
     {
-         //This endpoint isn't intended to handle public recos
+        //This endpoint isn't intended to handle public recos
         if($recommendation->hasPublicVisibility()) throw $this->createNotFoundException(
             'No recommendation exists'
         );
@@ -37,32 +38,42 @@ class AdminApiController extends FOSRestController
             $userContributor = $user->getContributor();
 
             //Missing contributor
-            if (!$recoContributor || !$userContributor) throw $this->createNotFoundException(
-                'No recommendation exists'
-            );
+            if (!$recoContributor || !$userContributor) {
+                throw $this->createNotFoundException(
+                    'No recommendation exists'
+                );
+            }
 
             //Invalid Role
-            if($userContributor->getRole() !== ContributorRole::AUTHOR_ROLE || $userContributor->getRole() != ContributorRole::EDITOR_ROLE) throw $this->createNotFoundException(
-                'No recommendation exists'
-            );
+            if($userContributor->getRole() !== ContributorRole::AUTHOR_ROLE() && $userContributor->getRole() != ContributorRole::EDITOR_ROLE()){
+                throw $this->createNotFoundException(
+                    'No recommendation exists'
+                );
+            }
 
             //Author cannot access to other recos
-            if($userContributor->getRole() === ContributorRole::AUTHOR_ROLE && $userContributor->getId() !== $recoContributor->getId()) throw $this->createNotFoundException(
-                'No recommendation exists'
-            );
+            if($userContributor->getRole() === ContributorRole::AUTHOR_ROLE() && $userContributor->getId() !== $recoContributor->getId()) {
+                throw $this->createNotFoundException(
+                    'No recommendation exists'
+                );
+            }
 
             $recoOrganization = $recoContributor->getOrganization();
             $userOrganization = $userContributor->getOrganization();
 
             //Missing organization
-            if (!$recoOrganization || !$userOrganization) throw $this->createNotFoundException(
-                'No recommendation exists'
-            );
+            if (!$recoOrganization || !$userOrganization) {
+                throw $this->createNotFoundException(
+                    'No recommendation exists'
+                );
+            }
 
             //Editor cannot access reco outside of his own Organization
-            if($userContributor->getRole() === ContributorRole::EDITOR_ROLE && $userOrganization->getId() !== $recoOrganization->getId()) throw $this->createNotFoundException(
-                'No recommendation exists'
-            );
+            if($userContributor->getRole() === ContributorRole::EDITOR_ROLE() && $userOrganization->getId() !== $recoOrganization->getId()) {
+                throw $this->createNotFoundException(
+                    'No recommendation exists'
+                );
+            }
         }
 
         return (new RecommendationFactory(
