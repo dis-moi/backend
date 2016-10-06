@@ -1,66 +1,107 @@
 <?php
 
 namespace AppBundle\Controller;
-use AppBundle\Entity\Contributor;
-use AppBundle\Entity\Recommendation;
-use AppBundle\Entity\MatchingContext;
 use AppBundle\Entity\RecommendationVisibility;
-use AppBundle\Repository\ContributorRepository;
-use AppBundle\Repository\ResourceRepository;
-use AppBundle\Tests\Controller\RecommendationControllerTest;
-use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
-use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\ORM\EntityManager;
-use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Bundle\FrameworkBundle\Client;
+use \AppBundle\TestBase;
 
-class AdminApiControllerTest extends WebTestCase
+
+class AdminApiControllerTest extends TestBase
 {
-    /** @var Client  */
-    private $client;
-    public function setUp()
+    public function testSuperAdminSeeAllPrivateMatchingContexts()
     {
-        $this->client = static::createClient();
-        $rootDir = $this->client->getKernel()->getRootDir();
-        $container = $this->client->getContainer();
-        $doctrine = $container->get('doctrine');
-        $entityManager = $doctrine->getManager();
-        $fixtureDir = '../src/AppBundle/DataFixtures/ORM';
-        $this->loadFixturesFromDirectory(sprintf("%s/%s", $rootDir, $fixtureDir), $entityManager);
-    }
+        $client = static::getLoggedInClient('lmem', 'LM3M!P4SSW0RD');
 
-    public function testAdminGetMatchingContextsPrivate()
-    {
-        $crawler = $this->client->request('GET', '/api/v1/admin/matchingcontexts/private');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
-        $this->assertTrue(
-            $this->client->getResponse()->headers->contains('Content-Type', 'application/json')
-        );
-        $payload = json_decode($this->client->getResponse()->getContent(), $asArray = true);
-        $this->assertGreaterThanOrEqual(1, count($payload));
+        $client->request('GET', '/api/v1/admin/matchingcontexts/private');
+        $response = $client->getResponse();
+        $this->assertIsSuccessfulJsonResponse($response);
+
+        $payload = json_decode($response->getContent(), $asArray = true);
+        $this->assertGreaterThanOrEqual(3, count($payload));
         $recommendationUrl = $payload[0]['recommendation_url'];
         return $recommendationUrl;
     }
 
-    //SuperAdmin can see all
-    //Author can see own
-    //Editor can see org
-
-
-    protected function loadFixturesFromDirectory($directory, $entityManager)
+    /**
+     * @depends testSuperAdminSeeAllPrivateMatchingContexts
+     */
+    public function testSuperAdminSeeAllPrivateRecommendation($recommendationUrl)
     {
-        $loader = new ContainerAwareLoader($this->client->getContainer());
-        $loader->loadFromDirectory($directory);
+        $client = static::getLoggedInClient('lmem', 'LM3M!P4SSW0RD');
 
-        $fixtures = $loader->getFixtures();
+        $client->request('GET', $this->getUri($recommendationUrl));
+        $response = $client->getResponse();
+        $this->assertIsSuccessfulJsonResponse($response);
 
-        $purger = new ORMPurger($entityManager);
+        $payload = json_decode($response->getContent(), $asArray = true);
+        $this->assertIsValidRecommendationPayload($payload);
+        $this->assertEquals($payload['visibility'], RecommendationVisibility::PRIVATE_VISIBILITY);
+    }
 
-        $executor = new ORMExecutor($entityManager, $purger);
-        //Awful but actually working ...
-        $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=0'));
-        $executor->execute($fixtures);
-        $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=1'));
+    public function testAuthorSeeOwnPrivateMatchingContexts()
+    {
+        $client = static::getLoggedInClient('myauthoruser', 't586rt586r');
+
+        $client->request('GET', '/api/v1/admin/matchingcontexts/private');
+        $response = $client->getResponse();
+        $this->assertIsSuccessfulJsonResponse($response);
+
+        $payload = json_decode($response->getContent(), $asArray = true);
+        $this->assertGreaterThanOrEqual(1, count($payload));
+
+        $recommendationUrl = $payload[0]['recommendation_url'];
+
+        return $recommendationUrl;
+    }
+
+    /**
+     * @depends testAuthorSeeOwnPrivateMatchingContexts
+     */
+    public function testAuthorSeeOwnPrivateRecommendation($recommendationUrl)
+    {
+        $client = static::getLoggedInClient('myauthoruser', 't586rt586r');
+
+        $client->request('GET', $this->getUri($recommendationUrl));
+        $response = $client->getResponse();
+        $this->assertIsSuccessfulJsonResponse($response);
+
+        $payload = json_decode($response->getContent(), $asArray = true);
+        $this->assertIsValidRecommendationPayload($payload);
+        $this->assertEquals($payload['visibility'], RecommendationVisibility::PRIVATE_VISIBILITY);
+        $this->assertEquals($payload['contributor']['name'], 'My Author');
+    }
+
+    public function testEditorSeeOrganizationPrivateMatchingContexts()
+    {
+        $client = static::getLoggedInClient('myeditoruser', 't586rt586r');
+
+        $client->request('GET', '/api/v1/admin/matchingcontexts/private');
+        $response = $client->getResponse();
+        $this->assertIsSuccessfulJsonResponse($response);
+
+        $payload = json_decode($response->getContent(), $asArray = true);
+        $this->assertGreaterThanOrEqual(2, count($payload));
+
+        return array_map(function($matchingContext){
+            return $matchingContext['recommendation_url'];
+        }, $payload);
+    }
+
+    /**
+     * @depends testEditorSeeOrganizationPrivateMatchingContexts
+     */
+    public function testEditorSeeOrganizationPrivateRecommendation($recommendationUrls)
+    {
+        $client = static::getLoggedInClient('myeditoruser', 't586rt586r');
+
+        foreach($recommendationUrls as $recommendationUrl){
+            $client->request('GET', $this->getUri($recommendationUrl));
+            $response = $client->getResponse();
+            $this->assertIsSuccessfulJsonResponse($response);
+
+            $payload = json_decode($response->getContent(), $asArray = true);
+            $this->assertIsValidRecommendationPayload($payload);
+            $this->assertEquals($payload['visibility'], RecommendationVisibility::PRIVATE_VISIBILITY);
+            $this->assertEquals($payload['contributor']['organization']['name'], 'MyOrg');
+        }
     }
 }
