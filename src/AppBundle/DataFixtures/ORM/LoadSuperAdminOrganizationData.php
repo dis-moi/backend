@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Entity\Organization;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 
-class LoadOrganizationData  extends AbstractFixture implements ContainerAwareInterface
+class LoadSuperAdminOrganizationData  extends AbstractFixture implements ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -23,11 +23,11 @@ class LoadOrganizationData  extends AbstractFixture implements ContainerAwareInt
     public function load(ObjectManager $manager)
     {
         $organization = new Organization();
-        $organization->setName('MyOrg');
-        $organization->setDescription('My Organization');
+        $organization->setName('LMEM');
+        $organization->setDescription('Le même en mieux');
         $manager->persist($organization);
         $manager->flush();
 
-        $this->setReference('organization', $organization);
+        $this->setReference('superadmin-organization', $organization);
     }
 }

@@ -32,7 +32,7 @@ class AdminApiControllerTest extends WebTestCase
 
     public function testAdminGetMatchingContextsPrivate()
     {
-        $crawler = $this->client->request('GET', '/api/v1/matchingcontexts');
+        $crawler = $this->client->request('GET', '/api/v1/admin/matchingcontexts/private');
         $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
         $this->assertTrue(
             $this->client->getResponse()->headers->contains('Content-Type', 'application/json')
@@ -43,6 +43,11 @@ class AdminApiControllerTest extends WebTestCase
         return $recommendationUrl;
     }
 
+    //SuperAdmin can see all
+    //Author can see own
+    //Editor can see org
+
+
     protected function loadFixturesFromDirectory($directory, $entityManager)
     {
         $loader = new ContainerAwareLoader($this->client->getContainer());
@@ -51,9 +56,11 @@ class AdminApiControllerTest extends WebTestCase
         $fixtures = $loader->getFixtures();
 
         $purger = new ORMPurger($entityManager);
-        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
 
         $executor = new ORMExecutor($entityManager, $purger);
+        //Awful but actually working ...
+        $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=0'));
         $executor->execute($fixtures);
+        $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=1'));
     }
 }

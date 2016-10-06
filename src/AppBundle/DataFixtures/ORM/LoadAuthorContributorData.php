@@ -8,9 +8,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Entity\Contributor;
 use AppBundle\Entity\ContributorRole;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class LoadContributorData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
+class LoadAuthorContributorData extends AbstractFixture implements ContainerAwareInterface, DependentFixtureInterface
 {
     /**
      * @var ContainerInterface
@@ -24,21 +24,22 @@ class LoadContributorData extends AbstractFixture implements FixtureInterface, C
 
     public function load(ObjectManager $manager)
     {
-        $user = $this->getReference('admin-user');
-        $organization = $this->getReference('admin-organization');
+        $user = $this->getReference('author-user');
+        $organization = $this->getReference('organization');
 
         $contributor = new Contributor();
         $contributor->setUser($user);
-        $contributor->setName('Admin lmem');
-        $contributor->setRole(ContributorRole::EDITOR_ROLE());
+        $contributor->setName('My Author');
+        $contributor->setRole(ContributorRole::AUTHOR_ROLE());
         $contributor->setOrganization($organization);
 
         $manager->persist($contributor);
         $manager->flush();
+        $this->addReference('author-contributor', $contributor);
     }
 
-    public function getOrder()
+    public function getDependencies()
     {
-        return 4;
+        return [LoadAuthorUserData::class, LoadOrganizationData::class];
     }
 }

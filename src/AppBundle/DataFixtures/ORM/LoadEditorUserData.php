@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Entity\User;
 
-class LoadUserData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface, OrderedFixtureInterface
+class LoadEditorUserData extends AbstractFixture implements FixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -29,25 +29,20 @@ class LoadUserData extends AbstractFixture implements FixtureInterface, Containe
 
         $user = $userManager->createUser();
 
-        $user->setUsername('lmem');
-        $user->setEmail('infra@lmem.net');
+        $user->setUsername('myeditoruser');
+        $user->setEmail('myeditoruser@lmem.net');
         $user->setEnabled(true);
-        $user->setRoles(array('ROLE_SUPER_ADMIN'));
+        $user->setRoles(array('ROLE_USER'));
 
         // the 'security.password_encoder' service requires Symfony 2.6 or higher
         $encoder = $factory->getEncoder($user);
-        $password = $encoder->encodePassword('LM3M!P4SSW0RD', $user->getSalt());
+        $password = $encoder->encodePassword('t586rt586r', $user->getSalt());
 
         $user->setPassword($password);
 
         $manager->persist($user);
         $manager->flush();
 
-        $this->addReference('admin-user', $user);
-    }
-
-    public function getOrder()
-    {
-        return 2;
+        $this->addReference('editor-user', $user);
     }
 }
