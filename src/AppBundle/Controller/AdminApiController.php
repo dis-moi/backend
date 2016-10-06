@@ -10,9 +10,67 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use AppBundle\Entity\ContributorRole;
 use Symfony\Component\Routing\Router;
+use AppBundle\Entity\Recommendation;
+use AppBundle\Entity\Contributor;
+use AppBundle\Entity\BrowserExtension\RecommendationFactory;
+use Symfony\Component\HttpFoundation\Request;
 
 class AdminApiController extends FOSRestController
 {
+    /**
+     * @Route("/recommendation/{id}")
+     * @ParamConverter("recommendation", class="AppBundle:Recommendation")
+     * @View()
+     */
+    public function getRecommendationAction(Recommendation $recommendation, Request $request)
+    {
+         //This endpoint isn't intended to handle public recos
+        if($recommendation->hasPublicVisibility()) throw $this->createNotFoundException(
+            'No recommendation exists'
+        );
+
+        $user = $this->getUser();
+
+        //SuperAdmin can see all
+        if(!$user->isSuperAdmin()) {
+            $recoContributor = $recommendation->getContributor();
+            $userContributor = $user->getContributor();
+
+            //Missing contributor
+            if (!$recoContributor || !$userContributor) throw $this->createNotFoundException(
+                'No recommendation exists'
+            );
+
+            //Invalid Role
+            if($userContributor->getRole() !== ContributorRole::AUTHOR_ROLE || $userContributor->getRole() != ContributorRole::EDITOR_ROLE) throw $this->createNotFoundException(
+                'No recommendation exists'
+            );
+
+            //Author cannot access to other recos
+            if($userContributor->getRole() === ContributorRole::AUTHOR_ROLE && $userContributor->getId() !== $recoContributor->getId()) throw $this->createNotFoundException(
+                'No recommendation exists'
+            );
+
+            $recoOrganization = $recoContributor->getOrganization();
+            $userOrganization = $userContributor->getOrganization();
+
+            //Missing organization
+            if (!$recoOrganization || !$userOrganization) throw $this->createNotFoundException(
+                'No recommendation exists'
+            );
+
+            //Editor cannot access reco outside of his own Organization
+            if($userContributor->getRole() === ContributorRole::EDITOR_ROLE && $userOrganization->getId() !== $recoOrganization->getId()) throw $this->createNotFoundException(
+                'No recommendation exists'
+            );
+        }
+
+        return (new RecommendationFactory(
+            function(Contributor $contributor) use($request) {
+                return $request->getSchemeAndHttpHost().$this->get('vich_uploader.storage')->resolveUri($contributor, 'imageFile');
+            }))->createFromRecommendation($recommendation);
+    }
+
     /**
      * @Route("/matchingcontexts/private")
      * @View()
@@ -70,7 +128,7 @@ class AdminApiController extends FOSRestController
         }
 
         $factory = new MatchingContextFactory( function($id) {
-            return $this->get('router')->generate('app_api_getrecommendation', ['id' => $id], Router::ABSOLUTE_URL);
+            return $this->get('router')->generate('app_adminapi_getrecommendation', ['id' => $id], Router::ABSOLUTE_URL);
         });
 
         return array_map(function($matchingContext) use ($factory){

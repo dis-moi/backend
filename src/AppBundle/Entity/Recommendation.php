@@ -57,6 +57,7 @@ class Recommendation
 
     /**
      * @ORM\ManyToOne(targetEntity="Contributor", inversedBy="recommendations", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $contributor;
 
