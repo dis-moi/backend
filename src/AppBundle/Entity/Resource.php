@@ -47,6 +47,13 @@ class Resource
      */
     private $url;
 
+    /**
+     * @var Editor
+     *
+     * @ORM\ManyToOne(targetEntity="Editor", fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $editor;
 
     /**
      * Get id
