@@ -17,6 +17,7 @@ class ResourceType extends AbstractType
         $builder
             ->add('label')
             ->add('url')
+            ->add('editor')
         ;
     }
     

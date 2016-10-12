@@ -81,4 +81,12 @@ class Editor
         $this->url = $url;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->label;
+    }
 }
