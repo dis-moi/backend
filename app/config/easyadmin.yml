@@ -37,3 +37,5 @@ easy_admin:
                   - name
                   - organization
                   - { property: 'imageFile', type: 'vich_image' }
+        Editor:
+            class: AppBundle\Entity\Editor
