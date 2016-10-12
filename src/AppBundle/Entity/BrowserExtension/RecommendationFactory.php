@@ -40,14 +40,16 @@ class RecommendationFactory
         $dto->description = $recommendation->getDescription();
 
         if (!is_null($recommendation->getResource())) {
-            $dto->source = new Source(
+            $dto->resource = new Resource(
                 "TODO",
                 $recommendation->getResource()->getUrl(),
                 $recommendation->getResource()->getLabel()
             );
         } else {
-            $dto->source = new Source('', '', '');
+            $dto->resource = new Resource('', '', '');
         }
+        /* for compatibility while the extension is being updated */
+        $dto->source = $dto->resource;
 
 
         $dto->contributor = [

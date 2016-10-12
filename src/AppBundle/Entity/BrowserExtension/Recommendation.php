@@ -15,23 +15,3 @@ class Recommendation
     public $criteria = array();
     public $filters = array();
 }
-
-class Source
-{
-    public $author;
-    public $url;
-    public $label;
-
-    /**
-     * Resource constructor.
-     * @param $author
-     * @param $url
-     * @param $label
-     */
-    public function __construct($author, $url, $label)
-    {
-        $this->author = $author;
-        $this->url = $url;
-        $this->label = $label;
-    }
-}
