@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Recommendation
@@ -28,12 +29,16 @@ class Recommendation
 
     /**
      * @ORM\OneToMany(targetEntity="Alternative", mappedBy="recommendation", cascade={"persist", "remove"}, orphanRemoval=true)
+     *
+     * @Assert\Valid
      */
     private $alternatives;
 
     /**
      * @ORM\OneToMany(targetEntity="MatchingContext", mappedBy="recommendation", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\Valid
      */
     private $matchingContexts;
 

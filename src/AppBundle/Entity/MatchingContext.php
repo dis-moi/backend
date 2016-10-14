@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * MatchingContext
@@ -30,6 +31,8 @@ class MatchingContext
      * @var string
      *
      * @ORM\Column(name="urlRegex", type="string", length=255)
+     *
+     * @Assert\NotBlank()
      */
     private $urlRegex;
 
