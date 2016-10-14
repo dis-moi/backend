@@ -8,15 +8,21 @@ fos_user:
     schemes: [https]
 
 api_v1:
-    resource: "@AppBundle/Controller/ApiController.php"
+    resource: "@AppBundle/Controller/ApiV1Controller.php"
     type:     annotation
     prefix:   /api/v1
     schemes: [https]
 
-api_v1_admin:
+api_v2:
+    resource: "@AppBundle/Controller/ApiController.php"
+    type:     annotation
+    prefix:   /api/v2
+    schemes: [https]
+
+api_v2_admin:
     resource: "@AppBundle/Controller/AdminApiController.php"
     type:     annotation
-    prefix:   /api/v1/admin
+    prefix:   /api/v2/admin
     schemes: [https]
 
 easy_admin_bundle:
