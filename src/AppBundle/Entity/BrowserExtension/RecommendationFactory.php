@@ -45,6 +45,12 @@ class RecommendationFactory
                 $recommendation->getResource()->getUrl(),
                 $recommendation->getResource()->getLabel()
             );
+            if (!is_null($recommendation->getResource()->getEditor())) {
+                $dto->resource->editor = new Editor(
+                    $recommendation->getResource()->getEditor()->getLabel(),
+                    $recommendation->getResource()->getEditor()->getUrl()
+                );
+            }
         } else {
             $dto->resource = new Resource('', '', '');
         }

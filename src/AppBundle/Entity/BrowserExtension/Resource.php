@@ -4,12 +4,17 @@ namespace AppBundle\Entity\BrowserExtension;
 
 class Resource
 {
-
+    /** @var string */
     public $author;
 
+    /** @var string */
     public $url;
 
+    /** @var string */
     public $label;
+
+    /** @var Editor */
+    public $editor;
 
     /**
      * Resource constructor.
