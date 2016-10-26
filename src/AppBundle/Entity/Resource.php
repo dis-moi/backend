@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Source
+ * Resource
  *
- * @ORM\Table(name="source")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\SourceRepository")
+ * @ORM\Table(name="resource")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ResourceRepository")
  */
-class Source
+class Resource
 {
     /**
      * @var int
@@ -47,6 +47,13 @@ class Source
      */
     private $url;
 
+    /**
+     * @var Editor
+     *
+     * @ORM\ManyToOne(targetEntity="Editor", fetch="EAGER")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $editor;
 
     /**
      * Get id
@@ -63,7 +70,7 @@ class Source
      *
      * @param string $label
      *
-     * @return Source
+     * @return Resource
      */
     public function setLabel($label)
     {
@@ -87,7 +94,7 @@ class Source
      *
      * @param string $description
      *
-     * @return Source
+     * @return Resource
      */
     public function setDescription($description)
     {
@@ -111,7 +118,7 @@ class Source
      *
      * @param string $url
      *
-     * @return Source
+     * @return Resource
      */
     public function setUrl($url)
     {
@@ -135,7 +142,7 @@ class Source
      *
      * @param \AppBundle\Entity\Recommendation $recommendation
      *
-     * @return Source
+     * @return Resource
      */
     public function setRecommendation(\AppBundle\Entity\Recommendation $recommendation = null)
     {
@@ -154,6 +161,25 @@ class Source
         return $this->recommendation;
     }
 
+    /**
+     * @param Editor $editor
+     */
+    public function setEditor(Editor $editor)
+    {
+        $this->editor = $editor;
+    }
+
+    /**
+     * @return Editor
+     */
+    public function getEditor()
+    {
+        return $this->editor;
+    }
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getLabel();

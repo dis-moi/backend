@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\RecommendationVisibility;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Recommendation
@@ -28,21 +28,25 @@ class Recommendation
     private $visibility;
 
     /**
-     * @ORM\OneToMany(targetEntity="Alternative", mappedBy="recommendation", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Alternative", mappedBy="recommendation", cascade={"persist", "remove"}, orphanRemoval=true)
+     *
+     * @Assert\Valid
      */
     private $alternatives;
 
     /**
-     * @ORM\OneToMany(targetEntity="MatchingContext", mappedBy="recommendation", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="MatchingContext", mappedBy="recommendation", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\Valid
      */
     private $matchingContexts;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Filter", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Criterion", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $filters;
+    private $criteria;
 
     /**
      * @var string
@@ -52,12 +56,13 @@ class Recommendation
     private $title;
 
     /**
-     * @ORM\OneToOne(targetEntity="Source", mappedBy="recommendation", cascade={"persist"}, fetch="EAGER", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Resource", mappedBy="recommendation", cascade={"persist"}, fetch="EAGER", orphanRemoval=true)
      */
-    private $source;
+    private $resource;
 
     /**
      * @ORM\ManyToOne(targetEntity="Contributor", inversedBy="recommendations", cascade={"persist"}, fetch="EAGER")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $contributor;
 
@@ -135,7 +140,7 @@ class Recommendation
     {
         $this->alternatives = new \Doctrine\Common\Collections\ArrayCollection();
         $this->matchingContexts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->filters = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->criteria = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visibility = RecommendationVisibility::getDefault();
     }
 
@@ -212,65 +217,68 @@ class Recommendation
     }
 
     /**
-     * Set source
+     * Set Resource
      *
-     * @param \AppBundle\Entity\Source $source
+     * @param Resource $resource
      *
      * @return Recommendation
      */
-    public function setSource(\AppBundle\Entity\Source $source = null)
+    public function setResource(Resource $resource = null)
     {
-        $source->setRecommendation($this);
+        $resource->setRecommendation($this);
 
-        $this->source = $source;
+        $this->resource = $resource;
 
         return $this;
     }
 
     /**
-     * Get source
+     * Get Resource
      *
-     * @return \AppBundle\Entity\Source
+     * @return \AppBundle\Entity\Resource
      */
-    public function getSource()
+    public function getResource()
     {
-        return $this->source;
+        return $this->resource;
     }
 
     /**
-     * Add filter
+     * Add criterion
      *
-     * @param \AppBundle\Entity\Filter $filter
+     * @param \AppBundle\Entity\Criterion $criterion
      *
      * @return Recommendation
      */
-    public function addFilter(\AppBundle\Entity\Filter $filter)
+    public function addCriterion(\AppBundle\Entity\Criterion $criterion)
     {
-        $this->filters[] = $filter;
+        $this->criteria[] = $criterion;
 
         return $this;
     }
 
     /**
-     * Remove filter
+     * Remove criterion
      *
-     * @param \AppBundle\Entity\Filter $filter
+     * @param \AppBundle\Entity\Criterion $criterion
      */
-    public function removeFilter(\AppBundle\Entity\Filter $filter)
+    public function removeCriterion(\AppBundle\Entity\Criterion $criterion)
     {
-        $this->filters->removeElement($filter);
+        $this->criteria->removeElement($criterion);
     }
 
     /**
-     * Get filters
+     * Get criteria
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getFilters()
+    public function getCriteria()
     {
-        return $this->filters;
+        return $this->criteria;
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getTitle();
@@ -305,7 +313,7 @@ class Recommendation
      */
     public function getVisibility()
     {
-        if(!$this->visibility){
+        if (!$this->visibility) {
             return RecommendationVisibility::getDefault();
         }
         return RecommendationVisibility::get($this->visibility);
@@ -321,5 +329,13 @@ class Recommendation
         $this->visibility = $visibility->getValue();
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasPublicVisibility()
+    {
+        return $this->getVisibility() === RecommendationVisibility::PUBLIC_VISIBILITY();
     }
 }

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SourceType extends AbstractType
+class ResourceType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,6 +17,7 @@ class SourceType extends AbstractType
         $builder
             ->add('label')
             ->add('url')
+            ->add('editor')
         ;
     }
     
@@ -26,7 +27,7 @@ class SourceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Source'
+            'data_class' => 'AppBundle\Entity\Resource'
         ));
     }
 }

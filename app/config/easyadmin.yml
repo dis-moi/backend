@@ -13,9 +13,9 @@ easy_admin:
                     - title
                     - description
                     - contributor
-                    - filters
+                    - criteria
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
-                    - { property: 'source', type: 'AppBundle\Form\SourceType' }
+                    - { property: 'resource', type: 'AppBundle\Form\ResourceType' }
                     - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
                     - { property: 'alternatives', type: 'collection', type_options: {entry_type: 'AppBundle\Form\AlternativeType', allow_add: true, allow_delete: true, by_reference: false} }
         MatchingContext:
@@ -24,8 +24,8 @@ easy_admin:
         Alternative:
             class: AppBundle\Entity\Alternative
             disabled_actions: ['new', 'edit']
-        Filter:
-            class: AppBundle\Entity\Filter
+        Criterion:
+            class: AppBundle\Entity\Criterion
         User:
             class: AppBundle\Entity\User
             form:
@@ -37,3 +37,5 @@ easy_admin:
                   - name
                   - organization
                   - { property: 'imageFile', type: 'vich_image' }
+        Editor:
+            class: AppBundle\Entity\Editor

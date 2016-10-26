@@ -1,5 +1,6 @@
 Title: Titre
-Filters: Critères
+Criteria: Critères
+Criterion: Critère
 Matching contexts: Produits ciblés
 Url regex: Url
 Url to redirect: Url
@@ -11,3 +12,5 @@ Image file: Avatar
 Public: Publique
 Private: Privée
 Visibility: Visibilité
+Resource: Ressource
+Editor: Editeur
