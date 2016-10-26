@@ -15,6 +15,7 @@ use AppBundle\Tests\Controller\RecommendationControllerTest;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -22,32 +23,27 @@ use Symfony\Bundle\FrameworkBundle\Client;
 class ApiControllerTest extends WebTestCase
 {
     /** @var Client  */
-    private $client;
+    private static $client;
 
-    public function setUp()
+    public static function setUpBeforeClass()
     {
-        $this->client = static::createClient();
-        $rootDir = $this->client->getKernel()->getRootDir();
-        $container = $this->client->getContainer();
-        $doctrine = $container->get('doctrine');
-        $entityManager = $doctrine->getManager();
-        $fixtureDir = '../src/AppBundle/DataFixtures/ORM';
-        $this->loadFixturesFromDirectory(sprintf("%s/%s", $rootDir, $fixtureDir), $entityManager);
+        parent::setUpBeforeClass();
+        static::$client = static::createClient();
+        static::loadFixtures(static::$client);
     }
 
     public function testGetMatchingContexts()
     {
-        $crawler = $this->client->request('GET', '/api/v1/matchingcontexts');
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $crawler = static::$client->request('GET', '/api/v2/matchingcontexts');
+        $this->assertEquals(200, static::$client->getResponse()->getStatusCode());
         $this->assertTrue(
-            $this->client->getResponse()->headers->contains('Content-Type', 'application/json')
+            static::$client->getResponse()->headers->contains('Content-Type', 'application/json')
         );
-        $payload = json_decode($this->client->getResponse()->getContent(), $asArray = true);
+        $payload = json_decode(static::$client->getResponse()->getContent(), $asArray = true);
         $this->assertGreaterThanOrEqual(1, count($payload));
 
         $recommendationUrl = $payload[0]['recommendation_url'];
         return $recommendationUrl;
-
     }
 
     /**
@@ -55,35 +51,54 @@ class ApiControllerTest extends WebTestCase
      */
     public function testGetRecommendation($recommendationUrl)
     {
-        echo $recommendationUrl;
-        $uriPattern = "#http://[^/]*(/.*)$#";
-        preg_match($uriPattern, $recommendationUrl, $matches);
-        $uri = $matches[1];
+        $path = $this->extractPathFromUrl($recommendationUrl);
 
-
-        $crawler = $this->client->request('GET', $uri);
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode());
+        $crawler = static::$client->request('GET', $path);
+        $this->assertEquals(200, static::$client->getResponse()->getStatusCode());
         $this->assertTrue(
-            $this->client->getResponse()->headers->contains('Content-Type', 'application/json')
+            static::$client->getResponse()->headers->contains('Content-Type', 'application/json')
         );
-        $payload = json_decode($this->client->getResponse()->getContent(), $asArray = true);
+        $payload = json_decode(static::$client->getResponse()->getContent(), $asArray = true);
         $this->assertArrayHasKey('contributor', $payload);
         $this->assertArrayHasKey('visibility', $payload);
         $this->assertArrayHasKey('title', $payload);
         $this->assertArrayHasKey('description', $payload);
         $this->assertArrayHasKey('alternatives', $payload);
         $this->assertArrayHasKey('source', $payload);
+        $this->assertArrayHasKey('resource', $payload);
         $this->assertArrayHasKey('criteria', $payload);
         $this->assertArrayHasKey('filters', $payload);
-
     }
 
-    protected function loadFixturesFromDirectory($directory, $entityManager)
+    protected static function loadFixtures(Client $client)
     {
-        $loader = new ContainerAwareLoader($this->client->getContainer());
-        $loader->loadFromDirectory($directory);
+        $container = $client->getContainer();
+        $doctrine = $container->get('doctrine');
+        $entityManager = $doctrine->getManager();
+
+        $rootDir = $client->getKernel()->getRootDir();
+        $fixtureDir = '../src/AppBundle/DataFixtures/ORM';
+
+        $loader = new ContainerAwareLoader($client->getContainer());
+        $loader->loadFromDirectory(sprintf("%s/%s", $rootDir, $fixtureDir));
+
         $purger = new ORMPurger();
+        $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=0'));
         $executor = new ORMExecutor($entityManager, $purger);
         $executor->execute($loader->getFixtures());
+        $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=1'));
+    }
+
+    /**
+     * @param $url
+     *
+     * @return string
+     */
+    private function extractPathFromUrl($url)
+    {
+        $uriPattern = "#http://[^/]*(/.*)$#";
+        preg_match($uriPattern, $url, $matches);
+        $uri = $matches[1];
+        return $uri;
     }
 }
