@@ -1,5 +1,3 @@
-
-
 var RegexValidator = function() {
 
   this.validate_url = function(url) {
