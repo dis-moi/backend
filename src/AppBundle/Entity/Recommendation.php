@@ -43,7 +43,7 @@ class Recommendation
     private $matchingContexts;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Criterion", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="Criterion", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $criteria;
