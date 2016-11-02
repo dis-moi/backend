@@ -17,8 +17,6 @@ services:
         ipv4_address: 172.16.1.2
   mysql:
     build: ./mysql
-    ports:
-    - "3306:3306"
     environment:
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: password
