@@ -3,6 +3,8 @@ easy_admin:
         assets:
             css:
                 - 'css/admin.css'
+            js:
+                - 'js/regex_validator.js'
     site_name: 'Le Même En Mieux'
     entities:
         Recommendation:
