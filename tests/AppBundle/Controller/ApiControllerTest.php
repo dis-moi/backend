@@ -32,7 +32,7 @@ class ApiControllerTest extends WebTestCase
         static::loadFixtures(static::$client);
     }
 
-    public function testGetMatchingContexts()
+    public function test_GetMatchingContexts()
     {
         $crawler = static::$client->request('GET', '/api/v2/matchingcontexts');
         $this->assertEquals(200, static::$client->getResponse()->getStatusCode());
@@ -46,8 +46,25 @@ class ApiControllerTest extends WebTestCase
         return $recommendationUrl;
     }
 
+    public function test_GetMatchingContexts_can_be_filtered_by_criteria()
+    {
+        $crawler = static::$client->request('GET', '/api/v2/matchingcontexts?criteria=ecology,politics');
+        $this->assertEquals(200, static::$client->getResponse()->getStatusCode());
+        $this->assertTrue(
+            static::$client->getResponse()->headers->contains('Content-Type', 'application/json')
+        );
+        $content = static::$client->getResponse()->getContent();
+        $payload = json_decode($content, $asArray = true);
+        $this->assertEquals(2, count($payload));
+        $this->assertContains('site-ecologique.fr', $content);
+        $this->assertContains('site-ecologique-et-politique.fr', $content);
+
+        $recommendationUrl = $payload[0]['recommendation_url'];
+        return $recommendationUrl;
+    }
+
     /**
-     * @depends testGetMatchingContexts
+     * @depends test_GetMatchingContexts
      */
     public function testGetRecommendation($recommendationUrl)
     {
