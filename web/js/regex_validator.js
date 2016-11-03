@@ -38,12 +38,12 @@
 
   document.onreadystatechange = function() {
     if (document.readyState === 'complete') {
-      var validated_element = $("#recommendation_resource_url");
-      validated_element.change(function() {
+      var validated_elements = $("#recommendation_resource_url");
+      validated_elements.change(function() {
         var status = validate_url($(this).val());
-        remove_error_message(validated_element);
+        remove_error_message($(this));
         if (!status.success) {
-          show_error_message(validated_element, status.message);
+          show_error_message($(this), status.message);
         }
       });
     }
