@@ -39,8 +39,8 @@
 
   document.onreadystatechange = function() {
     if (document.readyState === 'complete') {
-      var validated_elements = $("#recommendation_resource_url");
-      validated_elements.change(function() {
+      var url_selector = "[id$=urlRegex]";
+      $('form').on('change', '[id$=urlRegex]', function() {
         var status = validate_url($(this).val());
         remove_error_message($(this));
         if (!status.success) {
