@@ -1,18 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: alemaire
- * Date: 18/05/2016
- * Time: 16:58
- */
 
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Alternative;
+use AppBundle\Entity\BrowserExtension\Criterion as CriterionDto;
 use AppBundle\Entity\BrowserExtension\MatchingContextFactory;
 use AppBundle\Entity\BrowserExtension\RecommendationFactory;
 use AppBundle\Entity\Contributor;
 use AppBundle\Entity\Recommendation;
+use AppBundle\Entity\Criterion;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -39,13 +35,31 @@ class ApiController extends FOSRestController
             'No matching contexts exists'
         );
 
-        $factory = new MatchingContextFactory( function ($id) {
+        $factory = new MatchingContextFactory(function ($id) {
             return $this->get('router')->generate('app_api_getrecommendation', ['id' => $id], Router::ABSOLUTE_URL);
         });
 
         return array_map(function ($matchingContext) use ($factory){
             return $factory->createFromMatchingContext($matchingContext);
         }, $matchingContexts);
+    }
+
+    /**
+     * @Route("/criteria")
+     * @View()
+     */
+    public function geCriteriaAction() {
+        $criteria = $this->getDoctrine()
+                                 ->getRepository('AppBundle:Criterion')
+                                 ->findAll();
+
+        if (!$criteria) throw $this->createNotFoundException(
+            'No criteria found'
+        );
+
+        return array_map(function (Criterion $criterion) {
+            return new CriterionDto($criterion->getId(), $criterion->getLabel(), $criterion->getDescription());
+        }, $criteria);
     }
     
     /**
