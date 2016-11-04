@@ -1,5 +1,5 @@
 (function () {
-  validate_url = function(url) {
+  function validate_url(url) {
     var empty_regex_message = 'L\'url ne peut être vide';
     var invalid_regex_message = 'Cette regexp est invalide';
     var catch_all_regex_msg = 'Cette regexp est trop large';
@@ -10,6 +10,7 @@
     }
 
     //Regex invalid
+    var regex, error;
     try {
       regex = new RegExp(url);
     } catch (e) {
@@ -34,7 +35,7 @@
     }
 
     return {success: true, message: 'Regex valide'}
-  };
+  }
 
   document.onreadystatechange = function() {
     if (document.readyState === 'complete') {
