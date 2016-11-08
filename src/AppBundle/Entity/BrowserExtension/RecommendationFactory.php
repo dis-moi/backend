@@ -36,7 +36,7 @@ class RecommendationFactory
 
         $dto->visibility = $recommendation->getVisibility()->getValue();
         $dto->title = $recommendation->getTitle();
-        $dto->description = $recommendation->getDescription();
+        $dto->description = DataConverter::convertNewLinesToParagraphs($recommendation->getDescription());
 
         if (!is_null($recommendation->getResource())) {
             $dto->resource = new Resource(
