@@ -20,13 +20,34 @@ class LoadRecommendationData extends AbstractFixture implements DependentFixture
     public function load(ObjectManager $manager)
     {
         $recommendation = new Recommendation();
-        $recommendation->setTitle("Un site de new avec des info fiables");
+        $recommendation->setTitle("Une reco sans critère");
         $recommendation->setContributor($this->getReference('contributor'));
         $recommendation->setDescription("Il torche sa maman");
         $recommendation->setVisibility(RecommendationVisibility::PUBLIC_VISIBILITY());
         $manager->persist($recommendation);
         $manager->flush();
-        $this->addReference('recommendation', $recommendation);
+        $this->addReference('recommendation_no_criterion', $recommendation);
+
+        $recommendation = new Recommendation();
+        $recommendation->setTitle("my ecology story");
+        $recommendation->setContributor($this->getReference('contributor'));
+        $recommendation->setDescription("");
+        $recommendation->setVisibility(RecommendationVisibility::PUBLIC_VISIBILITY());
+        $recommendation->addCriterion($this->getReference('criterion_ecology'));
+        $manager->persist($recommendation);
+        $manager->flush();
+        $this->addReference('recommendation_criterion_ecology', $recommendation);
+
+        $recommendation = new Recommendation();
+        $recommendation->setTitle("my ecology and politics story");
+        $recommendation->setContributor($this->getReference('contributor'));
+        $recommendation->setDescription("");
+        $recommendation->setVisibility(RecommendationVisibility::PUBLIC_VISIBILITY());
+        $recommendation->addCriterion($this->getReference('criterion_ecology'));
+        $recommendation->addCriterion($this->getReference('criterion_politics'));
+        $manager->persist($recommendation);
+        $manager->flush();
+        $this->addReference('recommendation_criterion_ecology_and_politics', $recommendation);
     }
 
     public function getDependencies()
