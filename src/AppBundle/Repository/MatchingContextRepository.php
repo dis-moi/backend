@@ -41,7 +41,7 @@ class MatchingContextRepository extends \Doctrine\ORM\EntityRepository
             ->where('r.visibility=:visibility');
         $queryBuilder->setParameter('visibility', RecommendationVisibility::PUBLIC_VISIBILITY());
         if (!empty($criteria)) {
-            $queryBuilder->andWhere('c.label IN (:criteria)');
+            $queryBuilder->andWhere('c.slug IN (:criteria)');
             $queryBuilder->setParameter('criteria', $criteria);
         }
         return $queryBuilder->getQuery()->getResult();
