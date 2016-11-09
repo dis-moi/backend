@@ -29,6 +29,12 @@ easy_admin:
             disabled_actions: ['new', 'edit']
         Criterion:
             class: AppBundle\Entity\Criterion
+            list:
+                fields: ['id', 'label', 'slug']
+            form:
+                fields:
+                    - label
+                    - description
         User:
             class: AppBundle\Entity\User
             form:
