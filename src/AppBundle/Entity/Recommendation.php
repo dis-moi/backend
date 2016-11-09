@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -74,6 +76,13 @@ class Recommendation
     private $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="note", type="text", nullable=true)
+     */
+    private $note;
+
+    /**
      * Get id
      *
      * @return int
@@ -117,7 +126,7 @@ class Recommendation
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        $this->description = strip_tags($description);
 
         return $this;
     }
@@ -138,20 +147,20 @@ class Recommendation
      */
     public function __construct()
     {
-        $this->alternatives = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->matchingContexts = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->criteria = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->alternatives = new ArrayCollection();
+        $this->matchingContexts = new ArrayCollection();
+        $this->criteria = new ArrayCollection();
         $this->visibility = RecommendationVisibility::getDefault();
     }
 
     /**
      * Add alternative
      *
-     * @param \AppBundle\Entity\Alternative $alternative
+     * @param Alternative $alternative
      *
      * @return Recommendation
      */
-    public function addAlternative(\AppBundle\Entity\Alternative $alternative)
+    public function addAlternative(Alternative $alternative)
     {
         $alternative->setRecommendation($this);
 
@@ -163,9 +172,9 @@ class Recommendation
     /**
      * Remove alternative
      *
-     * @param \AppBundle\Entity\Alternative $alternative
+     * @param Alternative $alternative
      */
-    public function removeAlternative(\AppBundle\Entity\Alternative $alternative)
+    public function removeAlternative(Alternative $alternative)
     {
         $this->alternatives->removeElement($alternative);
     }
@@ -173,7 +182,7 @@ class Recommendation
     /**
      * Get alternative
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getAlternatives()
     {
@@ -183,11 +192,11 @@ class Recommendation
     /**
      * Add matchingContext
      *
-     * @param \AppBundle\Entity\MatchingContext $matchingContext
+     * @param MatchingContext $matchingContext
      *
      * @return Recommendation
      */
-    public function addMatchingContext(\AppBundle\Entity\MatchingContext $matchingContext)
+    public function addMatchingContext(MatchingContext $matchingContext)
     {
         $matchingContext->setRecommendation($this);
 
@@ -199,9 +208,9 @@ class Recommendation
     /**
      * Remove matchingContext
      *
-     * @param \AppBundle\Entity\MatchingContext $matchingContext
+     * @param MatchingContext $matchingContext
      */
-    public function removeMatchingContext(\AppBundle\Entity\MatchingContext $matchingContext)
+    public function removeMatchingContext(MatchingContext $matchingContext)
     {
         $this->matchingContexts->removeElement($matchingContext);
     }
@@ -209,7 +218,7 @@ class Recommendation
     /**
      * Get matchingContext
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getMatchingContexts()
     {
@@ -235,7 +244,7 @@ class Recommendation
     /**
      * Get Resource
      *
-     * @return \AppBundle\Entity\Resource
+     * @return Resource
      */
     public function getResource()
     {
@@ -245,11 +254,11 @@ class Recommendation
     /**
      * Add criterion
      *
-     * @param \AppBundle\Entity\Criterion $criterion
+     * @param Criterion $criterion
      *
      * @return Recommendation
      */
-    public function addCriterion(\AppBundle\Entity\Criterion $criterion)
+    public function addCriterion(Criterion $criterion)
     {
         $this->criteria[] = $criterion;
 
@@ -259,9 +268,9 @@ class Recommendation
     /**
      * Remove criterion
      *
-     * @param \AppBundle\Entity\Criterion $criterion
+     * @param Criterion $criterion
      */
-    public function removeCriterion(\AppBundle\Entity\Criterion $criterion)
+    public function removeCriterion(Criterion $criterion)
     {
         $this->criteria->removeElement($criterion);
     }
@@ -269,7 +278,7 @@ class Recommendation
     /**
      * Get criteria
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getCriteria()
     {
@@ -287,11 +296,11 @@ class Recommendation
     /**
      * Set contributor
      *
-     * @param \AppBundle\Entity\Contributor $contributor
+     * @param Contributor $contributor
      *
      * @return Recommendation
      */
-    public function setContributor(\AppBundle\Entity\Contributor $contributor = null)
+    public function setContributor(Contributor $contributor = null)
     {
         $this->contributor = $contributor;
 
@@ -301,7 +310,7 @@ class Recommendation
     /**
      * Get contributor
      *
-     * @return \AppBundle\Entity\Contributor
+     * @return Contributor
      */
     public function getContributor()
     {
@@ -337,5 +346,22 @@ class Recommendation
     public function hasPublicVisibility()
     {
         return $this->getVisibility() === RecommendationVisibility::PUBLIC_VISIBILITY();
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param string $note
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
     }
 }
