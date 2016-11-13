@@ -87,6 +87,22 @@ class ApiControllerTest extends WebTestCase
         $this->assertArrayHasKey('filters', $payload);
     }
 
+    /**
+     * @depends test_GetMatchingContexts
+     */
+    public function testGetCriteria()
+    {
+        $crawler = static::$client->request('GET', '/api/v2/criteria');
+        $this->assertEquals(200, static::$client->getResponse()->getStatusCode());
+        $this->assertTrue(
+            static::$client->getResponse()->headers->contains('Content-Type', 'application/json')
+        );
+        $payload = json_decode(static::$client->getResponse()->getContent(), $asArray = true);
+        $this->assertArrayHasKey('id', $payload[0]);
+        $this->assertArrayHasKey('slug', $payload[0]);
+        $this->assertArrayHasKey('label', $payload[0]);
+    }
+
     protected static function loadFixtures(Client $client)
     {
         $container = $client->getContainer();

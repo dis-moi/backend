@@ -58,7 +58,7 @@ class ApiController extends FOSRestController
         );
 
         return array_map(function (Criterion $criterion) {
-            return new CriterionDto($criterion->getId(), $criterion->getLabel(), $criterion->getDescription());
+            return new CriterionDto($criterion->getId(), $criterion->getLabel(), $criterion->getSlug());
         }, $criteria);
     }
     
