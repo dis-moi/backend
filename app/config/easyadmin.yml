@@ -16,6 +16,7 @@ easy_admin:
                     - description
                     - contributor
                     - criteria
+                    - note
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
                     - { property: 'resource', type: 'AppBundle\Form\ResourceType' }
                     - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }

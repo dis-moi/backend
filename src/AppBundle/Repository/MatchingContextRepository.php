@@ -11,22 +11,39 @@ use AppBundle\Entity\RecommendationVisibility;
  */
 class MatchingContextRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    /**
+     * @return array
+     */
     public function findAllWithPrivateVisibility()
     {
-        return $this->findAllWithVisibility(RecommendationVisibility::PRIVATE_VISIBILITY());
-    }
-
-    public function findAllWithPublicVisibility()
-    {
-        return $this->findAllWithVisibility(RecommendationVisibility::PUBLIC_VISIBILITY());
-
-    }
-
-    public function findAllWithVisibility(RecommendationVisibility $visibility)
-    {
         return $this->getEntityManager()
-            ->createQuery('SELECT mc FROM AppBundle:MatchingContext mc JOIN mc.recommendation r WHERE r.visibility = :visibility')
-            ->setParameter('visibility', $visibility->getValue())
-            ->getResult();
+                    ->createQuery(
+                        'SELECT mc FROM AppBundle:MatchingContext mc JOIN mc.recommendation r WHERE r.visibility = :visibility'
+                    )
+                    ->setParameter('visibility', RecommendationVisibility::PRIVATE_VISIBILITY())
+                    ->getResult();
+    }
+
+    /**
+     * @param string[] $criteria
+     *
+     * @return array
+     */
+    public function findAllPublicMatchingContext(array $criteria)
+    {
+        $queryBuilder = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('mc')
+            ->from('AppBundle:MatchingContext', 'mc')
+            ->innerJoin('mc.recommendation', 'r')
+            ->leftJoin('r.criteria', 'c')
+            ->where('r.visibility=:visibility');
+        $queryBuilder->setParameter('visibility', RecommendationVisibility::PUBLIC_VISIBILITY());
+        if (!empty($criteria)) {
+            $queryBuilder->andWhere('c.label IN (:criteria)');
+            $queryBuilder->setParameter('criteria', $criteria);
+        }
+        return $queryBuilder->getQuery()->getResult();
     }
 }

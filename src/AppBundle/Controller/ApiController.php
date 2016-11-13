@@ -28,20 +28,22 @@ class ApiController extends FOSRestController
      * @Route("/matchingcontexts")
      * @View()
      */
-    public function getMatchingcontextsAction(){
+    public function getMatchingcontextsAction(Request $request) {
+        $criteriaFilter = $request->get('criteria', null);
+        $criteria = $criteriaFilter ? explode(",", $criteriaFilter) : [];
         $matchingContexts = $this->getDoctrine()
             ->getRepository('AppBundle:MatchingContext')
-            ->findAllWithPublicVisibility();
+            ->findAllPublicMatchingContext($criteria);
 
         if (!$matchingContexts) throw $this->createNotFoundException(
             'No matching contexts exists'
         );
 
-        $factory = new MatchingContextFactory( function($id) {
+        $factory = new MatchingContextFactory( function ($id) {
             return $this->get('router')->generate('app_api_getrecommendation', ['id' => $id], Router::ABSOLUTE_URL);
         });
 
-        return array_map(function($matchingContext) use ($factory){
+        return array_map(function ($matchingContext) use ($factory){
             return $factory->createFromMatchingContext($matchingContext);
         }, $matchingContexts);
     }
