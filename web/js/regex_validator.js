@@ -42,40 +42,12 @@
       var url_selector = "[id$=urlRegex]";
       $('form').on('change', '[id$=urlRegex]', function() {
         var status = validate_url($(this).val());
-        remove_error_message($(this));
         if (!status.success) {
-          show_error_message($(this), status.message);
+          this.setCustomValidity(status.message);
+        } else {
+          this.setCustomValidity("");
         }
-        disable_form_submission_if_needed($(this));
       });
     }
   };
-
-  var show_error_message = function(element, message) {
-    element.parent().addClass('has-error').addClass('has-js-error').append(
-      '<div class="error-block"><span class="label label-danger">Erreur</span>'
-      +message
-      +'</div>'
-    )
-  };
-
-  var remove_error_message = function(element) {
-    element.parent().removeClass('has-error');
-    element.parent().removeClass('has-js-error');
-    element.siblings('.error-block').remove();
-  };
-
-  var disable_form_submission_if_needed = function(element) {
-    var submit_button = element.parents('form').find('button.btn-primary');
-    if ($('.has-js-error').size()) {
-      submit_button.attr('disabled', 'disabled');
-    } else {
-      submit_button.removeAttr('disabled');
-    }
-  };
-
-  var disable_form_submission = function(element) {
-
-  };
-
 })();
