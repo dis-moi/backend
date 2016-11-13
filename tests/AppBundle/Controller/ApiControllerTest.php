@@ -146,6 +146,22 @@ class ApiControllerTest extends WebTestCase
         $this->assertArrayHasKey('label', $payload[0]);
     }
 
+    /**
+     * @depends test_GetMatchingContexts
+     */
+    public function testGetEditors()
+    {
+        $crawler = static::$client->request('GET', '/api/v2/editors');
+        $this->assertEquals(200, static::$client->getResponse()->getStatusCode());
+        $this->assertTrue(
+            static::$client->getResponse()->headers->contains('Content-Type', 'application/json')
+        );
+        $payload = json_decode(static::$client->getResponse()->getContent(), $asArray = true);
+        $this->assertArrayHasKey('id', $payload[0]);
+        $this->assertArrayHasKey('label', $payload[0]);
+        $this->assertArrayHasKey('url', $payload[0]);
+    }
+
     protected static function loadFixtures(Client $client)
     {
         $container = $client->getContainer();

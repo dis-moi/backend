@@ -46,6 +46,7 @@ class RecommendationFactory
             );
             if (!is_null($recommendation->getResource()->getEditor())) {
                 $dto->resource->editor = new Editor(
+                    $recommendation->getResource()->getEditor()->getId(),
                     $recommendation->getResource()->getEditor()->getLabel(),
                     $recommendation->getResource()->getEditor()->getUrl()
                 );

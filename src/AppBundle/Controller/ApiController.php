@@ -4,9 +4,11 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Alternative;
 use AppBundle\Entity\BrowserExtension\Criterion as CriterionDto;
+use AppBundle\Entity\BrowserExtension\Editor as EditorDto;
 use AppBundle\Entity\BrowserExtension\MatchingContextFactory;
 use AppBundle\Entity\BrowserExtension\RecommendationFactory;
 use AppBundle\Entity\Contributor;
+use AppBundle\Entity\Editor;
 use AppBundle\Entity\Recommendation;
 use AppBundle\Entity\Criterion;
 use FOS\RestBundle\Controller\Annotations\View;
@@ -34,9 +36,9 @@ class ApiController extends FOSRestController
             ->getRepository('AppBundle:MatchingContext')
             ->findAllPublicMatchingContext($criteria, $excludedEditors);
 
-        if (!$matchingContexts) throw $this->createNotFoundException(
-            'No matching contexts exists'
-        );
+        if (!$matchingContexts) {
+            throw $this->createNotFoundException('No matching contexts exists');
+        }
 
         $factory = new MatchingContextFactory(function ($id) {
             return $this->get('router')->generate('app_api_getrecommendation', ['id' => $id], Router::ABSOLUTE_URL);
@@ -52,17 +54,31 @@ class ApiController extends FOSRestController
      * @View()
      */
     public function geCriteriaAction() {
-        $criteria = $this->getDoctrine()
-                                 ->getRepository('AppBundle:Criterion')
-                                 ->findAll();
+        $criteria = $this->getDoctrine()->getRepository('AppBundle:Criterion')->findAll();
 
-        if (!$criteria) throw $this->createNotFoundException(
-            'No criterion found'
-        );
+        if (!$criteria) {
+            throw $this->createNotFoundException('No criterion found');
+        }
 
         return array_map(function (Criterion $criterion) {
             return new CriterionDto($criterion->getLabel(), $criterion->getSlug());
         }, $criteria);
+    }
+
+    /**
+     * @Route("/editors")
+     * @View()
+     */
+    public function geEditorsAction() {
+        $editors = $this->getDoctrine()->getRepository('AppBundle:Editor')->findAll();
+
+        if (!$editors) {
+            throw $this->createNotFoundException('No editors found');
+        }
+
+        return array_map(function (Editor $editor) {
+            return new EditorDto($editor->getId(), $editor->getLabel(), $editor->getUrl());
+        }, $editors);
     }
     
     /**
