@@ -26,23 +26,29 @@ class MatchingContextRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
-     * @param string[] $criteria
+     * @param string[] $criterionSlugs
+     * @param int[]    $editorIds
      *
      * @return array
      */
-    public function findAllPublicMatchingContext(array $criteria)
+    public function findAllPublicMatchingContext(array $criterionSlugs, array $editorIds)
     {
         $queryBuilder = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('mc')
             ->from('AppBundle:MatchingContext', 'mc')
-            ->innerJoin('mc.recommendation', 'r')
-            ->leftJoin('r.criteria', 'c')
-            ->where('r.visibility=:visibility');
+            ->innerJoin('mc.recommendation', 'recommendation')
+            ->leftJoin('recommendation.criteria', 'criteria')
+            ->leftJoin('recommendation.resource', 'resource')
+            ->where('recommendation.visibility=:visibility');
         $queryBuilder->setParameter('visibility', RecommendationVisibility::PUBLIC_VISIBILITY());
-        if (!empty($criteria)) {
-            $queryBuilder->andWhere('c.slug IN (:criteria)');
-            $queryBuilder->setParameter('criteria', $criteria);
+        if (!empty($criterionSlugs)) {
+            $queryBuilder->andWhere('criteria.slug IN (:criteria_slugs)');
+            $queryBuilder->setParameter('criteria_slugs', $criterionSlugs);
+        }
+        if (!empty($editorIds)) {
+            $queryBuilder->andWhere('resource.editor IS NULL OR resource.editor NOT IN (:editorIds)');
+            $queryBuilder->setParameter('editorIds', $editorIds);
         }
         return $queryBuilder->getQuery()->getResult();
     }

@@ -27,9 +27,12 @@ class ApiController extends FOSRestController
     public function getMatchingcontextsAction(Request $request) {
         $criteriaFilter = $request->get('criteria', null);
         $criteria = $criteriaFilter ? explode(",", $criteriaFilter) : [];
+        $excludedEditorsFilter = $request->get('excluded_editors', null);
+        $excludedEditors = $excludedEditorsFilter ? explode(",", $excludedEditorsFilter) : [];
+        array_walk($excludedEditors, 'intval');
         $matchingContexts = $this->getDoctrine()
             ->getRepository('AppBundle:MatchingContext')
-            ->findAllPublicMatchingContext($criteria);
+            ->findAllPublicMatchingContext($criteria, $excludedEditors);
 
         if (!$matchingContexts) throw $this->createNotFoundException(
             'No matching contexts exists'

@@ -36,6 +36,13 @@ class LoadMatchingContextData extends  AbstractFixture implements DependentFixtu
         $matchingContext->setRecommendation($this->getReference('recommendation_criterion_ecology_and_politics'));
         $manager->persist($matchingContext);
         $manager->flush();
+
+        $matchingContext = new MatchingContext();
+        $matchingContext->setUrlRegex("http://random-site.fr");
+        $matchingContext->setDescription("A random site");
+        $matchingContext->setRecommendation($this->getReference('recommendation_no_editor'));
+        $manager->persist($matchingContext);
+        $manager->flush();
     }
 
     public function getDependencies()
