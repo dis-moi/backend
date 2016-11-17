@@ -34,7 +34,6 @@ easy_admin:
             form:
                 fields:
                     - label
-                    - description
         User:
             class: AppBundle\Entity\User
             form:
