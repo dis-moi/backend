@@ -31,10 +31,9 @@ class Criterion
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text", nullable=true)
+     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
      */
-    private $description;
-
+    private $slug;
 
     /**
      * Get id
@@ -56,7 +55,9 @@ class Criterion
     public function setLabel($label)
     {
         $this->label = $label;
-
+        if (empty($this->slug)) {
+            $this->slug = $this->slugify($this->label);
+        }
         return $this;
     }
 
@@ -71,31 +72,30 @@ class Criterion
     }
 
     /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Criterion
+     * @return string
      */
-    public function setDescription($description)
+    public function getSlug()
     {
-        $this->description = $description;
-
-        return $this;
+        return $this->slug;
     }
 
     /**
-     * Get description
-     *
      * @return string
      */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
     public function __toString()
     {
         return $this->label;
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return string
+     */
+    private function slugify($text)
+    {
+        $text = preg_replace('/\W+/', '-', $text);
+        $text = strtolower(trim($text, '-'));
+        return $text;
     }
 }
