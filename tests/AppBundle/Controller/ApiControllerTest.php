@@ -98,7 +98,6 @@ class ApiControllerTest extends WebTestCase
             static::$client->getResponse()->headers->contains('Content-Type', 'application/json')
         );
         $payload = json_decode(static::$client->getResponse()->getContent(), $asArray = true);
-        $this->assertArrayHasKey('id', $payload[0]);
         $this->assertArrayHasKey('slug', $payload[0]);
         $this->assertArrayHasKey('label', $payload[0]);
     }
