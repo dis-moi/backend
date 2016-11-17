@@ -31,7 +31,7 @@ class ApiController extends FOSRestController
         $criteria = $criteriaFilter ? explode(",", $criteriaFilter) : [];
         $excludedEditorsFilter = $request->get('excluded_editors', null);
         $excludedEditors = $excludedEditorsFilter ? explode(",", $excludedEditorsFilter) : [];
-        array_walk($excludedEditors, 'intval');
+        $excludedEditors = array_map(function($editorId) {return intval($editorId);}, $excludedEditors);
         $matchingContexts = $this->getDoctrine()
             ->getRepository('AppBundle:MatchingContext')
             ->findAllPublicMatchingContext($criteria, $excludedEditors);
