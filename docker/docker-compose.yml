@@ -42,7 +42,7 @@ networks:
     ipam:
       driver: default
       config:
-      - subnet: 172.16.1.0/24
+      - subnet: 172.16.0.0/24
         gateway: 172.16.1.1
 volumes:
   logvolume01: {}
