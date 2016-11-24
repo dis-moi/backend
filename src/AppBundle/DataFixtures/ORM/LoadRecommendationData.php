@@ -59,6 +59,6 @@ class LoadRecommendationData extends AbstractFixture implements DependentFixture
 
     public function getDependencies()
     {
-        return [LoadContributorData::class];
+        return [LoadContributorData::class, LoadResourceData::class, LoadCriterionData::class];
     }
 }

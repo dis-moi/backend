@@ -5,9 +5,10 @@ namespace AppBundle\DataFixtures\ORM;
 use AppBundle\Entity\Editor;
 use AppBundle\Entity\Resource;
 use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadResourceData extends AbstractFixture
+class LoadResourceData extends AbstractFixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -41,5 +42,10 @@ class LoadResourceData extends AbstractFixture
         $manager->persist($resource_link_no_editor);
         $manager->flush();
         $this->addReference('resource_with_no_editor', $resource_link_no_editor);
+    }
+
+    public function getDependencies()
+    {
+        return [LoadEditorData::class];
     }
 }

@@ -2,13 +2,9 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\Contributor;
 use AppBundle\Entity\Criterion;
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 class LoadCriterionData extends AbstractFixture
 {
