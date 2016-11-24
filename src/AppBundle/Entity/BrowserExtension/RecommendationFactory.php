@@ -66,8 +66,7 @@ class RecommendationFactory
 
         $dto->criteria = $recommendation->getCriteria()->map(function (CriterionEntity $e) {
             return [
-                'label' => $e->getLabel(),
-                'description' => $e->getDescription()
+                'label' => $e->getLabel()
             ];
         });
         $dto->filters = $dto->criteria;

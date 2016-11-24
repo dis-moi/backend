@@ -48,8 +48,9 @@ class ApiControllerTest extends WebTestCase
         $payload = json_decode(static::$client->getResponse()->getContent(), $asArray = true);
         $this->assertGreaterThanOrEqual(1, count($payload));
 
-        $recommendationUrl = $payload[0]['recommendation_url'];
-        return $recommendationUrl;
+        $recommendationUrlWithoutCriteria = $payload[0]['recommendation_url'];
+        $recommendationUrlWithCriteria = $payload[1]['recommendation_url'];
+        return [$recommendationUrlWithoutCriteria, $recommendationUrlWithCriteria];
     }
 
     public function test_GetMatchingContexts_can_be_filtered_by_criteria()
@@ -110,9 +111,10 @@ class ApiControllerTest extends WebTestCase
     /**
      * @depends test_GetMatchingContexts
      */
-    public function testGetRecommendation($recommendationUrl)
+    public function testGetRecommendation(array $recommendationUrls)
     {
-        $path = $this->extractPathFromUrl($recommendationUrl);
+        list($recommendationUrlWithoutCriteria, $recommendationUrlWithCriteria) = $recommendationUrls;
+        $path = $this->extractPathFromUrl($recommendationUrlWithoutCriteria);
 
         $crawler = static::$client->request('GET', $path);
         $this->assertEquals(200, static::$client->getResponse()->getStatusCode());
@@ -129,6 +131,11 @@ class ApiControllerTest extends WebTestCase
         $this->assertArrayHasKey('resource', $payload);
         $this->assertArrayHasKey('criteria', $payload);
         $this->assertArrayHasKey('filters', $payload);
+
+        $path = $this->extractPathFromUrl($recommendationUrlWithCriteria);
+
+        $crawler = static::$client->request('GET', $path);
+        $this->assertEquals(200, static::$client->getResponse()->getStatusCode());
     }
 
     /**
