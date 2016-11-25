@@ -5,10 +5,7 @@ namespace AppBundle\DataFixtures\ORM;
 use AppBundle\Entity\MatchingContext;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadMatchingContextData extends  AbstractFixture implements DependentFixtureInterface
 {
@@ -34,6 +31,13 @@ class LoadMatchingContextData extends  AbstractFixture implements DependentFixtu
         $matchingContext->setUrlRegex("http://site-ecologique-et-politique.fr");
         $matchingContext->setDescription("Un site politique et écologique");
         $matchingContext->setRecommendation($this->getReference('recommendation_criterion_ecology_and_politics'));
+        $manager->persist($matchingContext);
+        $manager->flush();
+
+        $matchingContext = new MatchingContext();
+        $matchingContext->setUrlRegex("http://random-site.fr");
+        $matchingContext->setDescription("A random site");
+        $matchingContext->setRecommendation($this->getReference('recommendation_no_editor'));
         $manager->persist($matchingContext);
         $manager->flush();
     }

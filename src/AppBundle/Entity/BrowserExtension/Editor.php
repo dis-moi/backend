@@ -4,6 +4,10 @@ namespace AppBundle\Entity\BrowserExtension;
 
 class Editor
 {
+
+    /** @var int */
+    public $id;
+
     /** @var string */
     public $label;
 
@@ -11,12 +15,14 @@ class Editor
     public $url;
 
     /**
+     * @param int    $id
      * @param string $label
      * @param string $url
      */
-    public function __construct($label, $url)
+    public function __construct($id, $label, $url)
     {
-        $this->label  = $label;
-        $this->url    = $url;
+        $this->id    = $id;
+        $this->label = $label;
+        $this->url   = $url;
     }
 }
