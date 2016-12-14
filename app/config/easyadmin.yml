@@ -21,6 +21,19 @@ easy_admin:
                     - { property: 'resource', type: 'AppBundle\Form\ResourceType' }
                     - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
                     - { property: 'alternatives', type: 'collection', type_options: {entry_type: 'AppBundle\Form\AlternativeType', allow_add: true, allow_delete: true, by_reference: false} }
+
+            list:
+                fields:
+                    - id
+                    - visibility
+                    - title
+                    - alternatives
+                    - matchingContexts
+                    - criteria
+                    - resource
+                    - { property : 'approvedFeedbacksCount', label: 'Approuvés' }
+                    - { property : 'dismissedFeedbacksCount', label: 'Ignorés' }
+                    - { property : 'reportedFeedbacksCount', label: 'Signalés' }
         MatchingContext:
             class: AppBundle\Entity\MatchingContext
             disabled_actions: ['new', 'edit']

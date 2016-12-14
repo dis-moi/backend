@@ -2,22 +2,15 @@
 
 namespace Tests\AppBundle\Controller;
 
-use AppBundle\DataFixtures\ORM\LoadContributorData;
 use AppBundle\DataFixtures\ORM\LoadEditorData;
-use AppBundle\DataFixtures\ORM\LoadMatchingContextData;
-use AppBundle\DataFixtures\ORM\LoadRecommendationData;
-use AppBundle\Entity\Contributor;
+use AppBundle\Entity\Feedback;
+use AppBundle\Entity\FeedbackContext;
 use AppBundle\Entity\Recommendation;
-use AppBundle\Entity\MatchingContext;
-use AppBundle\Entity\RecommendationVisibility;
-use AppBundle\Repository\ContributorRepository;
 use AppBundle\Repository\EditorRepository;
-use AppBundle\Repository\ResourceRepository;
-use AppBundle\Tests\Controller\RecommendationControllerTest;
+use AppBundle\Repository\RecommendationRepository;
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -70,7 +63,7 @@ class ApiControllerTest extends WebTestCase
     public function test_GetMatchingContexts_can_be_filtered_by_editor()
     {
         /** @var EditorRepository $editorRepository */
-        $editorRepository = static::$container->get('doctrine')->getRepository('AppBundle:Editor');
+        $editorRepository = $this->getDoctrine()->getRepository('AppBundle:Editor');
         $queChoisir = $editorRepository->findOneBy(['label' => LoadEditorData::QUE_CHOISIR]);
         $marianne = $editorRepository->findOneBy(['label' => LoadEditorData::MARIANNE]);
         $excludedEditors = sprintf('%s,%s', $queChoisir->getId(), $marianne->getId());
@@ -91,7 +84,7 @@ class ApiControllerTest extends WebTestCase
     public function test_GetMatchingContexts_can_be_filtered_by_criteria_and_editor()
     {
         /** @var EditorRepository $editorRepository */
-        $editorRepository = static::$container->get('doctrine')->getRepository('AppBundle:Editor');
+        $editorRepository = $this->getDoctrine()->getRepository('AppBundle:Editor');
         $queChoisir = $editorRepository->findOneBy(['label' => LoadEditorData::QUE_CHOISIR]);
         $marianne = $editorRepository->findOneBy(['label' => LoadEditorData::MARIANNE]);
         $excludedEditors = sprintf('%s,%s', $queChoisir->getId(), $marianne->getId());
@@ -169,6 +162,161 @@ class ApiControllerTest extends WebTestCase
         $this->assertArrayHasKey('url', $payload[0]);
     }
 
+    public function testRecommendationFeedback_approve()
+    {
+        $recommendationRepository = $this->getDoctrine()->getRepository('AppBundle:Recommendation');
+        $randomRecommendation = $this->retrieveRandomRecommendation($recommendationRepository);
+
+        $route = $this->getFeedbackUrl($randomRecommendation->getId());
+        $postedFeedback = $this->feedbackFactory('approve');
+        $payload = json_encode($postedFeedback);
+        $crawler = static::$client->request('POST', $route,  $params = [], $files = [], $server = [], $payload);
+
+        $this->assertEquals(201, static::$client->getResponse()->getStatusCode());
+        /** @var Recommendation $updatedRecommendation */
+
+        $this->getDoctrine()->getManager()->clear();
+        $updatedRecommendation = $recommendationRepository->findOneBy(['id' => $randomRecommendation->getId()]);
+        $feedbacks = $updatedRecommendation->getFeedbacks();
+        $this->assertCount(1, $feedbacks);
+        $approvedFeedback = $feedbacks[0];
+        $this->assertEquals(Feedback::APPROVE, $approvedFeedback->getType());
+        $context = $approvedFeedback->getContext();
+        $this->assertInstanceOf(FeedbackContext::class, $context);
+        $this->assertEquals('2016-12-07T12:11:02', $context->getDatetime()->format('Y-m-d\TH:i:s'));
+        $this->assertEquals('https://en.wikipedia.org/wiki/Abortion', $context->getUrl());
+
+        $this->getDoctrine()->getManager()->remove($approvedFeedback);
+        $this->getDoctrine()->getManager()->flush();
+
+    }
+
+    public function testRecommendationFeedback_dismiss()
+    {
+        $recommendationRepository = $this->getDoctrine()->getRepository('AppBundle:Recommendation');
+        $randomRecommendation = $this->retrieveRandomRecommendation($recommendationRepository);
+
+        $route = $this->getFeedbackUrl($randomRecommendation->getId());
+        $postedFeedback = $this->feedbackFactory('dismiss');
+        $payload = json_encode($postedFeedback);
+        $crawler = static::$client->request('POST', $route,  $params = [], $files = [], $server = [], $payload);
+
+        $this->assertEquals(201, static::$client->getResponse()->getStatusCode());
+        /** @var Recommendation $updatedRecommendation */
+        $this->getDoctrine()->getManager()->clear();
+        $updatedRecommendation = $recommendationRepository->findOneBy(['id' => $randomRecommendation->getId()]);
+        $feedbacks = $updatedRecommendation->getFeedbacks();
+        $this->assertCount(1, $feedbacks);
+        $dismissed = $feedbacks[0];
+        $this->assertEquals(Feedback::DISMISS, $dismissed->getType());
+        $context = $dismissed->getContext();
+        $this->assertInstanceOf(FeedbackContext::class, $context);
+        $this->assertEquals('2016-12-07T12:11:02', $context->getDatetime()->format('Y-m-d\TH:i:s'));
+        $this->assertEquals('https://en.wikipedia.org/wiki/Abortion', $context->getUrl());
+
+        $this->getDoctrine()->getManager()->remove($dismissed);
+        $this->getDoctrine()->getManager()->flush();
+    }
+
+    public function testRecommendationFeedback_report()
+    {
+        $recommendationRepository = $this->getDoctrine()->getRepository('AppBundle:Recommendation');
+        $randomRecommendation = $this->retrieveRandomRecommendation($recommendationRepository);
+
+        $route = $this->getFeedbackUrl($randomRecommendation->getId());
+        $postedFeedback = $this->feedbackFactory('report');
+        $payload = json_encode($postedFeedback);
+        $crawler = static::$client->request('POST', $route,  $params = [], $files = [], $server = [], $payload);
+
+        $this->assertEquals(201, static::$client->getResponse()->getStatusCode());
+        /** @var Recommendation $updatedRecommendation */
+        $this->getDoctrine()->getManager()->clear();
+        $updatedRecommendation = $recommendationRepository->findOneBy(['id' => $randomRecommendation->getId()]);
+        $feedbacks = $updatedRecommendation->getFeedbacks();
+        $this->assertCount(1, $feedbacks);
+        $reported = $feedbacks[0];
+        $this->assertEquals(Feedback::REPORT, $reported->getType());
+        $context = $reported->getContext();
+        $this->assertInstanceOf(FeedbackContext::class, $context);
+        $this->assertEquals('2016-12-07T12:11:02', $context->getDatetime()->format('Y-m-d\TH:i:s'));
+        $this->assertEquals('https://en.wikipedia.org/wiki/Abortion', $context->getUrl());
+
+        $this->getDoctrine()->getManager()->remove($reported);
+        $this->getDoctrine()->getManager()->flush();
+    }
+
+    public function testRecommendationFeedback_invalidType()
+    {
+        $recommendationRepository = $this->getDoctrine()->getRepository('AppBundle:Recommendation');
+        $randomRecommendation = $this->retrieveRandomRecommendation($recommendationRepository);
+
+        $route = $this->getFeedbackUrl($randomRecommendation->getId());
+        $postedFeedback = $this->feedbackFactory('invalid');
+        $payload = json_encode($postedFeedback);
+        $crawler = static::$client->request('POST', $route,  $params = [], $files = [], $server = [], $payload);
+
+        $this->assertEquals(400, static::$client->getResponse()->getStatusCode());
+    }
+
+    public function testRecommendationFeedback_invalidStructure()
+    {
+        $recommendationRepository = $this->getDoctrine()->getRepository('AppBundle:Recommendation');
+        $randomRecommendation = $this->retrieveRandomRecommendation($recommendationRepository);
+
+        $route = $this->getFeedbackUrl($randomRecommendation->getId());
+        $postedFeedback = ['random' => 'value'];
+        $payload = json_encode($postedFeedback);
+        $crawler = static::$client->request('POST', $route,  $params = [], $files = [], $server = [], $payload);
+
+        $this->assertEquals(400, static::$client->getResponse()->getStatusCode());
+    }
+
+    public function testRecommendationFeedback_invalidDatetime()
+    {
+        $recommendationRepository = $this->getDoctrine()->getRepository('AppBundle:Recommendation');
+        $randomRecommendation = $this->retrieveRandomRecommendation($recommendationRepository);
+
+        $route = $this->getFeedbackUrl($randomRecommendation->getId());
+        $postedFeedback = [
+            'feedback' => 'dismiss',
+            'context' => [
+                'datetime' => 'invalid',
+                'url' => 'https://en.wikipedia.org/wiki/Abortion'
+            ]
+        ];
+        $payload = json_encode($postedFeedback);
+        $crawler = static::$client->request('POST', $route,  $params = [], $files = [], $server = [], $payload);
+
+        $this->assertEquals(400, static::$client->getResponse()->getStatusCode());
+    }
+
+    /**
+     * @param RecommendationRepository $repository
+     *
+     * @return Recommendation
+     */
+    protected function retrieveRandomRecommendation(RecommendationRepository $repository)
+    {
+        $recommendations = $repository->findAll();
+        return $recommendations[0];
+    }
+
+    /**
+     * @param string $feedback
+     *
+     * @return array
+     */
+    protected function feedbackFactory($feedback)
+    {
+        return [
+            'feedback' => $feedback,
+            'context' => [
+                'datetime' => '2016-12-07T12:11:02+00:00',
+                'url' => 'https://en.wikipedia.org/wiki/Abortion'
+            ]
+        ];
+    }
+
     protected static function loadFixtures(Client $client)
     {
         $container = $client->getContainer();
@@ -199,5 +347,24 @@ class ApiControllerTest extends WebTestCase
         preg_match($uriPattern, $url, $matches);
         $uri = $matches[1];
         return $uri;
+    }
+
+    /**
+     * @param int $recommendationId
+     *
+     * @return string
+     */
+    private function getFeedbackUrl($recommendationId)
+    {
+        $route = sprintf('/api/v2/recommendations/%d/feedbacks', $recommendationId);
+        return $route;
+    }
+
+    /**
+     * @return Registry
+     */
+    private function getDoctrine()
+    {
+        return self::$container->get('doctrine');
     }
 }
