@@ -381,6 +381,9 @@ class Recommendation
         return $this->feedbacks;
     }
 
+    /**
+     * @return int
+     */
     public function getApprovedFeedbacksCount()
     {
         return $this->getFeedbacks()->filter(function(Feedback $feedback) {
@@ -388,6 +391,9 @@ class Recommendation
         })->count();
    }
 
+    /**
+     * @return int
+     */
     public function getDismissedFeedbacksCount()
     {
         return $this->getFeedbacks()->filter(function(Feedback $feedback) {
@@ -395,6 +401,9 @@ class Recommendation
         })->count();
     }
 
+    /**
+     * @return int
+     */
     public function getReportedFeedbacksCount()
     {
         return $this->getFeedbacks()->filter(function(Feedback $feedback) {

@@ -54,8 +54,6 @@ class Feedback
     private $contextUrl;
 
     /**
-     * Alternative constructor.
-     *
      * @param Recommendation $recommendation
      * @param string         $type
      * @param array         $context
@@ -68,18 +66,24 @@ class Feedback
        $this->contextUrl = array_key_exists('url', $context) ? $context['url'] : null;
    }
 
+    /**
+     * @return string
+     */
    public function getType()
    {
        return $this->type;
    }
 
+    /**
+     * @return FeedbackContext
+     */
    public function getContext()
    {
        return new FeedbackContext($this->contextDatetime, $this->contextUrl);
    }
 
     /**
-     * @param $type
+     * @param string $type
      */
     private function setType($type)
     {
