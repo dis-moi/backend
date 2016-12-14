@@ -83,6 +83,14 @@ class Recommendation
     private $note;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Feedback", mappedBy="recommendation", cascade={"persist", "remove"}, orphanRemoval=true)
+     *
+     */
+    private $feedbacks;
+
+    /**
      * Get id
      *
      * @return int
@@ -363,5 +371,34 @@ class Recommendation
     public function setNote($note)
     {
         $this->note = $note;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFeedbacks()
+    {
+        return $this->feedbacks;
+    }
+
+    public function getApprovedFeedbacksCount()
+    {
+        return $this->getFeedbacks()->filter(function(Feedback $feedback) {
+            return $feedback->getType() == Feedback::APPROVE;
+        })->count();
+   }
+
+    public function getDismissedFeedbacksCount()
+    {
+        return $this->getFeedbacks()->filter(function(Feedback $feedback) {
+            return $feedback->getType() == Feedback::DISMISS;
+        })->count();
+    }
+
+    public function getReportedFeedbacksCount()
+    {
+        return $this->getFeedbacks()->filter(function(Feedback $feedback) {
+            return $feedback->getType() == Feedback::REPORT;
+        })->count();
     }
 }

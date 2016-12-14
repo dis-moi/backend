@@ -5,6 +5,7 @@ namespace AppBundle\Entity\BrowserExtension;
 
 class Recommendation
 {
+    public $id;
     public $contributor;
     public $visibility;
     public $title;

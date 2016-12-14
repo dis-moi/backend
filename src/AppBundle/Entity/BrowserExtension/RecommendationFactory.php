@@ -34,6 +34,7 @@ class RecommendationFactory
 
         $dto = new BrowserExtension\Recommendation();
 
+        $dto->id = $recommendation->getId();
         $dto->visibility = $recommendation->getVisibility()->getValue();
         $dto->title = $recommendation->getTitle();
         $dto->description = DataConverter::convertNewLinesToParagraphs($recommendation->getDescription());

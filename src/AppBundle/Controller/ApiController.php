@@ -9,11 +9,13 @@ use AppBundle\Entity\BrowserExtension\MatchingContextFactory;
 use AppBundle\Entity\BrowserExtension\RecommendationFactory;
 use AppBundle\Entity\Contributor;
 use AppBundle\Entity\Editor;
+use AppBundle\Entity\Feedback;
 use AppBundle\Entity\Recommendation;
 use AppBundle\Entity\Criterion;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -106,5 +108,38 @@ class ApiController extends FOSRestController
             function(Contributor $contributor) use($request) {
                 return $request->getSchemeAndHttpHost().$this->get('vich_uploader.storage')->resolveUri($contributor, 'imageFile');
         }))->createFromRecommendation($recommendation);
+    }
+
+    /**
+     * @Route("/recommendations/{id}/feedbacks")
+     * @ParamConverter("recommendation", class="AppBundle:Recommendation")
+     * @View()
+     */
+    public function createRecommendationFeedbackAction(Recommendation $recommendation, Request $request)
+    {
+        if(!$recommendation->hasPublicVisibility()) throw $this->createNotFoundException(
+            'No recommendation exists'
+        );
+        $postedJsonFeedback = $request->getContent();
+        $postedFeedback = json_decode($postedJsonFeedback, $asArray = true);
+
+        $feedbackType = array_key_exists('feedback', $postedFeedback) ? $postedFeedback['feedback'] : null;
+        $feedbackContext = array_key_exists('context', $postedFeedback) ? $postedFeedback['context'] : [];
+
+        try {
+            $feedback = new Feedback(
+                $recommendation,
+                $feedbackType,
+                $feedbackContext
+            );
+        } catch(\InvalidArgumentException $e) {
+            return new JsonResponse(['message' => $e->getMessage()], $statusClientError = 400);
+        }
+
+        $feedbackRepository = $this->getDoctrine()->getRepository('AppBundle:Feedback');
+        $this->getDoctrine()->getManager()->persist($feedback);
+        $this->getDoctrine()->getManager()->flush();
+
+        return new JsonResponse([], $statusCreated = 201);
     }
 }
