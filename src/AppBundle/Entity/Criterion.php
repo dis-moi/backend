@@ -98,4 +98,18 @@ class Criterion
         $text = strtolower(trim($text, '-'));
         return $text;
     }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Criterion
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
 }
