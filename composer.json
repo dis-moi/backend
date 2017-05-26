@@ -29,7 +29,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "sensio/generator-bundle": "^3.0",
         "javiereguiluz/easyadmin-bundle": "^1.16",
-        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "friendsofsymfony/user-bundle": "~2.0.0",
         "doctrine/doctrine-migrations-bundle": "^1.1",
         "friendsofsymfony/rest-bundle": "^1.7",
         "jms/serializer-bundle": "^1.1",

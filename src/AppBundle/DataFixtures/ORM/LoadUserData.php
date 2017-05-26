@@ -32,6 +32,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $user->setEnabled(true);
         $user->setRoles(array('ROLE_SUPER_ADMIN'));
 
+
         // the 'security.password_encoder' service requires Symfony 2.6 or higher
         $encoder = $factory->getEncoder($user);
         $password = $encoder->encodePassword('LM3M!P4SSW0RD', $user->getSalt());
