@@ -55,7 +55,7 @@ class ApiController extends FOSRestController
      * @Route("/criteria")
      * @View()
      */
-    public function geCriteriaAction() {
+    public function getCriteriaAction() {
         $criteria = $this->getDoctrine()->getRepository('AppBundle:Criterion')->findAll();
 
         if (!$criteria) {
@@ -71,7 +71,7 @@ class ApiController extends FOSRestController
      * @Route("/editors")
      * @View()
      */
-    public function geEditorsAction() {
+    public function getEditorsAction() {
         $editors = $this->getDoctrine()->getRepository('AppBundle:Editor')->findAll();
 
         if (!$editors) {
