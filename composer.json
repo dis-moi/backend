@@ -35,6 +35,7 @@
         "jms/serializer-bundle": "^1.1",
         "ocramius/proxy-manager": "^2.0.2",
         "vich/uploader-bundle": "^1.1",
+        "league/uri":"^5.0",
         "marc-mabe/php-enum": "^2.2"
     },
     "require-dev": {

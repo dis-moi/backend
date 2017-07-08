@@ -45,7 +45,7 @@ class Recommendation
     private $matchingContexts;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Channel")
+     * @ORM\ManyToMany(targetEntity="Channel", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $channels;

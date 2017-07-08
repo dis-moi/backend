@@ -30,4 +30,15 @@ class MatchingContextFactory
             $matchingContext->getUrlRegex()
         );
     }
+
+    /**
+     * @param array $matchingContexts
+     * @return MatchingContext[]
+     */
+    public function createFromMatchingContexts(array $matchingContexts)
+    {
+        return array_map(function($mc) {
+            return $this->createFromMatchingContext($mc);
+        }, $matchingContexts);
+    }
 }

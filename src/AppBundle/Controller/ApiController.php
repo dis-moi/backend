@@ -12,6 +12,9 @@ use AppBundle\Entity\Editor;
 use AppBundle\Entity\Feedback;
 use AppBundle\Entity\Recommendation;
 use AppBundle\Entity\Criterion;
+use AppBundle\Query\MatchingContext\FindMatchingContextsByChannelQuery;
+use AppBundle\Query\MatchingContext\FindMatchingContextsByChannelQueryHandler;
+use AppBundle\Query\MatchingContext\MatchingContextCriterion;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -49,6 +52,25 @@ class ApiController extends FOSRestController
         return array_map(function ($matchingContext) use ($factory){
             return $factory->createFromMatchingContext($matchingContext);
         }, $matchingContexts);
+    }
+
+    /**
+     * @Route("/{channel}/matchingcontexts")
+     * @View()
+     */
+    public function getMatchingContextsByChannelAction(string $channel, Request $request) {
+        $handler = new FindMatchingContextsByChannelQueryHandler(
+            $this->getDoctrine()->getRepository('AppBundle:MatchingContext'),
+            new MatchingContextFactory(function ($id) {
+                return $this->get('router')->generate('app_api_getrecommendation', ['id' => $id], Router::ABSOLUTE_URL);
+            }));
+
+        return $handler->handle(
+            new FindMatchingContextsByChannelQuery(
+                $channel,
+                MatchingContextCriterion::fromRequest($request))
+        );
+
     }
 
     /**
