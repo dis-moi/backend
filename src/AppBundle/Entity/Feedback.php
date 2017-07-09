@@ -108,4 +108,86 @@ class Feedback
             $this->contextDatetime = new \DateTime($context['datetime']);
         }
     }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set contextDatetime
+     *
+     * @param \DateTime $contextDatetime
+     *
+     * @return Feedback
+     */
+    public function setContextDatetime($contextDatetime)
+    {
+        $this->contextDatetime = $contextDatetime;
+
+        return $this;
+    }
+
+    /**
+     * Get contextDatetime
+     *
+     * @return \DateTime
+     */
+    public function getContextDatetime()
+    {
+        return $this->contextDatetime;
+    }
+
+    /**
+     * Set contextUrl
+     *
+     * @param string $contextUrl
+     *
+     * @return Feedback
+     */
+    public function setContextUrl($contextUrl)
+    {
+        $this->contextUrl = $contextUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get contextUrl
+     *
+     * @return string
+     */
+    public function getContextUrl()
+    {
+        return $this->contextUrl;
+    }
+
+    /**
+     * Set recommendation
+     *
+     * @param \AppBundle\Entity\Recommendation $recommendation
+     *
+     * @return Feedback
+     */
+    public function setRecommendation(\AppBundle\Entity\Recommendation $recommendation = null)
+    {
+        $this->recommendation = $recommendation;
+
+        return $this;
+    }
+
+    /**
+     * Get recommendation
+     *
+     * @return \AppBundle\Entity\Recommendation
+     */
+    public function getRecommendation()
+    {
+        return $this->recommendation;
+    }
 }

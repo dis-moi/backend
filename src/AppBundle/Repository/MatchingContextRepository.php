@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 use AppBundle\Entity\RecommendationVisibility;
+use AppBundle\Query\MatchingContext\MatchingContextCriterion;
+use Doctrine\DBAL\Query\QueryBuilder;
 
 /**
  * MatchingContextRepository
@@ -33,15 +35,7 @@ class MatchingContextRepository extends \Doctrine\ORM\EntityRepository
      */
     public function findAllPublicMatchingContext(array $criterionSlugs, array $editorIds)
     {
-        $queryBuilder = $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select('mc')
-            ->from('AppBundle:MatchingContext', 'mc')
-            ->innerJoin('mc.recommendation', 'recommendation')
-            ->leftJoin('recommendation.criteria', 'criteria')
-            ->leftJoin('recommendation.resource', 'resource')
-            ->where('recommendation.visibility=:visibility');
-        $queryBuilder->setParameter('visibility', RecommendationVisibility::PUBLIC_VISIBILITY());
+        $queryBuilder = $this->createQueryForPublicMatchingContexts();
         if (!empty($criterionSlugs)) {
             $queryBuilder->andWhere('criteria.slug IN (:criteria_slugs)');
             $queryBuilder->setParameter('criteria_slugs', $criterionSlugs);
@@ -51,5 +45,47 @@ class MatchingContextRepository extends \Doctrine\ORM\EntityRepository
             $queryBuilder->setParameter('editorIds', $editorIds);
         }
         return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function findAllPublicByChannel(string $channelName, MatchingContextCriterion $criterion)
+    {
+        $queryBuilder = $this->createQueryForPublicMatchingContexts();
+        $queryBuilder = $this->extractAndApplyCriterion($queryBuilder, $criterion);
+        $queryBuilder->leftJoin('recommendation.channels', 'channel');
+        $queryBuilder->andWhere('channel.name=:channel');
+        $queryBuilder->setParameter('channel', strtoupper($channelName));
+
+        return $queryBuilder->getQuery()->getResult();
+
+    }
+
+    public function extractAndApplyCriterion(\Doctrine\ORM\QueryBuilder $queryBuilder, MatchingContextCriterion $criterion) {
+        if($criterion->hasCriteria()) {
+            $queryBuilder->andWhere('criteria.slug IN (:criteria_slugs)');
+            $queryBuilder->setParameter('criteria_slugs', $criterion->criteria);
+        }
+        if($criterion->hasExcludedEditors()) {
+            $queryBuilder->andWhere('resource.editor IS NULL OR resource.editor NOT IN (:editorIds)');
+            $queryBuilder->setParameter('editorIds', $criterion->excludedEditors);
+        }
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function createQueryForPublicMatchingContexts(): \Doctrine\ORM\QueryBuilder
+    {
+        $queryBuilder = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('mc')
+            ->from('AppBundle:MatchingContext', 'mc')
+            ->innerJoin('mc.recommendation', 'recommendation')
+            ->leftJoin('recommendation.criteria', 'criteria')
+            ->leftJoin('recommendation.resource', 'resource')
+            ->where('recommendation.visibility=:visibility');
+        $queryBuilder->setParameter('visibility', RecommendationVisibility::PUBLIC_VISIBILITY());
+        return $queryBuilder;
     }
 }

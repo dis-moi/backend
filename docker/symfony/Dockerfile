@@ -1,4 +1,4 @@
-FROM php:7.0
+FROM php:7.1
 
 RUN apt-get update
 RUN apt-get install -q -y  git zip libcurl4-gnutls-dev libmcrypt-dev libicu-dev g++

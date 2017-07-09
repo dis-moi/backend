@@ -12,6 +12,9 @@ use AppBundle\Entity\Editor;
 use AppBundle\Entity\Feedback;
 use AppBundle\Entity\Recommendation;
 use AppBundle\Entity\Criterion;
+use AppBundle\Query\MatchingContext\FindMatchingContextsByChannelQuery;
+use AppBundle\Query\MatchingContext\FindMatchingContextsByChannelQueryHandler;
+use AppBundle\Query\MatchingContext\MatchingContextCriterion;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
@@ -52,10 +55,29 @@ class ApiController extends FOSRestController
     }
 
     /**
+     * @Route("/{channel}/matchingcontexts")
+     * @View()
+     */
+    public function getMatchingContextsByChannelAction(string $channel, Request $request) {
+        $handler = new FindMatchingContextsByChannelQueryHandler(
+            $this->getDoctrine()->getRepository('AppBundle:MatchingContext'),
+            new MatchingContextFactory(function ($id) {
+                return $this->get('router')->generate('app_api_getrecommendation', ['id' => $id], Router::ABSOLUTE_URL);
+            }));
+
+        return $handler->handle(
+            new FindMatchingContextsByChannelQuery(
+                $channel,
+                MatchingContextCriterion::fromRequest($request))
+        );
+
+    }
+
+    /**
      * @Route("/criteria")
      * @View()
      */
-    public function geCriteriaAction() {
+    public function getCriteriaAction() {
         $criteria = $this->getDoctrine()->getRepository('AppBundle:Criterion')->findAll();
 
         if (!$criteria) {
@@ -71,7 +93,7 @@ class ApiController extends FOSRestController
      * @Route("/editors")
      * @View()
      */
-    public function geEditorsAction() {
+    public function getEditorsAction() {
         $editors = $this->getDoctrine()->getRepository('AppBundle:Editor')->findAll();
 
         if (!$editors) {

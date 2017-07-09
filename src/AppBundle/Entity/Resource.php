@@ -22,7 +22,7 @@ class Resource
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Recommendation")
+     * @ORM\OneToOne(targetEntity="Recommendation", inversedBy="resource")
      */
     private $recommendation;
 

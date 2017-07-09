@@ -45,6 +45,12 @@ class Recommendation
     private $matchingContexts;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Channel", fetch="EAGER")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $channels;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Criterion", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
@@ -155,6 +161,7 @@ class Recommendation
      */
     public function __construct()
     {
+        $this->channels = new ArrayCollection();
         $this->alternatives = new ArrayCollection();
         $this->matchingContexts = new ArrayCollection();
         $this->criteria = new ArrayCollection();
@@ -409,5 +416,63 @@ class Recommendation
         return $this->getFeedbacks()->filter(function(Feedback $feedback) {
             return $feedback->getType() == Feedback::REPORT;
         })->count();
+    }
+
+    /**
+     * Add channel
+     *
+     * @param \AppBundle\Entity\Channel $channel
+     *
+     * @return Recommendation
+     */
+    public function addChannel(\AppBundle\Entity\Channel $channel)
+    {
+        $this->channels[] = $channel;
+
+        return $this;
+    }
+
+    /**
+     * Remove channel
+     *
+     * @param \AppBundle\Entity\Channel $channel
+     */
+    public function removeChannel(\AppBundle\Entity\Channel $channel)
+    {
+        $this->channels->removeElement($channel);
+    }
+
+    /**
+     * Get channels
+     *
+     * @return ArrayCollection
+     */
+    public function getChannels()
+    {
+        return $this->channels;
+    }
+
+    /**
+     * Add feedback
+     *
+     * @param \AppBundle\Entity\Feedback $feedback
+     *
+     * @return Recommendation
+     */
+    public function addFeedback(\AppBundle\Entity\Feedback $feedback)
+    {
+        $this->feedbacks[] = $feedback;
+
+        return $this;
+    }
+
+    /**
+     * Remove feedback
+     *
+     * @param \AppBundle\Entity\Feedback $feedback
+     */
+    public function removeFeedback(\AppBundle\Entity\Feedback $feedback)
+    {
+        $this->feedbacks->removeElement($feedback);
     }
 }
