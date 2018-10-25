@@ -18,7 +18,7 @@ swiftmailer:
 doctrine:
     dbal:
         driver:   pdo_mysql
-        host:     mysql_test
-        dbname:   craft_test
+        host:     dbtest
+        dbname:   craft
         user:     root
         password: password
