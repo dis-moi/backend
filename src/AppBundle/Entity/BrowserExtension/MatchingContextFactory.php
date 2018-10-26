@@ -43,4 +43,3 @@ class MatchingContextFactory
         }, $matchingContexts);
     }
 }
-
