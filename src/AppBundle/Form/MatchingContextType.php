@@ -17,6 +17,7 @@ class MatchingContextType extends AbstractType
         $builder
             ->add('description')
             ->add('urlRegex')
+            ->add('excludeUrlRegex')
         ;
     }
     
