@@ -46,7 +46,7 @@ services:
     - dbtest-data:/var/lib/postgresql/data:rw
     environment:
     - MYSQL_ROOT_PASSWORD=password
-    - MYSQL_DATABASE=craft_test
+    - MYSQL_DATABASE=craft
     restart: always
 
 volumes:
