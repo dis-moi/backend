@@ -384,30 +384,51 @@ class Recommendation
     /**
      * @return int
      */
-    public function getApprovedFeedbacksCount()
+    public function getDisplayedFeedbackCount()
     {
-        return $this->getFeedbacks()->filter(function(Feedback $feedback) {
-            return $feedback->getType() == Feedback::APPROVE;
-        })->count();
-   }
-
-    /**
-     * @return int
-     */
-    public function getDismissedFeedbacksCount()
-    {
-        return $this->getFeedbacks()->filter(function(Feedback $feedback) {
-            return $feedback->getType() == Feedback::DISMISS;
-        })->count();
+        return $this->getFeedbackCount(Feedback::DISPLAY);
     }
 
     /**
      * @return int
      */
-    public function getReportedFeedbacksCount()
+    public function getClickedFeedbackCount()
     {
-        return $this->getFeedbacks()->filter(function(Feedback $feedback) {
-            return $feedback->getType() == Feedback::REPORT;
+        return $this->getFeedbackCount(Feedback::CLICK);
+    }
+
+    /**
+     * @return int
+     */
+    public function getApprovedFeedbackCount()
+    {
+        return $this->getFeedbackCount(Feedback::APPROVE);
+   }
+
+    /**
+     * @return int
+     */
+    public function getDismissedFeedbackCount()
+    {
+        return $this->getFeedbackCount(Feedback::DISMISS);
+    }
+
+    /**
+     * @return int
+     */
+    public function getReportedFeedbackCount()
+    {
+        return $this->getFeedbackCount(Feedback::REPORT);
+    }
+
+    /**
+     * @param string $type
+     * @return int
+     */
+    protected function getFeedbackCount($type)
+    {
+        return $this->getFeedbacks()->filter(function(Feedback $feedback) use ($type) {
+            return $feedback->getType() === $type;
         })->count();
     }
 }

@@ -13,6 +13,8 @@ use Symfony\Component\Validator\Constraints\DateTime;
  */
 class Feedback
 {
+    const DISPLAY = 'display';
+    const CLICK = 'click';
 
     const APPROVE = 'approve';
     const DISMISS = 'dismiss';
@@ -87,7 +89,7 @@ class Feedback
      */
     private function setType($type)
     {
-        if (!in_array($type, [self::APPROVE, self::DISMISS, self::REPORT])) {
+        if (!in_array($type, [self::APPROVE, self::DISMISS, self::REPORT, self::DISPLAY, self::CLICK])) {
             throw new \InvalidArgumentException(sprintf('Invalid value given for feedback type : %s', $type));
         }
         $this->type = $type;
