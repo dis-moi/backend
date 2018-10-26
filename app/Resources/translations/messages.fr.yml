@@ -1,7 +1,7 @@
 Title: Titre
 Criteria: Critères
 Criterion: Critère
-Matching contexts: Produits ciblés
+Matching contexts: Pages cibles
 Url regex: Url
 Url to redirect: Url
 Contributor: Contributeur
@@ -12,6 +12,6 @@ Image file: Avatar
 Public: Publique
 Private: Privée
 Visibility: Visibilité
-Resource: Ressource
+Resource: Pour en savoir plus
 Editor: Editeur
 Channel's name: Nom du channel
