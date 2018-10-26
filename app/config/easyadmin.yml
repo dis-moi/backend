@@ -10,6 +10,24 @@ easy_admin:
         Recommendation:
             class: AppBundle\Entity\Recommendation
             label: 'Recommendation'
+            search:
+                fields:
+                    - alternatives.urlToRedirect
+                    - alternatives.label
+                    - alternatives.description
+                    - matchingContexts.urlRegex
+                    - matchingContexts.excludeUrlRegex
+                    - matchingContexts.description
+                    - criteria.label
+                    - criteria.slug
+                    - title
+                    - resource.label
+                    - resource.description
+                    - resource.url
+                    - contributor.name
+                    - contributor.organization
+                    - description
+                    - note
             form:
                 fields:
                     - title
