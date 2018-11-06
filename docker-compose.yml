@@ -1,0 +1,54 @@
+version: '3.4'
+services:
+  php:
+    build:
+      context: .
+      target: platform_php
+    depends_on:
+    - db
+    - dbtest
+    env_file:
+    - .env
+    # Comment out these volumes in production
+    volumes:
+    - .:/var/www:rw,cached
+    # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
+    # - .:/var/www:rw
+
+  nginx:
+    build:
+      context: .
+      target: platform_nginx
+    depends_on:
+    - php
+    # Comment out this volume in production
+    volumes:
+    - ./web:/var/www/web:rw,cached
+    ports:
+    - "8088:80"
+
+  db:
+    image: mariadb:10.2
+    ports:
+    - '3308:3306'
+    volumes:
+    - db-data:/var/lib/postgresql/data:rw
+    environment:
+    - MYSQL_ROOT_PASSWORD=password
+    - MYSQL_DATABASE=craft
+    restart: always
+
+  dbtest:
+    image: mariadb:10.2
+    ports:
+    - '3309:3306'
+    volumes:
+    - dbtest-data:/var/lib/postgresql/data:rw
+    environment:
+    - MYSQL_ROOT_PASSWORD=password
+    - MYSQL_DATABASE=craft
+    restart: always
+
+volumes:
+  db-data: {}
+  dbtest-data: {}
