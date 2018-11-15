@@ -22,7 +22,6 @@ class AdminController extends BaseAdminController
         $this->get('fos_user.user_manager')->updateUser($user, false);
     }
 
-
     // Override Recommendation Search
     protected function createRecommendationSearchQueryBuilder($entityClass, $searchQuery, array $searchableFields, $sortField = null, $sortDirection = null, $dqlFilter = null)
     {

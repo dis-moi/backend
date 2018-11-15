@@ -13,9 +13,9 @@ services:
     volumes:
     - .:/var/www:rw,cached
     # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
-    # - ./api/var:/var/www/var:rw
+    # - .:/var/www:rw
 
-  api:
+  nginx:
     build:
       context: .
       target: platform_nginx
