@@ -39,6 +39,13 @@ class MatchingContext
     /**
      * @var string
      *
+     * @ORM\Column(name="excludeUrlRegex", type="string", length=255, nullable=true)
+     */
+    private $excludeUrlRegex;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
      */
     private $description;
@@ -78,9 +85,29 @@ class MatchingContext
     }
 
     /**
+     * @param null|string $excludeUrlRegex
+     *
+     * @return MatchingContext
+     */
+    public function setExcludeUrlRegex($excludeUrlRegex)
+    {
+        $this->excludeUrlRegex = $excludeUrlRegex;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getExcludeUrlRegex()
+    {
+        return $this->excludeUrlRegex;
+    }
+
+    /**
      * Set description
      *
-     * @param string $description
+     * @param null|string $description
      *
      * @return MatchingContext
      */
@@ -94,7 +121,7 @@ class MatchingContext
     /**
      * Get description
      *
-     * @return string
+     * @return null|string
      */
     public function getDescription()
     {
@@ -102,37 +129,13 @@ class MatchingContext
     }
 
     /**
-     * Set expirationDate
-     *
-     * @param \DateTime $expirationDate
-     *
-     * @return MatchingContext
-     */
-    public function setExpirationDate($expirationDate)
-    {
-        $this->expirationDate = $expirationDate;
-
-        return $this;
-    }
-
-    /**
-     * Get expirationDate
-     *
-     * @return \DateTime
-     */
-    public function getExpirationDate()
-    {
-        return $this->expirationDate;
-    }
-
-    /**
      * Set recommendation
      *
-     * @param \AppBundle\Entity\Recommendation $recommendation
+     * @param Recommendation $recommendation
      *
      * @return MatchingContext
      */
-    public function setRecommendation(\AppBundle\Entity\Recommendation $recommendation = null)
+    public function setRecommendation(Recommendation $recommendation = null)
     {
         $this->recommendation = $recommendation;
 
@@ -142,7 +145,7 @@ class MatchingContext
     /**
      * Get recommendation
      *
-     * @return \AppBundle\Entity\Recommendation
+     * @return Recommendation
      */
     public function getRecommendation()
     {
