@@ -22,7 +22,7 @@ docker-compose build
 docker-compose up
 . ./alias
 aphp composer install
-dropNmigrate && dLoad
+dMigrate && dLoad
 # avoid symlinks break
 aphp bin/console assets:install web
 ```

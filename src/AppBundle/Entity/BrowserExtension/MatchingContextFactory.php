@@ -27,7 +27,8 @@ class MatchingContextFactory
     {
         return new BrowserExtension\MatchingContext(
             $this->pathBuilder->__invoke($matchingContext->getRecommendation()->getId()),
-            $matchingContext->getUrlRegex()
+            $matchingContext->getUrlRegex(),
+            $matchingContext->getExcludeUrlRegex()
         );
     }
 }
