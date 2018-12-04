@@ -1,6 +1,7 @@
 version: '3.4'
 services:
   php:
+    container_name: kraft-backend_php
     build:
       context: .
       target: platform_php
@@ -16,6 +17,7 @@ services:
     # - .:/var/www:rw
 
   nginx:
+    container_name: kraft-backend_nginx
     build:
       context: .
       target: platform_nginx
@@ -28,6 +30,7 @@ services:
     - "8088:80"
 
   db:
+    container_name: kraft-backend_db
     image: mariadb:10.2
     ports:
     - '3308:3306'
@@ -39,6 +42,7 @@ services:
     restart: always
 
   dbtest:
+    container_name: kraft-backend_dbtest
     image: mariadb:10.2
     ports:
     - '3309:3306'
