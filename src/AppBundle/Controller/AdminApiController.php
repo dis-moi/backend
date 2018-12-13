@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Router;
 class AdminApiController extends FOSRestController
 {
     /**
-     * @Route("/matchingcontexts/private")
+     * @Route("/matchingcontexts")
      * @View()
      */
     public function getMatchingcontextsAction()

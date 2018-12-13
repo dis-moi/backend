@@ -14,3 +14,21 @@ To run the tests
 
     `vendor/bin/phpunit` 
 
+
+## Dev (w/ docker)
+### Fresh install
+```sh
+docker-compose build
+docker-compose up
+. ./alias
+aphp composer install
+dMigrate && dLoad
+# avoid symlinks break
+aphp bin/console assets:install web
+```
+
+### Tests
+```sh
+# clear cache in test envenv && run phpunit
+runtests
+```

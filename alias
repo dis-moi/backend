@@ -1,0 +1,7 @@
+alias aphp="docker exec -ti kraft-backend_php"
+alias runtests="aphp bin/console doctrine:migrations:migrate -n --env=test && aphp vendor/bin/phpunit"
+alias dropDB="aphp bin/console doctrine:schema:drop --force --full-database"
+alias dMigrate="aphp bin/console doctrine:migrations:migrate -n"
+alias dLoad="aphp bin/console doctrine:fixtures:load -n"
+alias dropNmigrate="dropDB && dMigrate"
+alias logintoDB="docker exec -ti kraft-backend_db mysql -uroot -ppassword -D craft"

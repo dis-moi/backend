@@ -10,6 +10,24 @@ easy_admin:
         Recommendation:
             class: AppBundle\Entity\Recommendation
             label: 'Recommendation'
+            search:
+                fields:
+                    - alternatives.urlToRedirect
+                    - alternatives.label
+                    - alternatives.description
+                    - matchingContexts.urlRegex
+                    - matchingContexts.excludeUrlRegex
+                    - matchingContexts.description
+                    - criteria.label
+                    - criteria.slug
+                    - title
+                    - resource.label
+                    - resource.description
+                    - resource.url
+                    - contributor.name
+                    - contributor.organization
+                    - description
+                    - note
             form:
                 fields:
                     - title
@@ -32,9 +50,12 @@ easy_admin:
                     - matchingContexts
                     - criteria
                     - resource
-                    - { property : 'approvedFeedbacksCount', label: 'Approuvés' }
-                    - { property : 'dismissedFeedbacksCount', label: 'Ignorés' }
-                    - { property : 'reportedFeedbacksCount', label: 'Signalés' }
+                    - { property : 'displayedFeedbackCount', label: 'Vues' }
+                    - { property : 'clickedFeedbackCount', label: 'Cliqués' }
+                    - { property : 'approvedFeedbackCount', label: 'Approuvés' }
+                    - { property : 'approvedFeedbackCount', label: 'Approuvés' }
+                    - { property : 'dismissedFeedbackCount', label: 'Ignorés' }
+                    - { property : 'reportedFeedbackCount', label: 'Signalés' }
         MatchingContext:
             class: AppBundle\Entity\MatchingContext
             disabled_actions: ['new', 'edit']
@@ -58,8 +79,29 @@ easy_admin:
                     - label
         User:
             class: AppBundle\Entity\User
-            form:
-                fields: ['enabled', 'username', 'email', 'roles', 'lastLogin']
+            list:
+                fields:
+                - username
+                - email
+                - enabled
+                - lastLogin
+                - roles
+            edit:
+                fields:
+                    - username
+                    - email
+                    - enabled
+                    - { property: 'plainPassword', type: 'text', type_options: { required: false } }
+                    - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+            new:
+                fields:
+                - username
+                - email
+                - enabled
+                - { property: 'plainPassword', type: 'text', type_options: { required: true } }
+                - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+
+
         Contributor:
             class: AppBundle\Entity\Contributor
             form:

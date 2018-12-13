@@ -39,7 +39,7 @@ class Contributor
     private $organization;
 
     /**
-     * @var datetime $updatedAt
+     * @var \Datetime $updatedAt
      * Needed to trigger forced update when an avatar is uploaded
      * @ORM\Column(type="datetime", nullable = true)
      */
@@ -49,6 +49,18 @@ class Contributor
      * @ORM\OneToMany(targetEntity="Recommendation", mappedBy="contributor")
      */
     private $recommendations;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    private $image;
+
+    /**
+     * @Vich\UploadableField(mapping="contributor_avatars", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
 
     /**
      * Get id
@@ -107,18 +119,6 @@ class Contributor
     {
         return $this->organization;
     }
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @var string
-     */
-    private $image;
-
-    /**
-     * @Vich\UploadableField(mapping="contributor_avatars", fileNameProperty="image")
-     * @var File
-     */
-    private $imageFile;
 
     public function setImageFile(File $image = null)
     {
