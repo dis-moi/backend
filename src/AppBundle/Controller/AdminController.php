@@ -23,13 +23,13 @@ class AdminController extends BaseAdminController
     }
 
 
-    // Override Recommendation Search
-    protected function createRecommendationSearchQueryBuilder($entityClass, $searchQuery, array $searchableFields, $sortField = null, $sortDirection = null, $dqlFilter = null)
+    // Override Notice Search
+    protected function createNoticeSearchQueryBuilder($entityClass, $searchQuery, array $searchableFields, $sortField = null, $sortDirection = null, $dqlFilter = null)
     {
         return $this->get('easyadmin.query_builder')->createSearchQueryBuilder($this->entity, $searchQuery, $sortField, $sortDirection, $dqlFilter);
     }
 
-    public function searchRecommendationAction()
+    public function searchNoticeAction()
     {
         $query = trim($this->request->query->get('query'));
         // if the search query is empty, redirect to the 'list' action
