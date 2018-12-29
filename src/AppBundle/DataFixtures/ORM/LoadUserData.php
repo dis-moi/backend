@@ -25,6 +25,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $userManager = $this->container->get('fos_user.user_manager');
         $factory = $this->container->get('security.encoder_factory');
 
+        /** @var User $user */
         $user = $userManager->createUser();
 
         $user->setUsername('lmem');

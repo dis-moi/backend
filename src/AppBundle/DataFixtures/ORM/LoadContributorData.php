@@ -15,11 +15,17 @@ class LoadContributorData extends AbstractFixture
     {
         $contributor = new Contributor();
         $contributor->setName("John Doe");
-        $contributor->setImage('photo.jpg');
-        $contributor->setOrganization("LMEM");
         $manager->persist($contributor);
-        $manager->flush();
+
         $this->addReference('contributor', $contributor);
+
+        $contributor = new Contributor();
+        $contributor->setName("Contributor 2");
+        $manager->persist($contributor);
+
+        $this->addReference('contributor2', $contributor);
+
+        $manager->flush();
     }
 
 }

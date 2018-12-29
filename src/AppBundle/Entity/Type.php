@@ -1,16 +1,16 @@
 <?php
-
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * Criterion
+ * Type
  *
- * @ORM\Table(name="criterion")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CriterionRepository")
+ * @ORM\Table(name="type")
+ * @ORM\Entity
  */
-class Criterion
+class Type
 {
     /**
      * @var int
@@ -25,6 +25,8 @@ class Criterion
      * @var string
      *
      * @ORM\Column(name="label", type="string", length=255)
+     *
+     * @Groups({"v3:list"})
      */
     private $label;
 
@@ -32,6 +34,8 @@ class Criterion
      * @var string
      *
      * @ORM\Column(name="slug", type="string", length=255, nullable=true)
+     *
+     * @Groups({"v3:list"})
      */
     private $slug;
 
@@ -50,7 +54,7 @@ class Criterion
      *
      * @param string $label
      *
-     * @return Criterion
+     * @return Type
      */
     public function setLabel($label)
     {
@@ -104,7 +108,7 @@ class Criterion
      *
      * @param string $slug
      *
-     * @return Criterion
+     * @return Type
      */
     public function setSlug($slug)
     {
