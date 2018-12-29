@@ -17,18 +17,6 @@ fos_user_change_password:
     prefix: "/profile"
     schemes: [https]
 
-api_v1:
-    resource: "@AppBundle/Controller/ApiV1Controller.php"
-    type:     annotation
-    prefix:   /api/v1
-    schemes: [https]
-
-api_v2:
-    resource: "@AppBundle/Controller/ApiController.php"
-    type:     annotation
-    prefix:   /api/v2
-    schemes: [https]
-
 api_v2_admin:
     resource: "@AppBundle/Controller/AdminApiController.php"
     type:     annotation
@@ -39,4 +27,10 @@ easy_admin_bundle:
     resource: "@AppBundle/Controller/AdminController.php"
     type:     annotation
     prefix:   /admin
+    schemes: [https]
+
+api_v3:
+    resource: "@AppBundle/Controller/Api/"
+    type:     annotation
+    prefix:   /api/v3
     schemes: [https]

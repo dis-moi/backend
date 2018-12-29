@@ -1,0 +1,47 @@
+<?php
+
+namespace Tests\AppBundle\Controller\Api;
+
+use AppBundle\Controller\Api\PostNoticeRatingAction;
+use AppBundle\Entity\Notice;
+use AppBundle\Entity\Rating;
+use AppBundle\Repository\NoticeRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\SerializerInterface;
+
+class PostNoticeRatingActionTest extends TestCase
+{
+    public function test__invoke()
+    {
+        $notice = $this->getMockBuilder(Notice::class)
+            ->getMock();
+
+        $serializer = $this->getMockBuilder(SerializerInterface::class)
+            ->getMockForAbstractClass();
+        $noticeRepository = $this->getMockBuilder(NoticeRepository::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $entityManager = $this->getMockBuilder(EntityManagerInterface::class)
+            ->getMock();
+        $request = $this->getMockBuilder(Request::class)
+            ->getMock();
+
+        $request->expects($this->once())->method('getContent')
+            ->willReturn('foo');
+
+        $noticeRepository->expects($this->once())->method('getOne')
+            ->willReturn($notice);
+
+        $serializer->expects($this->once())->method('deserialize')
+            ->with('foo', Rating::class, 'json', ['notice' => $notice])
+            ->willReturn('rating');
+
+        $action = new PostNoticeRatingAction($serializer, $noticeRepository, $entityManager);
+
+        $response = $action($request);
+        $this->assertEquals('', $response->getContent());
+        $this->assertEquals(204, $response->getStatusCode());
+    }
+}

@@ -1,14 +1,11 @@
 <?php
+namespace Tests\AppBundle\Helper;
 
-use AppBundle\Entity\BrowserExtension\DataConverter;
+use AppBundle\Helper\DataConverter;
+use PHPUnit\Framework\TestCase;
 
-class DataConverterTest extends PHPUnit_Framework_TestCase
+class DataConverterTest extends TestCase
 {
-
-    public function setup()
-    {
-    }
-
     public function test_convert_newline_to_paragraph_converts_single_line()
     {
         $content = "My simple content";
@@ -35,4 +32,17 @@ class DataConverterTest extends PHPUnit_Framework_TestCase
         $expectedContent = "<p>My simple content</p>\n<p>With some other content. </p>";
         $this->assertEquals($expectedContent, DataConverter::convertNewLinesToParagraphs($content));
     }
+/*
+    public function testItAddUtmSourceToUrl()
+    {
+        $add_utm_source = NoticeFactory::add_utm_source("adomain.fr?query=param");
+        $this->assertEquals("adomain.fr?query=param&utm_source=lmem_assistant", $add_utm_source);
+    }
+
+    public function testItAddUtmSourceToUrlWithoutQueryParam()
+    {
+        $add_utm_source = NoticeFactory::add_utm_source("http://www.adomain.fr");
+        $this->assertEquals("http://www.adomain.fr?utm_source=lmem_assistant", $add_utm_source);
+    }
+    */
 }
