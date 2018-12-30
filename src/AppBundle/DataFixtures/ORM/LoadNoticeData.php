@@ -18,7 +18,7 @@ class LoadNoticeData extends AbstractFixture implements DependentFixtureInterfac
         $notice->setMessage("message");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_ecology'));
-        $notice->setSourceHref('source href 1');
+        $notice->setSourceHref('http://source-href-1.fr');
         $this->addReference('notice_type_ecology', $notice);
         $manager->persist($notice);
 
@@ -27,7 +27,7 @@ class LoadNoticeData extends AbstractFixture implements DependentFixtureInterfac
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_ecology'));
-        $notice->setSourceHref('source href 2');
+        $notice->setSourceHref('http://source-href-2.fr');
         $this->addReference('notice_type_ecology_and_politics', $notice);
         $manager->persist($notice);
 
@@ -36,7 +36,7 @@ class LoadNoticeData extends AbstractFixture implements DependentFixtureInterfac
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_politics'));
-        $notice->setSourceHref('source href 3');
+        $notice->setSourceHref('http://source-href-3.fr');
         $this->addReference('notice_3', $notice);
         $manager->persist($notice);
 

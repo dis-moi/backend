@@ -17,7 +17,7 @@ class GetNoticeTest extends BaseApiE2eTestCase
         $this->assertEquals('John Doe', $payload['contributor']['name']);
         $this->assertEquals('public', $payload['visibility']);
         $this->assertEquals('<p>message</p>', $payload['message']);
-        $this->assertEquals('source href 1', $payload['sourceHref']);
+        $this->assertEquals('http://source-href-1.fr?utm_source=lmem_assistant', $payload['sourceHref']);
         $this->assertEquals('Ecology', $payload['type']['label']);
         $this->assertEquals('ecology', $payload['type']['slug']);
         $this->assertEquals(3, $payload['ratings']['approves']);

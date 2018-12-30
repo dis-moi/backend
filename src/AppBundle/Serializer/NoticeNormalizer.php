@@ -45,11 +45,19 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
             'contributor' => $this->normalizer->normalize($object->getContributor(), $format, $context),
             'type' => $this->normalizer->normalize($object->getType(), $format, $context),
 
-            'sourceHref' => $object->getSourceHref(),
+            'sourceHref' => $this->updateSourceHref($object->getSourceHref()),
             'ratings' => [
                 'approves' => $object->getApprovedRatingCount(),
                 'dislikes' => $object->getDismissedRatingCount()
             ]
         ];
+    }
+
+    protected function updateSourceHref($href)
+    {
+        return strlen($href)
+            ? DataConverter::addUtmSourceToLink($href)
+            : ''
+        ;
     }
 }
