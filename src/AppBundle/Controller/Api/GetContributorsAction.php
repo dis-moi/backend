@@ -4,7 +4,6 @@ namespace AppBundle\Controller\Api;
 
 use AppBundle\Repository\ContributorRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
 
