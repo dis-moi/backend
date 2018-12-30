@@ -30,8 +30,7 @@ class MatchingContextRepository extends BaseRepository
 
         if ($contributors) {
             $queryBuilder
-                ->leftJoin('notice.contributor', 'contrib')
-                ->andWhere('contrib.id IN (:contributors)')
+                ->andWhere('contributor.id IN (:contributors)')
                 ->setParameter('contributors', $contributors)
             ;
         }
@@ -46,9 +45,12 @@ class MatchingContextRepository extends BaseRepository
     {
         $queryBuilder = $this->repository->createQueryBuilder('mc')
             ->select('mc')
-            ->innerJoin('mc.notice', 'notice')
-            ->where('notice.visibility=:visibility');
-        $queryBuilder->setParameter('visibility', NoticeVisibility::PUBLIC_VISIBILITY());
+            ->leftJoin('mc.notice', 'notice')
+            ->leftJoin('notice.contributor', 'contributor')
+            ->andWhere('contributor.enabled = true')
+            ->andWhere('notice.visibility=:visibility')
+            ->setParameter('visibility', NoticeVisibility::PUBLIC_VISIBILITY())
+        ;
 
         return $queryBuilder;
     }

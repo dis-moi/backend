@@ -19,9 +19,8 @@ class LoadNoticeData extends AbstractFixture implements DependentFixtureInterfac
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_ecology'));
         $notice->setSourceHref('source href 1');
-        $manager->persist($notice);
-        $manager->flush();
         $this->addReference('notice_type_ecology', $notice);
+        $manager->persist($notice);
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor2'));
@@ -29,9 +28,8 @@ class LoadNoticeData extends AbstractFixture implements DependentFixtureInterfac
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_ecology'));
         $notice->setSourceHref('source href 2');
-        $manager->persist($notice);
-        $manager->flush();
         $this->addReference('notice_type_ecology_and_politics', $notice);
+        $manager->persist($notice);
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor'));
@@ -39,9 +37,8 @@ class LoadNoticeData extends AbstractFixture implements DependentFixtureInterfac
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_politics'));
         $notice->setSourceHref('source href 3');
-        $manager->persist($notice);
-        $manager->flush();
         $this->addReference('notice_3', $notice);
+        $manager->persist($notice);
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor_disabled'));
@@ -49,9 +46,10 @@ class LoadNoticeData extends AbstractFixture implements DependentFixtureInterfac
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_politics'));
         $notice->setSourceHref('source href disabled');
-        $manager->persist($notice);
-        $manager->flush();
         $this->addReference('notice_disabled', $notice);
+        $manager->persist($notice);
+
+        $manager->flush();
     }
 
     public function getDependencies()

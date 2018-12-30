@@ -12,15 +12,15 @@ class LoadTypeData extends AbstractFixture
     {
         $type_ecology = new Type();
         $type_ecology->setLabel('Ecology');
-        $manager->persist($type_ecology);
-        $manager->flush();
         $this->addReference('type_ecology', $type_ecology);
+        $manager->persist($type_ecology);
 
         $type_politics = new Type();
         $type_politics->setLabel('Politics');
         $manager->persist($type_politics);
-        $manager->flush();
         $this->addReference('type_politics', $type_politics);
+
+        $manager->flush();
     }
 
 }
