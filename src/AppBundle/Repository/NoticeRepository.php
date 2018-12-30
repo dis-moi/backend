@@ -17,6 +17,7 @@ class NoticeRepository extends BaseRepository
             ->leftJoin('n.contributor', 'c')
             ->leftJoin('n.type', 't')
             ->where('n.id = :id')
+            ->andWhere('c.enabled = true')
             ->setParameter('id', $id)
         ->getQuery()->getOneOrNullResult();
     }

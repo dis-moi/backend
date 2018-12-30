@@ -23,4 +23,13 @@ class GetNoticeTest extends BaseApiE2eTestCase
         $this->assertEquals(3, $payload['ratings']['approves']);
         $this->assertEquals(2, $payload['ratings']['dislikes']);
     }
+
+    public function testFailGetDisabledNotice()
+    {
+        /** @var Notice $notice */
+        $notice = static::$referenceRepository->getReference('notice_disabled');
+
+        static::$client->request('GET', '/api/v3/notices/'. $notice->getId());
+        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
+    }
 }

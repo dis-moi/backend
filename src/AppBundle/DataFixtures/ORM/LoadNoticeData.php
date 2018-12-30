@@ -42,6 +42,16 @@ class LoadNoticeData extends AbstractFixture implements DependentFixtureInterfac
         $manager->persist($notice);
         $manager->flush();
         $this->addReference('notice_3', $notice);
+
+        $notice = new Notice();
+        $notice->setContributor($this->getReference('contributor_disabled'));
+        $notice->setMessage("");
+        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $notice->setType($this->getReference('type_politics'));
+        $notice->setSourceHref('source href disabled');
+        $manager->persist($notice);
+        $manager->flush();
+        $this->addReference('notice_disabled', $notice);
     }
 
     public function getDependencies()
