@@ -112,7 +112,7 @@ class Notice
      */
     public function setMessage($message)
     {
-        $this->message = strip_tags($message);
+        $this->message = strip_tags($message, '<p><a>');
 
         return $this;
     }

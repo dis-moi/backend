@@ -15,7 +15,9 @@ class LoadNoticeData extends AbstractFixture implements DependentFixtureInterfac
     {
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor'));
-        $notice->setMessage("message");
+        $notice->setMessage("<a href=\"http://link2.com\">baz</a>
+message 
+<a href=\"http://link.com?foo=bar\">foo</a>");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_ecology'));
         $notice->setSourceHref('http://source-href-1.fr');

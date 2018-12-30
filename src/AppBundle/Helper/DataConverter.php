@@ -19,7 +19,7 @@ class DataConverter
         $message = self::addTargetBlankToLinks($message);
         $message = self::addUtmSourceToLinks($message);
 
-        return $message;
+        return substr($message, 0, 500);
     }
 
     /**
@@ -51,8 +51,8 @@ class DataConverter
     {
         $pattern = '/href="(.*)"/';
         if(preg_match_all($pattern, $message, $urls)) {
-            foreach ($urls as $url) {
-                str_replace($url,
+            foreach ($urls[1] as $url) {
+                $message = str_replace($url,
                     static::addUtmSourceToLink($url),
                     $message
                 );
