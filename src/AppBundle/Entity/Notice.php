@@ -95,6 +95,13 @@ class Notice
      */
     private $updated;
 
+    /**
+     * @var \DateTime $expires
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $expires = null;
+
     public function __construct()
     {
         $this->channels = new ArrayCollection();
@@ -416,5 +423,21 @@ class Notice
     public function setUpdated($updated)
     {
         $this->updated = $updated;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getExpires()
+    {
+        return $this->expires;
+    }
+
+    /**
+     * @param \DateTime $expires
+     */
+    public function setExpires($expires)
+    {
+        $this->expires = $expires;
     }
 }

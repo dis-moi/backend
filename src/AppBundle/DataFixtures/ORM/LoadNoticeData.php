@@ -39,6 +39,7 @@ message
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_politics'));
         $notice->setSourceHref('http://source-href-3.fr');
+        $notice->setExpires((new \DateTime())->modify('+3days'));
         $this->addReference('notice_3', $notice);
         $manager->persist($notice);
 
@@ -49,6 +50,16 @@ message
         $notice->setType($this->getReference('type_politics'));
         $notice->setSourceHref('source href disabled');
         $this->addReference('notice_disabled', $notice);
+        $manager->persist($notice);
+
+        $notice = new Notice();
+        $notice->setContributor($this->getReference('contributor2'));
+        $notice->setMessage("");
+        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $notice->setType($this->getReference('type_politics'));
+        $notice->setSourceHref('source href expired');
+        $notice->setExpires((new \DateTime())->modify('-3days'));
+        $this->addReference('notice_expired', $notice);
         $manager->persist($notice);
 
         $manager->flush();
