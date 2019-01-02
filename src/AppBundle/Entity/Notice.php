@@ -109,6 +109,13 @@ class Notice
      */
     private $updated;
 
+    /**
+     * @var \DateTime $expires
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $expires = null;
+
     public function __construct()
     {
         $this->alternatives = new ArrayCollection();
@@ -449,5 +456,21 @@ class Notice
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getExpires()
+    {
+        return $this->expires;
+    }
+
+    /**
+     * @param \DateTime $expires
+     */
+    public function setExpires($expires)
+    {
+        $this->expires = $expires;
     }
 }
