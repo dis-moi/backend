@@ -16,6 +16,7 @@ class LoadMatchingContextData extends  AbstractFixture implements DependentFixtu
         $matchingContext->setUrlRegex("http://site-ecologique.fr");
         $matchingContext->setDescription("Un site écologique");
         $matchingContext->setNotice($this->getReference('notice_type_ecology'));
+        $this->setReference('matchingContext_1', $matchingContext);
         $manager->persist($matchingContext);
 
         $matchingContext = new MatchingContext();

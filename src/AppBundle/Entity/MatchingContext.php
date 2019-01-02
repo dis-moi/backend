@@ -4,12 +4,14 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\EntityListener\MatchingContextListener;
 
 /**
  * MatchingContext
  *
  * @ORM\Table(name="matching_context")
  * @ORM\Entity
+ * @ORM\EntityListeners({MatchingContextListener::class})
  */
 class MatchingContext
 {

@@ -40,6 +40,7 @@ easy_admin:
                     - visibility
                     - matchingContexts
                     - type
+                    - updated
                     - { property : 'displayedRatingCount', label: 'Vues' }
                     - { property : 'clickedRatingCount', label: 'Cliqués' }
                     - { property : 'approvedRatingCount', label: 'Approuvés' }

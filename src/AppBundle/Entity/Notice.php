@@ -7,12 +7,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Helper\NoticeVisibility;
+use AppBundle\EntityListener\NoticeListener;
 
 /**
  * Notice
  *
  * @ORM\Table(name="notice")
  * @ORM\Entity
+ * @ORM\EntityListeners({NoticeListener::class})
  */
 class Notice
 {
@@ -85,6 +87,13 @@ class Notice
      * @Assert\Url
      */
     private $sourceHref;
+
+    /**
+     * @var \DateTime $updated
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
 
     public function __construct()
     {
@@ -391,5 +400,21 @@ class Notice
     public function setSourceHref($sourceHref)
     {
         $this->sourceHref = $sourceHref;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * @param \DateTime $updated
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
     }
 }
