@@ -27,6 +27,10 @@ dMigrate && dLoad
 aphp bin/console assets:install web
 ```
 
+#### admin access
+[http://localhost:8088](http://localhost:8088)
+
+
 ### Tests
 ```sh
 # clear cache in test envenv && run phpunit

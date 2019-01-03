@@ -91,6 +91,8 @@ easy_admin:
 
         Contributor:
             class: AppBundle\Entity\Contributor
+            list:
+                sort: ['name', 'ASC']
             form:
                 fields:
                   - name
