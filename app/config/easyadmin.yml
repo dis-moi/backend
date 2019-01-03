@@ -44,7 +44,6 @@ easy_admin:
                     - { property : 'displayedRatingCount', label: 'Vues' }
                     - { property : 'clickedRatingCount', label: 'Cliqués' }
                     - { property : 'approvedRatingCount', label: 'Approuvés' }
-                    - { property : 'approvedRatingCount', label: 'Approuvés' }
                     - { property : 'dismissedRatingCount', label: 'Ignorés' }
                     - { property : 'reportedRatingCount', label: 'Signalés' }
         MatchingContext:
