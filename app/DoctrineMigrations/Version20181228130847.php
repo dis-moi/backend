@@ -21,7 +21,7 @@ class Version20181228130847 extends AbstractMigration
         $this->addSql('RENAME TABLE feedback TO rating');
 
         // rename links
-
+        $this->addSql('ALTER TABLE matching_context DROP FOREIGN KEY FK_665341C1D173940B');
         $this->addSql('ALTER TABLE matching_context CHANGE recommendation_id notice_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE matching_context ADD CONSTRAINT FK_665341C17D540AB FOREIGN KEY (notice_id) REFERENCES notice (id)');
         $this->addSql('CREATE INDEX IDX_665341C17D540AB ON matching_context (notice_id)');

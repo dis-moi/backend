@@ -20,7 +20,7 @@ class Version20181228142357 extends AbstractMigration
 
         $this->addSql('ALTER TABLE contributor DROP organization, DROP updated_at, DROP image');
 
-        $this->addSql('ALTER TABLE matching_context DROP FOREIGN KEY FK_665341C1D173940B');
+
         $this->addSql('DROP INDEX IDX_665341C1D173940B ON matching_context');
         $this->addSql('ALTER TABLE matching_context CHANGE notice_id notice_id INT DEFAULT NULL, CHANGE description description VARCHAR(255) DEFAULT NULL, CHANGE excludeUrlRegex excludeUrlRegex VARCHAR(255) DEFAULT NULL');
 
