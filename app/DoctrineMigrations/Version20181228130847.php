@@ -17,7 +17,7 @@ class Version20181228130847 extends AbstractMigration
         // rename tables
         $this->addSql('RENAME TABLE recommendation TO notice');
         $this->addSql('RENAME TABLE recommendation_channel TO notice_channel');
-        $this->addSql('RENAME TABLE criterion TO type');
+        $this->addSql('RENAME TABLE criterion TO notice_type');
         $this->addSql('RENAME TABLE feedback TO rating');
 
         // rename links
@@ -45,7 +45,7 @@ class Version20181228130847 extends AbstractMigration
 
         $this->addSql('RENAME TABLE notice TO recommendation');
         $this->addSql('RENAME TABLE notice_channel TO recommendation_channel');
-        $this->addSql('RENAME TABLE type TO criterion');
+        $this->addSql('RENAME TABLE notice_type TO criterion');
         $this->addSql('RENAME TABLE rating TO feedback');
 
         $this->addSql('ALTER TABLE matching_context CHANGE notice_id recommendation_id INT DEFAULT NULL');

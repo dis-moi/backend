@@ -19,7 +19,7 @@ class Version20181229142424 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE rating DROP FOREIGN KEY FK_D22944587D540AB');
-        $this->addSql('ALTER TABLE rating CHANGE context_datetime context_timestamp DATETIME NOT NULL, ADD context_geolocation VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE rating CHANGE context_datetime context_timestamp DATETIME DEFAULT NULL, ADD context_geolocation VARCHAR(255) DEFAULT NULL');
         $this->addSql('DROP INDEX idx_d22944587d540ab ON rating');
         $this->addSql('CREATE INDEX IDX_D88926227D540AB ON rating (notice_id)');
         $this->addSql('ALTER TABLE rating ADD CONSTRAINT FK_D22944587D540AB FOREIGN KEY (notice_id) REFERENCES notice (id)');

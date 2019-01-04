@@ -12,21 +12,21 @@ class Context
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="timestamp", type="datetime")
+     * @ORM\Column(name="timestamp", type="datetime", nullable=true)
      */
     private $datetime;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string")
+     * @ORM\Column(name="url", type="string", nullable=true)
      */
     private $url;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="geolocation", type="string")
+     * @ORM\Column(name="geolocation", type="string", nullable=true)
      */
     private $geolocation;
 

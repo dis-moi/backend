@@ -48,7 +48,7 @@ class Notice
 
     /**
      * @ORM\ManyToOne(targetEntity=Type::class, cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, name="notice_type_id")
      */
     private $type;
 
