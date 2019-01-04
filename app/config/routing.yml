@@ -1,3 +1,4 @@
+## Admin Application w/ easy_admin
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
@@ -17,20 +18,22 @@ fos_user_change_password:
     prefix: "/profile"
     schemes: [https]
 
-api_v2_admin:
-    resource: "@AppBundle/Controller/AdminApiController.php"
-    type:     annotation
-    prefix:   /api/v2/admin
-    schemes: [https]
-
 easy_admin_bundle:
     resource: "@AppBundle/Controller/AdminController.php"
     type:     annotation
     prefix:   /admin
     schemes: [https]
 
+## API
+# support & code for public api for v1 & v2 has been dropped w/ the introduction of v3
 api_v3:
     resource: "@AppBundle/Controller/Api/"
     type:     annotation
     prefix:   /api/v3
+    schemes: [https]
+
+api_v2_admin:
+    resource: "@AppBundle/Controller/AdminApiController.php"
+    type:     annotation
+    prefix:   /api/v2/admin
     schemes: [https]
