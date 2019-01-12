@@ -57,9 +57,20 @@ message
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_politics'));
-        $notice->setSourceHref('source href expired');
+        $notice->setSourceHref('source href expired (but not unpublished)');
         $notice->setExpires((new \DateTime())->modify('-3days'));
         $this->addReference('notice_expired', $notice);
+        $manager->persist($notice);
+
+        $notice = new Notice();
+        $notice->setContributor($this->getReference('contributor2'));
+        $notice->setMessage("");
+        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $notice->setType($this->getReference('type_politics'));
+        $notice->setSourceHref('source href expired and unpublished');
+        $notice->setExpires((new \DateTime())->modify('-3days'));
+        $notice->setUnpublishedOnExpiration(true);
+        $this->addReference('notice_expired_unpublished', $notice);
         $manager->persist($notice);
 
         $manager->flush();

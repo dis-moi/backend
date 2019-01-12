@@ -49,11 +49,10 @@ class MatchingContextRepository extends BaseRepository
             ->leftJoin('notice.contributor', 'contributor')
             ->andWhere('contributor.enabled = true')
             ->andWhere('notice.visibility=:visibility')
-            ->andWhere('notice.expires >= CURRENT_TIMESTAMP() OR notice.expires IS NULL')
             ->setParameter('visibility', NoticeVisibility::PUBLIC_VISIBILITY())
         ;
 
-        return $queryBuilder;
+        return NoticeRepository::addNoticeExpirationLogic($queryBuilder, 'notice');
     }
 
     /**
