@@ -15,7 +15,7 @@ class Version20181228134252 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE notice ADD notice_type_id INT NOT NULL, DROP title, CHANGE description message LONGTEXT NOT NULL');
+        $this->addSql('ALTER TABLE notice ADD notice_type_id INT NOT NULL, CHANGE description message LONGTEXT NOT NULL, CHANGE title title VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci');
 
         $this->addSql('ALTER TABLE notice DROP FOREIGN KEY FK_433224D27A19A357');
         $this->addSql('DROP INDEX idx_433224d27a19a357 ON notice');
@@ -64,7 +64,7 @@ class Version20181228134252 extends AbstractMigration
         $this->addSql('ALTER TABLE notice DROP FOREIGN KEY FK_480D45C2C54C8C93');
         $this->addSql('DROP INDEX IDX_480D45C2C54C8C93 ON notice');
         $this->addSql('ALTER TABLE notice DROP FOREIGN KEY FK_480D45C27A19A357');
-        $this->addSql('ALTER TABLE notice ADD title VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, DROP notice_type_id, CHANGE message description LONGTEXT NOT NULL COLLATE utf8_unicode_ci');
+        $this->addSql('ALTER TABLE notice CHANGE title VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, DROP notice_type_id, CHANGE message description LONGTEXT NOT NULL COLLATE utf8_unicode_ci');
         $this->addSql('DROP INDEX idx_480d45c27a19a357 ON notice');
         $this->addSql('CREATE INDEX IDX_433224D27A19A357 ON notice (contributor_id)');
         $this->addSql('ALTER TABLE notice ADD CONSTRAINT FK_480D45C27A19A357 FOREIGN KEY (contributor_id) REFERENCES contributor (id)');

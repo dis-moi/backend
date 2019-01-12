@@ -47,6 +47,8 @@ easy_admin:
                     - { property : 'approvedRatingCount', label: 'Approuvés' }
                     - { property : 'dismissedRatingCount', label: 'Ignorés' }
                     - { property : 'reportedRatingCount', label: 'Signalés' }
+                    - { property : 'title', label: 'Titre (deprecated)' }
+                    - { property : 'alternatives', label: 'Alternatives (deprecated)' }
         MatchingContext:
             class: AppBundle\Entity\MatchingContext
             disabled_actions: ['new', 'edit']
