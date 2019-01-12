@@ -116,6 +116,13 @@ class Notice
      */
     private $expires = null;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $unpublishedOnExpiration = false;
+
     public function __construct()
     {
         $this->alternatives = new ArrayCollection();
@@ -472,5 +479,21 @@ class Notice
     public function setExpires($expires)
     {
         $this->expires = $expires;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUnpublishedOnExpiration()
+    {
+        return $this->unpublishedOnExpiration;
+    }
+
+    /**
+     * @param bool $unpublishedOnExpiration
+     */
+    public function setUnpublishedOnExpiration($unpublishedOnExpiration)
+    {
+        $this->unpublishedOnExpiration = $unpublishedOnExpiration;
     }
 }
