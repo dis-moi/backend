@@ -20,7 +20,7 @@ message
 <a href=\"http://link.com?foo=bar\">foo</a>");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_ecology'));
-        $notice->setSourceHref('http://source-href-1.fr');
+        $notice->setSource($this->getReference('source_link_quechoisir'));
         $this->addReference('notice_type_ecology', $notice);
         $manager->persist($notice);
 
@@ -29,7 +29,7 @@ message
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_ecology'));
-        $notice->setSourceHref('http://source-href-2.fr');
+        $notice->setSource($this->getReference('source_link_marianne'));
         $this->addReference('notice_type_ecology_and_politics', $notice);
         $manager->persist($notice);
 
@@ -38,7 +38,7 @@ message
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_politics'));
-        $notice->setSourceHref('http://source-href-3.fr');
+        $notice->setSource($this->getReference('source_link_huffington'));
         $this->addReference('notice_3', $notice);
         $manager->persist($notice);
 
@@ -47,7 +47,7 @@ message
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setType($this->getReference('type_politics'));
-        $notice->setSourceHref('source href disabled');
+        $notice->setSource($this->getReference('source_disabled'));
         $this->addReference('notice_disabled', $notice);
         $manager->persist($notice);
 
@@ -58,7 +58,8 @@ message
     {
         return [
             LoadContributorData::class,
-            LoadTypeData::class
+            LoadTypeData::class,
+            LoadSourceData::class
         ];
     }
 }

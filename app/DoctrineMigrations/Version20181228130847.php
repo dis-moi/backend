@@ -16,6 +16,7 @@ class Version20181228130847 extends AbstractMigration
 
         // rename tables
         $this->addSql('RENAME TABLE recommendation TO notice');
+        $this->addSql('RENAME TABLE resource TO source');
         $this->addSql('RENAME TABLE recommendation_channel TO notice_channel');
         $this->addSql('RENAME TABLE criterion TO notice_type');
         $this->addSql('RENAME TABLE feedback TO rating');
@@ -44,6 +45,7 @@ class Version20181228130847 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('RENAME TABLE notice TO recommendation');
+        $this->addSql('RENAME TABLE source TO resource');
         $this->addSql('RENAME TABLE notice_channel TO recommendation_channel');
         $this->addSql('RENAME TABLE notice_type TO criterion');
         $this->addSql('RENAME TABLE rating TO feedback');

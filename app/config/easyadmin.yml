@@ -20,14 +20,15 @@ easy_admin:
                     - contributor.name
                     - message
                     - note
-                    - source_href
+                    - source.url
+                    - source.label
             form:
                 fields:
                     - message
-                    - { property: 'sourceHref', type: 'Symfony\Component\Form\Extension\Core\Type\TextType' }
                     - contributor
                     - type
                     - note
+                    - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
                     - { property: 'channels'}
                     - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
@@ -35,8 +36,8 @@ easy_admin:
             list:
                 fields:
                     - id
-                    - source_href
                     - contributor
+                    - sourceUrl
                     - visibility
                     - matchingContexts
                     - type

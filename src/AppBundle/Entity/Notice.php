@@ -80,13 +80,11 @@ class Notice
     private $ratings;
 
     /**
-     * @var string
+     * @var Source
      *
-     * @ORM\Column(name="source_href", type="text", nullable=true)
-     *
-     * @Assert\Url
+     * @ORM\OneToOne(targetEntity=Source::class, mappedBy="notice", cascade={"persist"}, fetch="EAGER", orphanRemoval=true)
      */
-    private $sourceHref;
+    private $source;
 
     /**
      * @var \DateTime $updated
@@ -387,22 +385,6 @@ class Notice
     }
 
     /**
-     * @return string
-     */
-    public function getSourceHref()
-    {
-        return $this->sourceHref;
-    }
-
-    /**
-     * @param string $sourceHref
-     */
-    public function setSourceHref($sourceHref)
-    {
-        $this->sourceHref = $sourceHref;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getUpdated()
@@ -416,5 +398,27 @@ class Notice
     public function setUpdated($updated)
     {
         $this->updated = $updated;
+    }
+
+    /**
+     * @return Source
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * @param Source $source
+     */
+    public function setSource(Source $source)
+    {
+        $this->source = $source;
+        $this->source->setNotice($this);
+    }
+
+    public function getSourceUrl()
+    {
+        return $this->source->getUrl();
     }
 }

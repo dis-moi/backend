@@ -45,7 +45,7 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
             'contributor' => $this->normalizer->normalize($object->getContributor(), $format, $context),
             'type' => $this->normalizer->normalize($object->getType(), $format, $context),
 
-            'sourceHref' => $this->updateSourceHref($object->getSourceHref()),
+            'source' => $this->normalizer->normalize($object->getSource(), $format, $context),
             'ratings' => [
                 'approves' => $object->getApprovedRatingCount(),
                 'dislikes' => $object->getDismissedRatingCount()
