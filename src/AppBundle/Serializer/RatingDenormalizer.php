@@ -30,8 +30,8 @@ class RatingDenormalizer implements DenormalizerInterface
             $notice,
             $data['ratingType'],
             new Context(
-                new \DateTime($data['context']['datetime']),
-                $data['context']['url'],
+                isset($data['context']['datetime']) ? new \DateTime($data['context']['datetime']) : new \DateTime(),
+                isset($data['context']['url']) ? $data['context']['url'] : '',
                 isset($data['context']['geolocation']) ? $data['context']['geolocation'] : ''
             ),
             $data['reason']
