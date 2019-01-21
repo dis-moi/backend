@@ -32,7 +32,7 @@ class RatingDenormalizer implements DenormalizerInterface
             new Context(
                 new \DateTime($data['context']['datetime']),
                 $data['context']['url'],
-                $data['context']['geolocation']
+                isset($data['context']['geolocation']) ? $data['context']['geolocation'] : ''
             ),
             $data['reason']
         );
