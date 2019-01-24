@@ -34,7 +34,7 @@ class RatingDenormalizer implements DenormalizerInterface
                 isset($data['context']['url']) ? $data['context']['url'] : '',
                 isset($data['context']['geolocation']) ? $data['context']['geolocation'] : ''
             ),
-            $data['reason']
+            isset($data['reason']) ? $data['reason'] : ''
         );
     }
 }
