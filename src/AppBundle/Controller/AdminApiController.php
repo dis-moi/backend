@@ -1,38 +1,37 @@
 <?php
 namespace AppBundle\Controller;
 
-use AppBundle\DataTransferObject\BrowserExtensionMatchingContext;
-use AppBundle\Entity\BrowserExtension\MatchingContextFactory;
-use FOS\RestBundle\Controller\Annotations\View;
-use FOS\RestBundle\Controller\Annotations\QueryParam;
-use FOS\RestBundle\Controller\FOSRestController;
-use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Repository\MatchingContextRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Serializer\SerializerInterface;
 
-class AdminApiController extends FOSRestController
+class AdminApiController
 {
+    protected $repository;
+    protected $serializer;
+
+    public function __construct(SerializerInterface $serializer, MatchingContextRepository $repository)
+    {
+        $this->serializer = $serializer;
+
+        $this->repository = $repository;
+    }
+
     /**
      * @Route("/matchingcontexts")
-     * @View()
      */
     public function getMatchingcontextsAction()
     {
-        $matchingContexts = $this->getDoctrine()
-            ->getRepository('AppBundle:MatchingContext')
-            ->findAllWithPrivateVisibility();
+        $matchingContexts = $this->repository->findAllWithPrivateVisibility();
 
-        if (!$matchingContexts) throw $this->createNotFoundException(
-            'No matching contexts exists'
-        );
+        if (!$matchingContexts) {
+            throw new NotFoundHttpException('No matching contexts exists');
+        }
 
-        $factory = new MatchingContextFactory( function($id) {
-            return $this->get('router')->generate('app_api_getrecommendation', ['id' => $id], Router::ABSOLUTE_URL);
-        });
+        $json = $this->serializer->serialize($matchingContexts, 'json', ['groups' => [ 'v3:list' ]]);
 
-        return array_map(function($matchingContext) use ($factory){
-            return $factory->createFromMatchingContext($matchingContext);
-        }, $matchingContexts);
+        return new JsonResponse($json, 200, [], true);
     }
 }

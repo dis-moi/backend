@@ -7,55 +7,48 @@ easy_admin:
                 - 'js/regex_validator.js'
     site_name: 'Le Même En Mieux'
     entities:
-        Recommendation:
-            class: AppBundle\Entity\Recommendation
-            label: 'Recommendation'
+        Notice:
+            class: AppBundle\Entity\Notice
+            label: 'Notice'
             search:
                 fields:
-                    - alternatives.urlToRedirect
-                    - alternatives.label
-                    - alternatives.description
                     - matchingContexts.urlRegex
                     - matchingContexts.excludeUrlRegex
                     - matchingContexts.description
-                    - criteria.label
-                    - criteria.slug
-                    - title
-                    - resource.label
-                    - resource.description
-                    - resource.url
+                    - type.label
+                    - type.slug
                     - contributor.name
-                    - contributor.organization
-                    - description
+                    - message
                     - note
+                    - source.url
+                    - source.label
             form:
                 fields:
-                    - title
-                    - description
+                    - message
                     - contributor
-                    - criteria
+                    - type
                     - note
+                    - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
                     - { property: 'channels'}
-                    - { property: 'resource', type: 'AppBundle\Form\ResourceType' }
                     - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
-                    - { property: 'alternatives', type: 'collection', type_options: {entry_type: 'AppBundle\Form\AlternativeType', allow_add: true, allow_delete: true, by_reference: false} }
 
             list:
                 fields:
                     - id
+                    - contributor
+                    - sourceUrl
                     - visibility
-                    - title
-                    - alternatives
                     - matchingContexts
-                    - criteria
-                    - resource
-                    - { property : 'displayedFeedbackCount', label: 'Vues' }
-                    - { property : 'clickedFeedbackCount', label: 'Cliqués' }
-                    - { property : 'approvedFeedbackCount', label: 'Approuvés' }
-                    - { property : 'approvedFeedbackCount', label: 'Approuvés' }
-                    - { property : 'dismissedFeedbackCount', label: 'Ignorés' }
-                    - { property : 'reportedFeedbackCount', label: 'Signalés' }
+                    - type
+                    - updated
+                    - { property : 'displayedRatingCount', label: 'Vues' }
+                    - { property : 'clickedRatingCount', label: 'Cliqués' }
+                    - { property : 'approvedRatingCount', label: 'Approuvés' }
+                    - { property : 'dismissedRatingCount', label: 'Ignorés' }
+                    - { property : 'reportedRatingCount', label: 'Signalés' }
+                    - { property : 'title', label: 'Titre (deprecated)' }
+                    - { property : 'alternatives', label: 'Alternatives (deprecated)' }
         MatchingContext:
             class: AppBundle\Entity\MatchingContext
             disabled_actions: ['new', 'edit']
@@ -67,11 +60,8 @@ easy_admin:
             form:
               fields:
                 - { property: name, label: "Channel's name" }
-        Alternative:
-            class: AppBundle\Entity\Alternative
-            disabled_actions: ['new', 'edit']
-        Criterion:
-            class: AppBundle\Entity\Criterion
+        Type:
+            class: AppBundle\Entity\Type
             list:
                 fields: ['id', 'label', 'slug']
             form:
@@ -109,7 +99,3 @@ easy_admin:
             form:
                 fields:
                   - name
-                  - organization
-                  - { property: 'imageFile', type: 'vich_image' }
-        Editor:
-            class: AppBundle\Entity\Editor

@@ -2,7 +2,7 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Entity\RecommendationVisibility;
+use AppBundle\Helper\NoticeVisibility;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,10 +16,10 @@ class VisibilityType extends AbstractType
     {
         $resolver->setDefaults(array(
             'choices' => array(
-                'Private' => RecommendationVisibility::PRIVATE_VISIBILITY(),
-                'Public' => RecommendationVisibility::PUBLIC_VISIBILITY()
+                'Private' => NoticeVisibility::PRIVATE_VISIBILITY(),
+                'Public' => NoticeVisibility::PUBLIC_VISIBILITY()
             ),
-            'empty_data' =>  RecommendationVisibility::getDefault()
+            'empty_data' =>  NoticeVisibility::getDefault()
         ));
     }
 

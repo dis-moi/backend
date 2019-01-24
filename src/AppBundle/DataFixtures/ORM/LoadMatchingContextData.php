@@ -12,38 +12,36 @@ class LoadMatchingContextData extends  AbstractFixture implements DependentFixtu
 
     public function load(ObjectManager $manager)
     {
-
-        $matchingContext = new MatchingContext();
-        $matchingContext->setUrlRegex("http://lemonde.fr");
-        $matchingContext->setDescription("Un site avec des news");
-        $matchingContext->setRecommendation($this->getReference('recommendation_no_criterion'));
-        $manager->persist($matchingContext);
-        $manager->flush();
-
         $matchingContext = new MatchingContext();
         $matchingContext->setUrlRegex("http://site-ecologique.fr");
         $matchingContext->setDescription("Un site écologique");
-        $matchingContext->setRecommendation($this->getReference('recommendation_criterion_ecology'));
+        $matchingContext->setNotice($this->getReference('notice_type_ecology'));
+        $this->setReference('matchingContext_1', $matchingContext);
         $manager->persist($matchingContext);
-        $manager->flush();
 
         $matchingContext = new MatchingContext();
         $matchingContext->setUrlRegex("http://site-ecologique-et-politique.fr");
         $matchingContext->setDescription("Un site politique et écologique");
-        $matchingContext->setRecommendation($this->getReference('recommendation_criterion_ecology_and_politics'));
+        $matchingContext->setNotice($this->getReference('notice_type_ecology_and_politics'));
         $manager->persist($matchingContext);
-        $manager->flush();
 
         $matchingContext = new MatchingContext();
         $matchingContext->setUrlRegex("http://random-site.fr");
         $matchingContext->setDescription("A random site");
-        $matchingContext->setRecommendation($this->getReference('recommendation_no_editor'));
+        $matchingContext->setNotice($this->getReference('notice_3'));
         $manager->persist($matchingContext);
+
+        $matchingContext = new MatchingContext();
+        $matchingContext->setUrlRegex("http://disabled.fr");
+        $matchingContext->setDescription("A disabled site");
+        $matchingContext->setNotice($this->getReference('notice_disabled'));
+        $manager->persist($matchingContext);
+
         $manager->flush();
     }
 
     public function getDependencies()
     {
-        return [LoadRecommendationData::class];
+        return [LoadNoticeData::class];
     }
 }

@@ -2,16 +2,16 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Contributor
  *
  * @ORM\Table(name="contributor")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ContributorRepository")
- * @Vich\Uploadable
+ * @ORM\Entity
  */
 class Contributor
 {
@@ -21,6 +21,8 @@ class Contributor
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Groups({"v3:list"})
      */
     private $id;
 
@@ -28,39 +30,30 @@ class Contributor
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     *
+     * @Groups({"v3:list"})
      */
     private $name;
 
     /**
-     * @var string
+     * @ORM\OneToMany(targetEntity="Notice", mappedBy="contributor")
+     */
+    private $notices;
+
+    /**
+     * @var bool
      *
-     * @ORM\Column(name="organization", type="string", length=255)
+     * @ORM\Column(name="enabled", type="boolean")
      */
-    private $organization;
+    private $enabled = true;
 
     /**
-     * @var \Datetime $updatedAt
-     * Needed to trigger forced update when an avatar is uploaded
-     * @ORM\Column(type="datetime", nullable = true)
+     * Constructor
      */
-    protected $updatedAt;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Recommendation", mappedBy="contributor")
-     */
-    private $recommendations;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @var string
-     */
-    private $image;
-
-    /**
-     * @Vich\UploadableField(mapping="contributor_avatars", fileNameProperty="image")
-     * @var File
-     */
-    private $imageFile;
+    public function __construct()
+    {
+        $this->notices = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -96,125 +89,59 @@ class Contributor
         return $this->name;
     }
 
-    /**
-     * Set organization
-     *
-     * @param string $organization
-     *
-     * @return Contributor
-     */
-    public function setOrganization($organization)
-    {
-        $this->organization = $organization;
-
-        return $this;
-    }
-
-    /**
-     * Get organization
-     *
-     * @return string
-     */
-    public function getOrganization()
-    {
-        return $this->organization;
-    }
-
-    public function setImageFile(File $image = null)
-    {
-        $this->imageFile = $image;
-
-        // VERY IMPORTANT:
-        // It is required that at least one field changes if you are using Doctrine,
-        // otherwise the event listeners won't be called and the file is lost
-        if ($image) {
-            // if 'updatedAt' is not defined in your entity, use another property
-            $this->updatedAt = new \DateTime('now');
-        }
-    }
-
-    public function getImageFile()
-    {
-        return $this->imageFile;
-    }
-
-    public function setImage($image)
-    {
-        $this->image = $image;
-    }
-
-    public function getImage()
-    {
-        return $this->image;
-    }
-
     public function __toString()
     {
-        return $this->organization.' | '.$this->name;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->recommendations = new \Doctrine\Common\Collections\ArrayCollection();
+        return $this->name;
     }
 
+
     /**
-     * Set updatedAt
+     * Add notice
      *
-     * @param \DateTime $updatedAt
+     * @param Notice $notice
      *
      * @return Contributor
      */
-    public function setUpdatedAt($updatedAt)
+    public function addNotice(Notice $notice)
     {
-        $this->updatedAt = $updatedAt;
+        $this->notices[] = $notice;
 
         return $this;
     }
 
     /**
-     * Get updatedAt
+     * Remove notice
      *
-     * @return \DateTime
+     * @param Notice $notice
      */
-    public function getUpdatedAt()
+    public function removeNotice(Notice $notice)
     {
-        return $this->updatedAt;
+        $this->notices->removeElement($notice);
     }
 
     /**
-     * Add recommendation
+     * Get notices
      *
-     * @param \AppBundle\Entity\Recommendation $recommendation
-     *
-     * @return Contributor
+     * @return Collection
      */
-    public function addRecommendation(\AppBundle\Entity\Recommendation $recommendation)
+    public function getNotices()
     {
-        $this->recommendations[] = $recommendation;
-
-        return $this;
+        return $this->notices;
     }
 
     /**
-     * Remove recommendation
-     *
-     * @param \AppBundle\Entity\Recommendation $recommendation
+     * @return bool
      */
-    public function removeRecommendation(\AppBundle\Entity\Recommendation $recommendation)
+    public function isEnabled()
     {
-        $this->recommendations->removeElement($recommendation);
+        return $this->enabled;
     }
 
     /**
-     * Get recommendations
-     *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param bool $enabled
      */
-    public function getRecommendations()
+    public function setEnabled($enabled)
     {
-        return $this->recommendations;
+        $this->enabled = $enabled;
     }
 }

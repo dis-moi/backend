@@ -32,6 +32,7 @@ framework:
     fragments:       ~
     http_method_override: true
     assets: ~
+    serializer: { enable_annotations: true }
 
 sensio_framework_extra:
     request: { converters: true }
@@ -82,21 +83,3 @@ fos_user:
     from_email:
             address:        infrastructure@lmem.net
             sender_name:    LMEM Backend
-
-fos_rest:
-    routing_loader:
-        default_format: json
-    format_listener:
-        enabled: true
-        rules:
-            - { path: '^/api', priorities: ['json'], fallback_format: 'json' }
-            - { path: '^/', stop: true }
-    view:
-        view_response_listener: 'force'
-
-vich_uploader:
-    db_driver: orm
-    mappings:
-        contributor_avatars:
-            uri_prefix:         /uploads/avatars
-            upload_destination: %kernel.root_dir%/../web/uploads/avatars

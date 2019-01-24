@@ -8,7 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Alternative
  *
  * @ORM\Table(name="alternative")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\RecommendationRepository")
+ * @ORM\Entity
+ *
+ * @deprecated since API v3, will be removed soon
  */
 class Alternative
 {
@@ -22,9 +24,10 @@ class Alternative
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Recommendation", inversedBy="alternatives")
+     * @ORM\ManyToOne(targetEntity="Notice", inversedBy="alternatives")
+     * @ORM\JoinColumn(name="recommendation_id", referencedColumnName="id")
      */
-    private $recommendation;
+    private $notice;
 
     /**
      * @var string
@@ -131,27 +134,27 @@ class Alternative
     }
 
     /**
-     * Set recommendation
+     * Set notice
      *
-     * @param \AppBundle\Entity\Recommendation $recommendation
+     * @param Notice $notice
      *
      * @return Alternative
      */
-    public function setRecommendation(\AppBundle\Entity\Recommendation $recommendation = null)
+    public function setNotice(Notice $notice)
     {
-        $this->recommendation = $recommendation;
+        $this->notice = $notice;
 
         return $this;
     }
 
     /**
-     * Get recommendation
+     * Get notice
      *
-     * @return \AppBundle\Entity\Recommendation
+     * @return Notice
      */
-    public function getRecommendation()
+    public function getNotice()
     {
-        return $this->recommendation;
+        return $this->notice;
     }
 
     public function __toString()

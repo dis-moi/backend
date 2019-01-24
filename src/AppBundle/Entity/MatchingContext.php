@@ -4,12 +4,14 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\EntityListener\MatchingContextListener;
 
 /**
  * MatchingContext
  *
  * @ORM\Table(name="matching_context")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\MatchingContextRepository")
+ * @ORM\Entity
+ * @ORM\EntityListeners({MatchingContextListener::class})
  */
 class MatchingContext
 {
@@ -23,9 +25,11 @@ class MatchingContext
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Recommendation", inversedBy="matchingContexts", fetch="EAGER")
+     * @var Notice
+     *
+     * @ORM\ManyToOne(targetEntity="Notice", inversedBy="matchingContexts", fetch="EAGER")
      */
-    private $recommendation;
+    private $notice;
 
     /**
      * @var string
@@ -129,27 +133,27 @@ class MatchingContext
     }
 
     /**
-     * Set recommendation
+     * Set notice
      *
-     * @param Recommendation $recommendation
+     * @param Notice $notice
      *
      * @return MatchingContext
      */
-    public function setRecommendation(Recommendation $recommendation = null)
+    public function setNotice(Notice $notice = null)
     {
-        $this->recommendation = $recommendation;
+        $this->notice = $notice;
 
         return $this;
     }
 
     /**
-     * Get recommendation
+     * Get notice
      *
-     * @return Recommendation
+     * @return Notice
      */
-    public function getRecommendation()
+    public function getNotice()
     {
-        return $this->recommendation;
+        return $this->notice;
     }
 
     public function __toString()

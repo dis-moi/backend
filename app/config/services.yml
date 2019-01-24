@@ -4,7 +4,17 @@ parameters:
 #    parameter_name: value
 
 services:
-#      arguments: ["@router", "@vich_uploader.templating.helper.uploader_helper"]
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+        # fetching services directly from the container via $container->get() won't work.
+        # The best practice is to be explicit about your dependencies anyway.
+
+    AppBundle\:
+        resource: '%kernel.project_dir%/src/AppBundle/*'
+        exclude: '%kernel.project_dir%/src/AppBundle/{DataFixtures,Entity,Repository}'
+
+    AppBundle\Controller\:
+        resource: '%kernel.project_dir%/src/AppBundle/Controller/*'
+        tags: ['controller.service_arguments']

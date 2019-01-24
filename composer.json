@@ -18,7 +18,7 @@
     },
     "require": {
         "php": ">=5.5.9",
-        "symfony/symfony": "3.1.*",
+        "symfony/symfony": "3.3.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
@@ -31,17 +31,13 @@
         "javiereguiluz/easyadmin-bundle": "^1.17",
         "friendsofsymfony/user-bundle": "~2.0.0",
         "doctrine/doctrine-migrations-bundle": "^1.1",
-        "friendsofsymfony/rest-bundle": "^1.7",
-        "jms/serializer-bundle": "^1.1",
         "ocramius/proxy-manager": "^2.0.2",
-        "vich/uploader-bundle": "^1.1",
         "league/uri":"^5.0",
         "marc-mabe/php-enum": "^2.2"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",
-        "doctrine/doctrine-fixtures-bundle": "^2.3",
-        "phpunit/phpunit": "^5.6"
+        "doctrine/doctrine-fixtures-bundle": "^2.3"
     },
     "scripts": {
         "post-install-cmd": [
