@@ -41,7 +41,7 @@ easy_admin:
                 fields:
                     - id
                     - contributor
-                    - sourceUrl
+                    - source.url
                     - visibility
                     - matchingContexts
                     - type
@@ -54,6 +54,7 @@ easy_admin:
                     - { property : 'title', label: 'Titre (deprecated)' }
                     - { property : 'alternatives', label: 'Alternatives (deprecated)' }
                     - expires
+                    - unpublishedOnExpiration
 
         ExpiredNotice:
             class: AppBundle\Entity\Notice
@@ -68,24 +69,28 @@ easy_admin:
                     - contributor.name
                     - message
                     - note
-                    - source_href
+                    - source.url
+                    - source.label
+                    - expires
             list:
                 dql_filter: 'entity.expires <= CURRENT_TIMESTAMP()'
                 fields:
                     - id
-                    - source_href
                     - contributor
+                    - source.url
                     - visibility
                     - matchingContexts
                     - type
                     - updated
-                    - { property : 'displayedRatingCount', label: 'Vues' }
-                    - { property : 'clickedRatingCount', label: 'Cliqués' }
-                    - { property : 'approvedRatingCount', label: 'Approuvés' }
-                    - { property : 'approvedRatingCount', label: 'Approuvés' }
-                    - { property : 'dismissedRatingCount', label: 'Ignorés' }
-                    - { property : 'reportedRatingCount', label: 'Signalés' }
+                    - { property: 'displayedRatingCount', label: 'Vues' }
+                    - { property: 'clickedRatingCount', label: 'Cliqués' }
+                    - { property: 'approvedRatingCount', label: 'Approuvés' }
+                    - { property: 'dismissedRatingCount', label: 'Ignorés' }
+                    - { property: 'reportedRatingCount', label: 'Signalés' }
+                    - { property: 'title', label: 'Titre (deprecated)' }
+                    - { property: 'alternatives', label: 'Alternatives (deprecated)' }
                     - expires
+                    - unpublishedOnExpiration
 
         MatchingContext:
             class: AppBundle\Entity\MatchingContext

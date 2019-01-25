@@ -496,36 +496,4 @@ class Notice
     {
         $this->unpublishedOnExpiration = $unpublishedOnExpiration;
     }
-
-    /**
-     * @return \DateTime
-     */
-    public function getExpires()
-    {
-        return $this->expires;
-    }
-
-    /**
-     * @param \DateTime $expires
-     */
-    public function setExpires($expires)
-    {
-        $this->expires = $expires;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isUnpublishedOnExpiration()
-    {
-        return $this->unpublishedOnExpiration;
-    }
-
-    /**
-     * @param bool $unpublishedOnExpiration
-     */
-    public function setUnpublishedOnExpiration($unpublishedOnExpiration)
-    {
-        $this->unpublishedOnExpiration = $unpublishedOnExpiration;
-    }
 }
