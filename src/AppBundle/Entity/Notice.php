@@ -28,6 +28,22 @@ class Notice
     private $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="Alternative", mappedBy="notice", cascade={"persist", "remove"}, orphanRemoval=true)
+     *
+     * @deprecated since API v3, will be removed soon
+     */
+    private $alternatives;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     *
+     * @deprecated since API v3, will be removed soon
+     */
+    private $title;
+
+    /**
      * @ORM\Column(name="visibility", type="string", options={"default" : "private"})
      */
     private $visibility;
@@ -48,7 +64,7 @@ class Notice
 
     /**
      * @ORM\ManyToOne(targetEntity=Type::class, cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, name="notice_type_id")
      */
     private $type;
 
@@ -80,13 +96,11 @@ class Notice
     private $ratings;
 
     /**
-     * @var string
+     * @var Source
      *
-     * @ORM\Column(name="source_href", type="text", nullable=true)
-     *
-     * @Assert\Url
+     * @ORM\OneToOne(targetEntity=Source::class, mappedBy="notice", cascade={"persist"}, fetch="EAGER", orphanRemoval=true)
      */
-    private $sourceHref;
+    private $source;
 
     /**
      * @var \DateTime $updated
@@ -111,6 +125,8 @@ class Notice
 
     public function __construct()
     {
+        $this->alternatives = new ArrayCollection();
+
         $this->channels = new ArrayCollection();
         $this->matchingContexts = new ArrayCollection();
         $this->visibility = NoticeVisibility::getDefault();
@@ -401,22 +417,6 @@ class Notice
     }
 
     /**
-     * @return string
-     */
-    public function getSourceHref()
-    {
-        return $this->sourceHref;
-    }
-
-    /**
-     * @param string $sourceHref
-     */
-    public function setSourceHref($sourceHref)
-    {
-        $this->sourceHref = $sourceHref;
-    }
-
-    /**
      * @return \DateTime
      */
     public function getUpdated()
@@ -430,6 +430,71 @@ class Notice
     public function setUpdated($updated)
     {
         $this->updated = $updated;
+    }
+
+    /**
+     * @return Source
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * @param Source $source
+     */
+    public function setSource(Source $source)
+    {
+        $this->source = $source;
+        $this->source->setNotice($this);
+    }
+
+    public function getSourceUrl()
+    {
+        return $this->source->getUrl();
+    }
+
+
+    public function getAlternatives()
+    {
+        return $this->alternatives;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getExpires()
+    {
+        return $this->expires;
+    }
+
+    /**
+     * @param \DateTime $expires
+     */
+    public function setExpires($expires)
+    {
+        $this->expires = $expires;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUnpublishedOnExpiration()
+    {
+        return $this->unpublishedOnExpiration;
+    }
+
+    /**
+     * @param bool $unpublishedOnExpiration
+     */
+    public function setUnpublishedOnExpiration($unpublishedOnExpiration)
+    {
+        $this->unpublishedOnExpiration = $unpublishedOnExpiration;
     }
 
     /**

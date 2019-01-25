@@ -7,7 +7,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * Type
  *
- * @ORM\Table(name="type")
+ * @ORM\Table(name="notice_type")
  * @ORM\Entity
  */
 class Type

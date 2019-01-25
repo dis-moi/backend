@@ -16,12 +16,13 @@ class Version20181228130847 extends AbstractMigration
 
         // rename tables
         $this->addSql('RENAME TABLE recommendation TO notice');
+        $this->addSql('RENAME TABLE resource TO source');
         $this->addSql('RENAME TABLE recommendation_channel TO notice_channel');
-        $this->addSql('RENAME TABLE criterion TO type');
+        $this->addSql('RENAME TABLE criterion TO notice_type');
         $this->addSql('RENAME TABLE feedback TO rating');
 
         // rename links
-
+        $this->addSql('ALTER TABLE matching_context DROP FOREIGN KEY FK_665341C1D173940B');
         $this->addSql('ALTER TABLE matching_context CHANGE recommendation_id notice_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE matching_context ADD CONSTRAINT FK_665341C17D540AB FOREIGN KEY (notice_id) REFERENCES notice (id)');
         $this->addSql('CREATE INDEX IDX_665341C17D540AB ON matching_context (notice_id)');
@@ -44,8 +45,9 @@ class Version20181228130847 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('RENAME TABLE notice TO recommendation');
+        $this->addSql('RENAME TABLE source TO resource');
         $this->addSql('RENAME TABLE notice_channel TO recommendation_channel');
-        $this->addSql('RENAME TABLE type TO criterion');
+        $this->addSql('RENAME TABLE notice_type TO criterion');
         $this->addSql('RENAME TABLE rating TO feedback');
 
         $this->addSql('ALTER TABLE matching_context CHANGE notice_id recommendation_id INT DEFAULT NULL');
