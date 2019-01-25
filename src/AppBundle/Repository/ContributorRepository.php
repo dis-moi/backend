@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Contributor;
+use Doctrine\ORM\EntityRepository;
 
 class ContributorRepository extends BaseRepository
 {
@@ -20,4 +21,11 @@ class ContributorRepository extends BaseRepository
     {
         return Contributor::class;
     }
+
+    public static function getOrderedList(EntityRepository $er)
+    {
+        return $er->createQueryBuilder('c')
+            ->orderBy('c.name', 'ASC');
+    }
+
 }
