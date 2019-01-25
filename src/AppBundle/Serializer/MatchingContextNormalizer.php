@@ -35,7 +35,8 @@ class MatchingContextNormalizer implements NormalizerInterface
                 [ 'id' => $object->getNotice()->getId() ],
                 RouterInterface::ABSOLUTE_URL),
             'url_regex' => $object->getUrlRegex(),
-            'exclude_url_regex' => $object->getExcludeUrlRegex()
+            'exclude_url_regex' => $object->getExcludeUrlRegex(),
+            'query_selector' => $object->getQuerySelector()
         ];
     }
 }

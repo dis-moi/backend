@@ -18,6 +18,7 @@ class MatchingContextType extends AbstractType
             ->add('description')
             ->add('urlRegex')
             ->add('excludeUrlRegex')
+            ->add('querySelector')
         ;
     }
     

@@ -55,6 +55,13 @@ class MatchingContext
     private $description;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="querySelector", type="string", length=255, nullable=true)
+     */
+    private $querySelector;
+
+    /**
      * Get id
      *
      * @return int
@@ -159,5 +166,21 @@ class MatchingContext
     public function __toString()
     {
         return (is_null($this->getDescription())) ? 'you must set a description' : $this->getDescription();
+    }
+
+    /**
+     * @return string
+     */
+    public function getQuerySelector()
+    {
+        return $this->querySelector;
+    }
+
+    /**
+     * @param string $querySelector
+     */
+    public function setQuerySelector($querySelector)
+    {
+        $this->querySelector = $querySelector;
     }
 }
