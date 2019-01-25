@@ -21,6 +21,7 @@ easy_admin:
                     - message
                     - note
                     - source_href
+                    - expires
             form:
                 fields:
                     - message
@@ -31,6 +32,8 @@ easy_admin:
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
                     - { property: 'channels'}
                     - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
+                    - expires
+                    - unpublishedOnExpiration
 
             list:
                 dql_filter: 'entity.expires >= CURRENT_TIMESTAMP() OR entity.expires IS NULL'
@@ -49,6 +52,7 @@ easy_admin:
                     - { property : 'dismissedRatingCount', label: 'Ignorés' }
                     - { property : 'reportedRatingCount', label: 'Signalés' }
                     - expires
+                    - unpublishedOnExpiration
         ExpiredNotice:
             class: AppBundle\Entity\Notice
             label: 'Expired Notice'
