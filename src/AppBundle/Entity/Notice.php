@@ -109,6 +109,20 @@ class Notice
      */
     private $updated;
 
+    /**
+     * @var \DateTime $expires
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $expires = null;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $unpublishedOnExpiration = false;
+
     public function __construct()
     {
         $this->alternatives = new ArrayCollection();
@@ -449,5 +463,37 @@ class Notice
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getExpires()
+    {
+        return $this->expires;
+    }
+
+    /**
+     * @param \DateTime $expires
+     */
+    public function setExpires($expires)
+    {
+        $this->expires = $expires;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUnpublishedOnExpiration()
+    {
+        return $this->unpublishedOnExpiration;
+    }
+
+    /**
+     * @param bool $unpublishedOnExpiration
+     */
+    public function setUnpublishedOnExpiration($unpublishedOnExpiration)
+    {
+        $this->unpublishedOnExpiration = $unpublishedOnExpiration;
     }
 }

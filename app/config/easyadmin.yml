@@ -21,34 +21,81 @@ easy_admin:
                     - message
                     - note
                     - source.url
-                    - source.label
+                    - expires
             form:
                 fields:
                     - message
-                    - contributor
+                    - { property: 'contributor', type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
                     - type
                     - note
                     - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
                     - { property: 'channels'}
                     - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
+                    - expires
+                    - unpublishedOnExpiration
 
             list:
                 fields:
                     - id
                     - contributor
-                    - sourceUrl
+                    - source.url
                     - visibility
                     - matchingContexts
                     - type
-                    - updated
                     - { property : 'displayedRatingCount', label: 'Vues' }
                     - { property : 'clickedRatingCount', label: 'Cliqués' }
                     - { property : 'approvedRatingCount', label: 'Approuvés' }
                     - { property : 'dismissedRatingCount', label: 'Ignorés' }
-                    - { property : 'reportedRatingCount', label: 'Signalés' }
                     - { property : 'title', label: 'Titre (deprecated)' }
                     - { property : 'alternatives', label: 'Alternatives (deprecated)' }
+                    - expires
+                    - unpublishedOnExpiration
+
+        ExpiredNotice:
+            class: AppBundle\Entity\Notice
+            disabled_actions: ['new']
+            label: 'Expired Notice'
+            search:
+                fields:
+                    - matchingContexts.urlRegex
+                    - matchingContexts.excludeUrlRegex
+                    - matchingContexts.description
+                    - type.label
+                    - contributor.name
+                    - message
+                    - note
+                    - source.url
+                    - source.label
+                    - expires
+            list:
+                dql_filter: 'entity.expires <= CURRENT_TIMESTAMP()'
+                fields:
+                    - id
+                    - contributor
+                    - source.url
+                    - visibility
+                    - matchingContexts
+                    - type
+                    - { property: 'displayedRatingCount', label: 'Vues' }
+                    - { property: 'clickedRatingCount', label: 'Cliqués' }
+                    - { property: 'approvedRatingCount', label: 'Approuvés' }
+                    - { property: 'dismissedRatingCount', label: 'Ignorés' }
+                    - expires
+                    - unpublishedOnExpiration
+            form:
+                fields:
+                    - message
+                    - { property: 'contributor', type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
+                    - type
+                    - note
+                    - { property: 'source', type: 'AppBundle\Form\SourceType' }
+                    - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
+                    - { property: 'channels'}
+                    - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
+                    - expires
+                    - unpublishedOnExpiration
+
         MatchingContext:
             class: AppBundle\Entity\MatchingContext
             disabled_actions: ['new', 'edit']

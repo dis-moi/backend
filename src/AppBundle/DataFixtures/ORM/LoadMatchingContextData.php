@@ -37,6 +37,18 @@ class LoadMatchingContextData extends  AbstractFixture implements DependentFixtu
         $matchingContext->setNotice($this->getReference('notice_disabled'));
         $manager->persist($matchingContext);
 
+        $matchingContext = new MatchingContext();
+        $matchingContext->setUrlRegex("http://expired.fr");
+        $matchingContext->setDescription("A expired site");
+        $matchingContext->setNotice($this->getReference('notice_expired'));
+        $manager->persist($matchingContext);
+
+        $matchingContext = new MatchingContext();
+        $matchingContext->setUrlRegex("http://expired_and_unpublished.fr");
+        $matchingContext->setDescription("A expired and unpublished site");
+        $matchingContext->setNotice($this->getReference('notice_expired_unpublished'));
+        $manager->persist($matchingContext);
+
         $manager->flush();
     }
 

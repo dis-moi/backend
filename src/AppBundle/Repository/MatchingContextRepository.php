@@ -52,7 +52,7 @@ class MatchingContextRepository extends BaseRepository
             ->setParameter('visibility', NoticeVisibility::PUBLIC_VISIBILITY())
         ;
 
-        return $queryBuilder;
+        return NoticeRepository::addNoticeExpirationLogic($queryBuilder, 'notice');
     }
 
     /**
