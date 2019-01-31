@@ -329,7 +329,7 @@ class Notice
     public function getApprovedRatingCount()
     {
         return $this->getRatingCount(Rating::APPROVE);
-   }
+    }
 
     /**
      * @return int
