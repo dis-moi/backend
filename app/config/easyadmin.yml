@@ -4,6 +4,7 @@ easy_admin:
             css:
                 - 'css/admin.css'
             js:
+                - 'js/regex_validator.js'
                 - 'js/chartjs/moment.min.js'
                 - 'js/chartjs/Chart.js'
                 - 'js/custom_graph.js'

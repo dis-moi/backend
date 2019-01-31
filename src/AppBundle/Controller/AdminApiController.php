@@ -45,11 +45,6 @@ class AdminApiController
     public function getRestrictedcontextsAction()
     {
         $restrictedContexts = $this->restrictedContextRepository->findAll();
-
-        if (!$restrictedContexts) {
-            throw new NotFoundHttpException('No restricted contexts exists');
-        }
-
         $json = $this->serializer->serialize($restrictedContexts, 'json', ['groups' => [ 'v3:list' ]]);
 
         return new JsonResponse($json, 200, [], true);
