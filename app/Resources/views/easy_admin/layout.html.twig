@@ -38,7 +38,8 @@
                     };
                 </script>
             {% endblock %}
-
+            <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+            <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
             <script src="{{ asset('bundles/easyadmin/javascript/easyadmin-all.min.js') }}"></script>
         {% endblock head_javascript %}
 
@@ -123,6 +124,9 @@
         {% endblock wrapper %}
         </div>
 
+        <div id="modal" class="modal">
+            <div class="modal-content"></div>
+        </div>
         {% block body_javascript %}{% endblock body_javascript %}
 
         {% for js_asset in easyadmin_config('design.assets.js') %}

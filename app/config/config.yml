@@ -62,11 +62,19 @@ doctrine:
         server_version:       5.5
 
     orm:
-        auto_generate_proxy_classes: "%kernel.debug%"
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
-        filters:
-          matching_context_public_filter: AppBundle\Doctrine\MatchingContextPublicFilter
+        default_entity_manager: default
+        auto_generate_proxy_classes: %kernel.debug%
+        entity_managers:
+            default:
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                auto_mapping: true
+                filters:
+                    matching_context_public_filter: AppBundle\Doctrine\MatchingContextPublicFilter
+                dql:
+                    datetime_functions:
+                        day:   AppBundle\DQL\Day
+                        month: AppBundle\DQL\Month
+                        year:  AppBundle\DQL\Year
 
 # Swiftmailer Configuration
 swiftmailer:

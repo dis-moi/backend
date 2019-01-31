@@ -4,7 +4,9 @@ easy_admin:
             css:
                 - 'css/admin.css'
             js:
-                - 'js/regex_validator.js'
+                - 'js/chartjs/moment.min.js'
+                - 'js/chartjs/Chart.js'
+                - 'js/custom_graph.js'
     site_name: 'Le Même En Mieux'
     entities:
         Notice:
@@ -98,6 +100,9 @@ easy_admin:
 
         MatchingContext:
             class: AppBundle\Entity\MatchingContext
+            disabled_actions: ['new', 'edit']
+        RestrictedContext:
+            class: AppBundle\Entity\RestrictedContext
             disabled_actions: ['new', 'edit']
         Channel:
             class: AppBundle\Entity\Channel
