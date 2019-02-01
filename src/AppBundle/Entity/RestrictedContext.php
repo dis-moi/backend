@@ -4,14 +4,12 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\EntityListener\RestrictedContextListener;
 
 /**
  * RestrictedContext
  *
  * @ORM\Table(name="restricted_context")
  * @ORM\Entity
- * @ORM\EntityListeners({RestrictedContextListener::class})
  */
 class RestrictedContext
 {

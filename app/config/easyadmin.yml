@@ -12,7 +12,7 @@ easy_admin:
     entities:
         Notice:
             class: AppBundle\Entity\Notice
-            label: 'Notice'
+            label: 'Notices'
             search:
                 fields:
                     - matchingContexts.urlRegex
@@ -58,7 +58,7 @@ easy_admin:
         ExpiredNotice:
             class: AppBundle\Entity\Notice
             disabled_actions: ['new']
-            label: 'Expired Notice'
+            label: 'Expired Notices'
             search:
                 fields:
                     - matchingContexts.urlRegex
@@ -100,12 +100,23 @@ easy_admin:
                     - unpublishedOnExpiration
 
         MatchingContext:
+            label: 'Matching Contexts'
             class: AppBundle\Entity\MatchingContext
             disabled_actions: ['new', 'edit']
+
         RestrictedContext:
             class: AppBundle\Entity\RestrictedContext
-            disabled_actions: ['new', 'edit']
+            label: 'Restricted Contexts (global)'
+            list:
+                fields:
+                    - id
+                    - { property: urlRegex, label: 'Global Restricted URL Regex' }
+            form:
+                fields:
+                    - { property: urlRegex, label: 'Global Restricted URL Regex' }
+
         Channel:
+            label: "Channels"
             class: AppBundle\Entity\Channel
             list:
               fields:
@@ -114,6 +125,7 @@ easy_admin:
               fields:
                 - { property: name, label: "Channel's name" }
         Type:
+            label: "Types"
             class: AppBundle\Entity\Type
             list:
                 fields: ['id', 'label', 'slug']
@@ -121,6 +133,7 @@ easy_admin:
                 fields:
                     - label
         User:
+            label: "Users"
             class: AppBundle\Entity\User
             list:
                 fields:
@@ -146,6 +159,7 @@ easy_admin:
 
 
         Contributor:
+            label: "Contributors"
             class: AppBundle\Entity\Contributor
             list:
                 sort: ['name', 'ASC']
