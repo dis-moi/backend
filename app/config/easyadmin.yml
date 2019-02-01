@@ -43,7 +43,7 @@ easy_admin:
                     - visibility
                     - matchingContexts
                     - type
-                    - { property : 'displayedRatingCount', label: 'Vues', type: 'integer'}
+                    - { property : 'displayedRatingCount', label: 'Vues' }
                     - { property : 'clickedRatingCount', label: 'Cliqués' }
                     - { property : 'approvedRatingCount', label: 'Approuvés' }
                     - { property : 'dismissedRatingCount', label: 'Ignorés' }
