@@ -31,7 +31,7 @@ easy_admin:
                     - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
                     - { property: 'channels'}
-                    - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
+                    - { property: 'matchingContexts', type: 'collection', type_options: {required: true, entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
                     - expires
                     - unpublishedOnExpiration
 
