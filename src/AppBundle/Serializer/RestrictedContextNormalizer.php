@@ -23,7 +23,7 @@ class RestrictedContextNormalizer implements NormalizerInterface
     }
 
     /**
-     * @param MatchingContext $object
+     * @param RestrictedContext $object
      *
      * @return array
      */

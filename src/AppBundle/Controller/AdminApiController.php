@@ -38,15 +38,4 @@ class AdminApiController
 
         return new JsonResponse($json, 200, [], true);
     }
-
-    /**
-     * @Route("/restrictedcontexts")
-     */
-    public function getRestrictedcontextsAction()
-    {
-        $restrictedContexts = $this->restrictedContextRepository->findAll();
-        $json = $this->serializer->serialize($restrictedContexts, 'json', ['groups' => [ 'v3:list' ]]);
-
-        return new JsonResponse($json, 200, [], true);
-    }
 }
