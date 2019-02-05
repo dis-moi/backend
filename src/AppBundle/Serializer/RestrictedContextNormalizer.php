@@ -7,27 +7,24 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class RestrictedContextNormalizer implements NormalizerInterface
 {
+    /** @var RouterInterface $router */
     protected $router;
 
+    /**
+     * RestrictedContextNormalizer constructor.
+     * @param RouterInterface $router
+     */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }
 
-    /**
-     * @return bool
-     */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, $format = null) : bool
     {
         return $data instanceof RestrictedContext;
     }
 
-    /**
-     * @param RestrictedContext $object
-     *
-     * @return array
-     */
-    public function normalize($object, $format = null, array $context = array())
+    public function normalize($object, $format = null, array $context = array()) : array
     {
         return [
             'url_regex' => $object->getUrlRegex()

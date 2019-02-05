@@ -5,19 +5,15 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Notice;
 use AppBundle\Entity\Rating;
 
-class RatingRepository extends \Doctrine\ORM\EntityRepository
+class RatingRepository extends BaseRepository
 {
-    /**
-     * @param Notice $notice
-     * @return array
-     */
-    public function getGraphDataByNoticeType(Notice $notice, $type)
+    public function getGraphDataByNoticeType(Notice $notice, $type) : array
     {
         $from = new \DateTime('today');
         $from->modify('-1 month');
         $to   = new \DateTime();
 
-        $qb = $this->createQueryBuilder('r')
+        $qb = $this->repository->createQueryBuilder('r')
             ->select('DAY(r.context.datetime) AS gDay, MONTH(r.context.datetime) AS gDmonth, YEAR(r.context.datetime) AS gDyear, COUNT(r.id) AS _count');
         $qb->andWhere($qb->expr()->eq('r.type',':type'))->setParameter('type',$type);
         $qb->andWhere($qb->expr()->eq('r.notice',':notice'))->setParameter('notice',$notice);
@@ -34,7 +30,16 @@ class RatingRepository extends \Doctrine\ORM\EntityRepository
         $qb->addOrderBy('gDmonth','ASC');
         $qb->addOrderBy('gDay','ASC');
 
-        $items = $qb->getQuery()->getResult();
+        $items =  $qb->getQuery()->getResult();
+        return $this->extractDailyCount($items);
+    }
+
+    private function extractDailyCount($items) : array
+    {
+        $from = new \DateTime('today');
+        $from->modify('-1 month');
+        $to   = new \DateTime();
+
         $return = [];
         if(count($items)) {
             while ($from < $to) {
@@ -50,5 +55,10 @@ class RatingRepository extends \Doctrine\ORM\EntityRepository
             }
         }
         return $return;
+    }
+
+    public function getResourceClassName() : string
+    {
+        return Rating::class;
     }
 }

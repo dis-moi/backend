@@ -16,46 +16,46 @@ $(document).on('click','td[data-label="Vues"], td[data-label="Cliqués"], td[dat
         $modal.find('.modal-content').html(data);
         $modal.show();
         let $canvas = $('#canvas');
-        let _labels_data = $canvas.data('labels');
-        let _display_data = $canvas.data('display');
-        let _click_data = $canvas.data('click');
-        let _approve_data = $canvas.data('approve');
-        let _dismiss_data = $canvas.data('dismiss');
+        let labels_data = $canvas.data('labels');
+        let display_data = $canvas.data('display');
+        let click_data = $canvas.data('click');
+        let approve_data = $canvas.data('approve');
+        let dismiss_data = $canvas.data('dismiss');
 
-        let _labels = [];
-        $.each(_labels_data, function( index, value ) {
-            _labels.push(moment(value+"T00:00:00").toDate());
+        let labels = [];
+        $.each(labels_data, function( index, value ) {
+            labels.push(moment(value+"T00:00:00").toDate());
         });
 
         let color = Chart.helpers.color;
         let config = {
             type: 'line',
             data: {
-                labels: _labels_data,
+                labels: labels_data,
                 datasets: [{
                     label: 'Vues',
                     backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
                     borderColor: window.chartColors.red,
-                    fill: true,
-                    data: _display_data,
+                    fill: false,
+                    data: display_data,
                 },{
                     label: 'Cliqués',
                     backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
                     borderColor: window.chartColors.blue,
-                    fill: true,
-                    data: _click_data,
+                    fill: false,
+                    data: click_data,
                 },{
                     label: 'Approuvés',
                     backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
                     borderColor: window.chartColors.green,
-                    fill: true,
-                    data: _approve_data,
+                    fill: false,
+                    data: approve_data,
                 },{
                     label: 'Ignorés',
                     backgroundColor: color(window.chartColors.orange).alpha(0.5).rgbString(),
                     borderColor: window.chartColors.orange,
-                    fill: true,
-                    data: _dismiss_data,
+                    fill: false,
+                    data: dismiss_data,
                 }]
             },
             options: {
@@ -66,8 +66,7 @@ $(document).on('click','td[data-label="Vues"], td[data-label="Cliqués"], td[dat
                     xAxes: [{
                         type: 'time',
                         time: {
-                            format: 'YYYY-MM-DD',
-                            unit: 'day',
+                            format: 'YYYY-MM-DD'
                         },
                         scaleLabel: {
                             display: true,

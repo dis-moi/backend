@@ -1,7 +1,6 @@
 <?php
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\RestrictedContext;
 use AppBundle\Repository\MatchingContextRepository;
 use AppBundle\Repository\RestrictedContextRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

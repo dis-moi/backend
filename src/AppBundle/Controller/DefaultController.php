@@ -4,12 +4,24 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Notice;
 use AppBundle\Entity\Rating;
+use AppBundle\Repository\RatingRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
+    protected $ratingRepository;
+
+    /**
+     * DefaultController constructor.
+     * @param RatingRepository $ratingRepository
+     */
+    public function __construct(RatingRepository $ratingRepository)
+    {
+        $this->ratingRepository = $ratingRepository;
+    }
+
     /**
      * @Route("/", name="homepage")
      */
@@ -22,16 +34,14 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/notice-graph/{id}", name="notice_graph", options={"expose"=true}, condition="request.isXmlHttpRequest()")
+     * @Route("/notice-graph/{id}", name="notice_graph", options={"expose"=true})
      */
     public function noticeGraphAction(Request $request, Notice $notice) {
 
-        /** @var \AppBundle\Repository\RatingRepository $ratingRepository */
-        $ratingRepository = $this->getDoctrine()->getRepository(Rating::class);
-        $displayData = $ratingRepository->getGraphDataByNoticeType($notice, Rating::DISPLAY);
-        $clickData = $ratingRepository->getGraphDataByNoticeType($notice, Rating::CLICK);
-        $approveData = $ratingRepository->getGraphDataByNoticeType($notice, Rating::APPROVE);
-        $dismissData = $ratingRepository->getGraphDataByNoticeType($notice, Rating::DISMISS);
+        $displayData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::DISPLAY);
+        $clickData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::CLICK);
+        $approveData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::APPROVE);
+        $dismissData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::DISMISS);
 
         return $this->render('default/notice_graph_modal.html.twig', [
             'labels' => array_keys($displayData),
