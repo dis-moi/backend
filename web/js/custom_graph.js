@@ -37,24 +37,28 @@ $(document).on('click','td[data-label="Vues"], td[data-label="Cliqués"], td[dat
                     backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
                     borderColor: window.chartColors.red,
                     fill: false,
+                    lineTension: 0,
                     data: display_data,
                 },{
                     label: 'Cliqués',
                     backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
                     borderColor: window.chartColors.blue,
                     fill: false,
+                    lineTension: 0,
                     data: click_data,
                 },{
                     label: 'Approuvés',
                     backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
                     borderColor: window.chartColors.green,
                     fill: false,
+                    lineTension: 0,
                     data: approve_data,
                 },{
                     label: 'Ignorés',
                     backgroundColor: color(window.chartColors.orange).alpha(0.5).rgbString(),
                     borderColor: window.chartColors.orange,
                     fill: false,
+                    lineTension: 0,
                     data: dismiss_data,
                 }]
             },
@@ -66,7 +70,10 @@ $(document).on('click','td[data-label="Vues"], td[data-label="Cliqués"], td[dat
                     xAxes: [{
                         type: 'time',
                         time: {
-                            format: 'YYYY-MM-DD'
+                            format: 'YYYY-MM-DD',
+                            unit: 'day',
+                            min: moment().subtract(3, 'months'),
+                            max: moment()
                         },
                         scaleLabel: {
                             display: true,

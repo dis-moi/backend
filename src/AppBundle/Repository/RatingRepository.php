@@ -10,7 +10,7 @@ class RatingRepository extends BaseRepository
     public function getGraphDataByNoticeType(Notice $notice, $type) : array
     {
         $from = new \DateTime('today');
-        $from->modify('-1 month');
+        $from->modify('-3 month');
         $to   = new \DateTime();
 
         $qb = $this->repository->createQueryBuilder('r')
@@ -37,7 +37,7 @@ class RatingRepository extends BaseRepository
     private function extractDailyCount($items) : array
     {
         $from = new \DateTime('today');
-        $from->modify('-1 month');
+        $from->modify('-3 month');
         $to   = new \DateTime();
 
         $return = [];
