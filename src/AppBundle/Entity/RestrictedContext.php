@@ -36,7 +36,7 @@ class RestrictedContext
      * Get id.
      *
      */
-    public function getId() : int
+    public function getId() : ?int
     {
         return $this->id;
     }
@@ -56,7 +56,7 @@ class RestrictedContext
      * Get urlRegex.
      *
      */
-    public function getUrlRegex() : string
+    public function getUrlRegex() : ?string
     {
         return $this->urlRegex;
     }
