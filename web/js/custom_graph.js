@@ -1,102 +1,90 @@
-let $modal = $('#modal');
+jQuery(document).ready(() => {
+    const noticeRows = jQuery('#main td.graphable');
 
-window.chartColors = {
-    red: 'rgb(255, 99, 132)',
-    orange: 'rgb(255, 159, 64)',
-    yellow: 'rgb(255, 205, 86)',
-    green: 'rgb(75, 192, 192)',
-    blue: 'rgb(54, 162, 235)',
-    purple: 'rgb(153, 102, 255)',
-    grey: 'rgb(201, 203, 207)'
-};
+    const $modal = jQuery('#modal').modal({show: false});
+    const $modalContent = $modal.find('.modal-content')
+        .css('margin', '4% auto 0');
 
-$(document).on('click','td[data-label="Vues"], td[data-label="Cliqués"], td[data-label="Approuvés"], td[data-label="Ignorés"]',function () {
-    let _id = $(this).closest('tr').data('id');
-    $.ajax({url: Routing.generate('notice_graph',{'id':_id})}).done(function(data) {
-        $modal.find('.modal-content').html(data);
-        $modal.show();
-        let $canvas = $('#canvas');
-        let labels_data = $canvas.data('labels');
-        let display_data = $canvas.data('display');
-        let click_data = $canvas.data('click');
-        let approve_data = $canvas.data('approve');
-        let dismiss_data = $canvas.data('dismiss');
+    const chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
 
-        let labels = [];
-        $.each(labels_data, function( index, value ) {
-            labels.push(moment(value+"T00:00:00").toDate());
+    const datasetBaseConfig = {
+        fill: false,
+        lineTension: 0,
+    };
+
+    function makeDatasetConfig(label, color, data) {
+        return Object.assign({}, datasetBaseConfig, {
+            label, data,
+            backgroundColor: Chart.helpers.color(color).alpha(0.5).rgbString(),
+            borderColor: color,
         });
+    }
 
-        let color = Chart.helpers.color;
-        let config = {
-            type: 'line',
-            data: {
-                labels: labels_data,
-                datasets: [{
-                    label: 'Vues',
-                    backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-                    borderColor: window.chartColors.red,
-                    fill: false,
-                    lineTension: 0,
-                    data: display_data,
-                },{
-                    label: 'Cliqués',
-                    backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
-                    borderColor: window.chartColors.blue,
-                    fill: false,
-                    lineTension: 0,
-                    data: click_data,
-                },{
-                    label: 'Approuvés',
-                    backgroundColor: color(window.chartColors.green).alpha(0.5).rgbString(),
-                    borderColor: window.chartColors.green,
-                    fill: false,
-                    lineTension: 0,
-                    data: approve_data,
-                },{
-                    label: 'Ignorés',
-                    backgroundColor: color(window.chartColors.orange).alpha(0.5).rgbString(),
-                    borderColor: window.chartColors.orange,
-                    fill: false,
-                    lineTension: 0,
-                    data: dismiss_data,
+    const baseConfig = {
+        type: 'line',
+        options: {
+            title: {
+                text: 'Statistiques'
+            },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        parser: 'YYYY-MM-DD',
+                        unit: 'day',
+                        min: moment().subtract(3, 'months'),
+                        max: moment()
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'value'
+                    }
                 }]
             },
-            options: {
-                title: {
-                    text: 'Statistiques'
-                },
-                scales: {
-                    xAxes: [{
-                        type: 'time',
-                        time: {
-                            format: 'YYYY-MM-DD',
-                            unit: 'day',
-                            min: moment().subtract(3, 'months'),
-                            max: moment()
-                        },
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Date'
-                        }
-                    }],
-                    yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'value'
-                        }
-                    }]
-                },
-            }
-        };
+        }
+    };
 
-        let ctx = document.getElementById('canvas').getContext('2d');
-        window.myLine = new Chart(ctx, config);
+    function makeConfig(labels, datasets) {
+        return Object.assign({}, baseConfig, {data: {labels, datasets}});
+    }
 
+    noticeRows.on('click', event => {
+        const noticeId = jQuery(event.target).closest('tr').data('id');
+        $modalContent.load(Routing.generate('notice_graph', {'id': noticeId}), () => {
+            $modal.modal('show');
+
+            const $canvas = $modalContent.find('#canvas');
+
+            const labels_data = $canvas.data('labels');
+            const display_data = $canvas.data('display');
+            const click_data = $canvas.data('click');
+            const approve_data = $canvas.data('approve');
+            const dismiss_data = $canvas.data('dismiss');
+
+            const config = makeConfig(labels_data, [
+                makeDatasetConfig('Affichages', chartColors.blue, display_data),
+                makeDatasetConfig('Clics', chartColors.red, click_data),
+                makeDatasetConfig('Approuvés', chartColors.green, approve_data),
+                makeDatasetConfig('Ignorés', chartColors.orange, dismiss_data),
+            ]);
+
+            const ctx = $canvas.get(0).getContext('2d');
+            window.noticeChart = new Chart(ctx, config);
+        });
     });
-});
 
-/* MODAL */
-$(document).on('click','.close',function () {
-    $modal.hide();
 });

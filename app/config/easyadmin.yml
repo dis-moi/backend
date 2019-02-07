@@ -46,10 +46,10 @@ easy_admin:
                     - visibility
                     - matchingContexts
                     - type
-                    - { property : 'displayedRatingCount', label: 'Vues' }
-                    - { property : 'clickedRatingCount', label: 'Cliqués' }
-                    - { property : 'approvedRatingCount', label: 'Approuvés' }
-                    - { property : 'dismissedRatingCount', label: 'Ignorés' }
+                    - { property : 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
+                    - { property : 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
+                    - { property : 'approvedRatingCount', label: 'Approuvés', css_class: 'graphable' }
+                    - { property : 'dismissedRatingCount', label: 'Ignorés', css_class: 'graphable' }
                     - { property : 'title', label: 'Titre (deprecated)' }
                     - { property : 'alternatives', label: 'Alternatives (deprecated)' }
                     - expires
@@ -80,10 +80,10 @@ easy_admin:
                     - visibility
                     - matchingContexts
                     - type
-                    - { property: 'displayedRatingCount', label: 'Vues' }
-                    - { property: 'clickedRatingCount', label: 'Cliqués' }
-                    - { property: 'approvedRatingCount', label: 'Approuvés' }
-                    - { property: 'dismissedRatingCount', label: 'Ignorés' }
+                    - { property: 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
+                    - { property: 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
+                    - { property: 'approvedRatingCount', label: 'Approuvés', css_class: 'graphable' }
+                    - { property: 'dismissedRatingCount', label: 'Ignorés', css_class: 'graphable' }
                     - expires
                     - unpublishedOnExpiration
             form:
