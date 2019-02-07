@@ -44,9 +44,8 @@ class RestrictedContext
     /**
      * Set urlRegex.
      *
-     * @param string $urlRegex
      */
-    public function setUrlRegex($urlRegex) : RestrictedContext
+    public function setUrlRegex(string $urlRegex) : RestrictedContext
     {
         $this->urlRegex = $urlRegex;
 

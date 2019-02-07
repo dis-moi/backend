@@ -2,7 +2,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Repository\MatchingContextRepository;
-use AppBundle\Repository\RestrictedContextRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -11,15 +10,13 @@ use Symfony\Component\Serializer\SerializerInterface;
 class AdminApiController
 {
     protected $repository;
-    protected $restrictedContextRepository;
     protected $serializer;
 
-    public function __construct(SerializerInterface $serializer, MatchingContextRepository $repository, RestrictedContextRepository $restrictedContextRepository)
+    public function __construct(SerializerInterface $serializer, MatchingContextRepository $repository)
     {
         $this->serializer = $serializer;
 
         $this->repository = $repository;
-        $this->restrictedContextRepository = $restrictedContextRepository;
     }
 
     /**
