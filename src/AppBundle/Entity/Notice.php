@@ -329,7 +329,7 @@ class Notice
     public function getApprovedRatingCount()
     {
         return $this->getRatingCount(Rating::APPROVE);
-   }
+    }
 
     /**
      * @return int
@@ -451,7 +451,7 @@ class Notice
 
     public function getSourceUrl()
     {
-        return $this->source->getUrl();
+        return $this->source ? $this->source->getUrl() : null;
     }
 
 

@@ -5,11 +5,14 @@ easy_admin:
                 - 'css/admin.css'
             js:
                 - 'js/regex_validator.js'
+                - 'js/chartjs/moment.min.js'
+                - 'js/chartjs/Chart.js'
+                - 'js/custom_graph.js'
     site_name: 'Le Même En Mieux'
     entities:
         Notice:
             class: AppBundle\Entity\Notice
-            label: 'Notice'
+            label: 'Notices'
             search:
                 fields:
                     - matchingContexts.urlRegex
@@ -43,10 +46,10 @@ easy_admin:
                     - visibility
                     - matchingContexts
                     - type
-                    - { property : 'displayedRatingCount', label: 'Vues' }
-                    - { property : 'clickedRatingCount', label: 'Cliqués' }
-                    - { property : 'approvedRatingCount', label: 'Approuvés' }
-                    - { property : 'dismissedRatingCount', label: 'Ignorés' }
+                    - { property : 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
+                    - { property : 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
+                    - { property : 'approvedRatingCount', label: 'Approuvés', css_class: 'graphable' }
+                    - { property : 'dismissedRatingCount', label: 'Ignorés', css_class: 'graphable' }
                     - { property : 'title', label: 'Titre (deprecated)' }
                     - { property : 'alternatives', label: 'Alternatives (deprecated)' }
                     - expires
@@ -55,7 +58,7 @@ easy_admin:
         ExpiredNotice:
             class: AppBundle\Entity\Notice
             disabled_actions: ['new']
-            label: 'Expired Notice'
+            label: 'Expired Notices'
             search:
                 fields:
                     - matchingContexts.urlRegex
@@ -77,10 +80,10 @@ easy_admin:
                     - visibility
                     - matchingContexts
                     - type
-                    - { property: 'displayedRatingCount', label: 'Vues' }
-                    - { property: 'clickedRatingCount', label: 'Cliqués' }
-                    - { property: 'approvedRatingCount', label: 'Approuvés' }
-                    - { property: 'dismissedRatingCount', label: 'Ignorés' }
+                    - { property: 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
+                    - { property: 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
+                    - { property: 'approvedRatingCount', label: 'Approuvés', css_class: 'graphable' }
+                    - { property: 'dismissedRatingCount', label: 'Ignorés', css_class: 'graphable' }
                     - expires
                     - unpublishedOnExpiration
             form:
@@ -97,9 +100,23 @@ easy_admin:
                     - unpublishedOnExpiration
 
         MatchingContext:
+            label: 'Matching Contexts'
             class: AppBundle\Entity\MatchingContext
             disabled_actions: ['new', 'edit']
+
+        RestrictedContext:
+            class: AppBundle\Entity\RestrictedContext
+            label: 'Restricted Contexts (global)'
+            list:
+                fields:
+                    - id
+                    - { property: urlRegex, label: 'Global Restricted URL Regex' }
+            form:
+                fields:
+                    - { property: urlRegex, label: 'Global Restricted URL Regex' }
+
         Channel:
+            label: "Channels"
             class: AppBundle\Entity\Channel
             list:
               fields:
@@ -108,6 +125,7 @@ easy_admin:
               fields:
                 - { property: name, label: "Channel's name" }
         Type:
+            label: "Types"
             class: AppBundle\Entity\Type
             list:
                 fields: ['id', 'label', 'slug']
@@ -115,6 +133,7 @@ easy_admin:
                 fields:
                     - label
         User:
+            label: "Users"
             class: AppBundle\Entity\User
             list:
                 fields:
@@ -140,6 +159,7 @@ easy_admin:
 
 
         Contributor:
+            label: "Contributors"
             class: AppBundle\Entity\Contributor
             list:
                 sort: ['name', 'ASC']

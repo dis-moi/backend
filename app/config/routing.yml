@@ -24,6 +24,9 @@ easy_admin_bundle:
     prefix:   /admin
     schemes: [https]
 
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
 ## API
 # support & code for public api for v1 & v2 has been dropped w/ the introduction of v3
 api_v3:

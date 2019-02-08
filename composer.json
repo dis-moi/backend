@@ -17,7 +17,7 @@
         }
     },
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=7.1.0",
         "symfony/symfony": "3.3.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
@@ -33,7 +33,8 @@
         "doctrine/doctrine-migrations-bundle": "^1.1",
         "ocramius/proxy-manager": "^2.0.2",
         "league/uri":"^5.0",
-        "marc-mabe/php-enum": "^2.2"
+        "marc-mabe/php-enum": "^2.2",
+        "friendsofsymfony/jsrouting-bundle": "^2.2"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^3.0",
