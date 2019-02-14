@@ -168,25 +168,47 @@ class ApiControllerTest extends WebTestCase
         $randomRecommendation = $this->retrieveRandomRecommendation($recommendationRepository);
 
         $route = $this->getFeedbackUrl($randomRecommendation->getId());
-        $postedFeedback = $this->feedbackFactory('approve');
-        $payload = json_encode($postedFeedback);
-        $crawler = static::$client->request('POST', $route,  $params = [], $files = [], $server = [], $payload);
 
-        $this->assertEquals(201, static::$client->getResponse()->getStatusCode());
+        $upFeedback = $this->feedbackFactory('approve');
+        $downFeedback = $this->feedbackFactory('unapprove');
+        $upPayload = json_encode($upFeedback);
+        $downPayload = json_encode($downFeedback);
+
+        $clientUp1 = static::createClient();
+        $clientUp2 = static::createClient();
+        $clientDown1 = static::createClient();
+        $crawlerUp1 = $clientUp1
+            ->request('POST', $route,  $params = [], $files = [], $server = [], $upPayload);
+        $crawlerUp2 = $clientUp2
+            ->request('POST', $route,  $params = [], $files = [], $server = [], $upPayload);
+        $crawlerDown1 = $clientDown1
+            ->request('POST', $route,  $params = [], $files = [], $server = [], $downPayload);
+
+        $this->assertEquals(201, $clientUp1->getResponse()->getStatusCode());
+        $this->assertEquals(201, $clientUp2->getResponse()->getStatusCode());
+        $this->assertEquals(201, $clientDown1->getResponse()->getStatusCode());
         /** @var Recommendation $updatedRecommendation */
 
         $this->getDoctrine()->getManager()->clear();
         $updatedRecommendation = $recommendationRepository->findOneBy(['id' => $randomRecommendation->getId()]);
         $feedbacks = $updatedRecommendation->getFeedbacks();
-        $this->assertCount(1, $feedbacks);
-        $approvedFeedback = $feedbacks[0];
-        $this->assertEquals(Feedback::APPROVE, $approvedFeedback->getType());
-        $context = $approvedFeedback->getContext();
+        $this->assertCount(3, $feedbacks);
+        $approvedFeedbacksBalance = $updatedRecommendation->getApprovedFeedbackCount();
+        $this->assertCount(1, $approvedFeedbacksBalance);
+
+        $approvedFeedback1 = $feedbacks[0];
+        $approvedFeedback2 = $feedbacks[1];
+        $unapprovedFeedback1 = $feedbacks[2];
+        $this->assertEquals(Feedback::APPROVE, $approvedFeedback1->getType());
+        $this->assertEquals(Feedback::UNAPPROVE, $unapprovedFeedback1->getType());
+        $context = $approvedFeedback1->getContext();
         $this->assertInstanceOf(FeedbackContext::class, $context);
         $this->assertEquals('2016-12-07T12:11:02', $context->getDatetime()->format('Y-m-d\TH:i:s'));
         $this->assertEquals('https://en.wikipedia.org/wiki/Abortion', $context->getUrl());
 
-        $this->getDoctrine()->getManager()->remove($approvedFeedback);
+        $this->getDoctrine()->getManager()->remove($approvedFeedback1);
+        $this->getDoctrine()->getManager()->remove($approvedFeedback2);
+        $this->getDoctrine()->getManager()->remove($unapprovedFeedback1);
         $this->getDoctrine()->getManager()->flush();
 
     }

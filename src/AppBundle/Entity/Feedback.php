@@ -17,7 +17,17 @@ class Feedback
     const CLICK = 'click';
 
     const APPROVE = 'approve';
+    const UNAPPROVE = 'unapprove';
+
+    const LIKE = 'like';
+    const UNLIKE = 'unlike';
+
+    const DISLIKE = 'dislike';
+    const UNDISLIKE = 'undislike';
+
     const DISMISS = 'dismiss';
+    const UNDISMISS = 'undismiss';
+
     const REPORT = 'report';
 
     /**
@@ -89,7 +99,19 @@ class Feedback
      */
     private function setType($type)
     {
-        if (!in_array($type, [self::APPROVE, self::DISMISS, self::REPORT, self::DISPLAY, self::CLICK])) {
+        if (!in_array($type, [
+            self::APPROVE,
+            self::UNAPPROVE,
+            self::DISMISS,
+            self::UNDISMISS,
+            self::LIKE,
+            self::UNLIKE,
+            self::DISLIKE,
+            self::UNDISLIKE,
+            self::DISPLAY,
+            self::CLICK,
+            self::REPORT,
+        ])) {
             throw new \InvalidArgumentException(sprintf('Invalid value given for feedback type : %s', $type));
         }
         $this->type = $type;

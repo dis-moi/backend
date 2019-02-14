@@ -409,15 +409,31 @@ class Recommendation
      */
     public function getApprovedFeedbackCount()
     {
-        return $this->getFeedbackCount(Feedback::APPROVE);
-   }
+        return $this->getFeedbackBalance(Feedback::APPROVE, Feedback::UNAPPROVE);
+    }
 
     /**
      * @return int
      */
     public function getDismissedFeedbackCount()
     {
-        return $this->getFeedbackCount(Feedback::DISMISS);
+        return $this->getFeedbackBalance(Feedback::DISMISS, Feedback::UNDISMISS);
+    }
+
+    /**
+     * @return int
+     */
+    public function getLikedFeedbackCount()
+    {
+        return $this->getFeedbackBalance(Feedback::LIKE, Feedback::UNLIKE);
+    }
+
+    /**
+     * @return int
+     */
+    public function getDislikedFeedbackCount()
+    {
+        return $this->getFeedbackBalance(Feedback::DISLIKE, Feedback::UNDISLIKE);
     }
 
     /**
@@ -437,6 +453,17 @@ class Recommendation
         return $this->getFeedbacks()->filter(function(Feedback $feedback) use ($type) {
             return $feedback->getType() === $type;
         })->count();
+    }
+
+    /**
+     * @param string $typeUp
+     * @param string $typeDown
+     * @return int
+     */
+    protected function getFeedbackBalance($typeUp, $typeDown)
+    {
+        $balance = $this->getFeedbackCount($typeUp) - $this->getFeedbackCount($typeDown);
+        return $balance > 0 ? $balance : 0;
     }
 
     /**
