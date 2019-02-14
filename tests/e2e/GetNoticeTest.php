@@ -22,9 +22,9 @@ class GetNoticeTest extends BaseApiE2eTestCase
         $this->assertEquals('http://source-href-1.fr?utm_source=lmem_assistant', $payload['source']['url']);
         $this->assertEquals('Ecology', $payload['type']['label']);
         $this->assertEquals('ecology', $payload['type']['slug']);
-        $this->assertEquals('ecology', $payload['type']['slug']);
-        $this->assertEquals(3, $payload['ratings']['approves']);
-        $this->assertEquals(2, $payload['ratings']['dislikes']);
+        $this->assertEquals(2, $payload['ratings']['likes']);
+        $this->assertEquals(0, $payload['ratings']['dislikes']);
+
     }
 
     public function testFailGetDisabledNotice()

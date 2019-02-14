@@ -72,9 +72,7 @@ doctrine:
                     matching_context_public_filter: AppBundle\Doctrine\MatchingContextPublicFilter
                 dql:
                     datetime_functions:
-                        day:   AppBundle\DQL\Day
-                        month: AppBundle\DQL\Month
-                        year:  AppBundle\DQL\Year
+                        date_format: DoctrineExtensions\Query\Mysql\DateFormat
 
 # Swiftmailer Configuration
 swiftmailer:

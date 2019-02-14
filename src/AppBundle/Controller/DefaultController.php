@@ -40,14 +40,16 @@ class DefaultController extends Controller
 
         $displayData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::DISPLAY);
         $clickData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::CLICK);
-        $approveData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::APPROVE);
-        $dismissData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::DISMISS);
+        $likeData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::LIKE, Rating::UNLIKE);
+        $dislikeData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::DISLIKE, Rating::UNDISLIKE);
+        $dismissData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::DISMISS, Rating::UNDISMISS);
 
         return $this->render('default/notice_graph_modal.html.twig', [
             'labels' => array_keys($displayData),
             'display_data' => array_values($displayData),
             'click_data' => array_values($clickData),
-            'approve_data' => array_values($approveData),
+            'like_data' => array_values($likeData),
+            'dislike_data' => array_values($dislikeData),
             'dismiss_data' => array_values($dismissData)
         ]);
     }

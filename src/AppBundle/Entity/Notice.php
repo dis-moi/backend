@@ -307,55 +307,55 @@ class Notice
         return $this->ratings;
     }
 
-    /**
-     * @return int
-     */
-    public function getDisplayedRatingCount()
+    public function getDisplayedRatingCount(): int
     {
         return $this->getRatingCount(Rating::DISPLAY);
     }
 
-    /**
-     * @return int
-     */
-    public function getClickedRatingCount()
+    public function getClickedRatingCount(): int
     {
         return $this->getRatingCount(Rating::CLICK);
     }
 
     /**
-     * @return int
+     * @deprecated replaced by likes and dislikes
      */
-    public function getApprovedRatingCount()
+    public function getApprovedRatingCount(): int
     {
-        return $this->getRatingCount(Rating::APPROVE);
+        return 0;
     }
 
-    /**
-     * @return int
-     */
-    public function getDismissedRatingCount()
+    public function getLikedRatingCount(): int
     {
-        return $this->getRatingCount(Rating::DISMISS);
+        return $this->getRatingBalance(Rating::LIKE, Rating::UNLIKE);
     }
 
-    /**
-     * @return int
-     */
-    public function getReportedRatingCount()
+    public function getDislikedRatingCount(): int
+    {
+        return $this->getRatingBalance(Rating::DISLIKE, Rating::UNDISLIKE);
+    }
+
+    public function getDismissedRatingCount(): int
+    {
+        return $this->getRatingBalance(Rating::DISMISS, Rating::UNDISMISS);
+    }
+
+    public function getReportedRatingCount(): int
     {
         return $this->getRatingCount(Rating::REPORT);
     }
 
-    /**
-     * @param string $type
-     * @return int
-     */
-    protected function getRatingCount($type)
+    protected function getRatingCount(string $type): int
     {
         return $this->getRatings()->filter(function(Rating $rating) use ($type) {
             return $rating->getType() === $type;
         })->count();
+    }
+
+    protected function getRatingBalance(string $typeUp , string $typeDown): int
+    {
+        $balance = $this->getRatingCount($typeUp) - $this->getRatingCount($typeDown);
+        return $balance > 0 ? $balance : 0;
     }
 
     /**

@@ -72,13 +72,15 @@ jQuery(document).ready(() => {
             const labels_data = $canvas.data('labels');
             const display_data = $canvas.data('display');
             const click_data = $canvas.data('click');
-            const approve_data = $canvas.data('approve');
+            const like_data = $canvas.data('like');
+            const dislike_data = $canvas.data('dislike');
             const dismiss_data = $canvas.data('dismiss');
 
             const config = makeConfig(labels_data, [
-                makeDatasetConfig('Affichages', chartColors.blue, display_data),
+                makeDatasetConfig('Affichages', chartColors.green, display_data),
                 makeDatasetConfig('Clics', chartColors.red, click_data),
-                makeDatasetConfig('Approuvés', chartColors.green, approve_data),
+                makeDatasetConfig('Likes', chartColors.blue, like_data),
+                makeDatasetConfig('Dislikes', chartColors.purple, dislike_data),
                 makeDatasetConfig('Ignorés', chartColors.orange, dismiss_data),
             ]);
 
