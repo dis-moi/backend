@@ -194,7 +194,7 @@ class ApiControllerTest extends WebTestCase
         $feedbacks = $updatedRecommendation->getFeedbacks();
         $this->assertCount(3, $feedbacks);
         $approvedFeedbacksBalance = $updatedRecommendation->getApprovedFeedbackCount();
-        $this->assertCount(1, $approvedFeedbacksBalance);
+        $this->assertEquals(1, $approvedFeedbacksBalance);
 
         $approvedFeedback1 = $feedbacks[0];
         $approvedFeedback2 = $feedbacks[1];
