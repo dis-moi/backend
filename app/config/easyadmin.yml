@@ -53,9 +53,9 @@ easy_admin:
                     - { property : 'displayedFeedbackCount', label: 'Vues' }
                     - { property : 'clickedFeedbackCount', label: 'Cliqués' }
                     - { property : 'approvedFeedbackCount', label: 'Approuvés' }
-                    - { property : 'approvedFeedbackCount', label: 'Approuvés' }
+                    - { property : 'likedFeedbackCount', label: 'Likes' }
+                    - { property : 'dislikedFeedbackCount', label: 'Dislikes' }
                     - { property : 'dismissedFeedbackCount', label: 'Ignorés' }
-                    - { property : 'reportedFeedbackCount', label: 'Signalés' }
         MatchingContext:
             class: AppBundle\Entity\MatchingContext
             disabled_actions: ['new', 'edit']
