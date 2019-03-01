@@ -18,3 +18,7 @@ services:
     AppBundle\Controller\:
         resource: '%kernel.project_dir%/src/AppBundle/Controller/*'
         tags: ['controller.service_arguments']
+
+    AppBundle\EventListener\HttpExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
