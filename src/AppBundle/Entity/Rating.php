@@ -158,20 +158,4 @@ class Rating
     {
         $this->reason = $reason;
     }
-
-    /**
-     * @param array $context
-     */
-    /*private function setDatetime(array $context)
-    {
-        if (array_key_exists('datetime', $context)) {
-            if (\DateTime::createFromFormat(\DateTime::ISO8601, $context['datetime']) === false) {
-                $message = sprintf('Invalid rating context date given : %s', $context['datetime']);
-                $message .= 'Expected format : 2016-12-07T12:11:02+00:00';
-                throw new \InvalidArgumentException($message);
-            }
-
-            $this->contextDatetime = new \DateTime($context['datetime']);
-        }
-    }*/
 }

@@ -8,18 +8,12 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class RatingDenormalizer implements DenormalizerInterface
 {
-    /**
-     * @return bool
-     */
-    public function supportsDenormalization($data, $type, $format = null)
+    public function supportsDenormalization($data, $type, $format = null): bool
     {
         return $type === Rating::class;
     }
 
-    /**
-     * @return Rating
-     */
-    public function denormalize($data, $class, $format = null, array $context = array())
+    public function denormalize($data, $class, $format = null, array $context = array()): Rating
     {
         $notice = $context['notice'];
         if(! $notice || ! $notice instanceof Notice) {
@@ -30,7 +24,7 @@ class RatingDenormalizer implements DenormalizerInterface
             $notice,
             $data['ratingType'],
             new Context(
-                isset($data['context']['datetime']) ? new \DateTime($data['context']['datetime']) : new \DateTime(),
+                new \DateTime(),
                 isset($data['context']['url']) ? $data['context']['url'] : '',
                 isset($data['context']['geolocation']) ? $data['context']['geolocation'] : ''
             ),
