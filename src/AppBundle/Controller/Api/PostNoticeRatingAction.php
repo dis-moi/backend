@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class PostNoticeRatingAction extends BaseAction
@@ -37,7 +38,12 @@ class PostNoticeRatingAction extends BaseAction
             throw new NotFoundHttpException('Notice not found.');
         }
 
-        $rating = $this->serializer->deserialize($request->getContent(), Rating::class, 'json', ['notice' => $notice]);
+        try {
+          $rating = $this->serializer->deserialize($request->getContent(), Rating::class, 'json', ['notice' => $notice]);
+        }
+        catch (\Exception $e) {
+            throw new UnprocessableEntityHttpException($e->getMessage(), $e);
+        }
 
         $this->entityManager->persist($rating);
         $this->entityManager->flush();

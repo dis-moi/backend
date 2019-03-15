@@ -48,7 +48,8 @@ easy_admin:
                     - type
                     - { property : 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
                     - { property : 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
-                    - { property : 'approvedRatingCount', label: 'Approuvés', css_class: 'graphable' }
+                    - { property : 'likedRatingCount', label: 'Likes', css_class: 'graphable' }
+                    - { property : 'dislikedRatingCount', label: 'Dislikes', css_class: 'graphable' }
                     - { property : 'dismissedRatingCount', label: 'Ignorés', css_class: 'graphable' }
                     - { property : 'title', label: 'Titre (deprecated)' }
                     - { property : 'alternatives', label: 'Alternatives (deprecated)' }
@@ -82,7 +83,8 @@ easy_admin:
                     - type
                     - { property: 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
                     - { property: 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
-                    - { property: 'approvedRatingCount', label: 'Approuvés', css_class: 'graphable' }
+                    - { property : 'likedRatingCount', label: 'Likes', css_class: 'graphable' }
+                    - { property : 'dislikedRatingCount', label: 'Dislikes', css_class: 'graphable' }
                     - { property: 'dismissedRatingCount', label: 'Ignorés', css_class: 'graphable' }
                     - expires
                     - unpublishedOnExpiration

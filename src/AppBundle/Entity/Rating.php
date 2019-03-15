@@ -14,8 +14,15 @@ class Rating
     const DISPLAY = 'display';
     const CLICK   = 'click';
 
-    const APPROVE = 'approve';
+    const LIKE = 'like';
+    const UNLIKE = 'unlike';
+
+    const DISLIKE = 'dislike';
+    const UNDISLIKE = 'undislike';
+
     const DISMISS = 'dismiss';
+    const UNDISMISS = 'undismiss';
+
     const REPORT  = 'report';
 
     /**
@@ -104,6 +111,19 @@ class Rating
      */
     public function setType($type)
     {
+        if (!in_array($type, [
+            self::DISMISS,
+            self::UNDISMISS,
+            self::LIKE,
+            self::UNLIKE,
+            self::DISLIKE,
+            self::UNDISLIKE,
+            self::DISPLAY,
+            self::CLICK,
+            self::REPORT,
+        ])) {
+            throw new \InvalidArgumentException(sprintf('Invalid value given for feedback type : %s', $type));
+        }
         $this->type = $type;
     }
 
@@ -138,20 +158,4 @@ class Rating
     {
         $this->reason = $reason;
     }
-
-    /**
-     * @param array $context
-     */
-    /*private function setDatetime(array $context)
-    {
-        if (array_key_exists('datetime', $context)) {
-            if (\DateTime::createFromFormat(\DateTime::ISO8601, $context['datetime']) === false) {
-                $message = sprintf('Invalid rating context date given : %s', $context['datetime']);
-                $message .= 'Expected format : 2016-12-07T12:11:02+00:00';
-                throw new \InvalidArgumentException($message);
-            }
-
-            $this->contextDatetime = new \DateTime($context['datetime']);
-        }
-    }*/
 }
