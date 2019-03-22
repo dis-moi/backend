@@ -18,26 +18,18 @@ class SourceNormalizer implements NormalizerInterface, NormalizerAwareInterface
     /**
      * Sets the owning Normalizer object.
      *
-     * @param NormalizerInterface $normalizer
      */
     public function setNormalizer(NormalizerInterface $normalizer)
     {
         $this->normalizer = $normalizer;
     }
 
-    /**
-     * @return bool
-     */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, $format = null) : bool
     {
         return $data instanceof Source;
     }
 
-    /**
-     * @param Source $object
-     * @return array
-     */
-    public function normalize($object, $format = null, array $context = array())
+    public function normalize($object, $format = null, array $context = array()) : array
     {
         $url = $object->getUrl();
         return [

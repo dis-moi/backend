@@ -12,7 +12,7 @@ class RestrictedContextNormalizer implements NormalizerInterface
 
     /**
      * RestrictedContextNormalizer constructor.
-     * @param RouterInterface $router
+     *
      */
     public function __construct(RouterInterface $router)
     {
@@ -27,7 +27,7 @@ class RestrictedContextNormalizer implements NormalizerInterface
     public function normalize($object, $format = null, array $context = array()) : array
     {
         return [
-            'url_regex' => $object->getUrlRegex()
+            'urlRegex' => $object->getUrlRegex()
         ];
     }
 }

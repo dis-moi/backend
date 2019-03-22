@@ -17,26 +17,18 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
     /**
      * Sets the owning Normalizer object.
      *
-     * @param NormalizerInterface $normalizer
      */
     public function setNormalizer(NormalizerInterface $normalizer)
     {
         $this->normalizer = $normalizer;
     }
 
-    /**
-     * @return bool
-     */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, $format = null) : bool
     {
         return $data instanceof Notice;
     }
 
-    /**
-     * @param Notice $object
-     * @return array
-     */
-    public function normalize($object, $format = null, array $context = array())
+    public function normalize($object, $format = null, array $context = array()) : array
     {
         return [
             'id' => $object->getId(),
