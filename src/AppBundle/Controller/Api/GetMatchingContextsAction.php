@@ -22,6 +22,7 @@ class GetMatchingContextsAction extends BaseAction
 
     /**
      * @Route("/matchingcontexts")
+     * @Route("/matching-contexts")
      * @Method("GET")
      */
     public function __invoke(Request $request)
