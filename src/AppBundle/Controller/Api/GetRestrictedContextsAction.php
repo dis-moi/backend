@@ -20,6 +20,7 @@ class GetRestrictedContextsAction extends BaseAction
 
     /**
      * @Route("/restrictedcontexts")
+     * @Route("/restricted-contexts")
      * @Method("GET")
      */
     public function __invoke()
