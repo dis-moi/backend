@@ -14,29 +14,22 @@ class MatchingContextNormalizer implements NormalizerInterface
         $this->router = $router;
     }
 
-    /**
-     * @return bool
-     */
-    public function supportsNormalization($data, $format = null)
+    public function supportsNormalization($data, $format = null) : bool
     {
         return $data instanceof MatchingContext;
     }
 
-    /**
-     * @param MatchingContext $object
-     *
-     * @return array
-     */
-    public function normalize($object, $format = null, array $context = array())
+    public function normalize($object, $format = null, array $context = array()) : array
     {
         return [
-            'notice_url' => $this->router->generate(
+            'noticeId' => $object->getNotice()->getId(),
+            'noticeUrl' => $this->router->generate(
                 'app_api_getnoticeaction__invoke',
                 [ 'id' => $object->getNotice()->getId() ],
                 RouterInterface::ABSOLUTE_URL),
-            'url_regex' => $object->getUrlRegex(),
-            'exclude_url_regex' => $object->getExcludeUrlRegex(),
-            'query_selector' => $object->getQuerySelector()
+            'urlRegex' => $object->getUrlRegex(),
+            'excludeUrlRegex' => $object->getExcludeUrlRegex(),
+            'querySelector' => $object->getQuerySelector()
         ];
     }
 }

@@ -8,12 +8,12 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class RatingDenormalizer implements DenormalizerInterface
 {
-    public function supportsDenormalization($data, $type, $format = null): bool
+    public function supportsDenormalization($data, $type, $format = null) : bool
     {
         return $type === Rating::class;
     }
 
-    public function denormalize($data, $class, $format = null, array $context = array()): Rating
+    public function denormalize($data, $class, $format = null, array $context = array()) : Rating
     {
         $notice = $context['notice'];
         if(! $notice || ! $notice instanceof Notice) {

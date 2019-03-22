@@ -30,11 +30,11 @@ class GetMatchingContextsTest extends BaseApiE2eTestCase
         $this->assertEquals($count, count($payload));
 
         foreach ($payload as $matchingContext) {
-            $this->assertEquals(1, preg_match('/^http.*\/api\/v3\/notices\/.*$/', $matchingContext["notice_url"]));
+            $this->assertEquals(1, preg_match('/^http.*\/api\/v3\/notices\/.*$/', $matchingContext["noticeUrl"]));
         }
 
         $this->assertEquals($urlRegexes, array_map(function ($matchingContext) {
-            return $matchingContext['url_regex'];
+            return $matchingContext['urlRegex'];
         }, $payload));
     }
 }
