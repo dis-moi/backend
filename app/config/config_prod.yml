@@ -21,7 +21,7 @@ monolog:
             handler:      nested
 
         nested:
-            type: syslog
+            type: error_log
 
         console:
             type:  console
