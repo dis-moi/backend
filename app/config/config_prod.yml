@@ -21,9 +21,7 @@ monolog:
             handler:      nested
 
         nested:
-            type: syslogudp
-            host: '%env(MONOLOG_SYSLOGUDP_HOST)%'
-            port: '%env(MONOLOG_SYSLOGUDP_PORT)%'
+            type: syslog
 
         console:
             type:  console
