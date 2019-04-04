@@ -38,15 +38,23 @@ class DefaultController extends Controller
      */
     public function noticeGraphAction(Request $request, Notice $notice) {
 
-        $displayData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::DISPLAY);
-        $clickData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::CLICK);
-        $likeData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::LIKE, Rating::UNLIKE);
-        $dislikeData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::DISLIKE, Rating::UNDISLIKE);
-        $dismissData = $this->ratingRepository->getGraphDataByNoticeType($notice, Rating::DISMISS, Rating::UNDISMISS);
+        $displayData = $this->ratingRepository
+            ->getGraphDataByNoticeTypes($notice, [Rating::DISPLAY]);
+        $unfoldData = $this->ratingRepository
+            ->getGraphDataByNoticeTypes($notice, [Rating::UNFOLD]);
+        $clickData = $this->ratingRepository
+            ->getGraphDataByNoticeTypes($notice, [Rating::OUTBOUND_CLICK_SOURCE, Rating::OUTBOUND_CLICK_MESSAGE]);
+        $likeData = $this->ratingRepository
+            ->getGraphDataByNoticeBalanceType($notice, Rating::LIKE, Rating::UNLIKE);
+        $dislikeData = $this->ratingRepository
+            ->getGraphDataByNoticeBalanceType($notice, Rating::DISLIKE, Rating::UNDISLIKE);
+        $dismissData = $this->ratingRepository
+            ->getGraphDataByNoticeBalanceType($notice, Rating::DISMISS, Rating::UNDISMISS);
 
         return $this->render('default/notice_graph_modal.html.twig', [
             'labels' => array_keys($displayData),
             'display_data' => array_values($displayData),
+            'unfold_data' => array_values($unfoldData),
             'click_data' => array_values($clickData),
             'like_data' => array_values($likeData),
             'dislike_data' => array_values($dislikeData),

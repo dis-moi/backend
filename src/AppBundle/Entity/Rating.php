@@ -12,7 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Rating
 {
     const DISPLAY = 'display';
-    const CLICK   = 'click';
+    const UNFOLD = 'unfold';
+    const OUTBOUND_CLICK_MESSAGE = 'outbound-click-message';
+    const OUTBOUND_CLICK_SOURCE = 'outbound-click-source';
 
     const LIKE = 'like';
     const UNLIKE = 'unlike';
@@ -119,7 +121,9 @@ class Rating
             self::DISLIKE,
             self::UNDISLIKE,
             self::DISPLAY,
-            self::CLICK,
+            self::UNFOLD,
+            self::OUTBOUND_CLICK_MESSAGE,
+            self::OUTBOUND_CLICK_SOURCE,
             self::REPORT,
         ])) {
             throw new \InvalidArgumentException(sprintf('Invalid value given for feedback type : %s', $type));
