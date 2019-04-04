@@ -5,12 +5,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * Type
+ * Intention
  *
- * @ORM\Table(name="notice_type")
+ * @ORM\Table(name="notice_intention")
  * @ORM\Entity
  */
-class Type
+class Intention
 {
     /**
      * @var int
@@ -39,24 +39,12 @@ class Type
      */
     private $slug;
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
 
-    /**
-     * Set label
-     *
-     * @param string $label
-     *
-     * @return Type
-     */
-    public function setLabel($label)
+    public function setLabel(string $label) : Intention
     {
         $this->label = $label;
         if (empty($this->slug)) {
@@ -65,52 +53,29 @@ class Type
         return $this;
     }
 
-    /**
-     * Get label
-     *
-     * @return string
-     */
-    public function getLabel()
+    public function getLabel() : string
     {
         return $this->label;
     }
 
-    /**
-     * @return string
-     */
-    public function getSlug()
+    public function getSlug() : string
     {
         return $this->slug;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString() : string
     {
         return $this->label;
     }
 
-    /**
-     * @param string $text
-     *
-     * @return string
-     */
-    private function slugify($text)
+    private function slugify(string $text) : string
     {
         $text = preg_replace('/\W+/', '-', $text);
         $text = strtolower(trim($text, '-'));
         return $text;
     }
 
-    /**
-     * Set slug
-     *
-     * @param string $slug
-     *
-     * @return Type
-     */
-    public function setSlug($slug)
+    public function setSlug(string $slug) : Intention
     {
         $this->slug = $slug;
 

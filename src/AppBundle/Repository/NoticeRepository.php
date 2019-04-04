@@ -7,16 +7,13 @@ use Doctrine\ORM\QueryBuilder;
 
 class NoticeRepository extends BaseRepository
 {
-    /**
-     * @param $id
-     * @return Notice|null
-     */
-    public function getOne($id)
+
+    public function getOne(int $id) : ?Notice
     {
         $queryBuilder = $this->repository->createQueryBuilder('n')
-            ->select('n,c,t')
+            ->select('n,c,i')
             ->leftJoin('n.contributor', 'c')
-            ->leftJoin('n.type', 't')
+            ->leftJoin('n.intention', 'i')
             ->where('n.id = :id')
             ->andWhere('c.enabled = true')
             ->setParameter('id', $id);
@@ -26,22 +23,14 @@ class NoticeRepository extends BaseRepository
         ;
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     * @param string $noticeAlias
-     * @return QueryBuilder
-     */
-    public static function addNoticeExpirationLogic(QueryBuilder $queryBuilder, $noticeAlias = 'n')
+    public static function addNoticeExpirationLogic(QueryBuilder $queryBuilder, string $noticeAlias = 'n') : QueryBuilder
     {
         return $queryBuilder->andWhere(sprintf('%s.expires >= CURRENT_TIMESTAMP() OR %s.expires IS NULL OR (%s.expires <= CURRENT_TIMESTAMP() AND %s.unpublishedOnExpiration = false)',
                     $noticeAlias, $noticeAlias, $noticeAlias, $noticeAlias)
         );
     }
 
-    /**
-     * @return string
-     */
-    public function getResourceClassName()
+    public function getResourceClassName() : string
     {
         return Notice::class;
     }
