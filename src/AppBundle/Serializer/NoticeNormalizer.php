@@ -35,7 +35,7 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
             'visibility' => $object->getVisibility()->getValue(),
             'message' => DataConverter::convertFullMessage($object->getMessage()),
             'contributor' => $this->normalizer->normalize($object->getContributor(), $format, $context),
-            'type' => $this->normalizer->normalize($object->getType(), $format, $context),
+            'intention' => $this->normalizer->normalize($object->getIntention(), $format, $context),
 
             'source' => $this->normalizer->normalize($object->getSource(), $format, $context),
             'ratings' => [

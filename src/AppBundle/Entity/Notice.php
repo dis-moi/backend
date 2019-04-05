@@ -63,10 +63,10 @@ class Notice
     private $channels;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Type::class, cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false, name="notice_type_id")
+     * @ORM\ManyToOne(targetEntity=Intention::class, cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false, name="notice_intention_id")
      */
-    private $type;
+    private $intention;
 
     /**
      * @ORM\ManyToOne(targetEntity=Contributor::class, inversedBy="notices", cascade={"persist"}, fetch="EAGER")
@@ -132,48 +132,24 @@ class Notice
         $this->visibility = NoticeVisibility::getDefault();
     }
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId() : ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set message
-     *
-     * @param string $message
-     *
-     * @return Notice
-     */
-    public function setMessage($message)
+    public function setMessage(string $message) : Notice
     {
         $this->message = strip_tags($message, '<p><a>');
 
         return $this;
     }
 
-    /**
-     * Get message
-     *
-     * @return string
-     */
-    public function getMessage()
+    public function getMessage() : ?string
     {
         return $this->message;
     }
 
-    /**
-     * Add matchingContext
-     *
-     * @param MatchingContext $matchingContext
-     *
-     * @return Notice
-     */
-    public function addMatchingContext(MatchingContext $matchingContext)
+    public function addMatchingContext(MatchingContext $matchingContext) : Notice
     {
         $matchingContext->setNotice($this);
 
@@ -182,79 +158,46 @@ class Notice
         return $this;
     }
 
-    /**
-     * Remove matchingContext
-     *
-     * @param MatchingContext $matchingContext
-     */
     public function removeMatchingContext(MatchingContext $matchingContext)
     {
         $this->matchingContexts->removeElement($matchingContext);
     }
 
-    /**
-     * Get matchingContext
-     *
-     * @return Collection
-     */
-    public function getMatchingContexts()
+    public function getMatchingContexts() : ?Collection
     {
         return $this->matchingContexts;
     }
 
-    public function setType(Type $type)
+    public function setIntention(Intention $intention)
     {
-        $this->type = $type;
+        $this->intention = $intention;
 
         return $this;
     }
 
-    /**
-     * Get type
-     *
-     * @return Type
-     */
-    public function getType()
+    public function getIntention() : ?Intention
     {
-        return $this->type;
+        return $this->intention;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString() : string
     {
-        return sprintf('(id:%d) type: %s, contr: %s', $this->getId(), $this->getType(), $this->getContributor());
+        return sprintf('(id:%d) intention: %s, contr: %s', $this->getId(), $this->getIntention(), $this->getContributor());
     }
 
-    /**
-     * Set contributor
-     *
-     * @param Contributor $contributor
-     *
-     * @return Notice
-     */
-    public function setContributor(Contributor $contributor = null)
+    public function setContributor(Contributor $contributor = null) : Notice
     {
         $this->contributor = $contributor;
 
         return $this;
     }
 
-    /**
-     * Get contributor
-     *
-     * @return Contributor
-     */
-    public function getContributor()
+    public function getContributor() : ?Contributor
     {
         return $this->contributor;
     }
 
-    /**
-     * @return NoticeVisibility
-     */
-    public function getVisibility()
+    public function getVisibility() : ?NoticeVisibility
     {
         if (!$this->visibility) {
             return NoticeVisibility::getDefault();
@@ -263,46 +206,31 @@ class Notice
     }
 
     /**
-     * @param NoticeVisibility $visibility
      * @throw InvalidArgumentException
-     * @return Notice
      */
-    public function setVisibility(NoticeVisibility $visibility)
+    public function setVisibility(NoticeVisibility $visibility) : Notice
     {
         $this->visibility = $visibility->getValue();
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function hasPublicVisibility()
+    public function hasPublicVisibility() : bool
     {
         return $this->getVisibility() === NoticeVisibility::PUBLIC_VISIBILITY();
     }
 
-
-    /**
-     * @return string
-     */
-    public function getNote()
+    public function getNote() : ?string
     {
         return $this->note;
     }
 
-    /**
-     * @param string $note
-     */
-    public function setNote($note)
+    public function setNote(string $note)
     {
         $this->note = $note;
     }
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getRatings()
+    public function getRatings() : ?Collection
     {
         return $this->ratings;
     }
@@ -364,141 +292,87 @@ class Notice
         return $balance > 0 ? $balance : 0;
     }
 
-    /**
-     * Add channel
-     *
-     * @param Channel $channel
-     *
-     * @return Notice
-     */
-    public function addChannel(Channel $channel)
+    public function addChannel(Channel $channel) : Notice
     {
         $this->channels[] = $channel;
 
         return $this;
     }
 
-    /**
-     * Remove channel
-     *
-     * @param Channel $channel
-     */
     public function removeChannel(Channel $channel)
     {
         $this->channels->removeElement($channel);
     }
 
-    /**
-     * Get channels
-     *
-     * @return ArrayCollection
-     */
-    public function getChannels()
+    public function getChannels() : ?Collection
     {
         return $this->channels;
     }
 
-    /**
-     * Add rating
-     *
-     * @param Rating $rating
-     *
-     * @return Notice
-     */
-    public function addRating(Rating $rating)
+    public function addRating(Rating $rating) : Notice
     {
         $this->ratings[] = $rating;
 
         return $this;
     }
 
-    /**
-     * Remove rating
-     *
-     * @param Rating $rating
-     */
     public function removeRating(Rating $rating)
     {
         $this->ratings->removeElement($rating);
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getUpdated()
+    public function getUpdated() : ?\DateTime
     {
         return $this->updated;
     }
 
-    /**
-     * @param \DateTime $updated
-     */
-    public function setUpdated($updated)
+    public function setUpdated(\DateTime $updated)
     {
         $this->updated = $updated;
     }
 
-    /**
-     * @return Source
-     */
-    public function getSource()
+    public function getSource() : ?Source
     {
         return $this->source;
     }
 
-    /**
-     * @param Source $source
-     */
     public function setSource(Source $source)
     {
         $this->source = $source;
         $this->source->setNotice($this);
     }
 
-    public function getSourceUrl()
+    public function getSourceUrl() : ?string
     {
         return $this->source ? $this->source->getUrl() : null;
     }
 
-
-    public function getAlternatives()
+    public function getAlternatives() : Collection
     {
         return $this->alternatives;
     }
 
-    public function getTitle()
+    public function getTitle() : ?string
     {
         return $this->title;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getExpires()
+    public function getExpires() : ?\DateTime
     {
         return $this->expires;
     }
 
-    /**
-     * @param \DateTime $expires
-     */
-    public function setExpires($expires)
+    public function setExpires(\DateTime $expires)
     {
         $this->expires = $expires;
     }
 
-    /**
-     * @return bool
-     */
-    public function isUnpublishedOnExpiration()
+    public function isUnpublishedOnExpiration() : bool
     {
         return $this->unpublishedOnExpiration;
     }
 
-    /**
-     * @param bool $unpublishedOnExpiration
-     */
-    public function setUnpublishedOnExpiration($unpublishedOnExpiration)
+    public function setUnpublishedOnExpiration(bool $unpublishedOnExpiration)
     {
         $this->unpublishedOnExpiration = $unpublishedOnExpiration;
     }

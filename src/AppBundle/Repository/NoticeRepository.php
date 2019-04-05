@@ -8,15 +8,16 @@ use Doctrine\ORM\QueryBuilder;
 class NoticeRepository extends BaseRepository
 {
     /**
-     * @param $id
+     * @param int|null $id
      * @return Notice|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getOne($id)
     {
         $queryBuilder = $this->repository->createQueryBuilder('n')
-            ->select('n,c,t')
+            ->select('n,c,i')
             ->leftJoin('n.contributor', 'c')
-            ->leftJoin('n.type', 't')
+            ->leftJoin('n.intention', 'i')
             ->where('n.id = :id')
             ->andWhere('c.enabled = true')
             ->setParameter('id', $id);
