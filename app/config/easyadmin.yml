@@ -18,8 +18,8 @@ easy_admin:
                     - matchingContexts.urlRegex
                     - matchingContexts.excludeUrlRegex
                     - matchingContexts.description
-                    - type.label
-                    - type.slug
+                    - intention.label
+                    - intention.slug
                     - contributor.name
                     - message
                     - note
@@ -29,7 +29,7 @@ easy_admin:
                 fields:
                     - message
                     - { property: 'contributor', type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
-                    - type
+                    - intention
                     - note
                     - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
@@ -45,7 +45,7 @@ easy_admin:
                     - source.url
                     - visibility
                     - matchingContexts
-                    - type
+                    - intention
                     - { property : 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
                     - { property : 'unfoldedRatingCount', label: 'Dépliées', css_class: 'graphable' }
                     - { property : 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
@@ -66,7 +66,7 @@ easy_admin:
                     - matchingContexts.urlRegex
                     - matchingContexts.excludeUrlRegex
                     - matchingContexts.description
-                    - type.label
+                    - intention.label
                     - contributor.name
                     - message
                     - note
@@ -81,7 +81,7 @@ easy_admin:
                     - source.url
                     - visibility
                     - matchingContexts
-                    - type
+                    - intention
                     - { property: 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
                     - { property : 'unfoldedRatingCount', label: 'Dépliées', css_class: 'graphable' }
                     - { property: 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
@@ -94,7 +94,7 @@ easy_admin:
                 fields:
                     - message
                     - { property: 'contributor', type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
-                    - type
+                    - intention
                     - note
                     - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
@@ -128,9 +128,9 @@ easy_admin:
             form:
               fields:
                 - { property: name, label: "Channel's name" }
-        Type:
-            label: "Types"
-            class: AppBundle\Entity\Type
+        Intention:
+            label: "Intentions"
+            class: AppBundle\Entity\Intention
             list:
                 fields: ['id', 'label', 'slug']
             form:

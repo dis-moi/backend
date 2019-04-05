@@ -39,7 +39,7 @@ class Intention
      */
     private $slug;
 
-    public function getId() : int
+    public function getId() : ?int
     {
         return $this->id;
     }
@@ -53,12 +53,12 @@ class Intention
         return $this;
     }
 
-    public function getLabel() : string
+    public function getLabel() : ?string
     {
         return $this->label;
     }
 
-    public function getSlug() : string
+    public function getSlug() : ?string
     {
         return $this->slug;
     }

@@ -6,7 +6,7 @@ use AppBundle\Entity\Intention;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadTypeData extends AbstractFixture
+class LoadIntentionData extends AbstractFixture
 {
     public function load(ObjectManager $manager)
     {

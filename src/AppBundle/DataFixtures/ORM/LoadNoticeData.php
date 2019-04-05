@@ -80,7 +80,7 @@ message
     {
         return [
             LoadContributorData::class,
-            LoadTypeData::class,
+            LoadIntentionData::class,
             LoadSourceData::class
         ];
     }

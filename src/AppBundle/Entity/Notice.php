@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Repository\MatchingContextRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -65,7 +64,7 @@ class Notice
 
     /**
      * @ORM\ManyToOne(targetEntity=Intention::class, cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false, name="notice_type_id")
+     * @ORM\JoinColumn(nullable=false, name="notice_intention_id")
      */
     private $intention;
 
@@ -133,7 +132,7 @@ class Notice
         $this->visibility = NoticeVisibility::getDefault();
     }
 
-    public function getId() : int
+    public function getId() : ?int
     {
         return $this->id;
     }
@@ -145,7 +144,7 @@ class Notice
         return $this;
     }
 
-    public function getMessage() : string
+    public function getMessage() : ?string
     {
         return $this->message;
     }
@@ -164,7 +163,7 @@ class Notice
         $this->matchingContexts->removeElement($matchingContext);
     }
 
-    public function getMatchingContexts() : ArrayCollection
+    public function getMatchingContexts() : ?Collection
     {
         return $this->matchingContexts;
     }
@@ -176,14 +175,14 @@ class Notice
         return $this;
     }
 
-    public function getIntention() : Intention
+    public function getIntention() : ?Intention
     {
         return $this->intention;
     }
 
     public function __toString() : string
     {
-        return sprintf('(id:%d) type: %s, contr: %s', $this->getId(), $this->getIntention(), $this->getContributor());
+        return sprintf('(id:%d) intention: %s, contr: %s', $this->getId(), $this->getIntention(), $this->getContributor());
     }
 
     public function setContributor(Contributor $contributor = null) : Notice
@@ -193,12 +192,12 @@ class Notice
         return $this;
     }
 
-    public function getContributor() : Contributor
+    public function getContributor() : ?Contributor
     {
         return $this->contributor;
     }
 
-    public function getVisibility() : NoticeVisibility
+    public function getVisibility() : ?NoticeVisibility
     {
         if (!$this->visibility) {
             return NoticeVisibility::getDefault();
@@ -221,7 +220,7 @@ class Notice
         return $this->getVisibility() === NoticeVisibility::PUBLIC_VISIBILITY();
     }
 
-    public function getNote() : string
+    public function getNote() : ?string
     {
         return $this->note;
     }
@@ -231,7 +230,7 @@ class Notice
         $this->note = $note;
     }
 
-    public function getRatings() : ArrayCollection
+    public function getRatings() : ?Collection
     {
         return $this->ratings;
     }
@@ -305,7 +304,7 @@ class Notice
         $this->channels->removeElement($channel);
     }
 
-    public function getChannels() : ArrayCollection
+    public function getChannels() : ?Collection
     {
         return $this->channels;
     }
@@ -322,7 +321,7 @@ class Notice
         $this->ratings->removeElement($rating);
     }
 
-    public function getUpdated() : \DateTime
+    public function getUpdated() : ?\DateTime
     {
         return $this->updated;
     }
@@ -332,7 +331,7 @@ class Notice
         $this->updated = $updated;
     }
 
-    public function getSource() : Source
+    public function getSource() : ?Source
     {
         return $this->source;
     }
@@ -348,17 +347,17 @@ class Notice
         return $this->source ? $this->source->getUrl() : null;
     }
 
-    public function getAlternatives() : ArrayCollection
+    public function getAlternatives() : Collection
     {
         return $this->alternatives;
     }
 
-    public function getTitle() : string
+    public function getTitle() : ?string
     {
         return $this->title;
     }
 
-    public function getExpires() : \DateTime
+    public function getExpires() : ?\DateTime
     {
         return $this->expires;
     }

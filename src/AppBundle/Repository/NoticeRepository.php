@@ -8,7 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 class NoticeRepository extends BaseRepository
 {
 
-    public function getOne(int $id) : ?Notice
+    public function getOne(int $id = null) : ?Notice
     {
         $queryBuilder = $this->repository->createQueryBuilder('n')
             ->select('n,c,i')
