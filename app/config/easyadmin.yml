@@ -47,6 +47,7 @@ easy_admin:
                     - matchingContexts
                     - type
                     - { property : 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
+                    - { property : 'unfoldedRatingCount', label: 'Dépliées', css_class: 'graphable' }
                     - { property : 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
                     - { property : 'likedRatingCount', label: 'Likes', css_class: 'graphable' }
                     - { property : 'dislikedRatingCount', label: 'Dislikes', css_class: 'graphable' }
@@ -82,6 +83,7 @@ easy_admin:
                     - matchingContexts
                     - type
                     - { property: 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
+                    - { property : 'unfoldedRatingCount', label: 'Dépliées', css_class: 'graphable' }
                     - { property: 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
                     - { property : 'likedRatingCount', label: 'Likes', css_class: 'graphable' }
                     - { property : 'dislikedRatingCount', label: 'Dislikes', css_class: 'graphable' }

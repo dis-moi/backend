@@ -19,7 +19,8 @@ class LoadRatingData extends AbstractFixture implements DependentFixtureInterfac
         foreach ([Rating::LIKE, Rating::LIKE, Rating::LIKE, Rating::UNLIKE, // 3 - 1 = 2
                      Rating::DISLIKE, Rating::UNDISLIKE, Rating::UNDISLIKE, // 1 - 2 = 0
                      Rating::DISMISS, Rating::DISMISS, Rating::UNDISMISS,   // 2 - 1 = 1
-                     Rating::DISPLAY, Rating::CLICK] as $type) {
+                     Rating::DISPLAY, Rating::UNFOLD,
+                     Rating::OUTBOUND_CLICK_MESSAGE, Rating::OUTBOUND_CLICK_SOURCE] as $type) {
             $rating = new Rating($notice, $type, new Context(new \DateTime('-1 month'), 'url', 'geoloc'), 'reason');
             $manager->persist($rating);
         }

@@ -312,9 +312,15 @@ class Notice
         return $this->getRatingCount(Rating::DISPLAY);
     }
 
+    public function getUnfoldedRatingCount(): int
+    {
+        return $this->getRatingCount(Rating::UNFOLD);
+    }
+
     public function getClickedRatingCount(): int
     {
-        return $this->getRatingCount(Rating::CLICK);
+        return $this->getRatingCount(Rating::OUTBOUND_CLICK_SOURCE)
+            + $this->getRatingCount(Rating::OUTBOUND_CLICK_MESSAGE);
     }
 
     /**
