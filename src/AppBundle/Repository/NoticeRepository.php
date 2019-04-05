@@ -7,8 +7,12 @@ use Doctrine\ORM\QueryBuilder;
 
 class NoticeRepository extends BaseRepository
 {
-
-    public function getOne(int $id = null) : ?Notice
+    /**
+     * @param int|null $id
+     * @return Notice|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getOne($id)
     {
         $queryBuilder = $this->repository->createQueryBuilder('n')
             ->select('n,c,i')
@@ -23,14 +27,22 @@ class NoticeRepository extends BaseRepository
         ;
     }
 
-    public static function addNoticeExpirationLogic(QueryBuilder $queryBuilder, string $noticeAlias = 'n') : QueryBuilder
+    /**
+     * @param QueryBuilder $queryBuilder
+     * @param string $noticeAlias
+     * @return QueryBuilder
+     */
+    public static function addNoticeExpirationLogic(QueryBuilder $queryBuilder, $noticeAlias = 'n')
     {
         return $queryBuilder->andWhere(sprintf('%s.expires >= CURRENT_TIMESTAMP() OR %s.expires IS NULL OR (%s.expires <= CURRENT_TIMESTAMP() AND %s.unpublishedOnExpiration = false)',
                     $noticeAlias, $noticeAlias, $noticeAlias, $noticeAlias)
         );
     }
 
-    public function getResourceClassName() : string
+    /**
+     * @return string
+     */
+    public function getResourceClassName()
     {
         return Notice::class;
     }
