@@ -110,6 +110,13 @@ class Notice
     private $updated;
 
     /**
+     * @var \DateTime $created
+     *
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
      * @var \DateTime $expires
      *
      * @ORM\Column(type="datetime", nullable=true)
@@ -321,6 +328,16 @@ class Notice
         $this->ratings->removeElement($rating);
     }
 
+    public function getCreated() : ?\DateTime
+    {
+        return $this->created;
+    }
+
+    public function setCreated(\DateTime $created)
+    {
+        $this->created = $created;
+    }
+
     public function getUpdated() : ?\DateTime
     {
         return $this->updated;
@@ -362,7 +379,7 @@ class Notice
         return $this->expires;
     }
 
-    public function setExpires(\DateTime $expires)
+    public function setExpires(\DateTime $expires = null)
     {
         $this->expires = $expires;
     }
