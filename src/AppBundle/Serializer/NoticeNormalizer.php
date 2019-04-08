@@ -31,18 +31,24 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
     public function normalize($object, $format = null, array $context = array()) : array
     {
         return [
-            'id' => $object->getId(),
-            'visibility' => $object->getVisibility()->getValue(),
-            'message' => DataConverter::convertFullMessage($object->getMessage()),
             'contributor' => $this->normalizer->normalize($object->getContributor(), $format, $context),
+            'created' => $this->formatDateTime($object->getCreated()),
+            'id' => $object->getId(),
             'intention' => $this->normalizer->normalize($object->getIntention(), $format, $context),
-
-            'source' => $this->normalizer->normalize($object->getSource(), $format, $context),
+            'message' => DataConverter::convertFullMessage($object->getMessage()),
+            'modified' => $this->formatDateTime($object->getUpdated()),
             'ratings' => [
                 'likes' => $object->getLikedRatingCount(),
                 'dislikes' => $object->getDislikedRatingCount()
-            ]
+            ],
+            'source' => $this->normalizer->normalize($object->getSource(), $format, $context),
+            'visibility' => $object->getVisibility()->getValue(),
         ];
+    }
+
+    protected function formatDateTime(\DateTime $datetime) : string
+    {
+        return $datetime->format('c');
     }
 
     protected function updateSourceHref($href)
