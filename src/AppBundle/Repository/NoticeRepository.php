@@ -15,9 +15,8 @@ class NoticeRepository extends BaseRepository
     public function getOne($id)
     {
         $queryBuilder = $this->repository->createQueryBuilder('n')
-            ->select('n,c,i')
+            ->select('n,c')
             ->leftJoin('n.contributor', 'c')
-            ->leftJoin('n.intention', 'i')
             ->where('n.id = :id')
             ->andWhere('c.enabled = true')
             ->setParameter('id', $id);

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Helper\NoticeVisibility;
+use AppBundle\Helper\NoticeIntention;
 use AppBundle\EntityListener\NoticeListener;
 
 /**
@@ -63,8 +64,7 @@ class Notice
     private $channels;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Intention::class, cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false, name="notice_intention_id")
+     * @ORM\Column(name="intention", type="string", options={"default" : "other"})
      */
     private $intention;
 
@@ -175,16 +175,22 @@ class Notice
         return $this->matchingContexts;
     }
 
-    public function setIntention(Intention $intention)
+    /**
+     * @throw InvalidArgumentException
+     */
+    public function setIntention(NoticeIntention $intention) : Notice
     {
-        $this->intention = $intention;
+        $this->intention = $intention->getValue();
 
         return $this;
     }
 
-    public function getIntention() : ?Intention
+    public function getIntention() : ?NoticeIntention
     {
-        return $this->intention;
+        if (!$this->intention) {
+            return NoticeIntention::getDefault();
+        }
+        return NoticeIntention::get($this->intention);
     }
 
     public function __toString() : string
