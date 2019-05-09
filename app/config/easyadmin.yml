@@ -18,8 +18,7 @@ easy_admin:
                     - matchingContexts.urlRegex
                     - matchingContexts.excludeUrlRegex
                     - matchingContexts.description
-                    - intention.label
-                    - intention.slug
+                    - intention
                     - contributor.name
                     - message
                     - note
@@ -29,7 +28,7 @@ easy_admin:
                 fields:
                     - message
                     - { property: 'contributor', type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
-                    - intention
+                    - { property: 'intention', type: 'AppBundle\Form\IntentionType' }
                     - note
                     - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
@@ -66,7 +65,7 @@ easy_admin:
                     - matchingContexts.urlRegex
                     - matchingContexts.excludeUrlRegex
                     - matchingContexts.description
-                    - intention.label
+                    - intention
                     - contributor.name
                     - message
                     - note
@@ -94,7 +93,7 @@ easy_admin:
                 fields:
                     - message
                     - { property: 'contributor', type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
-                    - intention
+                    - { property: 'intention', type: 'AppBundle\Form\IntentionType' }
                     - note
                     - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
@@ -128,14 +127,7 @@ easy_admin:
             form:
               fields:
                 - { property: name, label: "Channel's name" }
-        Intention:
-            label: "Intentions"
-            class: AppBundle\Entity\Intention
-            list:
-                fields: ['id', 'label', 'slug']
-            form:
-                fields:
-                    - label
+
         User:
             label: "Users"
             class: AppBundle\Entity\User

@@ -34,7 +34,7 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
             'contributor' => $this->normalizer->normalize($object->getContributor(), $format, $context),
             'created' => $this->formatDateTime($object->getCreated()),
             'id' => $object->getId(),
-            'intention' => $this->normalizer->normalize($object->getIntention(), $format, $context),
+            'intention' => $object->getIntention()->getValue(),
             'message' => DataConverter::convertFullMessage($object->getMessage()),
             'modified' => $this->formatDateTime($object->getUpdated()),
             'ratings' => [
