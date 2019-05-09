@@ -6,7 +6,7 @@ use MabeEnum\Enum;
 
 class NoticeIntention extends Enum {
     const APPROVAL = 'approval';
-    const UNAPPROVAL = 'unapproval';
+    const DISAPPROVAL = 'disapproval';
     const ALTERNATIVE = 'alternative';
     const INFORMATION = 'information';
     const OTHER = 'other';
