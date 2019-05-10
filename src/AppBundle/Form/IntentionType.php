@@ -16,11 +16,11 @@ class IntentionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'choices' => array(
-                'Approval' => NoticeIntention::APPROVAL,
-                'Disapproval' => NoticeIntention::DISAPPROVAL,
-                'Information' => NoticeIntention::INFORMATION,
-                'Alternative' => NoticeIntention::ALTERNATIVE,
-                'Other' => NoticeIntention::OTHER,
+                'Approval' => NoticeIntention::APPROVAL(),
+                'Disapproval' => NoticeIntention::DISAPPROVAL(),
+                'Information' => NoticeIntention::INFORMATION(),
+                'Alternative' => NoticeIntention::ALTERNATIVE(),
+                'Other' => NoticeIntention::OTHER(),
             ),
             'empty_data' =>  NoticeIntention::getDefault(),
         ));
