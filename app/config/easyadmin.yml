@@ -46,7 +46,6 @@ easy_admin:
                     - message
                     - visibility
                     - matchingContexts
-                    - intention
                     - { property : 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
                     - { property : 'unfoldedRatingCount', label: 'Dépliées', css_class: 'graphable' }
                     - { property : 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
@@ -54,7 +53,6 @@ easy_admin:
                     - { property : 'dislikedRatingCount', label: 'Dislikes', css_class: 'graphable' }
                     - { property : 'dismissedRatingCount', label: 'Ignorés', css_class: 'graphable' }
                     - expires
-                    - unpublishedOnExpiration
 
         ExpiredNotice:
             class: AppBundle\Entity\Notice
@@ -80,7 +78,6 @@ easy_admin:
                     - message
                     - visibility
                     - matchingContexts
-                    - intention
                     - { property: 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
                     - { property : 'unfoldedRatingCount', label: 'Dépliées', css_class: 'graphable' }
                     - { property: 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
