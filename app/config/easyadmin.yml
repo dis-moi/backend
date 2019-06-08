@@ -36,12 +36,14 @@ easy_admin:
                     - { property: 'matchingContexts', type: 'collection', type_options: {required: true, entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
                     - expires
                     - unpublishedOnExpiration
+                    - title
+                    - alternative
 
             list:
                 fields:
                     - id
                     - contributor
-                    - source.url
+                    - message
                     - visibility
                     - matchingContexts
                     - intention
@@ -51,8 +53,6 @@ easy_admin:
                     - { property : 'likedRatingCount', label: 'Likes', css_class: 'graphable' }
                     - { property : 'dislikedRatingCount', label: 'Dislikes', css_class: 'graphable' }
                     - { property : 'dismissedRatingCount', label: 'Ignorés', css_class: 'graphable' }
-                    - { property : 'title', label: 'Titre (deprecated)' }
-                    - { property : 'alternatives', label: 'Alternatives (deprecated)' }
                     - expires
                     - unpublishedOnExpiration
 
@@ -77,7 +77,7 @@ easy_admin:
                 fields:
                     - id
                     - contributor
-                    - source.url
+                    - message
                     - visibility
                     - matchingContexts
                     - intention
