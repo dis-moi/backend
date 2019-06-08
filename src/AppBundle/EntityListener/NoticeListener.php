@@ -13,7 +13,6 @@ class NoticeListener
     public function prePersist(Notice $notice, LifecycleEventArgs $event = null)
     {
         $this->createNotice($notice);
-        $this->updateNotice($notice);
     }
 
     public function preUpdate(Notice $notice, LifecycleEventArgs $event = null)
