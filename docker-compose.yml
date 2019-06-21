@@ -10,24 +10,6 @@ services:
     - dbtest
     env_file:
     - .env
-    # Comment out these volumes in production
-    volumes:
-    - .:/var/www:rw,cached
-    # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
-    # - .:/var/www:rw
-
-  nginx:
-    container_name: kraft-backend_nginx
-    build:
-      context: .
-      target: platform_nginx
-    depends_on:
-    - php
-    # Comment out this volume in production
-    volumes:
-    - ./web:/var/www/web:rw,cached
-    ports:
-    - "8088:80"
 
   db:
     container_name: kraft-backend_db
@@ -35,11 +17,11 @@ services:
     ports:
     - '3308:3306'
     volumes:
-    - db-data:/var/lib/postgresql/data:rw
+    - /var/lib/postgresql/data
     environment:
     - MYSQL_ROOT_PASSWORD=password
     - MYSQL_DATABASE=craft
-    restart: always
+    restart: unless-stopped
 
   dbtest:
     container_name: kraft-backend_dbtest
@@ -47,12 +29,8 @@ services:
     ports:
     - '3309:3306'
     volumes:
-    - dbtest-data:/var/lib/postgresql/data:rw
+    - /var/lib/postgresql/data
     environment:
     - MYSQL_ROOT_PASSWORD=password
     - MYSQL_DATABASE=craft
-    restart: always
-
-volumes:
-  db-data: {}
-  dbtest-data: {}
+    restart: unless-stopped

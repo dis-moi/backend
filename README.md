@@ -9,35 +9,34 @@ A Symfony project created on May 9, 2016, 12:03 pm.
 
 
 ## Tests
-To run the tests
 
-- run the migrations on the test environment
+Setup and migrate test database and run phpunit:
 
-    `php bin/console doctrine:migrations:migrate --env=test`
-
-- execute phpunit
-
-    `vendor/bin/phpunit` 
+```
+$ runtests
+```
 
 
 ## Dev (w/ docker)
-### Fresh install
-```sh
-docker-compose build
-docker-compose up
-. ./alias
-aphp composer install
-dMigrate && dLoad
-# avoid symlinks break
-aphp bin/console assets:install web
+
+The first run may take few minutes since images are to be built,
+composer has to install project dependencies and doctrine has to
+migrate databases and load fixtures. Subsequent runs are much faster.
+
+```
+$ docker-compose up
 ```
 
-#### admin access
+#### Aliases
+
+Some aliases are conveniently made available... 
+
+```
+$ . ./alias
+$ aphp composer install
+$ aphp bin/console assets:install web
+$ dMigrate && dLoad
+```
+
+#### Admin access
 [http://localhost:8088](http://localhost:8088)
-
-
-### Tests
-```sh
-# clear cache in test envenv && run phpunit
-runtests
-```
