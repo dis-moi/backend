@@ -36,7 +36,6 @@ easy_admin:
                     - { property: 'matchingContexts', type: 'collection', type_options: {required: true, entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
                     - expires
                     - unpublishedOnExpiration
-                    - title
 
             list:
                 fields:
