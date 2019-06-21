@@ -139,14 +139,21 @@ class Contributor
         $this->notices->removeElement($notice);
     }
 
-    /**
-     * Get notices
-     *
-     * @return Collection
-     */
-    public function getNotices()
+    public function getNotices() : ?Collection
     {
         return $this->notices;
+    }
+
+    public function getNoticesCount() : int
+    {
+        if ($notices = $this->getNotices()) {
+            return $notices
+                ->filter(function (Notice $notice) {
+                    return $notice->hasPublicVisibility();
+                })
+                ->count();
+        }
+        else return 0;
     }
 
     /**
