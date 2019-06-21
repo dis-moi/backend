@@ -1,0 +1,6 @@
+version: '3.4'
+services:
+  php:
+    volumes:
+      - .:/var/www
+      - /var/www/var

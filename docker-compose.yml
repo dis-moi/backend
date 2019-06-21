@@ -10,35 +10,6 @@ services:
     - dbtest
     env_file:
     - .env
-    # Comment out these volumes in production
-    volumes:
-    - type: bind
-      source: .
-      target: /var/www
-      volume:
-        nocopy: true
-      consistency: cached # MacOS only
-    - /var/www/vendor
-    - /var/www/var
-
-  nginx:
-    container_name: kraft-backend_nginx
-    build:
-      context: .
-      target: platform_nginx
-    depends_on:
-    - php
-    # Comment out this volume in production
-    volumes:
-    - type: bind
-      source: ./web
-      target: /var/www/web
-      volume:
-        nocopy: true
-      read_only: true
-      consistency: cached # MacOS only
-    ports:
-    - "8088:80"
 
   db:
     container_name: kraft-backend_db
@@ -63,4 +34,3 @@ services:
     - MYSQL_ROOT_PASSWORD=password
     - MYSQL_DATABASE=craft
     restart: unless-stopped
-
