@@ -38,7 +38,7 @@ class Contributor
     /**
      * @var string
      *
-     * @ORM\Column(name="intro", type="string", length=255)
+     * @ORM\Column(name="intro", type="string", length=255, nullable=true)
      *
      * @Groups({"v3:list"})
      */
@@ -98,7 +98,7 @@ class Contributor
         return $this->name;
     }
 
-    public function setIntro(string $intro) : Contributor
+    public function setIntro(?string $intro) : Contributor
     {
         $this->intro = $intro;
 
