@@ -74,6 +74,13 @@ message
         $this->addReference('notice_expired_unpublished', $notice);
         $manager->persist($notice);
 
+        $notice = new Notice();
+        $notice->setContributor($this->getReference('contributor'));
+        $notice->setMessage("Celle-ci n’est pas publique");
+        $notice->setSource($this->getReference('source_link_huffington'));
+        $this->addReference('notice_private', $notice);
+        $manager->persist($notice);
+
         $manager->flush();
     }
 

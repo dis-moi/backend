@@ -6,6 +6,7 @@ use AppBundle\Entity\Notice;
 use AppBundle\Helper\DataConverter;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
 class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
@@ -30,6 +31,8 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
 
     public function normalize($object, $format = null, array $context = array()) : array
     {
+        if (!($object instanceof Notice)) throw new InvalidArgumentException();
+
         return [
             'contributor' => $this->normalizer->normalize($object->getContributor(), $format, $context),
             'created' => $this->formatDateTime($object->getCreated()),

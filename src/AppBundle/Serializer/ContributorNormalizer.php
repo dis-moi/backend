@@ -2,13 +2,12 @@
 
 namespace AppBundle\Serializer;
 
-use AppBundle\Entity\Source;
-use AppBundle\Helper\DataConverter;
+use AppBundle\Entity\Contributor;
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
-class SourceNormalizer implements NormalizerInterface, NormalizerAwareInterface
+class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
     /**
      * @var NormalizerInterface
@@ -26,17 +25,18 @@ class SourceNormalizer implements NormalizerInterface, NormalizerAwareInterface
 
     public function supportsNormalization($data, $format = null) : bool
     {
-        return $data instanceof Source;
+        return $data instanceof Contributor;
     }
 
     public function normalize($object, $format = null, array $context = array()) : array
     {
-        if (!($object instanceof Source)) throw new InvalidArgumentException();
+        if (!($object instanceof Contributor)) throw new InvalidArgumentException();
 
-        $url = $object->getUrl();
         return [
-            'label' => $object->getLabel(),
-            'url' => strlen($url) ? DataConverter::addUtmSourceToLink($url) : ''
+            'contributions' => $object->getNoticesCount(),
+            'id' => $object->getId(),
+            'intro' => $object->getIntro(),
+            'name' => $object->getName(),
         ];
     }
 }
