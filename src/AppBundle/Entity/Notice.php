@@ -380,6 +380,10 @@ class Notice
         return $this->title;
     }
 
+    public function setTitle(string $title) {
+        $this->title = $title;
+    }
+
     public function getExpires() : ?\DateTime
     {
         return $this->expires;
