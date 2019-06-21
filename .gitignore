@@ -1,5 +1,5 @@
 /app/config/parameters.yml
-/build/
+/build
 /phpunit.xml
 /var/*
 !/var/cache
@@ -8,8 +8,10 @@
 !/var/sessions
 /var/sessions/*
 !var/sessions/.gitkeep
-!var/SymfonyRequirements.php
-/vendor/
+!/var/logs
+/var/logs/*
+!var/logs/.gitkeep
+/vendor
 /web/bundles/
 .idea
 *.php~

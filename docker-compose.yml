@@ -12,9 +12,14 @@ services:
     - .env
     # Comment out these volumes in production
     volumes:
-    - .:/var/www:rw,cached
-    # If you develop on Linux, uncomment the following line to use a bind-mounted host directory instead
-    # - .:/var/www:rw
+    - type: bind
+      source: .
+      target: /var/www
+      volume:
+        nocopy: true
+      consistency: cached # MacOS only
+    - /var/www/vendor
+    - /var/www/var
 
   nginx:
     container_name: kraft-backend_nginx
@@ -25,7 +30,13 @@ services:
     - php
     # Comment out this volume in production
     volumes:
-    - ./web:/var/www/web:rw,cached
+    - type: bind
+      source: ./web
+      target: /var/www/web
+      volume:
+        nocopy: true
+      read_only: true
+      consistency: cached # MacOS only
     ports:
     - "8088:80"
 
@@ -35,11 +46,11 @@ services:
     ports:
     - '3308:3306'
     volumes:
-    - db-data:/var/lib/postgresql/data:rw
+    - /var/lib/postgresql/data
     environment:
     - MYSQL_ROOT_PASSWORD=password
     - MYSQL_DATABASE=craft
-    restart: always
+    restart: unless-stopped
 
   dbtest:
     container_name: kraft-backend_dbtest
@@ -47,12 +58,9 @@ services:
     ports:
     - '3309:3306'
     volumes:
-    - dbtest-data:/var/lib/postgresql/data:rw
+    - /var/lib/postgresql/data
     environment:
     - MYSQL_ROOT_PASSWORD=password
     - MYSQL_DATABASE=craft
-    restart: always
+    restart: unless-stopped
 
-volumes:
-  db-data: {}
-  dbtest-data: {}
