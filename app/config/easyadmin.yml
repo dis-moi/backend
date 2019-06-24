@@ -154,7 +154,13 @@ easy_admin:
             class: AppBundle\Entity\Contributor
             list:
                 sort: ['name', 'ASC']
+                fields:
+                    - id
+                    - name
+                    - intro
+                    - enabled
             form:
                 fields:
                   - name
                   - intro
+                  - { property: 'imageFile', type: 'vich_image' }
