@@ -13,6 +13,7 @@ class LoadContributorData extends AbstractFixture
         $contributor = new Contributor();
         $contributor->setName("John Doe");
         $contributor->setIntro("I’m all out of bubble gum.");
+        $contributor->setImage("photo-fake.jpg");
         $this->addReference('contributor', $contributor);
         $manager->persist($contributor);
 

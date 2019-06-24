@@ -89,3 +89,10 @@ fos_user:
     from_email:
             address:        infrastructure@lmem.net
             sender_name:    LMEM Backend
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+        contributor_avatars:
+            uri_prefix:         /uploads/avatars
+            upload_destination: "%kernel.root_dir%/../web/uploads/avatars"
