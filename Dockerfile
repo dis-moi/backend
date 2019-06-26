@@ -13,43 +13,40 @@ RUN apk add --no-cache \
 		file \
 		gettext \
 		git \
-		mysql-client \
-	;
+		mysql-client
 
 ARG APCU_VERSION=5.1.12
-RUN set -eux; \
-	apk add --no-cache --virtual .build-deps \
+RUN set -eux
+RUN	apk add --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		icu-dev \
 		libzip-dev \
 		mysql-dev \
 		zlib-dev \
-	; \
-	\
-	docker-php-ext-configure zip --with-libzip; \
+		freetype-dev \
+        libjpeg-turbo-dev \
+        libpng-dev
+RUN	docker-php-ext-configure zip --with-libzip && \
+	docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include && \
 	docker-php-ext-install -j$(nproc) \
 		intl \
 		pdo_mysql \
 		zip \
-	; \
-	pecl install \
-		apcu-${APCU_VERSION} \
-	; \
-	pecl clear-cache; \
+		gd
+RUN	pecl install \
+		apcu-${APCU_VERSION} && \
+	pecl clear-cache && \
 	docker-php-ext-enable \
 		apcu \
-		opcache \
-	; \
-	\
-	runDeps="$( \
+		opcache
+RUN	runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
 			| tr ',' '\n' \
 			| sort -u \
 			| awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
-	)"; \
-	apk add --no-cache --virtual .api-phpexts-rundeps $runDeps; \
-	\
-	apk del .build-deps
+	)" && \
+	apk add --no-cache --virtual .api-phpexts-rundeps $runDeps
+RUN	apk del .build-deps
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY docker/php/php.ini /usr/local/etc/php/php.ini

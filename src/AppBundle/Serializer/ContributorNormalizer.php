@@ -3,8 +3,7 @@
 namespace AppBundle\Serializer;
 
 use AppBundle\Entity\Contributor;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -18,19 +17,19 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
     protected $normalizer;
 
     /**
-     * @var Request
-     */
-    protected $request;
-
-    /**
      * @var UploaderHelper
      */
     protected $uploader;
 
-    public function __construct(UploaderHelper $uploader, RequestStack $requestStack)
+    /**
+     * @var CacheManager
+     */
+    protected $cacheManager;
+
+    public function __construct(UploaderHelper $uploader, CacheManager $cacheManager)
     {
         $this->uploader = $uploader;
-        $this->request = $requestStack->getCurrentRequest();
+        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -52,10 +51,13 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
         if (!($object instanceof Contributor)) throw new InvalidArgumentException();
 
         $path = $this->uploader->asset($object, 'imageFile');
-        $url = !empty($object->getImage()) ? $this->request->getUriForPath($path) : null;
 
         return [
-            'avatar' => $url,
+            'avatar' => !empty($object->getImage()) ? [
+                'small' => $this->cacheManager->getBrowserPath($path, 's_thumb'),
+                'normal' => $this->cacheManager->getBrowserPath($path, 'm_thumb'),
+                'large' => $this->cacheManager->getBrowserPath($path, 'l_thumb'),
+            ] : null,
             'contributions' => $object->getNoticesCount(),
             'id' => $object->getId(),
             'intro' => $object->getIntro(),

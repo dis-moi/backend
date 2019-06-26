@@ -37,7 +37,8 @@
         "friendsofsymfony/jsrouting-bundle": "^2.2",
         "ext-json": "*",
         "beberlei/DoctrineExtensions": "^1.2",
-        "vich/uploader-bundle": "^1.7"
+        "vich/uploader-bundle": "^1.7",
+        "liip/imagine-bundle": "^2.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.0",

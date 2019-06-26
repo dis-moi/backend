@@ -96,3 +96,28 @@ vich_uploader:
         contributor_avatars:
             uri_prefix:         /uploads/avatars
             upload_destination: "%kernel.root_dir%/../web/uploads/avatars"
+
+liip_imagine:
+    resolvers:
+        default:
+            web_path: ~
+    filter_sets:
+        cache: ~
+        s_thumb:
+            quality: 60
+            filters:
+                thumbnail:
+                    size: [90, 90]
+                    mode: outbound
+        m_thumb:
+            quality: 75
+            filters:
+                thumbnail:
+                    size: [200, 200]
+                    mode: outbound
+        l_thumb:
+            quality: 80
+            filters:
+                thumbnail:
+                    size: [500, 500]
+                    mode: outbound
