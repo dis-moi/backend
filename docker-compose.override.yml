@@ -8,7 +8,6 @@ services:
         volume:
           nocopy: true
         consistency: cached # MacOS only
-      - /var/www/vendor
       - /var/www/var
 
   nginx:
