@@ -16,4 +16,5 @@
 .idea
 *.php~
 /web/uploads/
+/web/media/
 .env_prod
