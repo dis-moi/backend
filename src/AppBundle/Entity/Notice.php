@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Helper\NoticeVisibility;
 use AppBundle\Helper\NoticeIntention;
 use AppBundle\EntityListener\NoticeListener;
+use AppBundle\Service\DateTimeImmutable as DateTimeImmutable;
 
 /**
  * Notice
@@ -117,7 +118,7 @@ class Notice
     private $created;
 
     /**
-     * @var \DateTime $expires
+     * @var \DateTimeInterface $expires
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -342,6 +343,7 @@ class Notice
     public function setCreated(\DateTime $created)
     {
         $this->created = $created;
+        $this->setUpdated($created);
     }
 
     public function getUpdated() : ?\DateTime
@@ -384,9 +386,15 @@ class Notice
         $this->title = $title;
     }
 
-    public function getExpires() : ?\DateTime
+    public function getExpires() : ?\DateTimeInterface
     {
         return $this->expires;
+    }
+
+    public function setInitialExpires(DateTimeImmutable $dateTime) {
+        if (empty($this->expires)) {
+            $this->expires = $dateTime->oneYearAhead();
+        }
     }
 
     public function setExpires(\DateTime $expires = null)

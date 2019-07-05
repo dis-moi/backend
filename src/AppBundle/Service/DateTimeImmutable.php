@@ -20,4 +20,8 @@ class DateTimeImmutable
         return new \DateTimeImmutable('-3 months');
     }
 
+    public function oneYearAhead(): \DateTimeImmutable {
+        return new \DateTimeImmutable('+1 year');
+    }
+
 }
