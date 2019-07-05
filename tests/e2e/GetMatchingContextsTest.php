@@ -7,7 +7,7 @@ class GetMatchingContextsTest extends BaseApiE2eTestCase
     public function getMatchingContextsData()
     {
         return [
-            [null, 4, ["http://site-ecologique.fr", "http://random-site.fr", "http://site-ecologique-et-politique.fr", "http://expired.fr"]],
+            [null, 5, ["http://site-ecologique.fr", "http://random-site.fr", "http://site-ecologique-et-politique.fr", "http://expired.fr", "domainname\.fr.+superexample"]],
             [['contributor', 'contributor2'], 4, ["http://site-ecologique.fr", "http://site-ecologique-et-politique.fr", "http://random-site.fr", "http://expired.fr"]],
             [['contributor'], 2, ["http://site-ecologique.fr", "http://random-site.fr"]],
             [['contributor2'], 2, ["http://site-ecologique-et-politique.fr", "http://expired.fr"]]
@@ -17,7 +17,7 @@ class GetMatchingContextsTest extends BaseApiE2eTestCase
     /**
      * @dataProvider getMatchingContextsData
      */
-    public function testGetMatchingContexts($contributors, $count, array $urlRegexes)
+    public function testGetMatchingContexts(?array $contributors, int $count, array $urlRegexes)
     {
         $url = '/api/v3/matchingcontexts';
         if($contributors) {
@@ -36,5 +36,6 @@ class GetMatchingContextsTest extends BaseApiE2eTestCase
         $this->assertEquals($urlRegexes, array_map(function ($matchingContext) {
             return $matchingContext['urlRegex'];
         }, $payload));
+
     }
 }

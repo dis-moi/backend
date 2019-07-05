@@ -21,15 +21,21 @@ class MatchingContextNormalizer implements NormalizerInterface
 
     public function normalize($object, $format = null, array $context = array()) : array
     {
-        return [
+        if (!($object instanceof MatchingContext)) throw new InvalidArgumentException();
+
+        $urlRegex = !empty($object->getDomainName()) ?
+            sprintf('%s.+%s', preg_quote($object->getDomainName()), $object->getUrlRegex()) :
+            $object->getUrlRegex();
+
+        return array_filter([
             'noticeId' => $object->getNotice()->getId(),
             'noticeUrl' => $this->router->generate(
                 'app_api_getnoticeaction__invoke',
                 [ 'id' => $object->getNotice()->getId() ],
                 RouterInterface::ABSOLUTE_URL),
-            'urlRegex' => $object->getUrlRegex(),
+            'urlRegex' => $urlRegex,
             'excludeUrlRegex' => $object->getExcludeUrlRegex(),
             'querySelector' => $object->getQuerySelector()
-        ];
+        ]);
     }
 }
