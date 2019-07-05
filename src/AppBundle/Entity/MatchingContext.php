@@ -34,6 +34,22 @@ class MatchingContext
     /**
      * @var string
      *
+     * @ORM\Column(name="exampleUrl", type="string", length=255)
+     *
+     * @Assert\NotBlank()
+     */
+    private $exampleUrl;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="domainName", type="string", length=150, nullable=true)
+     */
+    private $domainName;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="urlRegex", type="string", length=255)
      *
      * @Assert\NotBlank()
@@ -71,7 +87,31 @@ class MatchingContext
         return $this->id;
     }
 
-    /**
+    public function setExampleUrl(string $exampleUrl) : MatchingContext
+    {
+        $this->exampleUrl = $exampleUrl;
+
+        return $this;
+    }
+
+    public function getExampleUrl() : ?string
+    {
+        return $this->exampleUrl;
+    }
+
+    public function setDomainName(string $domainName = null) : MatchingContext
+    {
+        $this->domainName = $domainName;
+
+        return $this;
+    }
+
+    public function getDomainName() : ?string
+    {
+        return $this->domainName;
+    }
+
+    /**`
      * Set urlRegex
      *
      * @param string $urlRegex

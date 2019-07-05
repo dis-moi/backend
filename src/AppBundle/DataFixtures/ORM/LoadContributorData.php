@@ -23,6 +23,11 @@ class LoadContributorData extends AbstractFixture
         $manager->persist($contributor);
 
         $contributor = new Contributor();
+        $contributor->setName("Jane Doe");
+        $this->addReference('contributor3', $contributor);
+        $manager->persist($contributor);
+
+        $contributor = new Contributor();
         $contributor->setName("Disabled contributor");
         $contributor->setEnabled(false);
         $this->addReference('contributor_disabled', $contributor);

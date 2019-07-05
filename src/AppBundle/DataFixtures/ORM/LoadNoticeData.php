@@ -45,6 +45,15 @@ message
         $manager->persist($notice);
 
         $notice = new Notice();
+        $notice->setContributor($this->getReference('contributor3'));
+        $notice->setMessage("");
+        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $notice->setIntention(NoticeIntention::OTHER());
+        $notice->setSource($this->getReference('source_link_huffington'));
+        $this->addReference('notice_other', $notice);
+        $manager->persist($notice);
+
+        $notice = new Notice();
         $notice->setContributor($this->getReference('contributor_disabled'));
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
