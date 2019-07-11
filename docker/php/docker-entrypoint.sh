@@ -6,22 +6,11 @@ if [ "${1#-}" != "$1" ]; then
 	set -- php-fpm "$@"
 fi
 
-fresh_install () {
-    composer install --no-progress --no-suggest
-    bin/console assets:install web
+composer install --no-progress --no-suggest
+bin/console assets:install web
 
-    bin/console doctrine:migrations:migrate -n
-    bin/console doctrine:fixtures:load -n
-}
-
-if [ ! -e 'vendor/autoload.php' ]; then
-    fresh_install
-fi
-
-sleep 5
-if bin/console doctrine:migrations:status -n --show-versions | grep 'not migrated'; then
-    fresh_install
-fi
+wait-for db:3306 -- bin/console doctrine:migrations:migrate -n
+wait-for db:3306 -- bin/console doctrine:fixtures:load -n
 
 if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
     mkdir -p web/media
