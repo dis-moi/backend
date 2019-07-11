@@ -60,8 +60,9 @@ ENV PATH="${PATH}:/root/.composer/vendor/bin"
 
 WORKDIR /var/www
 
+COPY docker/wait-for /usr/local/bin/wait-for
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
-RUN chmod +x /usr/local/bin/docker-entrypoint
+RUN chmod +x /usr/local/bin/docker-entrypoint /usr/local/bin/wait-for
 
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
