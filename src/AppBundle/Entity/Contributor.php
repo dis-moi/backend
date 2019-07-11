@@ -36,6 +36,15 @@ class Contributor
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="intro", type="string", length=255, nullable=true)
+     *
+     * @Groups({"v3:list"})
+     */
+    private $intro;
+
+    /**
      * @ORM\OneToMany(targetEntity="Notice", mappedBy="contributor")
      */
     private $notices;
@@ -89,11 +98,22 @@ class Contributor
         return $this->name;
     }
 
+    public function setIntro(?string $intro) : Contributor
+    {
+        $this->intro = $intro;
+
+        return $this;
+    }
+
+    public function getIntro() : ?string
+    {
+        return $this->intro;
+    }
+
     public function __toString()
     {
         return $this->name;
     }
-
 
     /**
      * Add notice
@@ -119,14 +139,21 @@ class Contributor
         $this->notices->removeElement($notice);
     }
 
-    /**
-     * Get notices
-     *
-     * @return Collection
-     */
-    public function getNotices()
+    public function getNotices() : ?Collection
     {
         return $this->notices;
+    }
+
+    public function getNoticesCount() : int
+    {
+        if ($notices = $this->getNotices()) {
+            return $notices
+                ->filter(function (Notice $notice) {
+                    return $notice->hasPublicVisibility();
+                })
+                ->count();
+        }
+        else return 0;
     }
 
     /**

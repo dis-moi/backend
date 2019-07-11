@@ -30,22 +30,6 @@ class Notice
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Alternative", mappedBy="notice", cascade={"persist", "remove"}, orphanRemoval=true)
-     *
-     * @deprecated since API v3, will be removed soon
-     */
-    private $alternatives;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", length=255)
-     *
-     * @deprecated since API v3, will be removed soon
-     */
-    private $title;
-
-    /**
      * @ORM\Column(name="visibility", type="string", options={"default" : "private"})
      */
     private $visibility;
@@ -133,8 +117,6 @@ class Notice
 
     public function __construct()
     {
-        $this->alternatives = new ArrayCollection();
-
         $this->channels = new ArrayCollection();
         $this->matchingContexts = new ArrayCollection();
         $this->visibility = NoticeVisibility::getDefault();
@@ -370,20 +352,6 @@ class Notice
     public function getSourceUrl() : ?string
     {
         return $this->source ? $this->source->getUrl() : null;
-    }
-
-    public function getAlternatives() : Collection
-    {
-        return $this->alternatives;
-    }
-
-    public function getTitle() : ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title) {
-        $this->title = $title;
     }
 
     public function getExpires() : ?\DateTimeInterface

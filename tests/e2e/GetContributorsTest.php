@@ -10,6 +10,16 @@ class GetContributorsTest extends BaseApiE2eTestCase
 
         $this->assertEquals(2, count($payload));
         $this->assertEquals('John Doe', $payload[0]['name']);
+        $this->assertEquals('I’m all out of bubble gum.', $payload[0]['intro']);
         $this->assertEquals('Contributor 2', $payload[1]['name']);
     }
+
+    public function testGetContributorsCount()
+    {
+        $payload = $this->makeApiRequest('/api/v3/contributors');
+
+        $this->assertEquals(2, $payload[0]['contributions']); // 2 public + 1 private
+        $this->assertEquals(3, $payload[1]['contributions']); // 3 public
+    }
+
 }
