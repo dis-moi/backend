@@ -32,13 +32,13 @@
         "friendsofsymfony/user-bundle": "~2.0.0",
         "doctrine/doctrine-migrations-bundle": "^1.1",
         "ocramius/proxy-manager": "^2.0.2",
-        "league/uri":"^5.0",
         "marc-mabe/php-enum": "^2.2",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
         "ext-json": "*",
         "beberlei/DoctrineExtensions": "^1.2",
         "vich/uploader-bundle": "^1.7",
-        "liip/imagine-bundle": "^2.0"
+        "liip/imagine-bundle": "^2.0",
+        "youthweb/urllinker": "^1.2"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.0",

@@ -16,10 +16,10 @@ class GetNoticeTest extends BaseApiE2eTestCase
         //$this->assertEquals('', $payload['contributor']['id']);
         $this->assertEquals('John Doe', $payload['contributor']['name']);
         $this->assertEquals('public', $payload['visibility']);
-        $this->assertEquals("<p><a target=\"_blank\" rel=\"noopener noreferrer\" href=\"http://link2.com?utm_source=lmem_assistant\">baz</a></p>
+        $this->assertEquals("<p><a target=\"_blank\" rel=\"noopener noreferrer\" href=\"http://link2.com\">baz</a></p>
 <p>message </p>
-<p><a target=\"_blank\" rel=\"noopener noreferrer\" href=\"http://link.com?foo=bar&utm_source=lmem_assistant\">foo</a></p>", $payload['message']);
-        $this->assertEquals('http://source-href-1.fr?utm_source=lmem_assistant', $payload['source']['url']);
+<p><a target=\"_blank\" rel=\"noopener noreferrer\" href=\"http://link.com?foo=bar\">foo</a></p>", $payload['message']);
+        $this->assertEquals('http://source-href-1.fr', $payload['source']['url']);
         $this->assertEquals('alternative', $payload['intention']);
         $this->assertEquals(2, $payload['ratings']['likes']);
         $this->assertEquals(0, $payload['ratings']['dislikes']);
