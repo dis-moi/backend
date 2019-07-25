@@ -2,31 +2,20 @@
 
 namespace AppBundle\Helper;
 
-use League\Uri\Http;
-use League\Uri\Modifiers\MergeQuery;
+use Youthweb\UrlLinker\UrlLinker;
 
 class DataConverter
 {
-    static protected $hrefAddition = 'utm_source=lmem_assistant';
-
-    /**
-     * @param string $message
-     * @return string
-     */
-    static public function convertFullMessage($message)
+    static public function convertFullMessage(string $message) : string
     {
         $message = self::convertNewLinesToParagraphs($message);
         $message = self::addTargetBlankToLinks($message);
-        $message = self::addUtmSourceToLinks($message);
+        $message = self::addLinksToUrls($message);
 
         return substr($message, 0, 500);
     }
 
-    /**
-     * @param string $content
-     * @return string
-     */
-    static public function convertNewLinesToParagraphs($content)
+    static public function convertNewLinesToParagraphs(string $content) : string
     {
         $content = str_replace("\r\n", "\n", $content);
         $content = str_replace("\r", "\n", $content);
@@ -34,40 +23,17 @@ class DataConverter
         return preg_replace($pattern, '<p>$1</p>', $content);
     }
 
-    /**
-     * @param string $message
-     * @return string
-     */
-    static public function addTargetBlankToLinks($message)
+    static public function addTargetBlankToLinks(string $message) : string
     {
         return str_replace('<a ', '<a target="_blank" rel="noopener noreferrer" ', $message);
     }
 
-    /**
-     * @param string $message
-     * @return string
-     */
-    static public function addUtmSourceToLinks($message)
+    static public function addLinksToUrls(string $message) : string
     {
-        $pattern = '/href="(.*)"/';
-        if(preg_match_all($pattern, $message, $urls)) {
-            foreach ($urls[1] as $url) {
-                $message = str_replace($url,
-                    static::addUtmSourceToLink($url),
-                    $message
-                );
-            }
-        }
-
-        return $message;
-    }
-
-    /**
-     * @param string $href
-     * @return string
-     */
-    static public function addUtmSourceToLink($href)
-    {
-        return (new MergeQuery(static::$hrefAddition))->process(Http::createFromString($href))->__toString();
+        $urlLinker = new UrlLinker([
+            // Do not format emails...
+            'emailLinkCreator' => function($email) { return $email; },
+        ]);
+        return $urlLinker->linkUrlsInTrustedHtml($message);
     }
 }

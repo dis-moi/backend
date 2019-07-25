@@ -33,15 +33,38 @@ class DataConverterTest extends TestCase
         $this->assertEquals($expectedContent, DataConverter::convertNewLinesToParagraphs($content));
     }
 
-    public function testItAddUtmSourceToUrl()
+    public function testItAddTargetBlankAttributeToLink()
     {
-        $add_utm_source = DataConverter::addUtmSourceToLink("adomain.fr?query=param");
-        $this->assertEquals("adomain.fr?query=param&utm_source=lmem_assistant", $add_utm_source);
+        $link = DataConverter::addTargetBlankToLinks('<a href="https://lmem.net">lmem</a>');
+        $this->assertEquals('<a target="_blank" rel="noopener noreferrer" href="https://lmem.net">lmem</a>', $link);
     }
 
-    public function testItAddUtmSourceToUrlWithoutQueryParam()
+    public function testItConvertUrlToLink()
     {
-        $add_utm_source = DataConverter::addUtmSourceToLink("http://www.adomain.fr");
-        $this->assertEquals("http://www.adomain.fr?utm_source=lmem_assistant", $add_utm_source);
+        $textFullUrl = 'Un lien vers https://lmem.net/jeanmichel?ilenveut&bien=1&de=plus';
+        $this->assertEquals(
+            'Un lien vers <a href="https://lmem.net/jeanmichel?ilenveut&amp;bien=1&amp;de=plus">lmem.net/jeanmichel</a>',
+            DataConverter::addLinksToUrls($textFullUrl)
+        );
+        $textPartialUrl = 'Un lien vers www.lmem.net';
+        $this->assertEquals(
+            'Un lien vers <a href="http://www.lmem.net">www.lmem.net</a>',
+            DataConverter::addLinksToUrls($textPartialUrl)
+        );
+        $textPartialUrl2 = 'Un lien vers lmem.net/path';
+        $this->assertEquals(
+            'Un lien vers <a href="http://lmem.net/path">lmem.net/path</a>',
+            DataConverter::addLinksToUrls($textPartialUrl2)
+        );
+        $textPartialUrl3 = 'Un lien vers http://lmem.net';
+        $this->assertEquals(
+            'Un lien vers <a href="http://lmem.net">lmem.net</a>',
+            DataConverter::addLinksToUrls($textPartialUrl3)
+        );
+        $htmlWithLink = '<a href="https://www.lmem.net">does not convert</a>';
+        $this->assertEquals(
+            $htmlWithLink,
+            DataConverter::addLinksToUrls($htmlWithLink)
+        );
     }
 }

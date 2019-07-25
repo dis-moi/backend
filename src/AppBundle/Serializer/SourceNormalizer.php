@@ -36,7 +36,7 @@ class SourceNormalizer implements NormalizerInterface, NormalizerAwareInterface
         $url = $object->getUrl();
         return [
             'label' => $object->getLabel(),
-            'url' => strlen($url) ? DataConverter::addUtmSourceToLink($url) : ''
+            'url' => strlen($url) ? $url : ''
         ];
     }
 }
