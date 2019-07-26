@@ -37,6 +37,7 @@ class MatchingContext
      * @ORM\Column(name="exampleUrl", type="string", length=255)
      *
      * @Assert\NotBlank()
+     * @Assert\Url
      */
     private $exampleUrl;
 
