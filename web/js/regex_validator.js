@@ -16,7 +16,7 @@
         }
     }
 
-    function validate_url_regexp(url_regexp, loose) {
+    function validate_url_regexp(url_regexp, example_url, loose) {
         const invalid_regex_message = 'Cette regexp est invalide';
         const catch_all_regex_msg = 'Cette regexp est trop large';
 
@@ -45,7 +45,7 @@
             return new RegExpStateSuccess();
         }
 
-        //Regex matching too many urls
+        // Regex matching too many urls
         if (regex.test('//google.com?foo=bar&bar=foo')) {
             return new RegExpStateError(catch_all_regex_msg + " : elle couvre //google.com?foo=bar&bar=foo");
         }
@@ -53,23 +53,37 @@
             return new RegExpStateError(catch_all_regex_msg + " : elle couvre //google.com/foo/bar");
         }
 
+        // Match url example
+        if (example_url && !regex.test(example_url)) {
+            return new RegExpStateError('Cette regex ne marche pas avec l’exemple ' + example_url);
+        }
+
         return new RegExpStateSuccess();
     }
 
-    document.onreadystatechange = () => {
-        if (document.readyState === 'complete') {
-            jQuery('form [id$="urlRegex"i]').change((event) => {
-                const target = event.target;
-                const loose = target.id.startsWith('restricted');
-                const status = validate_url_regexp(jQuery(target).val(), loose);
+    function validateFields(regexField, exampleField) {
+        const loose = regexField.id.startsWith('restricted');
+        const status = validate_url_regexp(
+            regexField.value,
+            exampleField.value,
+            loose);
 
-                if (typeof status === 'undefined' || status instanceof RegExpStateSuccess) {
-                    target.setCustomValidity('');
-                }
-                else if (status instanceof RegExpStateError) {
-                    target.setCustomValidity(status.message);
-                }
-            });
+        if (typeof status === 'undefined' || status instanceof RegExpStateSuccess) {
+            regexField.setCustomValidity('');
         }
-    };
+        else if (status instanceof RegExpStateError) {
+            regexField.setCustomValidity(status.message);
+        }
+    }
+
+    jQuery(($) => {
+        const parentSelector = '[id*="matchingContexts_"]';
+
+        $('form [id$="urlRegex"]').change((event) => {
+            validateFields(event.target, $(event.target).parents(parentSelector).find('[id$="exampleUrl"]')[0]);
+        });
+        $('form [id$="exampleUrl"]').change((event) => {
+            validateFields($(event.target).parents(parentSelector).find('[id$="urlRegex"]')[0], event.target);
+        });
+    });
 })();
