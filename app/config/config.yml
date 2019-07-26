@@ -107,17 +107,17 @@ liip_imagine:
             quality: 60
             filters:
                 thumbnail:
-                    size: [90, 90]
+                    size: [40, 40]
                     mode: outbound
         m_thumb:
-            quality: 75
+            quality: 60
             filters:
                 thumbnail:
-                    size: [200, 200]
+                    size: [90, 90]
                     mode: outbound
         l_thumb:
             quality: 80
             filters:
                 thumbnail:
-                    size: [500, 500]
+                    size: [200, 200]
                     mode: outbound
