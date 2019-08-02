@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Helper\Escaper;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\EntityListener\MatchingContextListener;
@@ -136,6 +137,14 @@ class MatchingContext
     public function getUrlRegex()
     {
         return $this->urlRegex;
+    }
+
+    public function getFullUrlRegex(Escaper $escaper = null) : string
+    {
+        if (empty($this->domainName)) {
+            return $this->urlRegex;
+        }
+        return (is_null($escaper) ? $this->domainName : $escaper::escape($this->domainName)) . $this->urlRegex;
     }
 
     /**
