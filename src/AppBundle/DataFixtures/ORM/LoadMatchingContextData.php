@@ -32,6 +32,7 @@ class LoadMatchingContextData extends  AbstractFixture implements DependentFixtu
         $matchingContext->setUrlRegex("http://random-site.fr");
         $matchingContext->setDescription("A random site");
         $matchingContext->setNotice($this->getReference('notice_3'));
+        $this->addReference('mc_without_domain_name', $matchingContext);
         $manager->persist($matchingContext);
 
         $matchingContext = new MatchingContext();
@@ -58,9 +59,10 @@ class LoadMatchingContextData extends  AbstractFixture implements DependentFixtu
         $matchingContext = new MatchingContext();
         $matchingContext->setExampleUrl("https://www.domainname.fr/coucou/example");
         $matchingContext->setDomainName("domainname.fr");
-        $matchingContext->setUrlRegex("superexample");
+        $matchingContext->setUrlRegex("/superexample");
         $matchingContext->setDescription("With a FQDN");
         $matchingContext->setNotice($this->getReference('notice_other'));
+        $this->addReference('mc_with_domain_name', $matchingContext);
         $manager->persist($matchingContext);
 
         $manager->flush();
