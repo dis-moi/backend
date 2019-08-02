@@ -34,11 +34,12 @@
         "ocramius/proxy-manager": "^2.0.2",
         "marc-mabe/php-enum": "^2.2",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
-        "ext-json": "*",
         "beberlei/DoctrineExtensions": "^1.2",
         "vich/uploader-bundle": "^1.7",
         "liip/imagine-bundle": "^2.0",
-        "youthweb/urllinker": "^1.2"
+        "youthweb/urllinker": "^1.2",
+        "ext-json": "*",
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.0",

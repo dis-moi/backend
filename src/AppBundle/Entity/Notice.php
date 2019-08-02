@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Helper\NoticeVisibility;
 use AppBundle\Helper\NoticeIntention;
 use AppBundle\EntityListener\NoticeListener;
-use AppBundle\Service\DateTimeImmutable as DateTimeImmutable;
+use AppBundle\Service\DateTimeImmutable;
 
 /**
  * Notice

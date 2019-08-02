@@ -17,8 +17,9 @@ class LoadNoticeData extends AbstractFixture implements DependentFixtureInterfac
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor'));
         $notice->setMessage("<a href=\"http://link2.com\">baz</a>
-message 
-<a href=\"http://link.com?foo=bar\">foo</a>");
+message
+<a href=\"http://link.com?foo=bar\">foo</a>
+with https://bulles.fr.");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::ALTERNATIVE());
         $notice->setSource($this->getReference('source_link_quechoisir'));

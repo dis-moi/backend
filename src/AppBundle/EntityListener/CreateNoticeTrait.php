@@ -4,7 +4,7 @@ namespace AppBundle\EntityListener;
 
 use AppBundle\Entity\Notice;
 use \DateTime as DateTime;
-use AppBundle\Service\DateTimeImmutable as DateTimeImmutable;
+use AppBundle\Service\DateTimeImmutable;
 
 trait CreateNoticeTrait
 {
