@@ -1,0 +1,456 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "version" : "3.2.1",
+    "title" : "Notices API",
+    "contact" : { }
+  },
+  "paths" : {
+    "/matching-contexts" : {
+      "get" : {
+        "summary" : "Retrieve all matching contexts.",
+        "tags" : [ "Matching Contexts" ],
+        "parameters" : [ {
+          "name" : "contributors",
+          "in" : "query",
+          "required" : false,
+          "description" : "Include Notices that have one of those contributors. Include all if missing.",
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer"
+            },
+            "uniqueItems" : true
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of matching contexts the consumer should match  contexts with (e.g. URL, location, etc).",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/MatchingContextEntity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/restricted-contexts" : {
+      "get" : {
+        "summary" : "Retrieve all restricted contexts.",
+        "tags" : [ "Matching Contexts" ],
+        "responses" : {
+          "200" : {
+            "description" : "List of contexts the consumer should not match against. E.g. bank accounts, backoffices, dashboards, etc.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/RestrictedContextEntity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notices/{noticeId}" : {
+      "get" : {
+        "summary" : "Retrieve a Notice by its id.",
+        "tags" : [ "Notices" ],
+        "parameters" : [ {
+          "name" : "noticeId",
+          "in" : "path",
+          "required" : true,
+          "description" : "Id of the Notice.",
+          "example" : 6,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Here comes a complete Notice entity for the consumer to display.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NoticeEntity"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notices/{noticeId}/ratings" : {
+      "post" : {
+        "summary" : "Users can rate a Notice to give feedback to contributors.",
+        "tags" : [ "Notices" ],
+        "parameters" : [ {
+          "name" : "noticeId",
+          "in" : "path",
+          "required" : true,
+          "description" : "Id of the Notice.",
+          "example" : 6,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "The server successfully recorded the rating."
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/NoticeRatingEntity"
+              }
+            }
+          },
+          "required" : true
+        }
+      }
+    },
+    "/contributors" : {
+      "get" : {
+        "summary" : "Every Notice has one Contributor. Consumers can then filter Notices by contributors.",
+        "tags" : [ "Contributors" ],
+        "responses" : {
+          "200" : {
+            "description" : "List of contributors the consumers can subscribe to.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ContributorEntity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags" : [ {
+    "name" : "Matching Contexts",
+    "description" : "List of contexts to match or to not match against."
+  }, {
+    "name" : "Notices",
+    "description" : "Entity to be displayed whenever matching contexts trigger."
+  }, {
+    "name" : "Contributors",
+    "description" : "List of Notices’ contributors to subscribe to."
+  } ],
+  "servers" : [ {
+    "url" : "https://notices.lmem.net/api/v3"
+  }, {
+    "url" : "https://staging-notices.lmem.net/api/v3"
+  } ],
+  "components" : {
+    "schemas" : {
+      "RestrictedContextEntity" : {
+        "title" : "Restricted Context Entity",
+        "example" : {
+          "urlRegex" : "https?://(app|dash|console)\\."
+        },
+        "type" : "object",
+        "properties" : {
+          "urlRegex" : {
+            "example" : "https://(app|dash|console)\\.",
+            "type" : "string"
+          }
+        },
+        "required" : [ "urlRegex" ]
+      },
+      "MatchingContextEntity" : {
+        "title" : "Matching Context Entity",
+        "example" : {
+          "noticeId" : 6,
+          "noticeUrl" : "https://notices.lmem.net/api/v3/notices/6",
+          "urlRegex" : "http://tests.menant-benjamin.fr/?$",
+          "excludeUrlRegex" : "google",
+          "querySelector" : "[itemType=\"http://schema.org/Product\"]"
+        },
+        "type" : "object",
+        "properties" : {
+          "noticeId" : {
+            "example" : 3,
+            "type" : "integer"
+          },
+          "noticeUrl" : {
+            "example" : "https://notices.lmem.net/api/v3/notices/3",
+            "type" : "string",
+            "format" : "url"
+          },
+          "urlRegex" : {
+            "example" : "20minutes.fr/societe/1860259-20160606-violences-policieres-quarante-huit-enquetes-judiciaires-ouvertes-police-polices",
+            "type" : "string"
+          },
+          "excludeUrlRegex" : {
+            "example" : "google",
+            "type" : "string",
+            "nullable" : true
+          },
+          "querySelector" : {
+            "example" : "[itemType=\"http://schema.org/Product\"]",
+            "type" : "string",
+            "nullable" : true
+          }
+        },
+        "required" : [ "noticeId", "noticeUrl", "urlRegex" ]
+      },
+      "NoticeRatingEntity" : {
+        "title" : "Notice Rating Entity",
+        "example" : {
+          "ratingType" : "like",
+          "context" : {
+            "url" : "https://en.wikipedia.org/",
+            "geolocation" : "geo:37.786971,-122.399677;u=35"
+          }
+        },
+        "type" : "object",
+        "properties" : {
+          "ratingType" : {
+            "$ref" : "#/components/schemas/ratingType"
+          },
+          "context" : {
+            "$ref" : "#/components/schemas/context"
+          },
+          "reason" : {
+            "description" : "Hint about a report.",
+            "type" : "string"
+          }
+        },
+        "required" : [ "ratingType" ]
+      },
+      "ratingType" : {
+        "title" : "ratingType",
+        "description" : "Type of ratings or feedback.",
+        "example" : "like",
+        "type" : "string",
+        "enum" : [ "like", "unlike", "dislike", "undislike", "dismiss", "undismiss", "display", "unfold", "click-message", "click-source", "report" ]
+      },
+      "context" : {
+        "title" : "context",
+        "type" : "object",
+        "properties" : {
+          "url" : {
+            "description" : "URL the notice’s matching context actually matched.",
+            "example" : "https://tests.menant-benjamin.fr/",
+            "type" : "string",
+            "format" : "url"
+          },
+          "geolocation" : {
+            "description" : "Geo URI scheme (RFC 5870) of who’s giving feedbacks.",
+            "type" : "string",
+            "format" : "geouri"
+          }
+        },
+        "required" : [ "url" ]
+      },
+      "NoticeEntity" : {
+        "title" : "Notice Entity",
+        "example" : {
+          "contributor" : {
+            "id" : 42,
+            "name" : "Mediapart",
+            "intro" : "Journal d’information numérique, indépendant et participatif",
+            "avatar" : {
+              "small" : {
+                "url" : "https://example.org/assets/s1m2a3l4l5.jpg"
+              },
+              "normal" : {
+                "url" : "https://example.org/assets/n1o2r3m4a5l6.jpg"
+              },
+              "large" : {
+                "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
+              }
+            },
+            "contributions" : 24
+          },
+          "created" : "2018-01-25",
+          "id" : 6,
+          "intention" : "alternative",
+          "message" : "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
+          "modified" : "2019-03-30",
+          "ratings" : {
+            "likes" : 7,
+            "dislikes" : 2
+          },
+          "source" : {
+            "url" : "https://choisir.lmem.net?utm_source=lmem_assistant"
+          },
+          "visibility" : "public"
+        },
+        "type" : "object",
+        "properties" : {
+          "contributor" : {
+            "$ref" : "#/components/schemas/ContributorEntity"
+          },
+          "created" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "id" : {
+            "type" : "integer"
+          },
+          "intention" : {
+            "$ref" : "#/components/schemas/intention"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "modified" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "source" : {
+            "$ref" : "#/components/schemas/source"
+          },
+          "ratings" : {
+            "$ref" : "#/components/schemas/ratings"
+          },
+          "visibility" : {
+            "type" : "string",
+            "enum" : [ "public", "private" ]
+          }
+        },
+        "required" : [ "contributor", "created", "id", "intention", "message", "ratings", "source", "visibility" ]
+      },
+      "source" : {
+        "title" : "source",
+        "type" : "object",
+        "properties" : {
+          "url" : {
+            "description" : "Source’s URL.",
+            "example" : "https://tests.menant-benjamin.fr/source/example",
+            "type" : "string",
+            "format" : "url"
+          }
+        },
+        "required" : [ "url" ]
+      },
+      "ratings" : {
+        "title" : "ratings",
+        "type" : "object",
+        "properties" : {
+          "likes" : {
+            "type" : "number",
+            "example" : 12,
+            "description" : "Sum of likes (minus unlikes) for the notice"
+          },
+          "dislikes" : {
+            "type" : "number",
+            "example" : 0,
+            "description" : "Sum of dislikes (minus undislikes) for the notice"
+          }
+        },
+        "required" : [ "likes", "dislikes" ]
+      },
+      "intention" : {
+        "title" : "intention",
+        "example" : "approval",
+        "type" : "string",
+        "enum" : [ "approval", "disapproval", "alternative", "information", "other" ]
+      },
+      "ContributorEntity" : {
+        "title" : "Contributor Entity",
+        "example" : {
+          "id" : 42,
+          "name" : "Mediapart",
+          "intro" : "Journal d’information numérique, indépendant et participatif",
+          "avatar" : {
+            "small" : {
+              "url" : "https://example.org/assets/s1m2a3l4l5.jpg"
+            },
+            "normal" : {
+              "url" : "https://example.org/assets/n1o2r3m4a5l6.jpg"
+            },
+            "large" : {
+              "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
+            }
+          },
+          "contributions" : 24
+        },
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "example" : 42,
+            "type" : "integer"
+          },
+          "name" : {
+            "example" : "Mediapart",
+            "type" : "string"
+          },
+          "intro" : {
+            "example" : "Journal d'information numérique, indépendant et participatif",
+            "type" : "string",
+            "nullable" : true
+          },
+          "avatar" : {
+            "$ref" : "#/components/schemas/picture"
+          },
+          "contributions" : {
+            "description" : "The total number of contributions this contributor has published.",
+            "example" : 24,
+            "type" : "integer"
+          }
+        },
+        "required" : [ "id", "name", "contributions" ]
+      },
+      "picture" : {
+        "title" : "picture",
+        "example" : {
+          "small" : {
+            "url" : "https://example.org/assets/s1m2a3l4l5.jpg"
+          },
+          "normal" : {
+            "url" : "https://example.org/assets/n1o2r3m4a5l6.jpg"
+          },
+          "large" : {
+            "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
+          }
+        },
+        "type" : "object",
+        "properties" : {
+          "small" : {
+            "$ref" : "#/components/schemas/pictureSrc"
+          },
+          "normal" : {
+            "$ref" : "#/components/schemas/pictureSrc"
+          },
+          "large" : {
+            "$ref" : "#/components/schemas/pictureSrc"
+          }
+        },
+        "required" : [ "small", "normal", "large" ],
+        "nullable" : true
+      },
+      "pictureSrc" : {
+        "title" : "picture source",
+        "example" : {
+          "url" : "https://example.org/assets/s1m2a3l4l5.jpg"
+        },
+        "type" : "object",
+        "properties" : {
+          "url" : {
+            "example" : "https://example.org/assets/s1m2a3l4l5.jpg",
+            "type" : "string"
+          }
+        },
+        "required" : [ "url" ]
+      }
+    }
+  }
+}

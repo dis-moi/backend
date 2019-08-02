@@ -11,9 +11,9 @@ class GetContributorsTest extends BaseApiE2eTestCase
         $this->assertEquals(3, count($payload));
         $this->assertEquals('John Doe', $payload[0]['name']);
         $this->assertEquals('I’m all out of bubble gum.', $payload[0]['intro']);
-        $this->assertContains('photo-fake.jpg', $payload[0]['avatar']['small']);
-        $this->assertContains('photo-fake.jpg', $payload[0]['avatar']['normal']);
-        $this->assertContains('photo-fake.jpg', $payload[0]['avatar']['large']);
+        $this->assertContains('photo-fake.jpg', $payload[0]['avatar']['small']['url']);
+        $this->assertContains('photo-fake.jpg', $payload[0]['avatar']['normal']['url']);
+        $this->assertContains('photo-fake.jpg', $payload[0]['avatar']['large']['url']);
         $this->assertEquals('Contributor 2', $payload[1]['name']);
     }
 

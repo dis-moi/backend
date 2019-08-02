@@ -53,12 +53,4 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
     {
         return $datetime->format('c');
     }
-
-    protected function updateSourceHref($href)
-    {
-        return strlen($href)
-            ? DataConverter::addUtmSourceToLink($href)
-            : ''
-        ;
-    }
 }
