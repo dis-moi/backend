@@ -3,11 +3,11 @@
 namespace AppBundle\Serializer;
 
 use AppBundle\Entity\Contributor;
-use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use AppBundle\Serializer\Serializable\Picture;
+use AppBundle\Serializer\Serializable\Thumb;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
@@ -15,22 +15,6 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
      * @var NormalizerInterface
      */
     protected $normalizer;
-
-    /**
-     * @var UploaderHelper
-     */
-    protected $uploader;
-
-    /**
-     * @var CacheManager
-     */
-    protected $cacheManager;
-
-    public function __construct(UploaderHelper $uploader, CacheManager $cacheManager)
-    {
-        $this->uploader = $uploader;
-        $this->cacheManager = $cacheManager;
-    }
 
     /**
      * Sets the owning Normalizer object.
@@ -50,18 +34,22 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
     {
         if (!($object instanceof Contributor)) throw new InvalidArgumentException();
 
-        $path = $this->uploader->asset($object, 'imageFile');
-
         return [
-            'avatar' => !empty($object->getImage()) ? [
-                'small' => $this->cacheManager->getBrowserPath($path, 's_thumb'),
-                'normal' => $this->cacheManager->getBrowserPath($path, 'm_thumb'),
-                'large' => $this->cacheManager->getBrowserPath($path, 'l_thumb'),
-            ] : null,
+            'avatar' => !empty($object->getImage()) ?
+                $this->normalizer->normalize(self::avatarWithThumbs($object), $format, $context) :
+                null,
             'contributions' => $object->getNoticesCount(),
             'id' => $object->getId(),
             'intro' => $object->getIntro(),
             'name' => $object->getName(),
         ];
+    }
+
+    private static function avatarWithThumbs(Contributor $contributor) : Picture
+    {
+        return Picture::fromContributor($contributor)
+            ->addThumb(Thumb::fromName(Thumb::SMALL))
+            ->addThumb(Thumb::fromName(Thumb::NORMAL))
+            ->addThumb(Thumb::fromName(Thumb::LARGE));
     }
 }
