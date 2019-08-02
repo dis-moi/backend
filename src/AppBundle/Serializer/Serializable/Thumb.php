@@ -30,7 +30,7 @@ class Thumb
                 $this->filter = self::LARGE_FILTER;
                 break;
             default:
-                throw new \TypeError("Unknown thumbnail’s name '$name'; should be small, medium or large.");
+                throw new \TypeError("Unknown thumbnail’s name '$name'; should be small, normal or large.");
         }
     }
 
