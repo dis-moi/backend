@@ -35,9 +35,8 @@ class MatchingContext
     /**
      * @var string
      *
-     * @ORM\Column(name="exampleUrl", type="string", length=255)
+     * @ORM\Column(name="exampleUrl", type="string", length=255, nullable=true)
      *
-     * @Assert\NotBlank()
      * @Assert\Url
      */
     private $exampleUrl;
@@ -91,7 +90,7 @@ class MatchingContext
         return $this->id;
     }
 
-    public function setExampleUrl(string $exampleUrl) : MatchingContext
+    public function setExampleUrl(string $exampleUrl = null) : MatchingContext
     {
         $this->exampleUrl = $exampleUrl;
 
