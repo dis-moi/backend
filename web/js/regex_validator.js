@@ -83,7 +83,7 @@
     }
 
     function selectFields(child) {
-        const parentSelector = '[id*="matchingContexts_"]';
+        const parentSelector = '.field-matching_context';
         return [
             jQuery(child).parents(parentSelector).find('[id$="urlRegex"]')[0],
             jQuery(child).parents(parentSelector).find('[id$="domainName"]')[0],
