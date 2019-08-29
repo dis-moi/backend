@@ -1,5 +1,8 @@
 easy_admin:
     design:
+        form_theme:
+            - horizontal
+            - easy_admin/_form_theme.html.twig
         assets:
             css:
                 - 'css/admin.css'
