@@ -1,4 +1,12 @@
 (function () {
+
+    const listOfIdSelectors = [
+        'urlRegex',
+        'domainName',
+        'exampleUrl',
+        'excludeUrlRegex',
+    ].map((_) => `[id$="${_}"]`);
+
     class RegExpState {
         constructor(message) {
             this._message = message;
@@ -15,9 +23,9 @@
             return false;
         }
     }
+    class ExcludeRegExpStateError extends RegExpStateError {}
 
-    function validate_url_regexp(url_regexp, example_url, loose) {
-        const invalid_regex_message = 'Cette regexp est invalide';
+    function validate_url_regexp(url_regexp, exclude_url_regex, example_url, loose) {
         const catch_all_regex_msg = 'Cette regexp est trop large';
 
         //Regex empty
@@ -28,11 +36,16 @@
         }
 
         //Regex invalid
-        let regex;
+        let regex, exclude_regex;
         try {
-            regex = new RegExp(url_regexp);
+            regex = new RegExp(url_regexp, 'i');
         } catch (e) {
-            return new RegExpStateError(invalid_regex_message + " (Détails: " + e.message + ")");
+            return new RegExpStateError('Cette regexp est invalide' + " (Détails: " + e.message + ")");
+        }
+        try {
+            exclude_regex = exclude_url_regex && new RegExp(exclude_url_regex, 'i');
+        } catch (e) {
+            return new ExcludeRegExpStateError('Cette regexp est invalide' + " (Détails: " + e.message + ")");
         }
 
         //Regex matching way too many urls
@@ -58,10 +71,15 @@
             return new RegExpStateError('Cette regex ne marche pas avec l’exemple ' + example_url);
         }
 
+        // Exclude url does not match url example
+        if (example_url && exclude_regex && exclude_regex.test(example_url)) {
+            return new ExcludeRegExpStateError('Cette regex d’exclusion ne devrait pas matcher l’exemple ' + example_url);
+        }
+
         return new RegExpStateSuccess();
     }
 
-    function validateFields(regexField, dnField, exampleField) {
+    function validateFields(regexField, dnField, exampleField, excludeField) {
         const loose = regexField.id.startsWith('restricted');
         const regexValue = !!dnField.value ?
             dnField.value.replace(/\./g, '\\.') + regexField.value :
@@ -69,45 +87,46 @@
 
         const status = validate_url_regexp(
             regexValue,
+            excludeField.value,
             exampleField.value,
             loose);
 
         if (typeof status === 'undefined' || status instanceof RegExpStateSuccess) {
             regexField.setCustomValidity('');
-            removeErrorClass(regexField, dnField, exampleField);
+            excludeField.setCustomValidity('');
+            removeErrorClass(regexField, dnField, exampleField, excludeField);
+        }
+        else if(status instanceof ExcludeRegExpStateError) {
+            excludeField.setCustomValidity(status.message);
+            addErrorClass(regexField, dnField, exampleField, excludeField);
         }
         else if (status instanceof RegExpStateError) {
             regexField.setCustomValidity(status.message);
-            addErrorClass(regexField, dnField, exampleField);
+            addErrorClass(regexField, dnField, exampleField, excludeField);
         }
     }
 
     function selectFields(child) {
-        const parentSelector = '[id*="matchingContexts_"]';
-        return [
-            jQuery(child).parents(parentSelector).find('[id$="urlRegex"]')[0],
-            jQuery(child).parents(parentSelector).find('[id$="domainName"]')[0],
-            jQuery(child).parents(parentSelector).find('[id$="exampleUrl"]')[0],
-        ];
+        const parentSelector = '.field-matching_context';
+        return listOfIdSelectors.map((_) => jQuery(child).parents(parentSelector).find(_)[0]);
     }
 
-    function addErrorClass(regexField, dnField, exampleField) {
+    function addErrorClass(regexField, dnField, exampleField, excludeField) {
         const parentSelector = '.field-matching_context .form-group';
         jQuery(regexField).parents(parentSelector).addClass('has-error');
         jQuery(dnField).parents(parentSelector).addClass('has-error');
         jQuery(exampleField).parents(parentSelector).addClass('has-warning');
+        jQuery(excludeField).parents(parentSelector).addClass('has-error');
     }
 
-    function removeErrorClass(regexField, dnField, exampleField) {
+    function removeErrorClass(regexField, dnField, exampleField, excludeField) {
         const parentSelector = '.field-matching_context .form-group';
         jQuery(regexField).parents(parentSelector).removeClass('has-error');
         jQuery(dnField).parents(parentSelector).removeClass('has-error');
         jQuery(exampleField).parents(parentSelector).removeClass('has-warning');
+        jQuery(excludeField).parents(parentSelector).removeClass('has-error');
     }
 
-    jQuery(($) => {
-        $('form [id$="urlRegex"]').change((event) => validateFields(...selectFields(event.target)));
-        $('form [id$="exampleUrl"]').change((event) => validateFields(...selectFields(event.target)));
-        $('form [id$="domainName"]').change((event) => validateFields(...selectFields(event.target)));
-    });
+    jQuery(($) =>
+        $('form').on('change', listOfIdSelectors.join(), (event) => validateFields(...selectFields(event.target))));
 })();

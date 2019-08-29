@@ -1,0 +1,27 @@
+{% block _notice_matchingContexts_entry_widget %}
+
+    <div class="well form-entry-mc-bg">
+
+        {{ form_row(form.children.exampleUrl) }}
+
+        <fieldset class="well form-well-bg">
+            {{ form_row(form.children.domainName) }}
+            {{ form_row(form.children.urlRegex) }}
+        </fieldset>
+            {{ form_row(form.children.excludeUrlRegex) }}
+            {{ form_row(form.children.querySelector) }}
+
+        {{ form_row(form.children.description) }}
+
+    </div>
+
+    <style>
+        .form-entry-mc-bg {
+            background-color: #fefefe;
+        }
+        .form-well-bg {
+            background-color: #f7f7f7;
+        }
+    </style>
+
+{% endblock %}
