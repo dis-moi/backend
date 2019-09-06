@@ -13,7 +13,7 @@ class DateTimeImmutable
 {
 
     public function today(): \DateTimeImmutable {
-        return new \DateTimeImmutable('today');
+        return new \DateTimeImmutable('+1 day'); // Include today
     }
 
     public function threeMonthsAgo(): \DateTimeImmutable {

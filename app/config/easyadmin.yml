@@ -49,6 +49,7 @@ easy_admin:
                     - message
                     - visibility
                     - matchingContexts
+                    - { property : 'badgedRatingCount', label: 'Badges', css_class: 'graphable' }
                     - { property : 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
                     - { property : 'unfoldedRatingCount', label: 'Dépliées', css_class: 'graphable' }
                     - { property : 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }

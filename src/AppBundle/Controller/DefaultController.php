@@ -38,12 +38,14 @@ class DefaultController extends Controller
      */
     public function noticeGraphAction(Request $request, Notice $notice) {
 
+        $badgeData = $this->ratingRepository
+            ->getGraphDataByNoticeTypes($notice, [Rating::BADGE]);
         $displayData = $this->ratingRepository
             ->getGraphDataByNoticeTypes($notice, [Rating::DISPLAY]);
         $unfoldData = $this->ratingRepository
             ->getGraphDataByNoticeTypes($notice, [Rating::UNFOLD]);
         $clickData = $this->ratingRepository
-            ->getGraphDataByNoticeTypes($notice, [Rating::OUTBOUND_CLICK_SOURCE, Rating::OUTBOUND_CLICK_MESSAGE]);
+            ->getGraphDataByNoticeTypes($notice, [Rating::OUTBOUND_CLICK]);
         $likeData = $this->ratingRepository
             ->getGraphDataByNoticeBalanceType($notice, Rating::LIKE, Rating::UNLIKE);
         $dislikeData = $this->ratingRepository
@@ -53,6 +55,7 @@ class DefaultController extends Controller
 
         return $this->render('default/notice_graph_modal.html.twig', [
             'labels' => array_keys($displayData),
+            'badge_data' => array_values($badgeData),
             'display_data' => array_values($displayData),
             'unfold_data' => array_values($unfoldData),
             'click_data' => array_values($clickData),
