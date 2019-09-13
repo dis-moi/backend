@@ -231,6 +231,11 @@ class Notice
         return $this->ratings;
     }
 
+    public function getBadgedRatingCount(): int
+    {
+        return $this->getRatingCount(Rating::BADGE);
+    }
+
     public function getDisplayedRatingCount(): int
     {
         return $this->getRatingCount(Rating::DISPLAY);
@@ -243,16 +248,7 @@ class Notice
 
     public function getClickedRatingCount(): int
     {
-        return $this->getRatingCount(Rating::OUTBOUND_CLICK_SOURCE)
-            + $this->getRatingCount(Rating::OUTBOUND_CLICK_MESSAGE);
-    }
-
-    /**
-     * @deprecated replaced by likes and dislikes
-     */
-    public function getApprovedRatingCount(): int
-    {
-        return 0;
+        return $this->getRatingCount(Rating::OUTBOUND_CLICK);
     }
 
     public function getLikedRatingCount(): int
