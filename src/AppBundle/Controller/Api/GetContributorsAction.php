@@ -22,7 +22,7 @@ class GetContributorsAction extends BaseAction
      */
     public function __invoke()
     {
-        $contributors = $this->repository->getAllEnabled();
+        $contributors = $this->repository->getAllEnabledWithAtLeastOneContribution();
 
         if (!$contributors) {
             throw new NotFoundHttpException('No contributors exist');

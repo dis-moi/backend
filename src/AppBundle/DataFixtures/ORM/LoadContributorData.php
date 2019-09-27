@@ -33,6 +33,11 @@ class LoadContributorData extends AbstractFixture
         $this->addReference('contributor_disabled', $contributor);
         $manager->persist($contributor);
 
+        $contributor = new Contributor();
+        $contributor->setName("Paul Bismuth");
+        $this->addReference('contributor_lazy', $contributor);
+        $manager->persist($contributor);
+
         $manager->flush();
     }
 }
