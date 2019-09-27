@@ -201,6 +201,33 @@ class Contributor implements ImageUploadable
         else return 0;
     }
 
+    public function getTheirMostLikedOrDisplayedNotice() : ?Notice
+    {
+        if ($notices = $this->getNotices()) {
+            $noticesArray = $notices->toArray();
+            return array_reduce($noticesArray, function (?Notice $acc, Notice $curr) {
+                // First iteration...
+                if (is_null($acc)) return $curr;
+
+                // Compare likes at the first place...
+                $currLikes = $curr->getLikedRatingCount();
+                $accLikes = $acc->getLikedRatingCount();
+                if ($currLikes > $accLikes) return $curr;
+                if ($currLikes < $accLikes) return $acc;
+
+                // Likes equality, compare displays then...
+                $currDisplays = $curr->getDisplayedRatingCount();
+                $accDisplays = $acc->getDisplayedRatingCount();
+                if ($currDisplays > $accDisplays) return $curr;
+                if ($currDisplays < $accDisplays) return $acc;
+
+                // Likes and Displays equalities, just pick the first in...
+                return $acc;
+            });
+        }
+        else return null;
+    }
+
     /**
      * @return bool
      */
