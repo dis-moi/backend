@@ -70,6 +70,7 @@ jQuery(document).ready(() => {
             const $canvas = $modalContent.find('#canvas');
 
             const labels_data = $canvas.data('labels');
+            const badge_data = $canvas.data('badge');
             const display_data = $canvas.data('display');
             const unfold_data = $canvas.data('unfold');
             const click_data = $canvas.data('click');
@@ -78,6 +79,7 @@ jQuery(document).ready(() => {
             const dismiss_data = $canvas.data('dismiss');
 
             const config = makeConfig(labels_data, [
+                makeDatasetConfig('Badges', chartColors.yellow, badge_data),
                 makeDatasetConfig('Affichages', chartColors.grey, display_data),
                 makeDatasetConfig('Dépliées', chartColors.green, unfold_data),
                 makeDatasetConfig('Clics', chartColors.red, click_data),
