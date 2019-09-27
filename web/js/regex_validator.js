@@ -104,6 +104,8 @@
             regexField.setCustomValidity(status.message);
             addErrorClass(regexField, dnField, exampleField, excludeField);
         }
+
+        return status;
     }
 
     function selectFields(child) {
@@ -127,6 +129,14 @@
         jQuery(excludeField).parents(parentSelector).removeClass('has-error');
     }
 
-    jQuery(($) =>
-        $('form').on('change', listOfIdSelectors.join(), (event) => validateFields(...selectFields(event.target))));
+    jQuery(($) => {
+        const form = $('form');
+        form.on('change', listOfIdSelectors.join(), (event) => validateFields(...selectFields(event.target)));
+        form.on('submit', (event) => {
+            const status = validateFields(...selectFields(listOfIdSelectors[0]));
+            if (status instanceof RegExpStateError || status instanceof ExcludeRegExpStateError) {
+                event.preventDefault();
+            }
+        });
+    });
 })();
