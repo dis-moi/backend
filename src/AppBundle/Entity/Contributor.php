@@ -57,6 +57,7 @@ class Contributor implements ImageUploadable
 
     /**
      * @ORM\OneToMany(targetEntity="Notice", mappedBy="contributor")
+     * @ORM\OrderBy({"updated" = "ASC"})
      */
     private $notices;
 
