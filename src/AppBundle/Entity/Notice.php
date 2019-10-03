@@ -63,6 +63,10 @@ class Notice
      * @var string
      *
      * @ORM\Column(name="message", type="text")
+     * @Assert\Length(
+     *     max = 500,
+     *     maxMessage = "You reached the max length for the message! ({{limit}} characters)"
+     * )
      */
     private $message;
 

@@ -12,7 +12,7 @@ class LoadContributorData extends AbstractFixture
     {
         $contributor = new Contributor();
         $contributor->setName("John Doe");
-        $contributor->setIntro("I’m all out of bubble gum.");
+        $contributor->setIntro("I’m all out of bubble gum (https://www.youtube.com/watch?reload=9&v=yMN0yvot6dM)");
         $contributor->setImage("photo-fake.jpg");
         $this->addReference('contributor', $contributor);
         $manager->persist($contributor);
@@ -31,6 +31,16 @@ class LoadContributorData extends AbstractFixture
         $contributor->setName("Disabled contributor");
         $contributor->setEnabled(false);
         $this->addReference('contributor_disabled', $contributor);
+        $manager->persist($contributor);
+
+        $contributor = new Contributor();
+        $contributor->setName("Famous Contributor");
+        $this->addReference('contributor_fame', $contributor);
+        $manager->persist($contributor);
+
+        $contributor = new Contributor();
+        $contributor->setName("Paul Bismuth");
+        $this->addReference('contributor_lazy', $contributor);
         $manager->persist($contributor);
 
         $manager->flush();

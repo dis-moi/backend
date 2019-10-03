@@ -27,6 +27,31 @@ class LoadRatingData extends AbstractFixture implements DependentFixtureInterfac
             $manager->persist($rating);
         }
 
+        $notice = $this->getReference('notice_liked');
+        foreach ([
+                     Rating::LIKE, Rating::LIKE, Rating::LIKE,
+                     Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY,
+                 ] as $type) {
+            $rating = new Rating($notice, $type, new Context(new \DateTime('-1 month'), 'url', 'geoloc'), 'reason');
+            $manager->persist($rating);
+        }
+        $notice = $this->getReference('notice_displayed');
+        foreach ([
+                     Rating::LIKE, Rating::LIKE,
+                     Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY,
+                 ] as $type) {
+            $rating = new Rating($notice, $type, new Context(new \DateTime('-1 month'), 'url', 'geoloc'), 'reason');
+            $manager->persist($rating);
+        }
+        $notice = $this->getReference('notice_liked_displayed');
+        foreach ([
+                     Rating::LIKE, Rating::LIKE, Rating::LIKE,
+                     Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY,
+                 ] as $type) {
+            $rating = new Rating($notice, $type, new Context(new \DateTime('-1 month'), 'url', 'geoloc'), 'reason');
+            $manager->persist($rating);
+        }
+
         $manager->flush();
     }
 

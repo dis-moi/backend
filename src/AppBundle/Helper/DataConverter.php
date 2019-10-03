@@ -16,6 +16,15 @@ class DataConverter
         return $message;
     }
 
+    static public function convertFullIntro(string $intro) : string
+    {
+        $intro = self::convertNewLinesToParagraphs($intro);
+        $intro = self::addLinksToUrls($intro);
+        $intro = self::addTargetBlankToLinks($intro);
+
+        return $intro;
+    }
+
     static public function truncate(string $message, $length) : string
     {
         return mb_strlen($message) > $length ? mb_strcut($message, 0, $length) . '...' : $message;
