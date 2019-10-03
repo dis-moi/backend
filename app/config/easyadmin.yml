@@ -11,6 +11,8 @@ easy_admin:
                 - 'js/chartjs/moment.min.js'
                 - 'js/chartjs/Chart.js'
                 - 'js/custom_graph.js'
+                - 'js/short-and-sweet/short-and-sweet.js'
+                - 'js/message_validator.js'
     site_name: 'Le Même En Mieux'
     entities:
         Notice:
@@ -31,7 +33,7 @@ easy_admin:
                     - expires
             form:
                 fields:
-                    - message
+                    - { property: 'message', type_options: { attr: { maxLength: 500 } } }
                     - { property: 'contributor', type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
                     - { property: 'intention', type: 'AppBundle\Form\IntentionType' }
                     - note
