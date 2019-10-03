@@ -3,6 +3,7 @@
 namespace AppBundle\Serializer;
 
 use AppBundle\Entity\Contributor;
+use AppBundle\Helper\DataConverter;
 use AppBundle\Serializer\Serializable\Picture;
 use AppBundle\Serializer\Serializable\Thumb;
 use Symfony\Component\Routing\RouterInterface;
@@ -60,7 +61,7 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
                 'numberOfPublishedNotices' => $object->getNoticesCount(),
             ],
             'id' => $object->getId(),
-            'intro' => $object->getIntro(),
+            'intro' => $object->getIntro() ? DataConverter::convertFullIntro($object->getIntro()) : null,
             'name' => $object->getName(),
         ];
     }
