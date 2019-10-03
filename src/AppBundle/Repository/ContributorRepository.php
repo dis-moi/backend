@@ -3,14 +3,30 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Contributor;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
 class ContributorRepository extends BaseRepository
 {
-    public function getAllEnabled()
+
+    protected $noticeRepository;
+
+    public function __construct(EntityManagerInterface $entityManager, NoticeRepository $noticeRepository)
     {
-        return $this->repository->createQueryBuilder('c')
+        parent::__construct($entityManager);
+
+        $this->noticeRepository = $noticeRepository;
+    }
+
+    public function getAllEnabledWithAtLeastOneContribution()
+    {
+        $activeContributorsQuery = $this->noticeRepository->repository->createQueryBuilder('n')
+            ->select('IDENTITY(n.contributor)')->distinct();
+
+        $mainQuery = $this->repository->createQueryBuilder('c');
+        return $mainQuery
             ->where('c.enabled = true')
+            ->andWhere($mainQuery->expr()->in('c.id', $activeContributorsQuery->getDQL()))
             ->getQuery()->execute();
     }
 

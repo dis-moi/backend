@@ -91,6 +91,30 @@ with https://bulles.fr.");
         $this->addReference('notice_private', $notice);
         $manager->persist($notice);
 
+        $notice = new Notice();
+        $notice->setContributor($this->getReference('contributor_fame'));
+        $notice->setMessage("This notice has been liked 3 times and displayed 4 times.");
+        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $notice->setIntention(NoticeIntention::ALTERNATIVE());
+        $this->addReference('notice_liked', $notice);
+        $manager->persist($notice);
+
+        $notice = new Notice();
+        $notice->setContributor($this->getReference('contributor_fame'));
+        $notice->setMessage("This notice has been liked 3 times and displayed 5 times.");
+        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $notice->setIntention(NoticeIntention::ALTERNATIVE());
+        $this->addReference('notice_liked_displayed', $notice);
+        $manager->persist($notice);
+
+        $notice = new Notice();
+        $notice->setContributor($this->getReference('contributor_fame'));
+        $notice->setMessage("This notice has been liked 2 times and displayed 6 times.");
+        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $notice->setIntention(NoticeIntention::ALTERNATIVE());
+        $this->addReference('notice_displayed', $notice);
+        $manager->persist($notice);
+
         $manager->flush();
     }
 

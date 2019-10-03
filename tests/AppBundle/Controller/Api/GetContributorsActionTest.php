@@ -20,7 +20,7 @@ class GetContributorsActionTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $repository->expects($this->once())->method('getAllEnabled')
+        $repository->expects($this->once())->method('getAllEnabledWithAtLeastOneContribution')
             ->willReturn(['contributors']);
         $serializer->expects($this->once())->method('serialize')
             ->with(['contributors'])
