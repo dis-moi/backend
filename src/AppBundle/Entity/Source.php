@@ -31,14 +31,14 @@ class Source
     /**
      * @var string
      *
-     * @ORM\Column(name="label", type="string", length=255)
+     * @ORM\Column(name="label", type="string", length=255, nullable=true)
      */
     private $label;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255)
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
      *
      * @Assert\Url
      */
@@ -78,14 +78,7 @@ class Source
         return $this->label;
     }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Source
-     */
-    public function setDescription($description)
+    public function setDescription(string $description = null) : Source
     {
         $this->description = $description;
 
@@ -102,14 +95,7 @@ class Source
         return $this->description;
     }
 
-    /**
-     * Set url
-     *
-     * @param string $url
-     *
-     * @return Source
-     */
-    public function setUrl($url)
+    public function setUrl(string $url = null) : Source
     {
         $this->url = $url;
 
