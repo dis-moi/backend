@@ -130,13 +130,15 @@
     }
 
     jQuery(($) => {
-        const form = $('form');
-        form.on('change', listOfIdSelectors.join(), (event) => validateFields(...selectFields(event.target)));
-        form.on('submit', (event) => {
-            const status = validateFields(...selectFields(listOfIdSelectors[0]));
-            if (status instanceof RegExpStateError || status instanceof ExcludeRegExpStateError) {
-                event.preventDefault();
-            }
-        });
+        const form = $('form[name$="notice"]');
+        if (form.length > 0) {
+            form.on('change', listOfIdSelectors.join(), (event) => validateFields(...selectFields(event.target)));
+            form.on('submit', (event) => {
+                const status = validateFields(...selectFields(listOfIdSelectors[0]));
+                if (status instanceof RegExpStateError || status instanceof ExcludeRegExpStateError) {
+                    event.preventDefault();
+                }
+            });
+        }
     });
 })();
