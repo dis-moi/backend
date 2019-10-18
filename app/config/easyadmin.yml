@@ -166,6 +166,7 @@ easy_admin:
                     - id
                     - name
                     - intro
+                    - { property : 'totalSubscriptions', label: 'Avg. Subscribers', css_class: 'graphable' }
                     - enabled
             form:
                 fields:

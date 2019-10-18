@@ -3,6 +3,7 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Contributor;
+use AppBundle\Helper\ContributorSubscription;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -14,6 +15,11 @@ class LoadContributorData extends AbstractFixture
         $contributor->setName("John Doe");
         $contributor->setIntro("I’m all out of bubble gum (https://www.youtube.com/watch?reload=9&v=yMN0yvot6dM)");
         $contributor->setImage("photo-fake.jpg");
+        $contributor->setTotalSubscriptionsFromRating(ContributorSubscription::SUBSCRIBE());
+        $contributor->setTotalSubscriptionsFromRating(ContributorSubscription::SUBSCRIBE());
+        $contributor->setTotalSubscriptionsFromRating(ContributorSubscription::SUBSCRIBE());
+        $contributor->setTotalSubscriptionsFromRating(ContributorSubscription::UNSUBSCRIBE());
+        $contributor->setTotalSubscriptionsFromRating(ContributorSubscription::SUBSCRIBE());
         $this->addReference('contributor', $contributor);
         $manager->persist($contributor);
 

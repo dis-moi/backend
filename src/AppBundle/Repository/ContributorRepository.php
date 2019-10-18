@@ -31,6 +31,20 @@ class ContributorRepository extends BaseRepository
     }
 
     /**
+     * @return Contributor | null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getOne(int $id)
+    {
+        $queryBuilder = $this->repository->createQueryBuilder('c')
+            ->where('c.id = :id')
+            ->andwhere('c.enabled = true')
+            ->setParameter('id', $id);
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
      * @return string
      */
     public function getResourceClassName()

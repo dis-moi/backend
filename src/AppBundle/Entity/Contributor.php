@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Helper\ContributorSubscription;
 use AppBundle\Helper\ImageUploadable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -60,6 +61,13 @@ class Contributor implements ImageUploadable
      * @ORM\OrderBy({"updated" = "ASC"})
      */
     private $notices;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="total_subscriptions", type="integer")
+     */
+    private $totalSubscriptions = 0;
 
     /**
      * @var bool
@@ -227,6 +235,32 @@ class Contributor implements ImageUploadable
             });
         }
         else return null;
+    }
+
+    public function getTotalSubscriptions() : int
+    {
+        return $this->totalSubscriptions;
+    }
+
+    protected function addSubscription()
+    {
+        $this->totalSubscriptions = $this->totalSubscriptions + 1;
+    }
+
+    protected function removeSubscription()
+    {
+        if ($this->totalSubscriptions > 0) {
+            $this->totalSubscriptions = $this->totalSubscriptions - 1;
+        }
+    }
+
+    public function setTotalSubscriptionsFromRating(ContributorSubscription $rating) {
+        if ($rating->is(ContributorSubscription::SUBSCRIBE)) {
+            $this->addSubscription();
+        }
+        elseif ($rating->is(ContributorSubscription::UNSUBSCRIBE)) {
+            $this->removeSubscription();
+        }
     }
 
     /**

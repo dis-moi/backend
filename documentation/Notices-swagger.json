@@ -1,7 +1,7 @@
 {
-  "openapi" : "3.0.0",
+  "openapi" : "3.0.2",
   "info" : {
-    "version" : "3.2.1",
+    "version" : "3.2.4",
     "title" : "Notices API",
     "contact" : { }
   },
@@ -138,6 +138,64 @@
               }
             }
           }
+        }
+      }
+    },
+    "/contributors/{contributorId}" : {
+      "get" : {
+        "tags" : [ "Contributors" ],
+        "parameters" : [ {
+          "name" : "contributorId",
+          "in" : "path",
+          "required" : true,
+          "description" : "Id of the Contributor.",
+          "example" : 42,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A contributor the consumers can subscribe to.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ContributorEntity"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contributors/{contributorId}/ratings" : {
+      "post" : {
+        "summary" : "Every consumer can rate a contributor as they subscribe or unsubscribe them.",
+        "tags" : [ "Contributors" ],
+        "parameters" : [ {
+          "name" : "contributorId",
+          "in" : "path",
+          "required" : true,
+          "description" : "Id of the Contributor.",
+          "example" : 42,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "The server successfully recorded the rating."
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ContributorRatingEntity"
+              }
+            }
+          },
+          "required" : true
         }
       }
     }
@@ -381,7 +439,15 @@
               "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
             }
           },
-          "contributions" : 24
+          "contributions" : 24,
+          "contribution" : {
+            "example" : {
+              "matchingUrl" : "https://match.in/context/url",
+              "noticeId" : 3,
+              "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3"
+            },
+            "numberOfPublishedNotices" : 24
+          }
         },
         "type" : "object",
         "properties" : {
@@ -402,12 +468,84 @@
             "$ref" : "#/components/schemas/picture"
           },
           "contributions" : {
+            "description" : "DEPRECATED: use “contribution.numberOfPublishedNotices” instead. The total number of contributions this contributor has published.",
+            "example" : 24,
+            "type" : "integer",
+            "deprecated" : true
+          },
+          "contribution" : {
+            "$ref" : "#/components/schemas/contribution"
+          }
+        },
+        "required" : [ "id", "name", "contributions", "contribution" ]
+      },
+      "ContributorRatingEntity" : {
+        "title" : "Contributor Rating Entity",
+        "example" : {
+          "ratingType" : "subscribe"
+        },
+        "type" : "object",
+        "properties" : {
+          "ratingType" : {
+            "$ref" : "#/components/schemas/contributorRatingType"
+          }
+        },
+        "required" : [ "ratingType" ]
+      },
+      "contributorRatingType" : {
+        "title" : "subscriptionRatingType",
+        "description" : "Type of ratings for contributors.",
+        "example" : "subscribe",
+        "type" : "string",
+        "enum" : [ "subscribe", "unsubscribe", "report" ]
+      },
+      "contribution" : {
+        "title" : "contribution infos",
+        "example" : {
+          "example" : {
+            "matchingUrl" : "https://match.in/context/url",
+            "noticeId" : 3,
+            "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3"
+          },
+          "numberOfPublishedNotices" : 24
+        },
+        "type" : "object",
+        "properties" : {
+          "example" : {
+            "description" : "An example of a notice the contributor has created.",
+            "example" : {
+              "matchingUrl" : "https://match.in/context/url",
+              "noticeId" : 3,
+              "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3"
+            },
+            "type" : "object",
+            "properties" : {
+              "matchingUrl" : {
+                "description" : "The URL of a publicly available Web resource, where the notice should show up.",
+                "example" : "https://match.in/context/url",
+                "type" : "string",
+                "format" : "url"
+              },
+              "noticeId" : {
+                "example" : 3,
+                "type" : "integer"
+              },
+              "noticeUrl" : {
+                "description" : "The URL of the notice, should one had to fetch it.",
+                "example" : "https://notices.lmem.net/api/v3/notices/3",
+                "type" : "string",
+                "format" : "url"
+              }
+            },
+            "required" : [ "matchingUrl", "noticeId", "noticeUrl" ]
+          },
+          "numberOfPublishedNotices" : {
             "description" : "The total number of contributions this contributor has published.",
             "example" : 24,
             "type" : "integer"
           }
         },
-        "required" : [ "id", "name", "contributions" ]
+        "required" : [ "numberOfPublishedNotices" ]
       },
       "picture" : {
         "title" : "picture",
