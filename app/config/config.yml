@@ -96,6 +96,8 @@ vich_uploader:
         contributor_avatars:
             uri_prefix:         /uploads/avatars
             upload_destination: "%kernel.root_dir%/../web/uploads/avatars"
+            namer:
+                service: Vich\UploaderBundle\Naming\Base64Namer
 
 liip_imagine:
     resolvers:
