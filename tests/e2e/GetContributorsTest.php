@@ -42,6 +42,13 @@ class GetContributorsTest extends BaseApiE2eTestCase
         $this->assertEquals(3, $payload[1]['contribution']['numberOfPublishedNotices']); // 3 public
     }
 
+    public function testGetContributorsRatings()
+    {
+        $payload = $this->makeApiRequest('/api/v3/contributors');
+
+        $this->assertEquals(3, $payload[0]['ratings']['subscribes']);
+    }
+
     public function testGetContributorsContribExample()
     {
         $payload = $this->makeApiRequest('/api/v3/contributors');
