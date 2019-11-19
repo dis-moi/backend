@@ -33,12 +33,11 @@ RUN	docker-php-ext-configure zip --with-libzip && \
 		pdo_mysql \
 		zip \
 		gd
-RUN	pecl install \
-		apcu-${APCU_VERSION} && \
-	pecl clear-cache && \
-	docker-php-ext-enable \
-		apcu \
-		opcache
+
+RUN pecl install apcu-${APCU_VERSION} && docker-php-ext-enable apcu opcache
+RUN pecl install xdebug-2.7.2 && docker-php-ext-enable xdebug
+RUN pecl clear-cache
+
 RUN	runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
 			| tr ',' '\n' \
@@ -50,6 +49,7 @@ RUN	apk del .build-deps
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY docker/php/php.ini /usr/local/etc/php/php.ini
+COPY docker/php/conf.d/docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
