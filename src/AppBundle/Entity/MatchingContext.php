@@ -35,7 +35,7 @@ class MatchingContext
     /**
      * @var string
      *
-     * @ORM\Column(name="exampleUrl", type="string", length=255, nullable=true)
+     * @ORM\Column(name="exampleUrl", type="text", nullable=true)
      *
      * @Assert\Url
      */
