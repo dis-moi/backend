@@ -59,6 +59,8 @@ easy_admin:
                     - { property : 'dislikedRatingCount', label: 'Dislikes', css_class: 'graphable' }
                     - { property : 'dismissedRatingCount', label: 'Ignorés', css_class: 'graphable' }
                     - expires
+                    - created
+                    - updated
 
         ExpiredNotice:
             class: AppBundle\Entity\Notice
