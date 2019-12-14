@@ -116,11 +116,10 @@ with https://bulles.fr.");
         $manager->persist($notice);
 
         $notice = new Notice();
-        $notice->setContributor($this->getReference('contributor'));
+        $notice->setContributor($this->getReference('contributor_fame'));
         $notice->setMessage("I am archived");
         $notice->setVisibility(NoticeVisibility::ARCHIVED_VISIBILITY());
         $notice->setIntention(NoticeIntention::ALTERNATIVE());
-        $notice->setSource($this->getReference('source_link_quechoisir'));
         $this->addReference('notice_type_ecology_archived', $notice);
         $manager->persist($notice);
 
