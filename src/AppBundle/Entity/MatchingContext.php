@@ -53,7 +53,7 @@ class MatchingContext
     /**
      * @var string
      *
-     * @ORM\Column(name="urlRegex", type="string", length=255)
+     * @ORM\Column(name="urlRegex", type="text")
      *
      * @Assert\NotBlank()
      */
@@ -62,7 +62,7 @@ class MatchingContext
     /**
      * @var string
      *
-     * @ORM\Column(name="excludeUrlRegex", type="string", length=255, nullable=true)
+     * @ORM\Column(name="excludeUrlRegex", type="text", nullable=true)
      */
     private $excludeUrlRegex;
 
