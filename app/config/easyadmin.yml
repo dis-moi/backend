@@ -13,6 +13,7 @@ easy_admin:
                 - 'js/custom_graph.js'
                 - 'js/short-and-sweet/short-and-sweet.js'
                 - 'js/message_validator.js'
+                - 'js/filter_table_row.js'
     site_name: 'Le Même En Mieux'
     entities:
         Notice:
