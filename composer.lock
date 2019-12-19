@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "179746535cb576c0ff267ab639f87536",
@@ -3653,16 +3653,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v3.4.31",
+            "version": "v3.4.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "944e04808117477f46f804133d17913b77cf63d3"
+                "reference": "0a6fccb5772ad2467253e6849d589bd09d9eb195"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/944e04808117477f46f804133d17913b77cf63d3",
-                "reference": "944e04808117477f46f804133d17913b77cf63d3",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/0a6fccb5772ad2467253e6849d589bd09d9eb195",
+                "reference": "0a6fccb5772ad2467253e6849d589bd09d9eb195",
                 "shasum": ""
             },
             "require": {
@@ -3684,6 +3684,7 @@
                 "twig/twig": "^1.41|^2.10"
             },
             "conflict": {
+                "monolog/monolog": ">=2",
                 "phpdocumentor/reflection-docblock": "<3.0||>=3.2.0,<3.2.2",
                 "phpdocumentor/type-resolver": "<0.3.0",
                 "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
@@ -3779,8 +3780,7 @@
                     "Symfony\\Component\\": "src/Symfony/Component/"
                 },
                 "classmap": [
-                    "src/Symfony/Component/Intl/Resources/stubs",
-                    "src/Symfony/Bridge/ProxyManager/Legacy/ProxiedMethodReturnExpression.php"
+                    "src/Symfony/Component/Intl/Resources/stubs"
                 ],
                 "exclude-from-classmap": [
                     "**/Tests/"
@@ -3805,7 +3805,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2019-08-26T16:36:53+00:00"
+            "time": "2019-12-01T13:50:53+00:00"
         },
         {
             "name": "twig/extensions",
