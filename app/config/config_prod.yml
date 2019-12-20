@@ -34,7 +34,6 @@ sentry:
     dsn: "https://12ed31b41955443480dbfcb5da3e3a33@sentry.io/1404898"
     options:
         environment: '%kernel.environment%'
-        release: '%env(VERSION)%' #your app version
         excluded_exceptions: #exclude validation errors
             - App\Exception\UserNotFoundException
             - Symfony\Component\Security\Core\Exception\AccessDeniedException
