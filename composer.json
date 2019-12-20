@@ -39,7 +39,8 @@
         "liip/imagine-bundle": "^2.0",
         "youthweb/urllinker": "^1.2",
         "ext-json": "*",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "sentry/sentry-symfony": "^3.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.0",
