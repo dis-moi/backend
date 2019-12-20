@@ -33,7 +33,7 @@ class GetMatchingContextsAction extends BaseAction
         }
         $matchingContexts = $this->repository->findAllPublicMatchingContext($contributors);
 
-        if (!$matchingContexts) {
+        if (!is_array($matchingContexts)) {
             throw new NotFoundHttpException('No matching contexts exists');
         }
 

@@ -13,6 +13,7 @@ easy_admin:
                 - 'js/custom_graph.js'
                 - 'js/short-and-sweet/short-and-sweet.js'
                 - 'js/message_validator.js'
+                - 'js/filter_table_row.js'
     site_name: 'Le Même En Mieux'
     entities:
         Notice:
@@ -33,7 +34,7 @@ easy_admin:
                     - expires
             form:
                 fields:
-                    - { property: 'message', type_options: { attr: { maxLength: 500 } } }
+                    - { property: 'message' }
                     - { property: 'contributor', type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
                     - { property: 'intention', type: 'AppBundle\Form\IntentionType' }
                     - note
@@ -59,6 +60,8 @@ easy_admin:
                     - { property : 'dislikedRatingCount', label: 'Dislikes', css_class: 'graphable' }
                     - { property : 'dismissedRatingCount', label: 'Ignorés', css_class: 'graphable' }
                     - expires
+                    - created
+                    - updated
 
         ExpiredNotice:
             class: AppBundle\Entity\Notice
