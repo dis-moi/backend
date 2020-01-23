@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class PostSubscriptionAction extends BaseAction
+class PostSubscriptionsAction extends BaseAction
 {
   /**
    * @var SubscriptionsTrackingService
