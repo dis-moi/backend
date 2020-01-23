@@ -28,20 +28,14 @@ class SubscriptionRepository extends BaseRepository
    */
   public function findOne(string $extensionUserId, string $contributorId)
   {
-//    $criteria = new Criteria();
-//    $criteria->where($criteria->expr()->eq('contributor', $contributorId));
-//
-//    return $this->repository->matching($criteria)->first();
-
-    $query = $this->repository->createQueryBuilder('s')
+    return $this->repository->createQueryBuilder('s')
       ->select('s')
       ->leftJoin('s.contributor', 'contributor')
       ->where('s.extensionUser = :extensionUserId')
       ->andWhere('s.contributor = :contributorId')
       ->setParameter('extensionUserId', $extensionUserId)
       ->setParameter('contributorId', $contributorId)
-      ->getQuery();
-
-    return $query->getOneOrNullResult();
+      ->getQuery()
+      ->getOneOrNullResult();
   }
 }
