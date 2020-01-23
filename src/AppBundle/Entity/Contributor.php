@@ -62,6 +62,14 @@ class Contributor implements ImageUploadable
      */
     private $notices;
 
+
+    /**
+     * @var Subscription[]
+     * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor")
+     * @ORM\OrderBy({"created" = "DESC"})
+     */
+    private $subscriptions;
+
     /**
      * @var int
      *
@@ -278,4 +286,12 @@ class Contributor implements ImageUploadable
     {
         $this->enabled = $enabled;
     }
+
+  /**
+   * @return Subscription[]
+   */
+  public function getSubscriptions(): array
+  {
+    return $this->subscriptions;
+  }
 }
