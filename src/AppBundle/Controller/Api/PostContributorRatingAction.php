@@ -46,8 +46,7 @@ class PostContributorRatingAction extends BaseAction
             throw new NotFoundHttpException('Contributor not found.');
         }
 
-        $contributor->setTotalSubscriptionsFromRating($rating);
-
+        $this->entityManager->persist($rating);
         $this->entityManager->persist($contributor);
         $this->entityManager->flush();
 

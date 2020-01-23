@@ -98,6 +98,7 @@ class Contributor implements ImageUploadable
     public function __construct()
     {
         $this->notices = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
     }
 
     /**
@@ -245,30 +246,17 @@ class Contributor implements ImageUploadable
         else return null;
     }
 
+    /**
+     * @return Subscription[]
+     */
+    public function getSubscriptions(): array
+    {
+      return $this->subscriptions;
+    }
+
     public function getTotalSubscriptions() : int
     {
-        return $this->totalSubscriptions;
-    }
-
-    protected function addSubscription()
-    {
-        $this->totalSubscriptions = $this->totalSubscriptions + 1;
-    }
-
-    protected function removeSubscription()
-    {
-        if ($this->totalSubscriptions > 0) {
-            $this->totalSubscriptions = $this->totalSubscriptions - 1;
-        }
-    }
-
-    public function setTotalSubscriptionsFromRating(ContributorSubscription $rating) {
-        if ($rating->is(ContributorSubscription::SUBSCRIBE)) {
-            $this->addSubscription();
-        }
-        elseif ($rating->is(ContributorSubscription::UNSUBSCRIBE)) {
-            $this->removeSubscription();
-        }
+        return count($this->subscriptions);
     }
 
     /**
@@ -286,12 +274,4 @@ class Contributor implements ImageUploadable
     {
         $this->enabled = $enabled;
     }
-
-  /**
-   * @return Subscription[]
-   */
-  public function getSubscriptions(): array
-  {
-    return $this->subscriptions;
-  }
 }
