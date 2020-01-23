@@ -55,7 +55,7 @@ class ExtensionUser
   /**
    * @return PersistentCollection
    */
-  public function getSubscriptions()
+  public function getSubscriptions(): PersistentCollection
   {
     return $this->subscriptions;
   }
