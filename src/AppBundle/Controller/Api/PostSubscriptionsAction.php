@@ -1,8 +1,5 @@
 <?php
-
-
 namespace AppBundle\Controller\Api;
-
 
 use Domain\Service\SubscriptionsTrackingService;
 use Exception;
