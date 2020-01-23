@@ -33,11 +33,6 @@ class ContributorRepository extends BaseRepository
             ->getQuery()->execute();
     }
 
-    public function getByExtensionUserId(string $extensionUserId)
-    {
-      return $this->repository->findBy(["extensionUser" => $extensionUserId]);
-    }
-
     /**
      * @return Contributor | null
      * @throws \Doctrine\ORM\NonUniqueResultException

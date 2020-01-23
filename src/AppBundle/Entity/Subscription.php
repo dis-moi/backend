@@ -24,13 +24,13 @@ class Subscription
   private $contributor;
 
   /**
-   * @var ExtensionUser
+   * @var Extension
    *
-   * @ORM\ManyToOne(targetEntity=ExtensionUser::class, inversedBy="subscriptions", cascade={"persist"}, fetch="EAGER")
+   * @ORM\ManyToOne(targetEntity=Extension::class, inversedBy="subscriptions", cascade={"persist"}, fetch="EAGER")
    * @ORM\JoinColumn(nullable=false)
    * @ORM\Id
    */
-  private $extensionUser;
+  private $extension;
 
   /**
    * @var DateTime $updated
@@ -46,11 +46,11 @@ class Subscription
    */
   private $created;
 
-  public function __construct(Contributor $contributor, ExtensionUser $extensionUser)
+  public function __construct(Contributor $contributor, Extension $extension)
   {
     $this->created = new DateTime();
     $this->contributor = $contributor;
-    $this->extensionUser = $extensionUser;
+    $this->extension = $extension;
   }
 
   public function confirm()
@@ -67,10 +67,10 @@ class Subscription
   }
 
   /**
-   * @return ExtensionUser
+   * @return Extension
    */
-  public function getExtensionUser(): ExtensionUser
+  public function getExtension(): Extension
   {
-    return $this->extensionUser;
+    return $this->extension;
   }
 }

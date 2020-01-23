@@ -5,10 +5,10 @@ namespace Domain\Service;
 
 
 use AppBundle\Entity\Contributor;
-use AppBundle\Entity\ExtensionUser;
+use AppBundle\Entity\Extension;
 use AppBundle\Entity\Subscription;
 use AppBundle\Repository\ContributorRepository;
-use AppBundle\Repository\ExtensionUserRepository;
+use AppBundle\Repository\ExtensionRepository;
 use AppBundle\Repository\SubscriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
@@ -22,9 +22,9 @@ class SubscriptionsTrackingService
   protected $subscriptionRepository;
 
   /**
-   * @var ExtensionUserRepository
+   * @var ExtensionRepository
    */
-  protected $extensionUserRepository;
+  protected $extensionRepository;
 
   /**
    * @var ContributorRepository
@@ -36,27 +36,28 @@ class SubscriptionsTrackingService
    */
   private $entityManager;
 
-  public function __construct(SubscriptionRepository $subscriptionRepository, ExtensionUserRepository $extensionUserRepository, ContributorRepository $contributorRepository, EntityManagerInterface $entityManager)
+  public function __construct(SubscriptionRepository $subscriptionRepository, ExtensionRepository $extensionRepository, ContributorRepository $contributorRepository, EntityManagerInterface $entityManager)
   {
     $this->subscriptionRepository = $subscriptionRepository;
-    $this->extensionUserRepository = $extensionUserRepository;
+    $this->extensionRepository = $extensionRepository;
     $this->contributorRepository = $contributorRepository;
     $this->entityManager = $entityManager;
   }
 
   /**
-   * @param string $extensionUserId
+   * @param string $extensionId
    * @param string[] $contributorIds
    * @throws NonUniqueResultException
    */
-  public function refreshSubscriptions(string $extensionUserId, array $contributorIds)
+  public function refreshSubscriptions(string $extensionId, array $contributorIds)
   {
     /**
-     * @var ExtensionUser $extensionUser
+     * @var Extension $extension
      */
-    if ($extensionUser = $this->extensionUserRepository->find($extensionUserId))
+    if ($extension = $this->extensionRepository->find($extensionId))
     {
-      $existingSubscriptions = $extensionUser->getSubscriptions();
+      $extension->confirm();
+      $existingSubscriptions = $extension->getSubscriptions();
       foreach ($existingSubscriptions as $existingSubscription)
       {
         if (!in_array($existingSubscription->getContributor()->getId(), $contributorIds))
@@ -80,16 +81,16 @@ class SubscriptionsTrackingService
       /**
        * @var Subscription
        */
-      $subscription = $this->subscriptionRepository->findOne($extensionUserId, $contributorId);
+      $subscription = $this->subscriptionRepository->findOne($extensionId, $contributorId);
       if ($subscription)
       {
         $subscription->confirm();
       }
       else
       {
-        $extensionUser = $this->extensionUserRepository->findOrCreate($extensionUserId);
+        $extension = $this->extensionRepository->findOrCreate($extensionId);
 
-        $subscription = new Subscription($contributor, $extensionUser);
+        $subscription = new Subscription($contributor, $extension);
         $this->entityManager->persist($subscription);
       }
     }

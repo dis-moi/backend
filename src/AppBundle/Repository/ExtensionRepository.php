@@ -1,13 +1,10 @@
 <?php
-
-
 namespace AppBundle\Repository;
 
-
-use AppBundle\Entity\ExtensionUser;
+use AppBundle\Entity\Extension;
 use Doctrine\ORM\EntityManagerInterface;
 
-class ExtensionUserRepository extends BaseRepository
+class ExtensionRepository extends BaseRepository
 {
   public function __construct(EntityManagerInterface $entityManager)
   {
@@ -16,11 +13,11 @@ class ExtensionUserRepository extends BaseRepository
 
   public function getResourceClassName()
   {
-    return ExtensionUser::class;
+    return Extension::class;
   }
 
   public function findOrCreate(string $id)
   {
-    return parent::find($id) ?: new ExtensionUser($id);
+    return parent::find($id) ?: new Extension($id);
   }
 }

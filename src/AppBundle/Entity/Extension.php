@@ -8,13 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\PersistentCollection;
 
 /**
- * ExtensionUser
+ * Extension
  * @package AppBundle\Entity
- *
  * @ORM\Entity
- * @ORM\Table(name="extension_user")
+ * @ORM\Table(name="extension")
  */
-class ExtensionUser
+class Extension
 {
   /**
    * @var string
@@ -26,7 +25,7 @@ class ExtensionUser
 
   /**
    * @var PersistentCollection
-   * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="extensionUser")
+   * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="extension")
    * @ORM\OrderBy({"created" = "DESC"})
    */
   private $subscriptions;
@@ -37,6 +36,13 @@ class ExtensionUser
    * @ORM\Column(type="datetime")
    */
   private $created;
+
+  /**
+   * @var DateTime $updated
+   *
+   * @ORM\Column(type="datetime")
+   */
+  private $updated;
 
   public function __construct(string $id) {
 
@@ -58,5 +64,10 @@ class ExtensionUser
   public function getSubscriptions(): PersistentCollection
   {
     return $this->subscriptions;
+  }
+
+  public function confirm()
+  {
+    $this->updated = new DateTime('now');
   }
 }

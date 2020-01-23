@@ -24,18 +24,18 @@ class PostSubscriptionsAction extends BaseAction
   }
 
   /**
-   * @Route("/subscriptions/{extensionUserId}/")
+   * @Route("/subscriptions/{extensionId}/")
    * @Method("POST")
    */
   public function __invoke(Request $request)
   {
-    $extensionUserId = $request->get('extensionUserId', null);
+    $extensionId = $request->get('extensionId', null);
 
     $contributorsIds = json_decode($request->getContent());
 
     try
     {
-      $this->subscriptionsTrackingService->refreshSubscriptions($extensionUserId, $contributorsIds);
+      $this->subscriptionsTrackingService->refreshSubscriptions($extensionId, $contributorsIds);
     }
     catch (Exception $e)
     {

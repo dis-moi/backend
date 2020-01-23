@@ -21,19 +21,19 @@ class SubscriptionRepository extends BaseRepository
   }
 
   /**
-   * @param string $extensionUserId
+   * @param string $extensionId
    * @param string $contributorId
    * @return Subscription?
    * @throws NonUniqueResultException
    */
-  public function findOne(string $extensionUserId, string $contributorId)
+  public function findOne(string $extensionId, string $contributorId)
   {
     return $this->repository->createQueryBuilder('s')
       ->select('s')
       ->leftJoin('s.contributor', 'contributor')
-      ->where('s.extensionUser = :extensionUserId')
+      ->where('s.extension = :extensionId')
       ->andWhere('s.contributor = :contributorId')
-      ->setParameter('extensionUserId', $extensionUserId)
+      ->setParameter('extensionId', $extensionId)
       ->setParameter('contributorId', $contributorId)
       ->getQuery()
       ->getOneOrNullResult();
