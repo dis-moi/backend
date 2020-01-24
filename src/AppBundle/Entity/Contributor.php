@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Helper\ContributorSubscription;
 use AppBundle\Helper\ImageUploadable;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -64,18 +64,10 @@ class Contributor implements ImageUploadable
 
 
     /**
-     * @var Subscription[]
      * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor")
      * @ORM\OrderBy({"created" = "DESC"})
      */
     private $subscriptions;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="total_subscriptions", type="integer")
-     */
-    private $totalSubscriptions = 0;
 
     /**
      * @var bool
@@ -85,7 +77,7 @@ class Contributor implements ImageUploadable
     private $enabled = true;
 
     /**
-     * @var \DateTime $updatedAt
+     * @var DateTime $updatedAt
      *
      * Needed to trigger forced update when an avatar is uploaded
      * @ORM\Column(name="updated_at", type="datetime", nullable = true)
@@ -246,17 +238,22 @@ class Contributor implements ImageUploadable
         else return null;
     }
 
-    /**
+    /*
      * @return Subscription[]
      */
-    public function getSubscriptions(): array
+    public function getActiveSubscriptions(): Collection
     {
-      return $this->subscriptions;
+        return $this->subscriptions->filter(function (Subscription $subscription) {
+          return $subscription->isActive();
+        });
     }
 
-    public function getTotalSubscriptions() : int
+    /**
+     * @return int
+     */
+    public function getTotalActiveSubscriptions(): int
     {
-        return count($this->subscriptions);
+      return count($this->getActiveSubscriptions());
     }
 
     /**

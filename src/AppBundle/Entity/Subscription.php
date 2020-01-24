@@ -14,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Subscription
 {
+  const DAYS_TO_BE_CONSIDERED_ACTIVE = 15;
+
   /**
    * @var Contributor
    *
@@ -72,5 +74,31 @@ class Subscription
   public function getExtension(): Extension
   {
     return $this->extension;
+  }
+
+  /**
+   * @return DateTime
+   */
+  public function getCreated(): DateTime
+  {
+    return $this->created;
+  }
+
+  /**
+   * @return DateTime
+   */
+  public function getUpdated(): DateTime
+  {
+    return $this->updated;
+  }
+
+  public function isActive(): bool
+  {
+    $now = new DateTime('now');
+    return (
+      $this->created->diff($now, TRUE)->days < self::DAYS_TO_BE_CONSIDERED_ACTIVE
+      ||
+      $this->updated->diff($now, TRUE)->days < self::DAYS_TO_BE_CONSIDERED_ACTIVE
+    );
   }
 }
