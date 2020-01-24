@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Notice;
 use AppBundle\Entity\Rating;
 use AppBundle\Repository\RatingRepository;
+use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,15 @@ class DefaultController extends Controller
     public function __construct(RatingRepository $ratingRepository)
     {
         $this->ratingRepository = $ratingRepository;
+    }
+
+    /**
+     * @Route("/debug-sentry")
+     * @throws Exception
+     */
+    public function debug_sentry()
+    {
+      throw new Exception('My first Sentry error!');
     }
 
     /**
