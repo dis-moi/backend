@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Helper\ContributorSubscription;
 use AppBundle\Helper\ImageUploadable;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -62,12 +62,12 @@ class Contributor implements ImageUploadable
      */
     private $notices;
 
+
     /**
-     * @var int
-     *
-     * @ORM\Column(name="total_subscriptions", type="integer")
+     * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor")
+     * @ORM\OrderBy({"created" = "DESC"})
      */
-    private $totalSubscriptions = 0;
+    private $subscriptions;
 
     /**
      * @var bool
@@ -77,7 +77,7 @@ class Contributor implements ImageUploadable
     private $enabled = true;
 
     /**
-     * @var \DateTime $updatedAt
+     * @var DateTime $updatedAt
      *
      * Needed to trigger forced update when an avatar is uploaded
      * @ORM\Column(name="updated_at", type="datetime", nullable = true)
@@ -90,6 +90,7 @@ class Contributor implements ImageUploadable
     public function __construct()
     {
         $this->notices = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
     }
 
     /**
@@ -237,30 +238,22 @@ class Contributor implements ImageUploadable
         else return null;
     }
 
-    public function getTotalSubscriptions() : int
+    /*
+     * @return Subscription[]
+     */
+    public function getActiveSubscriptions(): Collection
     {
-        return $this->totalSubscriptions;
+        return $this->subscriptions->filter(function (Subscription $subscription) {
+          return $subscription->isActive();
+        });
     }
 
-    protected function addSubscription()
+    /**
+     * @return int
+     */
+    public function getTotalActiveSubscriptions(): int
     {
-        $this->totalSubscriptions = $this->totalSubscriptions + 1;
-    }
-
-    protected function removeSubscription()
-    {
-        if ($this->totalSubscriptions > 0) {
-            $this->totalSubscriptions = $this->totalSubscriptions - 1;
-        }
-    }
-
-    public function setTotalSubscriptionsFromRating(ContributorSubscription $rating) {
-        if ($rating->is(ContributorSubscription::SUBSCRIBE)) {
-            $this->addSubscription();
-        }
-        elseif ($rating->is(ContributorSubscription::UNSUBSCRIBE)) {
-            $this->removeSubscription();
-        }
+      return count($this->getActiveSubscriptions());
     }
 
     /**

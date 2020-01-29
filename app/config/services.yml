@@ -13,7 +13,7 @@ services:
 
     AppBundle\:
         resource: '%kernel.project_dir%/src/AppBundle/*'
-        exclude: '%kernel.project_dir%/src/AppBundle/{DataFixtures,Entity,Repository}'
+        exclude: '%kernel.project_dir%/src/AppBundle/{DataFixtures,Entity}'
 
     AppBundle\Controller\:
         resource: '%kernel.project_dir%/src/AppBundle/Controller/*'
@@ -21,4 +21,12 @@ services:
 
     AppBundle\EventListener\HttpExceptionListener:
         tags:
-            - { name: kernel.event_listener, event: kernel.exception }
+              - { name: kernel.event_listener, event: kernel.exception }
+
+    Domain\Service\SubscriptionsTrackingService:
+        arguments:
+            - '@AppBundle\Repository\SubscriptionRepository'
+            - '@AppBundle\Repository\ExtensionRepository'
+            - '@AppBundle\Repository\ContributorRepository'
+            - '@Doctrine\ORM\EntityManagerInterface'
+
