@@ -24,7 +24,7 @@ class PostSubscriptionsAction extends BaseAction
   }
 
   /**
-   * @Route("/subscriptions/{extensionId}/")
+   * @Route("/subscriptions/{extensionId}")
    * @Method("POST")
    */
   public function __invoke(Request $request)
