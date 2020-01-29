@@ -70,6 +70,13 @@ class Contributor implements ImageUploadable
     private $subscriptions;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="total_subscriptions", type="integer")
+     */
+    private $totalSubscriptions = 0;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="enabled", type="boolean")
