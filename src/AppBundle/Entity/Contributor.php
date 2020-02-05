@@ -69,6 +69,8 @@ class Contributor implements ImageUploadable
      */
     private $subscriptions;
 
+    private $activeSubscriptionsCount = 0;
+
     /**
      * @var int
      *
@@ -246,21 +248,11 @@ class Contributor implements ImageUploadable
     }
 
     /*
-     * @return Subscription[]
-     */
-    public function getActiveSubscriptions(): Collection
-    {
-        return $this->subscriptions->filter(function (Subscription $subscription) {
-          return $subscription->isActive();
-        });
-    }
-
-    /**
      * @return int
      */
-    public function getTotalActiveSubscriptions(): int
+    public function getActiveSubscriptionsCount(): int
     {
-      return count($this->getActiveSubscriptions());
+        return $this->activeSubscriptionsCount;
     }
 
     /**
@@ -277,5 +269,14 @@ class Contributor implements ImageUploadable
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
+    }
+
+    /**
+     * ⚠ Should not be used outside of repo
+     * @param int $activeSubscriptionsCount
+     */
+    public function setActiveSubscriptionsCount(int $activeSubscriptionsCount): void
+    {
+      $this->activeSubscriptionsCount = $activeSubscriptionsCount;
     }
 }
