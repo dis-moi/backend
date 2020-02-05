@@ -2,8 +2,8 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Helper\ContributorSubscription;
 use AppBundle\Helper\ImageUploadable;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -62,6 +62,15 @@ class Contributor implements ImageUploadable
      */
     private $notices;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor")
+     * @ORM\OrderBy({"created" = "DESC"})
+     */
+    private $subscriptions;
+
+    private $activeSubscriptionsCount = 0;
+
     /**
      * @var int
      *
@@ -77,7 +86,7 @@ class Contributor implements ImageUploadable
     private $enabled = true;
 
     /**
-     * @var \DateTime $updatedAt
+     * @var DateTime $updatedAt
      *
      * Needed to trigger forced update when an avatar is uploaded
      * @ORM\Column(name="updated_at", type="datetime", nullable = true)
@@ -90,6 +99,7 @@ class Contributor implements ImageUploadable
     public function __construct()
     {
         $this->notices = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
     }
 
     /**
@@ -237,30 +247,12 @@ class Contributor implements ImageUploadable
         else return null;
     }
 
-    public function getTotalSubscriptions() : int
+    /*
+     * @return int
+     */
+    public function getActiveSubscriptionsCount(): int
     {
-        return $this->totalSubscriptions;
-    }
-
-    protected function addSubscription()
-    {
-        $this->totalSubscriptions = $this->totalSubscriptions + 1;
-    }
-
-    protected function removeSubscription()
-    {
-        if ($this->totalSubscriptions > 0) {
-            $this->totalSubscriptions = $this->totalSubscriptions - 1;
-        }
-    }
-
-    public function setTotalSubscriptionsFromRating(ContributorSubscription $rating) {
-        if ($rating->is(ContributorSubscription::SUBSCRIBE)) {
-            $this->addSubscription();
-        }
-        elseif ($rating->is(ContributorSubscription::UNSUBSCRIBE)) {
-            $this->removeSubscription();
-        }
+        return $this->activeSubscriptionsCount;
     }
 
     /**
@@ -277,5 +269,14 @@ class Contributor implements ImageUploadable
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
+    }
+
+    /**
+     * ⚠ Should not be used outside of repo
+     * @param int $activeSubscriptionsCount
+     */
+    public function setActiveSubscriptionsCount(int $activeSubscriptionsCount): void
+    {
+      $this->activeSubscriptionsCount = $activeSubscriptionsCount;
     }
 }

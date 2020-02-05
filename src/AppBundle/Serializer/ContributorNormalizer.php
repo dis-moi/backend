@@ -64,7 +64,7 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
             'intro' => $object->getIntro() ? DataConverter::convertFullIntro($object->getIntro()) : null,
             'name' => $object->getName(),
             'ratings' => [
-                'subscribes' => $object->getTotalSubscriptions(),
+                'subscribes' => $object->getActiveSubscriptionsCount(),
             ],
         ];
     }

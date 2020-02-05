@@ -3,9 +3,13 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Contributor;
+use AppBundle\Entity\Subscription;
 use AppBundle\Helper\NoticeVisibility;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
+use function Doctrine\ORM\QueryBuilder;
 
 class ContributorRepository extends BaseRepository
 {
@@ -19,6 +23,25 @@ class ContributorRepository extends BaseRepository
         $this->noticeRepository = $noticeRepository;
     }
 
+    public static function addActiveSubscriptionsCount(QueryBuilder $queryBuilder)
+    {
+      return $queryBuilder
+        ->addSelect('count(s.extension) as activeSubscriptions')
+        ->leftJoin('c.subscriptions', 's', Join::WITH, 's.created >= :freshnessDate OR s.updated >= :freshnessDate')
+        ->groupBy('c.id')
+        ->setParameter('freshnessDate', Subscription::getFreshnessDate());
+    }
+
+    public static function mergeActiveSubscriptionsCountWithContributor($result)
+    {
+        if (!$result || !$result[0]) return null;
+
+        /** @var Contributor $contributor */
+        $contributor = $result[0];
+        $contributor->setActiveSubscriptionsCount($result['activeSubscriptions']);
+        return $contributor;
+    }
+
     public function getAllEnabledWithAtLeastOneContribution()
     {
         $activeContributorsQuery = $this->noticeRepository->repository->createQueryBuilder('n')
@@ -26,11 +49,16 @@ class ContributorRepository extends BaseRepository
             ->where('n.visibility = :visibility');
 
         $mainQuery = $this->repository->createQueryBuilder('c');
-        return $mainQuery
+        $mainQuery = $mainQuery
             ->where('c.enabled = true')
             ->andWhere($mainQuery->expr()->in('c.id', $activeContributorsQuery->getDQL()))
-            ->setParameter('visibility', NoticeVisibility::PUBLIC_VISIBILITY())
-            ->getQuery()->execute();
+            ->setParameter('visibility', NoticeVisibility::PUBLIC_VISIBILITY());
+
+        $resultsWithActiveSubscriptionsCount = self::addActiveSubscriptionsCount($mainQuery)
+          ->getQuery()
+          ->getResult();
+
+        return array_map('self::mergeActiveSubscriptionsCountWithContributor', $resultsWithActiveSubscriptionsCount);
     }
 
     /**
@@ -44,7 +72,11 @@ class ContributorRepository extends BaseRepository
             ->andwhere('c.enabled = true')
             ->setParameter('id', $id);
 
-        return $queryBuilder->getQuery()->getOneOrNullResult();
+        $queryResult = self::addActiveSubscriptionsCount($queryBuilder)
+          ->getQuery()
+          ->getOneOrNullResult();
+
+        return self::mergeActiveSubscriptionsCountWithContributor($queryResult);
     }
 
     /**

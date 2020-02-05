@@ -169,7 +169,7 @@ easy_admin:
                     - id
                     - name
                     - intro
-                    - { property : 'totalSubscriptions', label: 'Avg. Subscribers' }
+                    - { property : 'ActiveSubscriptionsCount', label: 'Active Subscribers' }
                     - enabled
             form:
                 fields:
