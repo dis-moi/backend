@@ -32,6 +32,16 @@ class ContributorRepository extends BaseRepository
         ->setParameter('freshnessDate', Subscription::getFreshnessDate());
     }
 
+    public static function mergeActiveSubscriptionsCountWithContributor($result)
+    {
+        if (!$result || !$result[0]) return null;
+
+        /** @var Contributor $contributor */
+        $contributor = $result[0];
+        $contributor->setActiveSubscriptionsCount($result['activeSubscriptions']);
+        return $contributor;
+    }
+
     public function getAllEnabledWithAtLeastOneContribution()
     {
         $activeContributorsQuery = $this->noticeRepository->repository->createQueryBuilder('n')
@@ -48,12 +58,7 @@ class ContributorRepository extends BaseRepository
           ->getQuery()
           ->getResult();
 
-        return array_map(function ($result) {
-            /** @var Contributor $contributor */
-            $contributor = $result[0];
-            $contributor->setActiveSubscriptionsCount($result['activeSubscriptions']);
-            return $contributor;
-        }, $resultsWithActiveSubscriptionsCount);
+        return array_map('self::mergeActiveSubscriptionsCountWithContributor', $resultsWithActiveSubscriptionsCount);
     }
 
     /**
@@ -67,9 +72,11 @@ class ContributorRepository extends BaseRepository
             ->andwhere('c.enabled = true')
             ->setParameter('id', $id);
 
-        return self::addActiveSubscriptionsCount($queryBuilder)
+        $queryResult = self::addActiveSubscriptionsCount($queryBuilder)
           ->getQuery()
           ->getOneOrNullResult();
+
+        return self::mergeActiveSubscriptionsCountWithContributor($queryResult);
     }
 
     /**
