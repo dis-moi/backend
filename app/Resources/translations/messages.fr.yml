@@ -2,11 +2,15 @@ Title: Titre
 Criteria: Critères
 Criterion: Critère
 Matching contexts: Pages cibles
+Matching Contexts: Pages Cibles
+Restricted Contexts (global): Pages Exclues (global)
 Url regex: Regex
 Url to redirect: Url
 Contributor: Contributeur
+Contributors: Contributeurs
 User: Utilisateur
-Name: Prénom Nom
+Users: Utilisateurs
+Name: Nom
 Organization: Organisation
 Image file: Avatar
 Public: Publique
@@ -16,3 +20,9 @@ Resource: Pour en savoir plus
 Editor: Editeur
 Channel's name: Nom du channel
 form.label.delete: Supprimer l’image ?
+Domains: Domaines
+Domains_set: Groupe de domaines
+Domains Sets: Groupes de Domaines
+Created: Créé
+Updated: Modifié
+Expired Notices: Notices Expirées

@@ -1,8 +1,8 @@
 easy_admin:
+    site_name: 'DisMoi'
     design:
         form_theme:
             - horizontal
-            - easy_admin/_form_theme.html.twig
         assets:
             css:
                 - 'css/admin.css'
@@ -14,7 +14,7 @@ easy_admin:
                 - 'js/short-and-sweet/short-and-sweet.js'
                 - 'js/message_validator.js'
                 - 'js/filter_table_row.js'
-    site_name: 'Le Même En Mieux'
+                - 'js/select2.js'
     entities:
         Notice:
             class: AppBundle\Entity\Notice
@@ -34,14 +34,28 @@ easy_admin:
                     - expires
             form:
                 fields:
+                    - { type: 'group', label: Bulle, icon: paper-plane }
+                    - { type: 'section', icon: comment, label: Infos à publier }
                     - { property: 'message' }
                     - { property: 'contributor', type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
                     - { property: 'intention', type: 'AppBundle\Form\IntentionType' }
+                    - { property: 'source', type: 'AppBundle\Form\SourceType', label: Source (obsolète), help: Bientôt supprimé }
+                    - { type: 'section', icon: lock, label: Infos privées }
                     - note
-                    - { property: 'source', type: 'AppBundle\Form\SourceType' }
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
-                    - { property: 'channels'}
-                    - { property: 'matchingContexts', type: 'collection', type_options: {required: true, entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
+                    - { type: 'group', label: 'Ensembles de pages cibles', icon: 'paper-plane', columns: 6 }
+                    - {
+                        property: 'matchingContexts',
+                        type: 'collection',
+                        type_options: {
+                            required: true,
+                            entry_type: 'AppBundle\Form\MatchingContextType',
+                            allow_add: true,
+                            allow_delete: true,
+                            by_reference: false
+                        }
+                      }
+                    - { type: 'group', label: 'Cycle de vie', icon: 'recycle', columns: 6 }
                     - expires
                     - unpublishedOnExpiration
 
@@ -112,6 +126,12 @@ easy_admin:
             label: 'Matching Contexts'
             class: AppBundle\Entity\MatchingContext
             disabled_actions: ['new', 'edit']
+            list:
+                fields:
+                    - description
+                    - domainNames
+                    - domainsSets
+                    - notice
 
         RestrictedContext:
             class: AppBundle\Entity\RestrictedContext
@@ -124,15 +144,35 @@ easy_admin:
                 fields:
                     - { property: urlRegex, label: 'Global Restricted URL Regex' }
 
-        Channel:
-            label: "Channels"
-            class: AppBundle\Entity\Channel
+
+        Domain:
+            label: 'Domains'
+            class: AppBundle\Entity\DomainName
             list:
-              fields:
-                - { property: name, label: "Channel's name" }
+                actions: ['show']
+                fields:
+                    - name
+                    - { property: 'matchingContexts', label: 'Pages cibles liées' }
+                    - { property: 'sets', label: 'Groupes de domaines liés' }
             form:
-              fields:
-                - { property: name, label: "Channel's name" }
+                fields:
+                    - name
+                    - { property: 'matchingContexts', label: 'Pages cibles liées' }
+                    - { property: 'sets', label: 'Groupes de domaines' }
+
+        Domains_set:
+            label: 'Domains Sets'
+            class: AppBundle\Entity\DomainsSet
+            list:
+                actions: ['show']
+                fields:
+                    - name
+                    - { property: 'domains', label: 'Domaines liés' }
+                    - { property: 'matchingContexts', label: 'Pages cibles liées' }
+            form:
+                fields:
+                    - name
+                    - domains
 
         User:
             label: "Users"

@@ -15,10 +15,14 @@
     margin-top: 25px;
 }
 
-body.edit textarea#recommendation_description {
+body.edit textarea#notice_message,
+body.edit textarea#notice_note {
     min-height: 100px;
 }
 
+#notice_source label {
+    width: 60px;
+}
 
 .navbar-custom-menu ul.navbar-nav .user-menu a.logout {
     display: inline-block;

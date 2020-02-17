@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Helper\Escaper;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\EntityListener\MatchingContextListener;
@@ -51,6 +53,28 @@ class MatchingContext
     private $domainName;
 
     /**
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="DomainName", inversedBy="matchingContexts", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="matching_context_domain_name",
+     *   joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
+     *   inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
+     *   )
+     */
+    private $domainNames;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\ManyToMany(targetEntity="DomainsSet", inversedBy="matchingContexts", cascade={"persist", "remove"})
+     * @ORM\JoinTable(name="domains_set_domain",
+     *   joinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")},
+     *   inverseJoinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")}
+     *   )
+     */
+    private $domainsSets;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="urlRegex", type="text")
@@ -79,6 +103,12 @@ class MatchingContext
      * @ORM\Column(name="querySelector", type="string", length=255, nullable=true)
      */
     private $querySelector;
+
+    public function __construct()
+    {
+      $this->domainNames = new ArrayCollection();
+      $this->domainsSets = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -233,5 +263,54 @@ class MatchingContext
     public function setQuerySelector($querySelector)
     {
         $this->querySelector = $querySelector;
+    }
+
+
+    /**
+     * @return Collection
+     */
+    public function getDomainNames(): Collection
+    {
+       return $this->domainNames;
+    }
+
+    public function addDomainName(DomainName $domainName) : self
+    {
+        $this->domainNames[] = $domainName;
+
+        return $this;
+    }
+
+    public function removeDomainName(DomainName $domainName) : self
+    {
+        if ($this->domainNames->contains($domainName)) {
+          $this->domainNames->removeElement($domainName);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getDomainsSets(): Collection
+    {
+        return $this->domainsSets;
+    }
+
+    public function addDomainsSet(DomainsSet $domainsSet)
+    {
+        $this->domainsSets[] = $domainsSet;
+
+        return $this;
+    }
+
+    public function removeDomainsSet(DomainsSet $domainsSet) : self
+    {
+        if ($this->domainsSets->contains($domainsSet)) {
+            $this->domainsSets->removeElement($domainsSet);
+        }
+
+        return $this;
     }
 }
