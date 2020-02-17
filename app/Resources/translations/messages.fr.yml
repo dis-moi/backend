@@ -21,8 +21,17 @@ Editor: Editeur
 Channel's name: Nom du channel
 form.label.delete: Supprimer l’image ?
 Domains: Domaines
+Domain names: Domaines
 Domains_set: Groupe de domaines
 Domains Sets: Groupes de Domaines
+Domains sets: Groupes de domaines
 Created: Créé
 Updated: Modifié
-Expired Notices: Notices Expirées
+Notice: Bulle
+Notices: Bulles
+Expired Notices: Bulles Expirées
+Example url: Exemple d’URL
+Exclude url regex: Regex d'exclusion
+Query selector: Sélecteur de requête
+Expires: Expire
+Unpublished on expiration: Dépublié à expiration

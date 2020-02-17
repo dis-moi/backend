@@ -38,10 +38,10 @@ easy_admin:
                     - { type: 'section', icon: comment, label: Infos à publier }
                     - { property: 'message' }
                     - { property: 'contributor', type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
-                    - { property: 'intention', type: 'AppBundle\Form\IntentionType' }
+                    - { property: 'intention', type: 'AppBundle\Form\IntentionType', help: N’apparait pas dans l’extension actuelle }
                     - { property: 'source', type: 'AppBundle\Form\SourceType', label: Source (obsolète), help: Bientôt supprimé }
-                    - { type: 'section', icon: lock, label: Infos privées }
-                    - note
+                    - { type: 'section', icon: lock, label: Gestion }
+                    - { property: note, label: Note privée }
                     - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
                     - { type: 'group', label: 'Ensembles de pages cibles', icon: 'paper-plane', columns: 6 }
                     - {
