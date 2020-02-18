@@ -90,6 +90,14 @@ class DomainsSet extends TimestampableEntity
     return $this->name;
   }
 
+  /**
+   * @param string $name
+   */
+  public function setName(string $name): void
+  {
+    $this->name = $name;
+  }
+
   public function addDomain(DomainName $domain)
   {
     $this->domains[] = $domain;
@@ -102,7 +110,6 @@ class DomainsSet extends TimestampableEntity
   {
     return $this->matchingContexts;
   }
-
   /**
    * @return Collection
    */
