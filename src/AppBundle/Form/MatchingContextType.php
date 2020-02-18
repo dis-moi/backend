@@ -33,7 +33,7 @@ class MatchingContextType extends AbstractType
                             function (DomainName $domainName) {
                                 return $domainName->getName();
                             },
-                            iterator_to_array($domainsSet->getDomains())
+                            $domainsSet->getDomains()->toArray()
                         ))
                     ];
                 }

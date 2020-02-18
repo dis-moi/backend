@@ -9,6 +9,17 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\EntityListener\MatchingContextListener;
 
+function flatten(array $array) {
+    $return = array();
+    array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
+    return $return;
+}
+
+function escape(string $dn, Escaper $e) {
+  return is_null($e) ? $dn : $e::escape($dn);
+}
+
+
 /**
  * MatchingContext
  *
@@ -170,10 +181,16 @@ class MatchingContext
 
     public function getFullUrlRegex(Escaper $escaper = null) : string
     {
-        if (empty($this->domainName)) {
+        $domains = $this->getAllRelatedDomains();
+        if (count($domains) === 0) {
             return $this->urlRegex;
         }
-        return (is_null($escaper) ? $this->domainName : $escaper::escape($this->domainName)) . $this->urlRegex;
+
+        return '('.join('|',
+          array_map(function (DomainName $dn) use ($escaper) {
+            return escape($dn->getName(), $escaper);
+          }, $domains)
+        ).')'.$this->urlRegex;
     }
 
     /**
@@ -312,5 +329,18 @@ class MatchingContext
         }
 
         return $this;
+    }
+
+    public function getAllRelatedDomains() : array
+    {
+        return array_unique(array_merge(
+            flatten(array_map(
+                function (DomainsSet $domainsSet) {
+                    return $domainsSet->getDomains()->toArray();
+                },
+                $this->getDomainsSets()->toArray()
+            )),
+            $this->getDomainNames()->toArray()
+        ));
     }
 }
