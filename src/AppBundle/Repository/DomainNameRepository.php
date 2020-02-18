@@ -39,6 +39,7 @@ class DomainNameRepository extends BaseRepository
     {
       $newDomain = new DomainName($domainName);
       $this->entityManager->persist($newDomain);
+      $this->entityManager->flush();
       return $newDomain;
     }
   }
