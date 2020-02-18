@@ -20,26 +20,36 @@ class MatchingContextType extends AbstractType
     {
         $builder
             ->add('exampleUrl')
-            ->add('description', TextType::class, [
-              'required' => true
+            ->add('domainsSets', EntityType::class, [
+                'class' => DomainsSet::class,
+                'required' => false,
+                'multiple' => true,
+                'attr' => [
+                    'data-widget' => 'select2'
+                ],
+                'choice_attr' => function (DomainsSet $domainsSet) {
+                    return [
+                        'data-domains' => join(',', array_map(
+                            function (DomainName $domainName) {
+                                return $domainName->getName();
+                            },
+                            iterator_to_array($domainsSet->getDomains())
+                        ))
+                    ];
+                }
             ])
             ->add('domainNames', EntityType::class, [
-              'class' => DomainName::class,
-              'multiple' => true,
-              'attr' => [
-                'data-widget' => 'select2'
-              ]
-            ])
-            ->add('domainsSets', EntityType::class, [
-              'class' => DomainsSet::class,
-              'multiple' => true,
-              'attr' => [
-                'data-widget' => 'select2'
-              ]
+                'class' => DomainName::class,
+                'required' => false,
+                'multiple' => true,
+                'attr' => [
+                    'data-widget' => 'select2'
+                ]
             ])
             ->add('urlRegex', TextType::class)
-            ->add('excludeUrlRegex', TextType::class)
-            ->add('querySelector')
+            ->add('excludeUrlRegex', TextType::class, [
+                'required' => false,
+            ])
         ;
     }
     
