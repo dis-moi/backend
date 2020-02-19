@@ -117,8 +117,8 @@ class MatchingContext
 
     public function __construct()
     {
-      $this->domainNames = new ArrayCollection();
-      $this->domainsSets = new ArrayCollection();
+        $this->domainNames = new ArrayCollection();
+        $this->domainsSets = new ArrayCollection();
     }
 
     /**
@@ -162,7 +162,7 @@ class MatchingContext
      *
      * @return MatchingContext
      */
-    public function setUrlRegex($urlRegex)
+    public function setUrlRegex($urlRegex) : self
     {
         $this->urlRegex = $urlRegex;
 
@@ -174,11 +174,15 @@ class MatchingContext
      *
      * @return string
      */
-    public function getUrlRegex()
+    public function getUrlRegex() : string
     {
         return $this->urlRegex;
     }
 
+    /**
+     * @param Escaper|null $escaper
+     * @return string
+     */
     public function getFullUrlRegex(Escaper $escaper = null) : string
     {
         $domains = $this->getAllRelatedDomains();
@@ -198,7 +202,7 @@ class MatchingContext
      *
      * @return MatchingContext
      */
-    public function setExcludeUrlRegex($excludeUrlRegex)
+    public function setExcludeUrlRegex($excludeUrlRegex) : self
     {
         $this->excludeUrlRegex = $excludeUrlRegex;
 
@@ -208,7 +212,7 @@ class MatchingContext
     /**
      * @return null|string
      */
-    public function getExcludeUrlRegex()
+    public function getExcludeUrlRegex() : ?string
     {
         return $this->excludeUrlRegex;
     }
@@ -220,7 +224,7 @@ class MatchingContext
      *
      * @return MatchingContext
      */
-    public function setDescription($description)
+    public function setDescription($description) : self
     {
         $this->description = $description;
 
@@ -232,7 +236,7 @@ class MatchingContext
      *
      * @return null|string
      */
-    public function getDescription()
+    public function getDescription() : ?string
     {
         return $this->description;
     }
@@ -244,7 +248,7 @@ class MatchingContext
      *
      * @return MatchingContext
      */
-    public function setNotice(Notice $notice = null)
+    public function setNotice(Notice $notice = null) : self
     {
         $this->notice = $notice;
 
@@ -256,12 +260,12 @@ class MatchingContext
      *
      * @return Notice
      */
-    public function getNotice()
+    public function getNotice() : Notice
     {
         return $this->notice;
     }
 
-    public function __toString()
+    public function __toString() : string
     {
         return (is_null($this->getDescription())) ? 'you must set a description' : $this->getDescription();
     }
@@ -269,17 +273,20 @@ class MatchingContext
     /**
      * @return string
      */
-    public function getQuerySelector()
+    public function getQuerySelector() : string
     {
         return $this->querySelector;
     }
 
     /**
      * @param string $querySelector
+     * @return MatchingContext
      */
-    public function setQuerySelector($querySelector)
+    public function setQuerySelector($querySelector) : self
     {
         $this->querySelector = $querySelector;
+
+        return $this;
     }
 
 
@@ -288,7 +295,7 @@ class MatchingContext
      */
     public function getDomainNames(): Collection
     {
-       return $this->domainNames;
+        return $this->domainNames;
     }
 
     public function addDomainName(DomainName $domainName) : self
@@ -315,7 +322,7 @@ class MatchingContext
         return $this->domainsSets;
     }
 
-    public function addDomainsSet(DomainsSet $domainsSet)
+    public function addDomainsSet(DomainsSet $domainsSet) : self
     {
         $this->domainsSets[] = $domainsSet;
 
@@ -331,6 +338,9 @@ class MatchingContext
         return $this;
     }
 
+    /**
+     * @return DomainName[]
+     */
     public function getAllRelatedDomains() : array
     {
         return array_unique(array_merge(

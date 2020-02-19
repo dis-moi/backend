@@ -5,7 +5,6 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Domain
@@ -64,7 +63,7 @@ class DomainsSet extends TimestampableEntity
     $this->domains = new ArrayCollection();
   }
 
-  public function __toString()
+  public function __toString() : string
   {
     return $this->name;
   }
@@ -91,15 +90,20 @@ class DomainsSet extends TimestampableEntity
 
   /**
    * @param string $name
+   * @return DomainsSet
    */
-  public function setName(string $name): void
+  public function setName(string $name): self
   {
     $this->name = $name;
+
+    return $this;
   }
 
-  public function addDomain(DomainName $domain)
+  public function addDomain(DomainName $domain) : self
   {
     $this->domains[] = $domain;
+
+    return $this;
   }
 
   /**

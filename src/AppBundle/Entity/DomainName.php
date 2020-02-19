@@ -65,7 +65,10 @@ class DomainName extends TimestampableEntity
     $this->sets = new ArrayCollection();
   }
 
-  public function __toString()
+  /**
+   * @return string
+   */
+  public function __toString() : string
   {
     return $this->name;
   }
@@ -85,7 +88,7 @@ class DomainName extends TimestampableEntity
    *
    * @return string
    */
-  public function getName()
+  public function getName() : string
   {
     return $this->name;
   }
@@ -108,9 +111,12 @@ class DomainName extends TimestampableEntity
 
   /**
    * @param string $name
+   * @return DomainName
    */
-  public function setName(string $name): void
+  public function setName(string $name): self
   {
     $this->name = $name;
+
+    return $this;
   }
 }
