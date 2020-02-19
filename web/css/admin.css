@@ -16,7 +16,13 @@
 }
 
 body.edit textarea#notice_message,
-body.edit textarea#notice_note {
+body.edit textarea#notice_note,
+body.new textarea#notice_message,
+body.new textarea#notice_note,
+body.edit textarea#expirednotice_message,
+body.edit textarea#expirednotice_note,
+body.new textarea#expirednotice_message,
+body.new textarea#expirednotice_note {
     min-height: 100px;
 }
 

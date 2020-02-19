@@ -18,35 +18,30 @@ easy_admin:
     entities:
         Notice:
             class: AppBundle\Entity\Notice
-            label: 'Notices'
-            search:
+            label: menu.notices
+            show:
                 fields:
-                    - matchingContexts.exampleUrl
-                    - matchingContexts.domainName
-                    - matchingContexts.urlRegex
-                    - matchingContexts.excludeUrlRegex
-                    - matchingContexts.description
-                    - intention
-                    - contributor.name
-                    - message
-                    - note
-                    - source.url
-                    - expires
+                    - { property: message, label: notices.message }
+                    - { property: contributor, label: notices.contributor }
+                    - { property: source, label: notices.source, help: notices.source.help }
+                    - { property: note, label: notices.note }
+                    - { property: visibility, label: notices.visibility }
+                    - { property: matchingContexts, label: notices.matchingContexts }
+                    - { property: expires, label: notices.expires }
+                    - { property: unpublishedOnExpiration, label: notices.unpublishedOnExpiration }
             form:
                 fields:
-                    - { type: 'group', label: Bulle, icon: paper-plane }
-                    - { type: 'section', icon: comment, label: Infos à publier }
-                    - { property: 'message' }
-                    - { property: 'contributor', type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
-                    - { property: 'intention', type: 'AppBundle\Form\IntentionType', help: N’apparait pas dans l’extension actuelle }
-                    - { property: 'source', type: 'AppBundle\Form\SourceType', label: Source (obsolète), help: Bientôt supprimé }
-                    - { type: 'section', icon: lock, label: Gestion }
-                    - { property: note, label: Note privée }
-                    - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
-                    - { type: 'group', label: 'Ensembles de pages cibles', icon: 'paper-plane', columns: 6 }
+                    - { type: group, label: notices.groups.publication, icon: comments }
+                    - { property: message, label: notices.message }
+                    - { property: contributor, label: notices.contributor, type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
+                    - { property: source, type: 'AppBundle\Form\SourceType', label: notices.source, help: notices.source.help }
+                    - { property: note, label: notices.note }
+                    - { property: visibility, label: notices.visibility, type: 'AppBundle\Form\VisibilityType' }
+                    - { type: group, label: notices.groups.matchingContexts, icon: 'paper-plane', columns: 6 }
                     - {
-                        property: 'matchingContexts',
-                        type: 'collection',
+                        property: matchingContexts,
+                        type: collection,
+                        label: notices.matchingContexts,
                         type_options: {
                             required: true,
                             entry_type: 'AppBundle\Form\MatchingContextType',
@@ -55,164 +50,176 @@ easy_admin:
                             by_reference: false
                         }
                       }
-                    - { type: 'group', label: 'Cycle de vie', icon: 'recycle', columns: 6 }
-                    - expires
-                    - unpublishedOnExpiration
+                    - { type: group, label: Cycle de vie, icon: recycle, columns: 6 }
+                    - { property: expires, label: notices.expires }
+                    - { property: unpublishedOnExpiration, label: notices.unpublishedOnExpiration }
 
             list:
+                title: title.notices
                 fields:
-                    - id
-                    - contributor
-                    - message
-                    - visibility
-                    - matchingContexts
-                    - { property : 'badgedRatingCount', label: 'Badges', css_class: 'graphable' }
-                    - { property : 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
-                    - { property : 'unfoldedRatingCount', label: 'Dépliées', css_class: 'graphable' }
-                    - { property : 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
-                    - { property : 'likedRatingCount', label: 'Likes', css_class: 'graphable' }
-                    - { property : 'dislikedRatingCount', label: 'Dislikes', css_class: 'graphable' }
-                    - { property : 'dismissedRatingCount', label: 'Ignorés', css_class: 'graphable' }
-                    - expires
-                    - created
-                    - updated
+                    - { property: id, label: notices.id }
+                    - { property: contributor, label: notices.contributor }
+                    - { property: message, label: notices.message }
+                    - { property: visibility, label: notices.visibility }
+                    - { property: matchingContexts, label: notices.matchingContexts }
+                    - { property : badgedRatingCount, label: notices.badgedRatingCount, css_class: 'graphable' }
+                    - { property : displayedRatingCount, label: notices.displayedRatingCount, css_class: 'graphable' }
+                    - { property : unfoldedRatingCount, label: notices.unfoldedRatingCount, css_class: 'graphable' }
+                    - { property : clickedRatingCount, label: notices.clickedRatingCount, css_class: 'graphable' }
+                    - { property : likedRatingCount, label: notices.likedRatingCount, css_class: 'graphable' }
+                    - { property : dislikedRatingCount, label: notices.dislikedRatingCount, css_class: 'graphable' }
+                    - { property : dismissedRatingCount, label: notices.dismissedRatingCount, css_class: 'graphable' }
+                    - { property: expires, label: notices.expires }
+                    - { property: created, label: notices.created }
+                    - { property: updated, label: notices.updated }
 
         ExpiredNotice:
             class: AppBundle\Entity\Notice
+            label: menu.expiredNotices
             disabled_actions: ['new']
-            label: 'Expired Notices'
-            search:
-                fields:
-                    - matchingContexts.urlRegex
-                    - matchingContexts.excludeUrlRegex
-                    - matchingContexts.description
-                    - intention
-                    - contributor.name
-                    - message
-                    - note
-                    - source.url
-                    - source.label
-                    - expires
             list:
+                title: title.expiredNotices
                 dql_filter: 'entity.expires <= CURRENT_TIMESTAMP()'
                 fields:
-                    - id
-                    - contributor
-                    - message
-                    - visibility
-                    - matchingContexts
-                    - { property: 'displayedRatingCount', label: 'Vues', css_class: 'graphable' }
-                    - { property : 'unfoldedRatingCount', label: 'Dépliées', css_class: 'graphable' }
-                    - { property: 'clickedRatingCount', label: 'Cliqués', css_class: 'graphable' }
-                    - { property : 'likedRatingCount', label: 'Likes', css_class: 'graphable' }
-                    - { property : 'dislikedRatingCount', label: 'Dislikes', css_class: 'graphable' }
-                    - { property: 'dismissedRatingCount', label: 'Ignorés', css_class: 'graphable' }
-                    - expires
-                    - unpublishedOnExpiration
+                    - { property: id, label: notices.id }
+                    - { property: contributor, label: notices.contributor }
+                    - { property: message, label: notices.message }
+                    - { property: visibility, label: notices.visibility }
+                    - { property: matchingContexts, label: notices.matchingContexts }
+                    - { property: badgedRatingCount, label: notices.badgedRatingCount, css_class: 'graphable' }
+                    - { property: displayedRatingCount, label: notices.displayedRatingCount, css_class: 'graphable' }
+                    - { property: unfoldedRatingCount, label: notices.unfoldedRatingCount, css_class: 'graphable' }
+                    - { property: clickedRatingCount, label: notices.clickedRatingCount, css_class: 'graphable' }
+                    - { property: likedRatingCount, label: notices.likedRatingCount, css_class: 'graphable' }
+                    - { property: dislikedRatingCount, label: notices.dislikedRatingCount, css_class: 'graphable' }
+                    - { property: dismissedRatingCount, label: notices.dismissedRatingCount, css_class: 'graphable' }
+                    - { property: expires, label: notices.expires }
+                    - { property: unpublishedOnExpiration, label: notices.unpublishedOnExpiration }
             form:
                 fields:
-                    - message
-                    - { property: 'contributor', type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
-                    - { property: 'intention', type: 'AppBundle\Form\IntentionType' }
-                    - note
-                    - { property: 'source', type: 'AppBundle\Form\SourceType' }
-                    - { property: 'visibility', type: 'AppBundle\Form\VisibilityType' }
-                    - { property: 'channels'}
-                    - { property: 'matchingContexts', type: 'collection', type_options: {entry_type: 'AppBundle\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false} }
-                    - expires
-                    - unpublishedOnExpiration
-
-        MatchingContext:
-            label: 'Matching Contexts'
-            class: AppBundle\Entity\MatchingContext
-            disabled_actions: ['new', 'edit']
-            list:
-                fields:
-                    - description
-                    - domainNames
-                    - domainsSets
-                    - notice
-
-        RestrictedContext:
-            class: AppBundle\Entity\RestrictedContext
-            label: 'Restricted Contexts (global)'
-            list:
-                fields:
-                    - id
-                    - { property: urlRegex, label: 'Global Restricted URL Regex' }
-            form:
-                fields:
-                    - { property: urlRegex, label: 'Global Restricted URL Regex' }
-
-
-        Domain:
-            label: 'Domains'
-            class: AppBundle\Entity\DomainName
-            list:
-                actions: ['show']
-                fields:
-                    - name
-                    - { property: 'matchingContexts', label: 'Pages cibles liées' }
-                    - { property: 'sets', label: 'Groupes de domaines liés' }
-            form:
-                fields:
-                    - name
-                    - { property: 'matchingContexts', label: 'Pages cibles liées' }
-                    - { property: 'sets', label: 'Groupes de domaines' }
-
-        Domains_set:
-            label: 'Domains Sets'
-            class: AppBundle\Entity\DomainsSet
-            list:
-                actions: ['show']
-                fields:
-                    - name
-                    - { property: 'domains', label: 'Domaines liés' }
-                    - { property: 'matchingContexts', label: 'Pages cibles liées' }
-            form:
-                fields:
-                    - name
-                    - domains
-
-        User:
-            label: "Users"
-            class: AppBundle\Entity\User
-            list:
-                fields:
-                - username
-                - email
-                - enabled
-                - lastLogin
-                - roles
-            edit:
-                fields:
-                    - username
-                    - email
-                    - enabled
-                    - { property: 'plainPassword', type: 'text', type_options: { required: false } }
-                    - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
-            new:
-                fields:
-                - username
-                - email
-                - enabled
-                - { property: 'plainPassword', type: 'text', type_options: { required: true } }
-                - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+                    - { type: group, label: notices.groups.publication, icon: comments }
+                    - { property: message, label: notices.message }
+                    - { property: contributor, label: notices.contributor, type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
+                    - { property: source, type: 'AppBundle\Form\SourceType', label: notices.source, help: notices.source.help }
+                    - { property: note, label: notices.note }
+                    - { property: visibility, label: notices.visibility, type: 'AppBundle\Form\VisibilityType' }
+                    - { type: group, label: notices.groups.matchingContexts, icon: 'paper-plane', columns: 6 }
+                    - {
+                        property: matchingContexts,
+                        type: collection,
+                        label: notices.matchingContexts,
+                        type_options: {
+                            required: true,
+                            entry_type: 'AppBundle\Form\MatchingContextType',
+                            allow_add: true,
+                            allow_delete: true,
+                            by_reference: false
+                        }
+                      }
+                    - { type: group, label: Cycle de vie, icon: recycle, columns: 6 }
+                    - { property: expires, label: notices.expires }
+                    - { property: unpublishedOnExpiration, label: notices.unpublishedOnExpiration }
 
 
         Contributor:
-            label: "Contributors"
+            label: menu.contributors
             class: AppBundle\Entity\Contributor
             list:
-                sort: ['name', 'ASC']
+                title: title.contributors
+                sort: [name, ASC]
                 fields:
-                    - id
-                    - name
-                    - intro
-                    - { property : 'ActiveSubscriptionsCount', label: 'Active Subscribers' }
-                    - enabled
+                    - { property: id, label: contributors.id }
+                    - { property: name, label: contributors.name }
+                    - { property: intro, label: contributors.intro }
+                    - { property: activeSubscriptionsCount, label: contributors.activeSubscriptionsCount }
+                    - { property: enabled, label: contributors.enabled }
             form:
                 fields:
-                  - name
-                  - intro
-                  - { property: 'imageFile', type: 'vich_image' }
+                    - { property: name, label: contributors.name }
+                    - { property: intro, label: contributors.intro }
+                    - { property: imageFile, label: contributors.imageFile, type: vich_image }
+
+
+
+        Domain:
+            label: menu.domains
+            class: AppBundle\Entity\DomainName
+            list:
+                title: title.domains
+                actions: ['show']
+                fields:
+                    - { property: name, label: domains.name }
+                    - { property: sets, label: domains.sets.nb }
+                    - { property: matchingContexts, label: domains.matchingContexts.nb }
+            form:
+                fields:
+                    - { property: name, label: domains.name }
+            show:
+                fields:
+                    - { property: id, label: domains.id }
+                    - { property: name, label: domains.name }
+                    - { property: sets, label: domains.sets }
+                    - { property: matchingContexts, label: domains.matchingContexts }
+                    - { property: createdAt, label: domains.createdAt }
+                    - { property: updatedAt, label: domains.updatedAt }
+
+        DomainsSet:
+            label: menu.domainsSets
+            class: AppBundle\Entity\DomainsSet
+            list:
+                title: title.domainsSets
+                actions: ['show']
+                fields:
+                    - { property: name, label: domainsSets.name }
+                    - { property: domains, label: domainsSets.domains.nb }
+                    - { property: matchingContexts, label: domainsSets.matchingContexts.nb }
+            form:
+                fields:
+                    - { property: name, label: domains.name }
+            show:
+                fields:
+                    - { property: id, label: domains.id }
+                    - { property: name, label: domains.name }
+                    - { property: domains, label: domainsSets.domains }
+                    - { property: matchingContexts, label: domains.matchingContexts }
+                    - { property: createdAt, label: domains.createdAt }
+                    - { property: updatedAt, label: domains.updatedAt }
+
+
+        RestrictedContext:
+            class: AppBundle\Entity\RestrictedContext
+            label: menu.restrictedContexts
+            list:
+                title: title.restrictedContexts
+                fields:
+                    - id
+                    - { property: urlRegex, label: restrictedContexts.urlRegex }
+            form:
+                fields:
+                    - { property: urlRegex, label: restrictedContexts.urlRegex }
+
+        User:
+            label: menu.users
+            class: AppBundle\Entity\User
+            list:
+                title: title.users
+                fields:
+                    - { property: username, label: users.username }
+                    - { property: email, label: users.email }
+                    - { property: enabled, label: users.enabled }
+                    - { property: lastLogin, label: users.lastLogin }
+                    - { property: roles, label: users.roles }
+            edit:
+                fields:
+                    - { property: username, label: users.username }
+                    - { property: email, label: users.email }
+                    - { property: enabled, label: users.enabled }
+                    - { property: plainPassword, label: users.plainPassword, type: text, type_options: { required: false } }
+                    - { property: roles, label: users.roles, type: choice, type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+            new:
+                fields:
+                    - { property: username, label: users.username }
+                    - { property: email, label: users.email }
+                    - { property: enabled, label: users.enabled }
+                    - { property: plainPassword, label: users.plainPassword, type: text, type_options: { required: true } }
+                    - { property: roles, label: users.roles, type: choice, type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }

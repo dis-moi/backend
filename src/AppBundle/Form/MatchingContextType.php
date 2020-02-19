@@ -19,9 +19,12 @@ class MatchingContextType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('exampleUrl')
+            ->add('exampleUrl', TextType::class, [
+                'label' => 'matchingContexts.exampleUrl'
+            ])
             ->add('domainsSets', EntityType::class, [
                 'class' => DomainsSet::class,
+                'label' => 'matchingContexts.domainsSets',
                 'required' => false,
                 'multiple' => true,
                 'attr' => [
@@ -40,15 +43,19 @@ class MatchingContextType extends AbstractType
             ])
             ->add('domainNames', EntityType::class, [
                 'class' => DomainName::class,
+                'label' => 'matchingContexts.domainNames',
                 'required' => false,
                 'multiple' => true,
                 'attr' => [
                     'data-widget' => 'select2'
                 ]
             ])
-            ->add('urlRegex', TextType::class)
+            ->add('urlRegex', TextType::class, [
+                'label' => 'matchingContexts.urlRegex'
+            ])
             ->add('excludeUrlRegex', TextType::class, [
                 'required' => false,
+                'label' => 'matchingContexts.excludeUrlRegex'
             ])
         ;
     }
