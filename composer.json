@@ -40,7 +40,8 @@
         "youthweb/urllinker": "^1.2",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "sentry/sentry-symfony": "^3.0"
+        "sentry/sentry-symfony": "^3.0",
+        "knplabs/doctrine-behaviors": "1.4"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.0",

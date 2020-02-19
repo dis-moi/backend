@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -13,8 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="domain_name")
  * @ORM\Entity
  */
-class DomainName extends TimestampableEntity
+class DomainName
 {
+  use ORMBehaviors\Timestampable\Timestampable;
+
   /**
    * @var int
    *
