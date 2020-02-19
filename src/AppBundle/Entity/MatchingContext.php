@@ -15,7 +15,7 @@ function flatten(array $array) {
     return $return;
 }
 
-function escape(string $dn, Escaper $e) {
+function escape(string $dn, ?Escaper $e) {
   return is_null($e) ? $dn : $e::escape($dn);
 }
 
@@ -271,9 +271,9 @@ class MatchingContext
     }
 
     /**
-     * @return string
+     * @return string?
      */
-    public function getQuerySelector() : string
+    public function getQuerySelector() : ?string
     {
         return $this->querySelector;
     }
