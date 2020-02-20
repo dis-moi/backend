@@ -1,33 +1,49 @@
 (function () {
+    const matchingContextFieldSelector = ' .field-matching_context ';
+    const formGroupSelector = ' .form-group ';
+
     const elements = (jQueryQuery) => Array.from(jQueryQuery);
     const single = (jQueryElements) => elements(jQueryElements)[0];
 
     const findForm = () => jQuery('form[name$="notice"]');
-    const findExampleUrlField = () => jQuery(`input[id$="exampleUrl"]`);
-    const findDomainsFields = () => jQuery(`select[id$="domainNames"],select[id$="domainsSets"]`);
-    const findUrlRegexField = () => jQuery(`input[id$="urlRegex"]`);
-    const findExcludeUrlRegexField = () => jQuery(`input[id$="excludeUrlRegex"]`);
-    const findFields = () => [
-        single(findExampleUrlField()),
-        ...elements(findDomainsFields()),
-        single(findUrlRegexField()),
-        single(findExcludeUrlRegexField())
+
+    const findExampleUrlField = (matchingContextField) => jQuery(matchingContextField)
+      .find(`input[id$="exampleUrl"]`);
+
+    const findDomainsFields = (matchingContextField) => jQuery(matchingContextField)
+      .find(`select[id$="domainNames"],select[id$="domainsSets"]`);
+
+    const findUrlRegexField = (matchingContextField) => jQuery(matchingContextField)
+      .find(`input[id$="urlRegex"]`);
+
+    const findExcludeUrlRegexField = (matchingContextField) => jQuery(matchingContextField)
+      .find(`input[id$="excludeUrlRegex"]`);
+
+    const findFields = (matchingContextField) => [
+        single(findExampleUrlField(matchingContextField)),
+        ...elements(findDomainsFields(matchingContextField)),
+        single(findUrlRegexField(matchingContextField)),
+        single(findExcludeUrlRegexField(matchingContextField))
     ];
-    const findFormGroupOfField = (field) => jQuery(field).parents('.field-matching_context .form-group');
+
+    const findFormGroupOfField = (field) => jQuery(field).parents(matchingContextFieldSelector+formGroupSelector);
 
     const markHasError = element => element.addClass('has-error');
     const markHasWarning = element => element.addClass('has-warning');
     const markIsClean = element => element.removeClass('has-warning').removeClass('has-error');
 
-    const getSelectedDomainNames = () => Array.from(jQuery('select[id$="domainNames"] option:selected'))
-        .map(option => jQuery(option).prop('label'))
+    const getSelectedDomainNames = (matchingContextField) => Array.from(
+      jQuery(matchingContextField).find('select[id$="domainNames"] option:selected')
+    ).map(option => jQuery(option).prop('label'))
 
-    const getSelectedDomainSetsDomains = () => Array.from(jQuery('select[id$="domainsSets"] option:selected'))
+    const getSelectedDomainSetsDomains = (matchingContextField) => Array.from(
+      jQuery(matchingContextField).find('select[id$="domainsSets"] option:selected')
+    )
         .map(option => jQuery(option).data('domains').split(','))
         .flat()
 
-    const getAllRelatedDomains = () => [...new Set(
-        getSelectedDomainNames().concat(getSelectedDomainSetsDomains())
+    const getAllRelatedDomains = (matchingContextField) => [...new Set(
+        getSelectedDomainNames(matchingContextField).concat(getSelectedDomainSetsDomains(matchingContextField))
     )]
 
     const injectRegexToDomain = baseRegex => domainName => domainName.replace(/\./g, '\\.') + baseRegex;
@@ -48,7 +64,11 @@
             return false;
         }
     }
-    class ExcludeRegExpStateError extends RegExpStateError {}
+    class ExcludeRegExpStateError extends RegExpState {
+        static get success() {
+            return false;
+        }
+    }
 
     function validateUrlRegexp(urlRegexps, exclude_url_regex, example_url, loose) {
         //Regex invalid
@@ -98,15 +118,15 @@
         return new RegExpStateSuccess();
     }
 
-    function validateFields() {
-        markErrors();
+    function validateFields(matchingContextField) {
+        markErrors(matchingContextField);
 
-        const exampleField = single(findExampleUrlField());
-        const excludeField = single(findExcludeUrlRegexField());
-        const regexField = single(findUrlRegexField());
+        const exampleField = single(findExampleUrlField(matchingContextField));
+        const excludeField = single(findExcludeUrlRegexField(matchingContextField));
+        const regexField = single(findUrlRegexField(matchingContextField));
         const loose = regexField.id.startsWith('restricted');
 
-        const domainNames = getAllRelatedDomains();
+        const domainNames = getAllRelatedDomains(matchingContextField);
 
         const status = regexField.value ? validateUrlRegexp(
             domainNames.length ? domainNames.map(injectRegexToDomain(regexField.value)) : [regexField.value],
@@ -118,41 +138,51 @@
         if (typeof status === 'undefined' || status instanceof RegExpStateSuccess) {
             regexField.setCustomValidity('');
             excludeField.setCustomValidity('');
-            cleanErrors();
-        }
-        else if(status instanceof ExcludeRegExpStateError) {
-            excludeField.setCustomValidity(status.message);
-            markErrors();
+            cleanErrors(matchingContextField);
         }
         else if (status instanceof RegExpStateError) {
             regexField.setCustomValidity(status.message);
-            markErrors();
+            excludeField.setCustomValidity('');
+            markErrors(matchingContextField);
+        }
+        else if(status instanceof ExcludeRegExpStateError) {
+            regexField.setCustomValidity('');
+            excludeField.setCustomValidity(status.message);
+            markErrors(matchingContextField);
         }
 
         return status;
     }
 
-    function markErrors() {
-        markHasWarning(findFormGroupOfField(findExampleUrlField()));
-        elements(findDomainsFields()).forEach(field => markHasError(findFormGroupOfField(field)));
-        markHasError(findFormGroupOfField(findUrlRegexField()));
-        markHasError(findFormGroupOfField(findExcludeUrlRegexField()));
+    function markErrors(matchingContextField) {
+        markHasWarning(findFormGroupOfField(findExampleUrlField(matchingContextField)));
+        elements(findDomainsFields(matchingContextField)).forEach(field => markHasError(findFormGroupOfField(field)));
+        markHasError(findFormGroupOfField(findUrlRegexField(matchingContextField)));
+        markHasError(findFormGroupOfField(findExcludeUrlRegexField(matchingContextField)));
     }
 
-    function cleanErrors() {
-        findFields().forEach(field => markIsClean(findFormGroupOfField(field)));
+    function cleanErrors(matchingContextField) {
+        findFields(matchingContextField).forEach(field => markIsClean(findFormGroupOfField(field)));
     }
 
     jQuery(($) => {
         const form = findForm();
         if (form.length > 0) {
-            form.change(() => validateFields());
-            form.submit((event) => {
-                const status = validateFields();
-                if (status instanceof RegExpStateError || status instanceof ExcludeRegExpStateError) {
-                    event.preventDefault();
+            form.on(
+                'change keyup',
+                matchingContextFieldSelector,
+                function (event) { validateFields(this); }
+            );
+            form.on(
+                'submit',
+                matchingContextFieldSelector,
+                function (event) {
+                    const status = validateFields(this);
+                    if (status instanceof RegExpStateError || status instanceof ExcludeRegExpStateError) {
+                        event.preventDefault();
+                    }
                 }
-            });
+            );
         }
     });
 })();

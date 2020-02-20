@@ -117,6 +117,7 @@ class MatchingContext
 
     public function __construct()
     {
+        $this->urlRegex = '';
         $this->domainNames = new ArrayCollection();
         $this->domainsSets = new ArrayCollection();
     }
