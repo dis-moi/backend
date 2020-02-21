@@ -33,22 +33,6 @@ class DataConverterTest extends TestCase
         $this->assertEquals($expectedContent, DataConverter::convertNewLinesToParagraphs($content));
     }
 
-    public function testItTruncatesMessage()
-    {
-        $truncateAt = 100;
-        $suffix = '...';
-
-        $shortText = "This sentence is 63 characters long, which is shorter than 100.";
-        $longText = "$shortText $shortText";
-
-        $unmodified = DataConverter::truncate($shortText, $truncateAt);
-        $truncated = DataConverter::truncate($longText, $truncateAt);
-
-        $this->assertEquals($shortText, $unmodified);
-        $this->assertStringEndsWith($suffix, $truncated);
-        $this->assertEquals($truncateAt + mb_strlen($suffix), mb_strlen($truncated));
-    }
-
     public function testItAddsTargetBlankAttributeToLink()
     {
         $link = DataConverter::addTargetBlankToLinks('<a href="https://lmem.net">lmem</a>');

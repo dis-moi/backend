@@ -8,7 +8,6 @@ class DataConverter
 {
     static public function convertFullMessage(string $message) : string
     {
-        $message = self::truncate($message, 500);
         $message = self::convertNewLinesToParagraphs($message);
         $message = self::addLinksToUrls($message);
         $message = self::addTargetBlankToLinks($message);
@@ -23,11 +22,6 @@ class DataConverter
         $intro = self::addTargetBlankToLinks($intro);
 
         return $intro;
-    }
-
-    static public function truncate(string $message, $length) : string
-    {
-        return mb_strlen($message) > $length ? mb_strcut($message, 0, $length) . '...' : $message;
     }
 
     static public function convertNewLinesToParagraphs(string $content) : string
