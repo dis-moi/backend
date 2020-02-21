@@ -6,6 +6,7 @@ use AppBundle\Entity\DomainName;
 use AppBundle\Entity\DomainsSet;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -50,10 +51,10 @@ class MatchingContextType extends AbstractType
                     'data-widget' => 'select2'
                 ]
             ])
-            ->add('urlRegex', TextType::class, [
+            ->add('urlRegex', TextareaType::class, [
                 'label' => 'matchingContexts.urlRegex'
             ])
-            ->add('excludeUrlRegex', TextType::class, [
+            ->add('excludeUrlRegex', TextareaType::class, [
                 'required' => false,
                 'label' => 'matchingContexts.excludeUrlRegex'
             ])

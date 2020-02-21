@@ -22,8 +22,12 @@ body.new textarea#notice_note,
 body.edit textarea#expirednotice_message,
 body.edit textarea#expirednotice_note,
 body.new textarea#expirednotice_message,
-body.new textarea#expirednotice_note {
+body.new textarea#expirednotice_note{
     min-height: 100px;
+}
+body.new .field-matching_context textarea,
+body.edit .field-matching_context textarea {
+    min-height: 50px;
 }
 
 #notice_source label {
