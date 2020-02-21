@@ -175,15 +175,16 @@ easy_admin:
                     - { property: matchingContexts, label: domainsSets.matchingContexts.nb }
             form:
                 fields:
-                    - { property: name, label: domains.name }
+                    - { property: name, label: domainsSets.name }
+                    - { property: domains, label: domainsSets.domains }
             show:
                 fields:
-                    - { property: id, label: domains.id }
-                    - { property: name, label: domains.name }
+                    - { property: id, label: domainsSets.id }
+                    - { property: name, label: domainsSets.name }
                     - { property: domains, label: domainsSets.domains }
-                    - { property: matchingContexts, label: domains.matchingContexts }
-                    - { property: createdAt, label: domains.createdAt }
-                    - { property: updatedAt, label: domains.updatedAt }
+                    - { property: matchingContexts, label: domainsSets.matchingContexts }
+                    - { property: createdAt, label: domainsSets.createdAt }
+                    - { property: updatedAt, label: domainsSets.updatedAt }
 
 
         RestrictedContext:
