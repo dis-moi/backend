@@ -21,6 +21,7 @@ class MatchingContextType extends AbstractType
     {
         $builder
             ->add('exampleUrl', TextType::class, [
+                'required' => false,
                 'label' => 'matchingContexts.exampleUrl'
             ])
             ->add('domainsSets', EntityType::class, [
