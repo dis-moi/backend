@@ -7,7 +7,7 @@ class GetMatchingContextsTest extends BaseApiE2eTestCase
     public function getMatchingContextsData()
     {
         return [
-            [null, 6, ["http://site-ecologique.fr", "http://random-site.fr", "http://site-ecologique-et-politique.fr", "http://expired.fr", "domainname\.fr/superexample", "http://siteecologique.fr"]],
+            [null, 6, ["http://site-ecologique.fr", "http://random-site.fr", "http://site-ecologique-et-politique.fr", "http://expired.fr", "(www\.google\.fr|www\.bing\.com|duckduckgo\.com|www\.qwant\.com|www\.yahoo\.com|first\.domainname\.fr|second\.domainname\.fr)/superexample", "http://siteecologique.fr"]],
             [['contributor', 'contributor2'], 4, ["http://site-ecologique.fr", "http://site-ecologique-et-politique.fr", "http://random-site.fr", "http://expired.fr"]],
             [['contributor'], 2, ["http://site-ecologique.fr", "http://random-site.fr"]],
             [['contributor2'], 2, ["http://site-ecologique-et-politique.fr", "http://expired.fr"]]

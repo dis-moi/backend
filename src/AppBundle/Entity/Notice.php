@@ -178,7 +178,7 @@ class Notice
 
     public function __toString() : string
     {
-        return sprintf('(id:%d) intention: %s, contr: %s', $this->getId(), $this->getIntention(), $this->getContributor());
+        return sprintf('(id:%d) [%s] %s', $this->getId(), $this->getContributor(), $this->getMessage());
     }
 
     public function setContributor(Contributor $contributor = null) : Notice

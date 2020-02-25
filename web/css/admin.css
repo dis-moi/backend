@@ -15,10 +15,24 @@
     margin-top: 25px;
 }
 
-body.edit textarea#recommendation_description {
+body.edit textarea#notice_message,
+body.edit textarea#notice_note,
+body.new textarea#notice_message,
+body.new textarea#notice_note,
+body.edit textarea#expirednotice_message,
+body.edit textarea#expirednotice_note,
+body.new textarea#expirednotice_message,
+body.new textarea#expirednotice_note{
     min-height: 100px;
 }
+body.new .field-matching_context textarea,
+body.edit .field-matching_context textarea {
+    min-height: 50px;
+}
 
+#notice_source label {
+    width: 60px;
+}
 
 .navbar-custom-menu ul.navbar-nav .user-menu a.logout {
     display: inline-block;

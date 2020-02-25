@@ -15,7 +15,7 @@ class FakeEscaper implements Escaper
 {
     public static function escape(string $input): string
     {
-        return 'totallyfake';
+        return $input;
     }
 }
 
@@ -28,10 +28,10 @@ class MatchingContextTest extends FixtureAwareWebTestCase
         /** @var MatchingContext $mc */
         $mc = static::$referenceRepository->getReference('mc_with_domain_name');
         $regex = $mc->getFullUrlRegex($escaper);
-        $this->assertEquals('totallyfake' . $mc->getUrlRegex(), $regex);
+        $this->assertEquals('(www.google.fr|www.bing.com|duckduckgo.com|www.qwant.com|www.yahoo.com|first.domainname.fr|second.domainname.fr)' . $mc->getUrlRegex(), $regex);
 
         $regex = $mc->getFullUrlRegex();
-        $this->assertEquals($mc->getDomainName() . $mc->getUrlRegex(), $regex);
+        $this->assertEquals('(www.google.fr|www.bing.com|duckduckgo.com|www.qwant.com|www.yahoo.com|first.domainname.fr|second.domainname.fr)' . $mc->getUrlRegex(), $regex);
 
         /** @var MatchingContext $mc */
         $mc = static::$referenceRepository->getReference('mc_without_domain_name');
