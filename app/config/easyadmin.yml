@@ -23,7 +23,6 @@ easy_admin:
                 fields:
                     - { property: message, label: notices.message }
                     - { property: contributor, label: notices.contributor }
-                    - { property: source, label: notices.source, help: notices.source.help }
                     - { property: note, label: notices.note }
                     - { property: visibility, label: notices.visibility }
                     - { property: matchingContexts, label: notices.matchingContexts }
@@ -34,7 +33,6 @@ easy_admin:
                     - { type: group, label: notices.groups.publication, icon: comments }
                     - { property: message, label: notices.message }
                     - { property: contributor, label: notices.contributor, type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
-                    - { property: source, type: 'AppBundle\Form\SourceType', label: notices.source, help: notices.source.help }
                     - { property: note, label: notices.note }
                     - { property: visibility, label: notices.visibility, type: 'AppBundle\Form\VisibilityType' }
                     - { type: group, label: notices.groups.matchingContexts, icon: 'paper-plane', columns: 6 }
@@ -100,7 +98,6 @@ easy_admin:
                     - { type: group, label: notices.groups.publication, icon: comments }
                     - { property: message, label: notices.message }
                     - { property: contributor, label: notices.contributor, type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
-                    - { property: source, type: 'AppBundle\Form\SourceType', label: notices.source, help: notices.source.help }
                     - { property: note, label: notices.note }
                     - { property: visibility, label: notices.visibility, type: 'AppBundle\Form\VisibilityType' }
                     - { type: group, label: notices.groups.matchingContexts, icon: 'paper-plane', columns: 6 }

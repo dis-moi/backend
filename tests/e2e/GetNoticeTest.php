@@ -20,7 +20,6 @@ class GetNoticeTest extends BaseApiE2eTestCase
 <p>message</p>
 <p><a target=\"_blank\" rel=\"noopener noreferrer\" href=\"http://link.com?foo=bar\">foo</a></p>
 <p>with <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://bulles.fr\">bulles.fr</a>.</p>", $payload['message']);
-        $this->assertEquals('http://source-href-1.fr', $payload['source']['url']);
         $this->assertEquals('alternative', $payload['intention']);
         $this->assertEquals(2, $payload['ratings']['likes']);
         $this->assertEquals(0, $payload['ratings']['dislikes']);
