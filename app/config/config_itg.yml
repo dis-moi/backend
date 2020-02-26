@@ -19,6 +19,9 @@ monolog:
             type:         fingers_crossed
             action_level: notice
             handler:      nested
+            excluded_404s:
+                - ^/.well-known
+                - ^/api/v3/notices/
 
         nested:
             type: error_log
@@ -33,11 +36,11 @@ monolog:
 sentry:
     dsn: "https://12ed31b41955443480dbfcb5da3e3a33@sentry.io/1404898"
     options:
-        environment: '%kernel.environment%'
+        environment: staging
         excluded_exceptions: #exclude validation errors
             - App\Exception\UserNotFoundException
             - Symfony\Component\Security\Core\Exception\AccessDeniedException
-    register_error_listener: false # Disables the ErrorListener
+    register_error_listener: true # Disables the ErrorListener
     monolog:
         error_handler:
             enabled: true

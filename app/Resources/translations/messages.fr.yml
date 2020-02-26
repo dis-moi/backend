@@ -44,8 +44,6 @@ notices:
   likedRatingCount: Aimées
   dislikedRatingCount: Déplu
   dismissedRatingCount: Ignorées
-  source: Source (obsolète)
-  source.help: Bientôt supprimé
   created: Crée
   updated: Modifiée
   expires: Expire

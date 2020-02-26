@@ -22,7 +22,6 @@ message
 with https://bulles.fr.");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::ALTERNATIVE());
-        $notice->setSource($this->getReference('source_link_quechoisir'));
         $this->addReference('notice_type_ecology', $notice);
         $manager->persist($notice);
 
@@ -31,7 +30,6 @@ with https://bulles.fr.");
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::ALTERNATIVE());
-        $notice->setSource($this->getReference('source_link_marianne'));
         $this->addReference('notice_type_ecology_and_politics', $notice);
         $manager->persist($notice);
 
@@ -40,7 +38,6 @@ with https://bulles.fr.");
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::ALTERNATIVE());
-        $notice->setSource($this->getReference('source_link_huffington'));
         $notice->setExpires((new \DateTime())->modify('+3days'));
         $this->addReference('notice_3', $notice);
         $manager->persist($notice);
@@ -50,7 +47,6 @@ with https://bulles.fr.");
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::OTHER());
-        $notice->setSource($this->getReference('source_link_huffington'));
         $this->addReference('notice_other', $notice);
         $manager->persist($notice);
 
@@ -59,7 +55,6 @@ with https://bulles.fr.");
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::INFORMATION());
-        $notice->setSource($this->getReference('source_disabled'));
         $this->addReference('notice_disabled', $notice);
         $manager->persist($notice);
 
@@ -68,7 +63,6 @@ with https://bulles.fr.");
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::INFORMATION());
-        $notice->setSource($this->getReference('source_link_huffington'));
         $notice->setExpires((new \DateTime())->modify('-3days'));
         $this->addReference('notice_expired', $notice);
         $manager->persist($notice);
@@ -78,7 +72,6 @@ with https://bulles.fr.");
         $notice->setMessage("");
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::INFORMATION());
-        $notice->setSource($this->getReference('source_link_huffington'));
         $notice->setExpires((new \DateTime())->modify('-3days'));
         $notice->setUnpublishedOnExpiration(true);
         $this->addReference('notice_expired_unpublished', $notice);
@@ -87,7 +80,6 @@ with https://bulles.fr.");
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor'));
         $notice->setMessage("Celle-ci n’est pas publique");
-        $notice->setSource($this->getReference('source_link_huffington'));
         $this->addReference('notice_private', $notice);
         $manager->persist($notice);
 
@@ -128,9 +120,6 @@ with https://bulles.fr.");
 
     public function getDependencies()
     {
-        return [
-            LoadContributorData::class,
-            LoadSourceData::class
-        ];
+        return [LoadContributorData::class];
     }
 }

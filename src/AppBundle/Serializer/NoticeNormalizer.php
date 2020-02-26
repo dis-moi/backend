@@ -44,7 +44,6 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
                 'likes' => $object->getLikedRatingCount(),
                 'dislikes' => $object->getDislikedRatingCount()
             ],
-            'source' => $this->normalizer->normalize($object->getSource(), $format, $context),
             'visibility' => $object->getVisibility()->getValue(),
         ];
     }
