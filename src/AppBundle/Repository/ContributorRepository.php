@@ -42,6 +42,16 @@ class ContributorRepository extends BaseRepository
         return $contributor;
     }
 
+    public function getAll()
+    {
+        $mainQuery = $this->repository->createQueryBuilder('c');
+        $resultsWithActiveSubscriptionsCount = self::addActiveSubscriptionsCount($mainQuery)
+            ->getQuery()
+            ->getResult();
+
+        return array_map('self::mergeActiveSubscriptionsCountWithContributor', $resultsWithActiveSubscriptionsCount);
+    }
+
     public function getAllEnabledWithAtLeastOneContribution()
     {
         $activeContributorsQuery = $this->noticeRepository->repository->createQueryBuilder('n')
