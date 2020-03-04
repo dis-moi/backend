@@ -19,6 +19,15 @@ easy_admin:
         Notice:
             class: AppBundle\Entity\Notice
             label: menu.notices
+            search:
+                fields:
+                    - matchingContexts.exampleUrl
+                    - matchingContexts.urlRegex
+                    - matchingContexts.excludeUrlRegex
+                    - contributor.name
+                    - message
+                    - note
+                    - expires
             show:
                 fields:
                     - { property: message, label: notices.message }
@@ -75,6 +84,15 @@ easy_admin:
             class: AppBundle\Entity\Notice
             label: menu.expiredNotices
             disabled_actions: ['new']
+            search:
+                fields:
+                    - matchingContexts.exampleUrl
+                    - matchingContexts.urlRegex
+                    - matchingContexts.excludeUrlRegex
+                    - contributor.name
+                    - message
+                    - note
+                    - expires
             list:
                 title: title.expiredNotices
                 dql_filter: 'entity.expires <= CURRENT_TIMESTAMP()'
