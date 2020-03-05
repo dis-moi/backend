@@ -19,9 +19,9 @@ final class Version20200225153600 extends AbstractMigration
                 CONCAT(
                     n.message,
                     \'\n<strong>\',
-                    (SELECT s.label FROM source s WHERE s.notice_id = n.id),
+                    (SELECT COALESCE(s.label, \'\') FROM source s WHERE s.notice_id = n.id),
                     \' : </strong>\',
-                    (SELECT s.url FROM source s WHERE s.notice_id = n.id)
+                    (SELECT COALESCE(s.url, \'\') FROM source s WHERE s.notice_id = n.id)
                 )
             )
         ');
