@@ -14,10 +14,10 @@
       .find(`select[id$="domainNames"],select[id$="domainsSets"]`);
 
     const findUrlRegexField = (matchingContextField) => jQuery(matchingContextField)
-      .find(`input[id$="urlRegex"]`);
+      .find(`textarea[id$="urlRegex"]`);
 
     const findExcludeUrlRegexField = (matchingContextField) => jQuery(matchingContextField)
-      .find(`input[id$="excludeUrlRegex"]`);
+      .find(`textarea[id$="excludeUrlRegex"]`);
 
     const findFields = (matchingContextField) => [
         single(findExampleUrlField(matchingContextField)),
