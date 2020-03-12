@@ -208,21 +208,24 @@ class Contributor implements ImageUploadable
         return $this->notices;
     }
 
+    public function getPublicNotices() : ?Collection
+    {
+        return $this->getNotices()->filter(function(Notice $notice) {
+            return $notice->hasPublicVisibility();
+        });
+    }
+
     public function getNoticesCount() : int
     {
-        if ($notices = $this->getNotices()) {
-            return $notices
-                ->filter(function (Notice $notice) {
-                    return $notice->hasPublicVisibility();
-                })
-                ->count();
+        if ($notices = $this->getPublicNotices()) {
+            return $this->getPublicNotices()->count();
         }
         else return 0;
     }
 
     public function getTheirMostLikedOrDisplayedNotice() : ?Notice
     {
-        if ($notices = $this->getNotices()) {
+        if ($notices = $this->getPublicNotices()) {
             $noticesArray = $notices->toArray();
             return array_reduce($noticesArray, function (?Notice $acc, Notice $curr) {
                 // First iteration...
