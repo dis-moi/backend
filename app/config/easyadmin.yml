@@ -21,6 +21,8 @@ easy_admin:
             label: menu.notices
             search:
                 fields:
+                    - id
+                    - matchingContexts.description
                     - matchingContexts.exampleUrl
                     - matchingContexts.urlRegex
                     - matchingContexts.excludeUrlRegex

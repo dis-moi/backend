@@ -53,6 +53,7 @@ notices:
     matchingContexts: Ensembles de pages cibles
 
 matchingContexts:
+  description: Description
   exampleUrl: Exemple d’URL
   domainsSets: Groupe de domaines
   domainNames: Domaines
