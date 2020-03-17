@@ -43,12 +43,6 @@ class Notice
     private $matchingContexts;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Channel::class, fetch="EAGER")
-     * @ORM\JoinColumn(nullable=false, name="recommendation_channel")
-     */
-    private $channels;
-
-    /**
      * @ORM\Column(name="intention", type="string", options={"default" : "other"})
      */
     private $intention;
@@ -81,13 +75,6 @@ class Notice
     private $ratings;
 
     /**
-     * @var Source
-     *
-     * @ORM\OneToOne(targetEntity=Source::class, mappedBy="notice", cascade={"persist"}, fetch="EAGER", orphanRemoval=true)
-     */
-    private $source;
-
-    /**
      * @var \DateTime $updated
      *
      * @ORM\Column(type="datetime")
@@ -117,7 +104,6 @@ class Notice
 
     public function __construct()
     {
-        $this->channels = new ArrayCollection();
         $this->matchingContexts = new ArrayCollection();
         $this->visibility = NoticeVisibility::getDefault();
     }
@@ -178,7 +164,7 @@ class Notice
 
     public function __toString() : string
     {
-        return sprintf('(id:%d) intention: %s, contr: %s', $this->getId(), $this->getIntention(), $this->getContributor());
+        return sprintf('(id:%d) [%s] %s', $this->getId(), $this->getContributor(), $this->getMessage());
     }
 
     public function setContributor(Contributor $contributor = null) : Notice
@@ -284,23 +270,6 @@ class Notice
         return $balance > 0 ? $balance : 0;
     }
 
-    public function addChannel(Channel $channel) : Notice
-    {
-        $this->channels[] = $channel;
-
-        return $this;
-    }
-
-    public function removeChannel(Channel $channel)
-    {
-        $this->channels->removeElement($channel);
-    }
-
-    public function getChannels() : ?Collection
-    {
-        return $this->channels;
-    }
-
     public function addRating(Rating $rating) : Notice
     {
         $this->ratings[] = $rating;
@@ -332,22 +301,6 @@ class Notice
     public function setUpdated(\DateTime $updated)
     {
         $this->updated = $updated;
-    }
-
-    public function getSource() : ?Source
-    {
-        return $this->source;
-    }
-
-    public function setSource(Source $source)
-    {
-        $this->source = $source;
-        $this->source->setNotice($this);
-    }
-
-    public function getSourceUrl() : ?string
-    {
-        return $this->source ? $this->source->getUrl() : null;
     }
 
     public function getExpires() : ?\DateTimeInterface

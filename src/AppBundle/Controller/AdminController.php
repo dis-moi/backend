@@ -1,11 +1,25 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Contributor;
+use AppBundle\Repository\ContributorRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
 use EasyCorp\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
+use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Pagerfanta;
 
 class AdminController extends BaseAdminController
 {
+    /**
+     * @var ContributorRepository
+     */
+    private $contributorRepository;
+
+    public function __construct(ContributorRepository $repository)
+    {
+        $this->contributorRepository = $repository;
+    }
+
     // Override User CRUD
     public function createNewUserEntity()
     {
@@ -24,9 +38,24 @@ class AdminController extends BaseAdminController
 
 
     // Override Notice Search
+    // Jalil: Override but does the same as super-class ?
     protected function createNoticeSearchQueryBuilder($entityClass, $searchQuery, array $searchableFields, $sortField = null, $sortDirection = null, $dqlFilter = null)
     {
         return $this->get('easyadmin.query_builder')->createSearchQueryBuilder($this->entity, $searchQuery, $sortField, $sortDirection, $dqlFilter);
+    }
+
+    protected function findAll($entityClass, $page = 1, $maxPerPage = 15, $sortField = null, $sortDirection = null, $dqlFilter = null)
+    {
+        if ($entityClass !== Contributor::class)
+          return parent::findAll($entityClass, $page, $maxPerPage, $sortField, $sortDirection, $dqlFilter);
+
+        $contributors = $this->contributorRepository->getAll();
+
+        $paginator = new Pagerfanta(new ArrayAdapter($contributors));
+        $paginator->setMaxPerPage($maxPerPage);
+        $paginator->setCurrentPage($page);
+
+        return $paginator;
     }
 
     public function searchNoticeAction()

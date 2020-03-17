@@ -1,18 +1,103 @@
-Title: Titre
-Criteria: Critères
-Criterion: Critère
-Matching contexts: Pages cibles
-Url regex: Regex
-Url to redirect: Url
+# Entities
+MatchingContext: Pages cibles
+Notice: Bulle
+RestrictedContext: Page exclue
+Domain: Nom de domaine
+DomainsSet: Groupe de noms de domaines
 Contributor: Contributeur
 User: Utilisateur
-Name: Prénom Nom
-Organization: Organisation
-Image file: Avatar
-Public: Publique
-Private: Privée
-Visibility: Visibilité
-Resource: Pour en savoir plus
-Editor: Editeur
-Channel's name: Nom du channel
+
+# Easy Admin Menu
+menu:
+  notices: Bulles
+  matchingContexts: Pages cibles
+  expiredNotices: Bulles expirées
+  restrictedContexts: Pages exclues (global)
+  domains: Domaines
+  domainsSets: Groupes de domaines
+  contributors: Contributeurs
+  users: Utilisateurs
+
+# Easy Admin Pages
+title:
+  notices: Toutes les bulles
+  expiredNotices: Bulle expirées
+  matchingContexts: Ensemble de pages cibles
+  restrictedContexts: Pages exclues (global)
+  domains: Noms de domaines
+  domainsSets: Groupes de domaines
+  contributors: Contributeurs
+  users: Utilisateurs
+
+# Entities properties
+notices:
+  id: id
+  contributor: Contributeur
+  message: Message
+  visibility: Visibilité
+  note: Note privée
+  matchingContexts: Ensemble de pages cibles
+  badgedRatingCount: Badges
+  displayedRatingCount: Vues
+  unfoldedRatingCount: Dépliées
+  clickedRatingCount: Cliquées
+  likedRatingCount: Aimées
+  dislikedRatingCount: Déplu
+  dismissedRatingCount: Ignorées
+  created: Crée
+  updated: Modifiée
+  expires: Expire
+  unpublishedOnExpiration: Dépubliée à expiration
+  groups:
+    publication: Publication
+    matchingContexts: Ensembles de pages cibles
+
+matchingContexts:
+  exampleUrl: Exemple d’URL
+  domainsSets: Groupe de domaines
+  domainNames: Domaines
+  urlRegex: Regex recherchée
+  excludeUrlRegex: Regex d'exclusion
+  notice: Bulle
+
+restrictedContexts:
+  urlRegex: URL Regex d’exclusion globale
+
+domains:
+  id: Id
+  name: Nom du domaine
+  sets: Groupes de domaines liés
+  sets.nb: Nb de groupes de domaines liés
+  matchingContexts: Pages cibles liées
+  matchingContexts.nb: Nb d’ensemble de pages cibles liées
+  createdAt: Créé le
+  updatedAt: Modifié le
+
+domainsSets:
+  id: Id
+  name: Nom du groupe
+  domains: Domaines
+  domains.nb: Nb de domaines
+  matchingContexts: Pages cibles liées
+  matchingContexts.nb: Nb d’ensemble de pages cibles liées
+  createdAt: Créé le
+  updatedAt: Modifié le
+
+contributors:
+  id: Id
+  name: Nom
+  intro: Intro
+  activeSubscriptionsCount: Nombre d’abonnés actifs
+  enabled: Activé
+  imageFile: Image d’avatar
+
+users:
+  username: Identifiant
+  email: Adresse e-mail
+  enabled: Activé
+  plainPassword: Mot de passe
+  lastLogin: Dernière connexion
+  roles: Rôles
+
+# Easy Admin
 form.label.delete: Supprimer l’image ?

@@ -16,17 +16,19 @@ class VisibilityType extends AbstractType
     {
         $resolver->setDefaults(array(
             'choices' => array(
+                'Archived' => NoticeVisibility::ARCHIVED_VISIBILITY(),
                 'Private' => NoticeVisibility::PRIVATE_VISIBILITY(),
-                'Public' => NoticeVisibility::PUBLIC_VISIBILITY()
+                'Public' => NoticeVisibility::PUBLIC_VISIBILITY(),
             ),
             'empty_data' =>  NoticeVisibility::getDefault()
         ));
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getParent(){
+    public function getParent()
+    {
         return ChoiceType::class;
     }
 }

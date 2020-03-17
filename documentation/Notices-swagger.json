@@ -381,7 +381,7 @@
           },
           "visibility" : {
             "type" : "string",
-            "enum" : [ "public", "private" ]
+            "enum" : [ "public", "private", "archived" ]
           }
         },
         "required" : [ "contributor", "created", "id", "intention", "message", "ratings", "source", "visibility" ]

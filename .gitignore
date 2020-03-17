@@ -18,3 +18,4 @@
 /web/uploads/
 /web/media/
 .env_prod
+/.clever.json
