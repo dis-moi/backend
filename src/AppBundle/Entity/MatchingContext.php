@@ -215,6 +215,13 @@ class MatchingContext
      */
     public function getExcludeUrlRegex() : ?string
     {
+        $noticeExcludeRegex = $this->getNotice()->getExcludeUrlRegex();
+
+        if ($noticeExcludeRegex)
+        {
+            return '('.$this->excludeUrlRegex.'|'.$noticeExcludeRegex.')';
+        }
+
         return $this->excludeUrlRegex;
     }
 

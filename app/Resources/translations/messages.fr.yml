@@ -1,5 +1,5 @@
 # Entities
-MatchingContext: Pages cibles
+MatchingContext: Pages cibles
 Notice: Bulle
 RestrictedContext: Page exclue
 Domain: Nom de domaine
@@ -36,9 +36,9 @@ notices:
   message: Message
   visibility: Visibilité
   note: Note privée
-  matchingContexts: Ensemble de pages cibles
-  badgedRatingCount: Badges
-  displayedRatingCount: Vues
+  matchingContexts: Ensemble de pages cibles
+  badgedRatingCount: Badges
+  displayedRatingCount: Vues
   unfoldedRatingCount: Dépliées
   clickedRatingCount: Cliquées
   likedRatingCount: Aimées
@@ -48,6 +48,7 @@ notices:
   updated: Modifiée
   expires: Expire
   unpublishedOnExpiration: Dépubliée à expiration
+  excludeUrlRegex: Regex d'exclusion (Pour toute la bulle)
   groups:
     publication: Publication
     matchingContexts: Ensembles de pages cibles

@@ -43,6 +43,13 @@ class Notice
     private $matchingContexts;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="excludeUrlRegex", type="text", nullable=true)
+     */
+    private $excludeUrlRegex;
+
+    /**
      * @ORM\Column(name="intention", type="string", options={"default" : "other"})
      */
     private $intention;
@@ -327,5 +334,21 @@ class Notice
     public function setUnpublishedOnExpiration(bool $unpublishedOnExpiration)
     {
         $this->unpublishedOnExpiration = $unpublishedOnExpiration;
+    }
+
+    /**
+     * @return string?
+     */
+    public function getExcludeUrlRegex(): ?string
+    {
+        return $this->excludeUrlRegex;
+    }
+
+    /**
+     * @param string? $excludeUrlRegex
+     */
+    public function setExcludeUrlRegex(?string $excludeUrlRegex): void
+    {
+        $this->excludeUrlRegex = $excludeUrlRegex;
     }
 }
