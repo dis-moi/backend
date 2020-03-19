@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -34,6 +35,7 @@ class Contributor implements ImageUploadable
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @Assert\Length(max="255")
      */
     private $name;
 
@@ -41,6 +43,7 @@ class Contributor implements ImageUploadable
      * @var string
      *
      * @ORM\Column(name="intro", type="string", length=255, nullable=true)
+     * @Assert\Length(max="255")
      */
     private $intro;
 

@@ -59,6 +59,10 @@ class MatchingContextType extends AbstractType
                 'required' => false,
                 'label' => 'matchingContexts.excludeUrlRegex'
             ])
+            ->add('description', TextType::class, [
+                'required' => false,
+                'label' => 'matchingContexts.description'
+            ])
         ;
     }
     
