@@ -38,10 +38,10 @@ class DomainsSet
   /**
    * @var Collection
    *
-   * @ORM\ManyToMany(targetEntity="MatchingContext", mappedBy="domainsSets", cascade={"persist", "remove"})
+   * @ORM\ManyToMany(targetEntity="MatchingContext", mappedBy="domainsSets")
    * @ORM\JoinTable(name="matching_context_domains_set",
-   *   joinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")},
-   *   inverseJoinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")}
+   *   joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
+   *   inverseJoinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")}
    *   )
    */
   private $matchingContexts;
@@ -49,7 +49,7 @@ class DomainsSet
   /**
    * @var Collection
    *
-   * @ORM\ManyToMany(targetEntity="DomainName", inversedBy="sets", cascade={"persist", "remove"})
+   * @ORM\ManyToMany(targetEntity="DomainName", inversedBy="sets")
    * @ORM\JoinTable(name="domains_set_domain",
    *   joinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")},
    *   inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
