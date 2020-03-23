@@ -6,12 +6,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Domain
  *
  * @ORM\Table(name="domains_set")
  * @ORM\Entity
+ * @UniqueEntity("name")
  */
 class DomainsSet
 {
