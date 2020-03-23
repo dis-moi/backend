@@ -66,7 +66,7 @@ class MatchingContext
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="DomainName", inversedBy="matchingContexts", cascade={"persist", "remove"})
+     * @ORM\ManyToMany(targetEntity="DomainName", inversedBy="matchingContexts")
      * @ORM\JoinTable(name="matching_context_domain_name",
      *   joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
      *   inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
@@ -77,9 +77,9 @@ class MatchingContext
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="DomainsSet", inversedBy="matchingContexts", cascade={"persist", "remove"})
-     * @ORM\JoinTable(name="domains_set_domain",
-     *   joinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")},
+     * @ORM\ManyToMany(targetEntity="DomainsSet", inversedBy="matchingContexts")
+     * @ORM\JoinTable(name="matching_context_domains_set",
+     *   joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
      *   inverseJoinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")}
      *   )
      */
