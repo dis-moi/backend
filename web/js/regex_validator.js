@@ -96,6 +96,8 @@
             return new NoticeExcludeRegExpStateError('Cette regexp est invalide' + " (Détails: " + e.message + ")");
         }
 
+        const catch_all_regex_msg = 'Cette regexp est trop large';
+
         //Regex matching way too many urls
         if (regexs[0].test('//google.com') && regexs[0].test('//lemonde.fr')) {
             return new RegExpStateError(catch_all_regex_msg + " : elle couvre //google.com et //lemonde.fr")
@@ -107,7 +109,6 @@
         }
 
         // Regex matching too many urls
-        const catch_all_regex_msg = 'Cette regexp est trop large';
         if (regexs[0].test('//google.com?foo=bar&bar=foo')) {
             return new RegExpStateError(catch_all_regex_msg + " : elle couvre //google.com?foo=bar&bar=foo");
         }
@@ -211,8 +212,12 @@
             form.on(
                 'submit',
                 function (event) {
-                    const status = validateAllMatchingContexts();
-                    if (status instanceof ValidationError) {
+                    try {
+                        const status = validateAllMatchingContexts();
+                        if (status instanceof ValidationError) {
+                            event.preventDefault();
+                        }
+                    } catch (e) {
                         event.preventDefault();
                     }
                 }
