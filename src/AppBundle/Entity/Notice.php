@@ -68,7 +68,7 @@ class Notice
     private $message;
 
     /**
-     * @var string
+     * @var string?
      *
      * @ORM\Column(name="note", type="text", nullable=true)
      */
@@ -214,7 +214,7 @@ class Notice
         return $this->note;
     }
 
-    public function setNote(string $note)
+    public function setNote(?string $note)
     {
         $this->note = $note;
     }
