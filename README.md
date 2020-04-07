@@ -38,5 +38,11 @@ $ aphp bin/console assets:install web
 $ dMigrate && dLoad
 ```
 
+##### Code style
+To fix code style automatically, run the following command:
+```
+aphp composer fix
+```
+
 #### Admin access
 [http://localhost:8088](http://localhost:8088)

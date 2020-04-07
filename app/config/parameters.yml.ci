@@ -3,7 +3,7 @@ parameters:
     database_host: db
     database_port: ''
     database_user: root
-    database_name: craft
+    database_name: kraftbackenddev
     database_password: password
     mailer_transport: smtp
     mailer_host: 127.0.0.1
