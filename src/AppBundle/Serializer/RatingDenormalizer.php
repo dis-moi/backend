@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Serializer;
 
 use AppBundle\Entity\Embeddable\Context;
@@ -8,15 +9,15 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class RatingDenormalizer implements DenormalizerInterface
 {
-    public function supportsDenormalization($data, $type, $format = null) : bool
+    public function supportsDenormalization($data, $type, $format = null): bool
     {
-        return $type === Rating::class;
+        return Rating::class === $type;
     }
 
-    public function denormalize($data, $class, $format = null, array $context = array()) : Rating
+    public function denormalize($data, $class, $format = null, array $context = []): Rating
     {
         $notice = $context['notice'];
-        if(! $notice || ! $notice instanceof Notice) {
+        if (!$notice || !$notice instanceof Notice) {
             throw new \LogicException('RatingDenormalizer->denormalize must be called with a Notice instance in the context.');
         }
 

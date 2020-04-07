@@ -13,16 +13,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MatchingContextType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('exampleUrl', TextType::class, [
                 'required' => false,
-                'label' => 'matchingContexts.exampleUrl'
+                'label' => 'matchingContexts.exampleUrl',
             ])
             ->add('domainsSets', EntityType::class, [
                 'class' => DomainsSet::class,
@@ -30,7 +26,7 @@ class MatchingContextType extends AbstractType
                 'required' => false,
                 'multiple' => true,
                 'attr' => [
-                    'data-widget' => 'select2'
+                    'data-widget' => 'select2',
                 ],
                 'choice_attr' => function (DomainsSet $domainsSet) {
                     return [
@@ -39,9 +35,9 @@ class MatchingContextType extends AbstractType
                                 return $domainName->getName();
                             },
                             $domainsSet->getDomains()->toArray()
-                        ))
+                        )),
                     ];
-                }
+                },
             ])
             ->add('domainNames', EntityType::class, [
                 'class' => DomainName::class,
@@ -49,30 +45,27 @@ class MatchingContextType extends AbstractType
                 'required' => false,
                 'multiple' => true,
                 'attr' => [
-                    'data-widget' => 'select2'
-                ]
+                    'data-widget' => 'select2',
+                ],
             ])
             ->add('urlRegex', TextareaType::class, [
-                'label' => 'matchingContexts.urlRegex'
+                'label' => 'matchingContexts.urlRegex',
             ])
             ->add('excludeUrlRegex', TextareaType::class, [
                 'required' => false,
-                'label' => 'matchingContexts.excludeUrlRegex'
+                'label' => 'matchingContexts.excludeUrlRegex',
             ])
             ->add('description', TextType::class, [
                 'required' => false,
-                'label' => 'matchingContexts.description'
+                'label' => 'matchingContexts.description',
             ])
         ;
     }
-    
-    /**
-     * @param OptionsResolver $resolver
-     */
+
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\MatchingContext'
-        ));
+        $resolver->setDefaults([
+            'data_class' => 'AppBundle\Entity\MatchingContext',
+        ]);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Application\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
@@ -6,13 +7,10 @@ use Doctrine\DBAL\Schema\Schema;
 
 class Version20181228130847 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         // rename tables
         $this->addSql('RENAME TABLE recommendation TO notice');
@@ -32,17 +30,12 @@ class Version20181228130847 extends AbstractMigration
         $this->addSql('ALTER TABLE rating CHANGE recommendation_id notice_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE rating ADD CONSTRAINT FK_D22944587D540AB FOREIGN KEY (notice_id) REFERENCES notice (id)');
         $this->addSql('CREATE INDEX IDX_D22944587D540AB ON rating (notice_id)');
-
-
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('RENAME TABLE notice TO recommendation');
         $this->addSql('RENAME TABLE source TO resource');

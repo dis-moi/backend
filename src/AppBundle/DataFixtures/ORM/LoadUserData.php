@@ -1,11 +1,12 @@
 <?php
+
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\User;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use AppBundle\Entity\User;
 
 class LoadUserData implements FixtureInterface, ContainerAwareInterface
 {
@@ -21,7 +22,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
-
         $userManager = $this->container->get('fos_user.user_manager');
         $factory = $this->container->get('security.encoder_factory');
 
@@ -31,8 +31,7 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $user->setUsername('lmem');
         $user->setEmail('infra@lmem.net');
         $user->setEnabled(true);
-        $user->setRoles(array('ROLE_SUPER_ADMIN'));
-
+        $user->setRoles(['ROLE_SUPER_ADMIN']);
 
         // the 'security.password_encoder' service requires Symfony 2.6 or higher
         $encoder = $factory->getEncoder($user);

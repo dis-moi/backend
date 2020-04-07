@@ -10,13 +10,10 @@ use Doctrine\DBAL\Schema\Schema;
  */
 class Version20181229142424 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE rating DROP FOREIGN KEY FK_D22944587D540AB');
         $this->addSql('ALTER TABLE rating CHANGE context_datetime context_timestamp DATETIME DEFAULT NULL, ADD context_geolocation VARCHAR(255) DEFAULT NULL');
@@ -25,13 +22,10 @@ class Version20181229142424 extends AbstractMigration
         $this->addSql('ALTER TABLE rating ADD CONSTRAINT FK_D22944587D540AB FOREIGN KEY (notice_id) REFERENCES notice (id)');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE rating DROP FOREIGN KEY FK_D88926227D540AB');
         $this->addSql('ALTER TABLE rating CHANGE context_timestamp context_datetime DATETIME DEFAULT \'NULL\', DROP context_geolocation');

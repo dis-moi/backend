@@ -21,7 +21,6 @@ class MatchingContextRepository extends BaseRepository
     }
 
     /**
-     * @param array|null $contributors
      * @return array
      */
     public function findAllPublicMatchingContext(array $contributors = null)

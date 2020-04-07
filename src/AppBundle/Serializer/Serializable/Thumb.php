@@ -1,6 +1,5 @@
 <?php
 
-
 namespace AppBundle\Serializer\Serializable;
 
 class Thumb
@@ -34,19 +33,18 @@ class Thumb
         }
     }
 
-    static function fromName(string $name) : self
+    public static function fromName(string $name): self
     {
         return new self($name);
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getFilter() : string
+    public function getFilter(): string
     {
         return $this->filter;
     }
-
 }

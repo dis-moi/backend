@@ -2,26 +2,28 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityListener\MatchingContextListener;
 use AppBundle\Helper\Escaper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\EntityListener\MatchingContextListener;
 
-function flatten(array $array) {
-    $return = array();
-    array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
+function flatten(array $array)
+{
+    $return = [];
+    array_walk_recursive($array, function ($a) use (&$return) { $return[] = $a; });
+
     return $return;
 }
 
-function escape(string $dn, ?Escaper $e) {
-  return is_null($e) ? $dn : $e::escape($dn);
+function escape(string $dn, ?Escaper $e)
+{
+    return is_null($e) ? $dn : $e::escape($dn);
 }
 
-
 /**
- * MatchingContext
+ * MatchingContext.
  *
  * @ORM\Table(name="matching_context")
  * @ORM\Entity
@@ -123,7 +125,7 @@ class MatchingContext
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -132,26 +134,26 @@ class MatchingContext
         return $this->id;
     }
 
-    public function setExampleUrl(string $exampleUrl = null) : MatchingContext
+    public function setExampleUrl(string $exampleUrl = null): MatchingContext
     {
         $this->exampleUrl = $exampleUrl;
 
         return $this;
     }
 
-    public function getExampleUrl() : ?string
+    public function getExampleUrl(): ?string
     {
         return $this->exampleUrl;
     }
 
-    public function setDomainName(string $domainName = null) : MatchingContext
+    public function setDomainName(string $domainName = null): MatchingContext
     {
         $this->domainName = $domainName;
 
         return $this;
     }
 
-    public function getDomainName() : ?string
+    public function getDomainName(): ?string
     {
         return $this->domainName;
     }
@@ -163,7 +165,7 @@ class MatchingContext
      *
      * @return MatchingContext
      */
-    public function setUrlRegex($urlRegex) : self
+    public function setUrlRegex($urlRegex): self
     {
         $this->urlRegex = $urlRegex;
 
@@ -171,63 +173,50 @@ class MatchingContext
     }
 
     /**
-     * Get urlRegex
-     *
-     * @return string
+     * Get urlRegex.
      */
-    public function getUrlRegex() : string
+    public function getUrlRegex(): string
     {
         return $this->urlRegex;
     }
 
-    /**
-     * @param Escaper|null $escaper
-     * @return string
-     */
-    public function getFullUrlRegex(Escaper $escaper = null) : string
+    public function getFullUrlRegex(Escaper $escaper = null): string
     {
         $domains = $this->getAllRelatedDomains();
-        if (count($domains) === 0) {
+        if (0 === count($domains)) {
             return $this->urlRegex;
         }
 
         return '('.join('|',
           array_map(function (DomainName $dn) use ($escaper) {
-            return escape($dn->getName(), $escaper);
+              return escape($dn->getName(), $escaper);
           }, $domains)
         ).')'.$this->urlRegex;
     }
 
     /**
-     * @param null|string $excludeUrlRegex
+     * @param string|null $excludeUrlRegex
      *
      * @return MatchingContext
      */
-    public function setExcludeUrlRegex($excludeUrlRegex) : self
+    public function setExcludeUrlRegex($excludeUrlRegex): self
     {
         $this->excludeUrlRegex = $excludeUrlRegex;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getExcludeUrlRegex() : ?string
+    public function getExcludeUrlRegex(): ?string
     {
         return $this->excludeUrlRegex;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getCompleteExcludeUrlRegex() : ?string
+    public function getCompleteExcludeUrlRegex(): ?string
     {
         $noticeExcludeRegex = $this->getNotice()->getExcludeUrlRegex();
         $mcExcludeRegex = $this->getExcludeUrlRegex();
 
-        if ($noticeExcludeRegex && $mcExcludeRegex)
-        {
+        if ($noticeExcludeRegex && $mcExcludeRegex) {
             return '('.$mcExcludeRegex.'|'.$noticeExcludeRegex.')';
         }
 
@@ -235,13 +224,13 @@ class MatchingContext
     }
 
     /**
-     * Set description
+     * Set description.
      *
-     * @param null|string $description
+     * @param string|null $description
      *
      * @return MatchingContext
      */
-    public function setDescription($description) : self
+    public function setDescription($description): self
     {
         $this->description = $description;
 
@@ -249,23 +238,21 @@ class MatchingContext
     }
 
     /**
-     * Get description
-     *
-     * @return null|string
+     * Get description.
      */
-    public function getDescription() : ?string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * Set notice
+     * Set notice.
      *
      * @param Notice $notice
      *
      * @return MatchingContext
      */
-    public function setNotice(Notice $notice = null) : self
+    public function setNotice(Notice $notice = null): self
     {
         $this->notice = $notice;
 
@@ -273,16 +260,14 @@ class MatchingContext
     }
 
     /**
-     * Get notice
-     *
-     * @return Notice
+     * Get notice.
      */
-    public function getNotice() : Notice
+    public function getNotice(): Notice
     {
         return $this->notice;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return (is_null($this->getDescription())) ? 'you must set a description' : $this->getDescription();
     }
@@ -290,63 +275,57 @@ class MatchingContext
     /**
      * @return string?
      */
-    public function getQuerySelector() : ?string
+    public function getQuerySelector(): ?string
     {
         return $this->querySelector;
     }
 
     /**
      * @param string $querySelector
+     *
      * @return MatchingContext
      */
-    public function setQuerySelector($querySelector) : self
+    public function setQuerySelector($querySelector): self
     {
         $this->querySelector = $querySelector;
 
         return $this;
     }
 
-
-    /**
-     * @return Collection
-     */
     public function getDomainNames(): Collection
     {
         return $this->domainNames;
     }
 
-    public function addDomainName(DomainName $domainName) : self
+    public function addDomainName(DomainName $domainName): self
     {
         $this->domainNames[] = $domainName;
 
         return $this;
     }
 
-    public function removeDomainName(DomainName $domainName) : self
+    public function removeDomainName(DomainName $domainName): self
     {
         if ($this->domainNames->contains($domainName)) {
-          $this->domainNames->removeElement($domainName);
+            $this->domainNames->removeElement($domainName);
         }
 
         return $this;
     }
 
-    /**
-     * @return Collection
-     */
     public function getDomainsSets(): Collection
     {
         return $this->domainsSets;
     }
 
-    public function addDomainsSet(DomainsSet $domainsSet) : self
+    public function addDomainsSet(DomainsSet $domainsSet): self
     {
         $this->domainsSets[] = $domainsSet;
 
         return $this;
     }
 
-    public function removeDomainsSet(DomainsSet $domainsSet) : self
+    public function removeDomainsSet(DomainsSet $domainsSet): self
     {
         if ($this->domainsSets->contains($domainsSet)) {
             $this->domainsSets->removeElement($domainsSet);
@@ -358,7 +337,7 @@ class MatchingContext
     /**
      * @return DomainName[]
      */
-    public function getAllRelatedDomains() : array
+    public function getAllRelatedDomains(): array
     {
         return array_unique(array_merge(
             flatten(array_map(

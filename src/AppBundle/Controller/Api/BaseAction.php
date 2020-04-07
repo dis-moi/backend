@@ -23,6 +23,6 @@ abstract class BaseAction
 
     protected function serialize($content)
     {
-        return $this->serializer->serialize($content, 'json', ['groups' => [ 'v3:list' ]]);
+        return $this->serializer->serialize($content, 'json', ['groups' => ['v3:list']]);
     }
 }

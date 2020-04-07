@@ -31,7 +31,6 @@ class Context
     private $geolocation;
 
     /**
-     * @param \DateTime $datetime
      * @param string $url
      * @param string $geolocation
      */

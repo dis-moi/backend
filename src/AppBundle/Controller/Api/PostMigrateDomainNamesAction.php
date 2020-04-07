@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller\Api;
 
 use AppBundle\Entity\MatchingContext;
@@ -15,62 +16,54 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class PostMigrateDomainNamesAction extends BaseAction
 {
+    /**
+     * @var MatchingContextRepository
+     */
+    private $matchingContextRepository;
+    /**
+     * @var DomainNameRepository
+     */
+    private $domainNameRepository;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
-  /**
-   * @var MatchingContextRepository
-   */
-  private $matchingContextRepository;
-  /**
-   * @var DomainNameRepository
-   */
-  private $domainNameRepository;
-  /**
-   * @var EntityManagerInterface
-   */
-  private $entityManager;
-
-  public function __construct(
+    public function __construct(
     SerializerInterface $serializer,
     MatchingContextRepository $matchingContextRepository,
     DomainNameRepository $domainNameRepository,
     EntityManagerInterface $entityManager
-  )
-  {
-    parent::__construct($serializer);
-    $this->matchingContextRepository = $matchingContextRepository;
-    $this->domainNameRepository = $domainNameRepository;
-    $this->entityManager = $entityManager;
-  }
+  ) {
+        parent::__construct($serializer);
+        $this->matchingContextRepository = $matchingContextRepository;
+        $this->domainNameRepository = $domainNameRepository;
+        $this->entityManager = $entityManager;
+    }
 
-  /**
-   * @Route("/migrate/domains")
-   * @Method("POST")
-   */
-  public function __invoke(Request $request)
-  {
-    try
+    /**
+     * @Route("/migrate/domains")
+     * @Method("POST")
+     */
+    public function __invoke(Request $request)
     {
-      /** @var MatchingContext $mc */
-      foreach ($this->matchingContextRepository->findAll() as $mc)
-      {
-        $oldField = $mc->getDomainName();
+        try {
+            /** @var MatchingContext $mc */
+            foreach ($this->matchingContextRepository->findAll() as $mc) {
+                $oldField = $mc->getDomainName();
 
-        if ($oldField)
-        {
-          $domainName = $this->domainNameRepository->findOrCreate($oldField);
-          if(!$mc->getDomainNames()->contains($domainName))
-          {
-            $mc->addDomainName($domainName);
-          }
+                if ($oldField) {
+                    $domainName = $this->domainNameRepository->findOrCreate($oldField);
+                    if (!$mc->getDomainNames()->contains($domainName)) {
+                        $mc->addDomainName($domainName);
+                    }
+                }
+            }
+            $this->entityManager->flush();
+        } catch (Exception $e) {
+            throw new UnprocessableEntityHttpException($e->getMessage(), $e);
         }
-      }
-      $this->entityManager->flush();
-    }
-    catch (Exception $e)
-    {
-      throw new UnprocessableEntityHttpException($e->getMessage(), $e);
-    }
 
-    return new JsonResponse('', 204, [], true);
-  }
+        return new JsonResponse('', 204, [], true);
+    }
 }

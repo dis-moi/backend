@@ -4,9 +4,9 @@ namespace AppBundle\Serializer;
 
 use AppBundle\Entity\Notice;
 use AppBundle\Helper\DataConverter;
+use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 
 class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
@@ -17,21 +17,22 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
 
     /**
      * Sets the owning Normalizer object.
-     *
      */
     public function setNormalizer(NormalizerInterface $normalizer)
     {
         $this->normalizer = $normalizer;
     }
 
-    public function supportsNormalization($data, $format = null) : bool
+    public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof Notice;
     }
 
-    public function normalize($object, $format = null, array $context = array()) : array
+    public function normalize($object, $format = null, array $context = []): array
     {
-        if (!($object instanceof Notice)) throw new InvalidArgumentException();
+        if (!($object instanceof Notice)) {
+            throw new InvalidArgumentException();
+        }
 
         return [
             'contributor' => $this->normalizer->normalize($object->getContributor(), $format, $context),
@@ -42,13 +43,13 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
             'modified' => $this->formatDateTime($object->getUpdated()),
             'ratings' => [
                 'likes' => $object->getLikedRatingCount(),
-                'dislikes' => $object->getDislikedRatingCount()
+                'dislikes' => $object->getDislikedRatingCount(),
             ],
             'visibility' => $object->getVisibility()->getValue(),
         ];
     }
 
-    protected function formatDateTime(\DateTime $datetime) : string
+    protected function formatDateTime(\DateTime $datetime): string
     {
         return $datetime->format('c');
     }

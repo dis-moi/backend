@@ -12,10 +12,10 @@ class PostContributorRatingTest extends BaseApiE2eTestCase
         $contributor = static::$referenceRepository->getReference('contributor');
 
         $content = json_encode([
-            'ratingType' => 'subscribe'
+            'ratingType' => 'subscribe',
         ]);
 
-        static::$client->request('POST', '/api/v3/contributors/'. $contributor->getId() .'/ratings', [], [], [], $content);
+        static::$client->request('POST', '/api/v3/contributors/'.$contributor->getId().'/ratings', [], [], [], $content);
         $this->assertEquals(204, static::$client->getResponse()->getStatusCode());
     }
 }

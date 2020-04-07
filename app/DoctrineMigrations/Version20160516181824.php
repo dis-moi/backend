@@ -10,13 +10,10 @@ use Doctrine\DBAL\Schema\Schema;
  */
 class Version20160516181824 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' != $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('CREATE TABLE alternative (id INT AUTO_INCREMENT NOT NULL, recommendation_id INT DEFAULT NULL, urlToRedirect VARCHAR(255) NOT NULL, `label` VARCHAR(255) NOT NULL, description VARCHAR(255) DEFAULT NULL, INDEX IDX_EFF5DFAD173940B (recommendation_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE filter (id INT AUTO_INCREMENT NOT NULL, `label` VARCHAR(255) NOT NULL, description LONGTEXT DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
@@ -33,13 +30,10 @@ class Version20160516181824 extends AbstractMigration
         $this->addSql('ALTER TABLE source ADD CONSTRAINT FK_5F8A7F73D173940B FOREIGN KEY (recommendation_id) REFERENCES recommendation (id)');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' != $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE recommendation_filter DROP FOREIGN KEY FK_74D6F1E7D395B25E');
         $this->addSql('ALTER TABLE alternative DROP FOREIGN KEY FK_EFF5DFAD173940B');

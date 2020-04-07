@@ -13,7 +13,6 @@ use function Doctrine\ORM\QueryBuilder;
 
 class ContributorRepository extends BaseRepository
 {
-
     protected $noticeRepository;
 
     public function __construct(EntityManagerInterface $entityManager, NoticeRepository $noticeRepository)
@@ -25,7 +24,7 @@ class ContributorRepository extends BaseRepository
 
     public static function addActiveSubscriptionsCount(QueryBuilder $queryBuilder)
     {
-      return $queryBuilder
+        return $queryBuilder
         ->addSelect('count(s.extension) as activeSubscriptions')
         ->leftJoin('c.subscriptions', 's', Join::WITH, 's.created >= :freshnessDate OR s.updated >= :freshnessDate')
         ->groupBy('c.id')
@@ -34,11 +33,14 @@ class ContributorRepository extends BaseRepository
 
     public static function mergeActiveSubscriptionsCountWithContributor($result)
     {
-        if (!$result || !$result[0]) return null;
+        if (!$result || !$result[0]) {
+            return null;
+        }
 
         /** @var Contributor $contributor */
         $contributor = $result[0];
         $contributor->setActiveSubscriptionsCount($result['activeSubscriptions']);
+
         return $contributor;
     }
 
@@ -73,6 +75,7 @@ class ContributorRepository extends BaseRepository
 
     /**
      * @return Contributor | null
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getOne(int $id)
@@ -102,5 +105,4 @@ class ContributorRepository extends BaseRepository
         return $er->createQueryBuilder('c')
             ->orderBy('c.name', 'ASC');
     }
-
 }

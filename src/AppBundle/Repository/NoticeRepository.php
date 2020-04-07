@@ -9,7 +9,9 @@ class NoticeRepository extends BaseRepository
 {
     /**
      * @param int|null $id
+     *
      * @return Notice|null
+     *
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function getOne($id)
@@ -27,8 +29,8 @@ class NoticeRepository extends BaseRepository
     }
 
     /**
-     * @param QueryBuilder $queryBuilder
      * @param string $noticeAlias
+     *
      * @return QueryBuilder
      */
     public static function addNoticeExpirationLogic(QueryBuilder $queryBuilder, $noticeAlias = 'n')

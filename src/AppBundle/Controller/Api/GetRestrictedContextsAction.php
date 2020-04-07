@@ -29,5 +29,4 @@ class GetRestrictedContextsAction extends BaseAction
 
         return $this->createResponse($restrictedContexts);
     }
-
 }

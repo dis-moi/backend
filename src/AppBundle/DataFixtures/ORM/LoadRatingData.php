@@ -58,7 +58,7 @@ class LoadRatingData extends AbstractFixture implements DependentFixtureInterfac
     public function getDependencies()
     {
         return [
-            LoadNoticeData::class
+            LoadNoticeData::class,
         ];
     }
 }
