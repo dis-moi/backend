@@ -27,21 +27,22 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
 
     /**
      * Sets the owning Normalizer object.
-     *
      */
     public function setNormalizer(NormalizerInterface $normalizer)
     {
         $this->normalizer = $normalizer;
     }
 
-    public function supportsNormalization($data, $format = null) : bool
+    public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof Contributor;
     }
 
-    public function normalize($object, $format = null, array $context = array()) : array
+    public function normalize($object, $format = null, array $context = []): array
     {
-        if (!($object instanceof Contributor)) throw new InvalidArgumentException();
+        if (!($object instanceof Contributor)) {
+            throw new InvalidArgumentException();
+        }
         $exampleNotice = $object->getTheirMostLikedOrDisplayedNotice();
 
         return [
@@ -55,7 +56,7 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
                     'noticeId' => $exampleNotice->getId(),
                     'noticeUrl' => $this->router->generate(
                       'app_api_getnoticeaction__invoke',
-                      [ 'id' => $exampleNotice->getId() ],
+                      ['id' => $exampleNotice->getId()],
                       RouterInterface::ABSOLUTE_URL),
                 ],
                 'numberOfPublishedNotices' => $object->getNoticesCount(),
@@ -69,7 +70,7 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
         ];
     }
 
-    private static function avatarWithThumbs(Contributor $contributor) : Picture
+    private static function avatarWithThumbs(Contributor $contributor): Picture
     {
         return Picture::fromContributor($contributor)
             ->addThumb(Thumb::fromName(Thumb::SMALL))

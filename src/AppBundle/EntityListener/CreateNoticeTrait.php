@@ -3,8 +3,8 @@
 namespace AppBundle\EntityListener;
 
 use AppBundle\Entity\Notice;
-use \DateTime as DateTime;
 use AppBundle\Service\DateTimeImmutable;
+use DateTime as DateTime;
 
 trait CreateNoticeTrait
 {

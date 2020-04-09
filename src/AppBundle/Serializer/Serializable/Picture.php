@@ -1,8 +1,6 @@
 <?php
 
-
 namespace AppBundle\Serializer\Serializable;
-
 
 use AppBundle\Entity\Contributor;
 use AppBundle\Helper\ImageUploadable;
@@ -17,7 +15,7 @@ class Picture
         $this->uploadable = $uploadable;
     }
 
-    static function fromContributor(Contributor $contributor) : self
+    public static function fromContributor(Contributor $contributor): self
     {
         return new self($contributor);
     }
@@ -27,14 +25,14 @@ class Picture
         return $this->uploadable;
     }
 
-    public function addThumb(Thumb $thumb) : self
+    public function addThumb(Thumb $thumb): self
     {
         $this->thumbs[$thumb->getName()] = $thumb;
 
         return $this;
     }
 
-    public function getThumbs() : array
+    public function getThumbs(): array
     {
         return $this->thumbs;
     }

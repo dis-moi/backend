@@ -45,7 +45,8 @@
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.0",
-        "doctrine/doctrine-fixtures-bundle": "^2.3"
+        "doctrine/doctrine-fixtures-bundle": "^2.3",
+        "friendsofphp/php-cs-fixer": "^2.16"
     },
     "scripts": {
         "post-install-cmd": [
@@ -63,6 +64,9 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
+        ],
+        "fix": [
+            "php-cs-fixer fix"
         ]
     },
     "extra": {

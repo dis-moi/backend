@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Contributor
+ * Contributor.
  *
  * @ORM\Table(name="contributor")
  * @ORM\Entity
@@ -67,7 +67,6 @@ class Contributor implements ImageUploadable
      */
     private $notices;
 
-
     /**
      * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor")
      * @ORM\OrderBy({"created" = "DESC"})
@@ -91,7 +90,7 @@ class Contributor implements ImageUploadable
     private $enabled = true;
 
     /**
-     * @var DateTime $updatedAt
+     * @var DateTime
      *
      * Needed to trigger forced update when an avatar is uploaded
      * @ORM\Column(name="updated_at", type="datetime", nullable = true)
@@ -99,7 +98,7 @@ class Contributor implements ImageUploadable
     private $updatedAt;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -108,7 +107,7 @@ class Contributor implements ImageUploadable
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -118,7 +117,7 @@ class Contributor implements ImageUploadable
     }
 
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      *
@@ -132,7 +131,7 @@ class Contributor implements ImageUploadable
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -141,14 +140,14 @@ class Contributor implements ImageUploadable
         return $this->name;
     }
 
-    public function setIntro(?string $intro) : Contributor
+    public function setIntro(?string $intro): Contributor
     {
         $this->intro = $intro;
 
         return $this;
     }
 
-    public function getIntro() : ?string
+    public function getIntro(): ?string
     {
         return $this->intro;
     }
@@ -185,9 +184,7 @@ class Contributor implements ImageUploadable
     }
 
     /**
-     * Add notice
-     *
-     * @param Notice $notice
+     * Add notice.
      *
      * @return Contributor
      */
@@ -199,60 +196,71 @@ class Contributor implements ImageUploadable
     }
 
     /**
-     * Remove notice
-     *
-     * @param Notice $notice
+     * Remove notice.
      */
     public function removeNotice(Notice $notice)
     {
         $this->notices->removeElement($notice);
     }
 
-    public function getNotices() : ?Collection
+    public function getNotices(): ?Collection
     {
         return $this->notices;
     }
 
-    public function getPublicNotices() : ?Collection
+    public function getPublicNotices(): ?Collection
     {
-        return $this->getNotices()->filter(function(Notice $notice) {
+        return $this->getNotices()->filter(function (Notice $notice) {
             return $notice->hasPublicVisibility();
         });
     }
 
-    public function getNoticesCount() : int
+    public function getNoticesCount(): int
     {
         if ($notices = $this->getPublicNotices()) {
             return $this->getPublicNotices()->count();
+        } else {
+            return 0;
         }
-        else return 0;
     }
 
-    public function getTheirMostLikedOrDisplayedNotice() : ?Notice
+    public function getTheirMostLikedOrDisplayedNotice(): ?Notice
     {
         if ($notices = $this->getPublicNotices()) {
             $noticesArray = $notices->toArray();
+
             return array_reduce($noticesArray, function (?Notice $acc, Notice $curr) {
                 // First iteration...
-                if (is_null($acc)) return $curr;
+                if (is_null($acc)) {
+                    return $curr;
+                }
 
                 // Compare likes at the first place...
                 $currLikes = $curr->getLikedRatingCount();
                 $accLikes = $acc->getLikedRatingCount();
-                if ($currLikes > $accLikes) return $curr;
-                if ($currLikes < $accLikes) return $acc;
+                if ($currLikes > $accLikes) {
+                    return $curr;
+                }
+                if ($currLikes < $accLikes) {
+                    return $acc;
+                }
 
                 // Likes equality, compare displays then...
                 $currDisplays = $curr->getDisplayedRatingCount();
                 $accDisplays = $acc->getDisplayedRatingCount();
-                if ($currDisplays > $accDisplays) return $curr;
-                if ($currDisplays < $accDisplays) return $acc;
+                if ($currDisplays > $accDisplays) {
+                    return $curr;
+                }
+                if ($currDisplays < $accDisplays) {
+                    return $acc;
+                }
 
                 // Likes and Displays equalities, just pick the first in...
                 return $acc;
             });
+        } else {
+            return null;
         }
-        else return null;
     }
 
     /*
@@ -280,11 +288,10 @@ class Contributor implements ImageUploadable
     }
 
     /**
-     * ⚠ Should not be used outside of repo
-     * @param int $activeSubscriptionsCount
+     * ⚠ Should not be used outside of repo.
      */
     public function setActiveSubscriptionsCount(int $activeSubscriptionsCount): void
     {
-      $this->activeSubscriptionsCount = $activeSubscriptionsCount;
+        $this->activeSubscriptionsCount = $activeSubscriptionsCount;
     }
 }

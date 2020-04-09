@@ -2,17 +2,17 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\EntityListener\NoticeListener;
+use AppBundle\Helper\NoticeIntention;
+use AppBundle\Helper\NoticeVisibility;
+use AppBundle\Service\DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Helper\NoticeVisibility;
-use AppBundle\Helper\NoticeIntention;
-use AppBundle\EntityListener\NoticeListener;
-use AppBundle\Service\DateTimeImmutable;
 
 /**
- * Notice
+ * Notice.
  *
  * @ORM\Table(name="notice")
  * @ORM\Entity
@@ -82,28 +82,28 @@ class Notice
     private $ratings;
 
     /**
-     * @var \DateTime $updated
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     private $updated;
 
     /**
-     * @var \DateTime $created
+     * @var \DateTime
      *
      * @ORM\Column(type="datetime")
      */
     private $created;
 
     /**
-     * @var \DateTimeInterface $expires
+     * @var \DateTimeInterface
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $expires = null;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -115,24 +115,24 @@ class Notice
         $this->visibility = NoticeVisibility::getDefault();
     }
 
-    public function getId() : ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setMessage(string $message) : Notice
+    public function setMessage(string $message): Notice
     {
         $this->message = strip_tags($message, '<p><a>');
 
         return $this;
     }
 
-    public function getMessage() : ?string
+    public function getMessage(): ?string
     {
         return $this->message;
     }
 
-    public function addMatchingContext(MatchingContext $matchingContext) : Notice
+    public function addMatchingContext(MatchingContext $matchingContext): Notice
     {
         $matchingContext->setNotice($this);
 
@@ -146,7 +146,7 @@ class Notice
         $this->matchingContexts->removeElement($matchingContext);
     }
 
-    public function getMatchingContexts() : ?Collection
+    public function getMatchingContexts(): ?Collection
     {
         return $this->matchingContexts;
     }
@@ -154,62 +154,64 @@ class Notice
     /**
      * @throw InvalidArgumentException
      */
-    public function setIntention(NoticeIntention $intention) : Notice
+    public function setIntention(NoticeIntention $intention): Notice
     {
         $this->intention = $intention->getValue();
 
         return $this;
     }
 
-    public function getIntention() : ?NoticeIntention
+    public function getIntention(): ?NoticeIntention
     {
         if (!$this->intention) {
             return NoticeIntention::getDefault();
         }
+
         return NoticeIntention::get($this->intention);
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return sprintf('(id:%d) [%s] %s', $this->getId(), $this->getContributor(), $this->getMessage());
     }
 
-    public function setContributor(Contributor $contributor = null) : Notice
+    public function setContributor(Contributor $contributor = null): Notice
     {
         $this->contributor = $contributor;
 
         return $this;
     }
 
-    public function getContributor() : ?Contributor
+    public function getContributor(): ?Contributor
     {
         return $this->contributor;
     }
 
-    public function getVisibility() : ?NoticeVisibility
+    public function getVisibility(): ?NoticeVisibility
     {
         if (!$this->visibility) {
             return NoticeVisibility::getDefault();
         }
+
         return NoticeVisibility::get($this->visibility);
     }
 
     /**
      * @throw InvalidArgumentException
      */
-    public function setVisibility(NoticeVisibility $visibility) : Notice
+    public function setVisibility(NoticeVisibility $visibility): Notice
     {
         $this->visibility = $visibility->getValue();
 
         return $this;
     }
 
-    public function hasPublicVisibility() : bool
+    public function hasPublicVisibility(): bool
     {
         return $this->getVisibility() === NoticeVisibility::PUBLIC_VISIBILITY();
     }
 
-    public function getNote() : ?string
+    public function getNote(): ?string
     {
         return $this->note;
     }
@@ -219,7 +221,7 @@ class Notice
         $this->note = $note;
     }
 
-    public function getRatings() : ?Collection
+    public function getRatings(): ?Collection
     {
         return $this->ratings;
     }
@@ -266,18 +268,19 @@ class Notice
 
     protected function getRatingCount(string $type): int
     {
-        return $this->getRatings()->filter(function(Rating $rating) use ($type) {
+        return $this->getRatings()->filter(function (Rating $rating) use ($type) {
             return $rating->getType() === $type;
         })->count();
     }
 
-    protected function getRatingBalance(string $typeUp , string $typeDown): int
+    protected function getRatingBalance(string $typeUp, string $typeDown): int
     {
         $balance = $this->getRatingCount($typeUp) - $this->getRatingCount($typeDown);
+
         return $balance > 0 ? $balance : 0;
     }
 
-    public function addRating(Rating $rating) : Notice
+    public function addRating(Rating $rating): Notice
     {
         $this->ratings[] = $rating;
 
@@ -289,7 +292,7 @@ class Notice
         $this->ratings->removeElement($rating);
     }
 
-    public function getCreated() : ?\DateTime
+    public function getCreated(): ?\DateTime
     {
         return $this->created;
     }
@@ -300,7 +303,7 @@ class Notice
         $this->setUpdated($created);
     }
 
-    public function getUpdated() : ?\DateTime
+    public function getUpdated(): ?\DateTime
     {
         return $this->updated;
     }
@@ -310,12 +313,13 @@ class Notice
         $this->updated = $updated;
     }
 
-    public function getExpires() : ?\DateTimeInterface
+    public function getExpires(): ?\DateTimeInterface
     {
         return $this->expires;
     }
 
-    public function setInitialExpires(DateTimeImmutable $dateTime) {
+    public function setInitialExpires(DateTimeImmutable $dateTime)
+    {
         if (empty($this->expires)) {
             $this->expires = $dateTime->oneYearAhead();
         }
@@ -326,7 +330,7 @@ class Notice
         $this->expires = $expires;
     }
 
-    public function isUnpublishedOnExpiration() : bool
+    public function isUnpublishedOnExpiration(): bool
     {
         return $this->unpublishedOnExpiration;
     }

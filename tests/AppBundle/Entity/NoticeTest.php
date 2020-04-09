@@ -2,17 +2,16 @@
 
 namespace Tests\AppBundle\Entity;
 
+use AppBundle\Entity\Contributor;
 use AppBundle\Entity\MatchingContext;
 use AppBundle\Entity\Notice;
-use AppBundle\Entity\Contributor;
-use DateTimeImmutable;
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Tests\FixtureAwareWebTestCase;
 
 class NoticeTest extends FixtureAwareWebTestCase
 {
-
     /**
      * @var EntityManagerInterface
      */
@@ -27,7 +26,7 @@ class NoticeTest extends FixtureAwareWebTestCase
 
     protected function _getReference(string $name)
     {
-       return static::$referenceRepository->getReference($name);
+        return static::$referenceRepository->getReference($name);
     }
 
     public function testUpdated()
@@ -61,7 +60,7 @@ class NoticeTest extends FixtureAwareWebTestCase
 
         $notice = new Notice();
         $notice->setContributor($contributor);
-        $notice->setMessage("Dumb message...");
+        $notice->setMessage('Dumb message...');
 
         $created = $notice->getCreated();
         $expires = $notice->getExpires();

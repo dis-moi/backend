@@ -60,6 +60,6 @@ class GetContributorsTest extends BaseApiE2eTestCase
 
         $this->assertEquals($mc->getExampleUrl(), $payload[0]['contribution']['example']['matchingUrl']);
         $this->assertEquals($notice->getId(), $payload[0]['contribution']['example']['noticeId']);
-        $this->assertStringEndsWith("/api/v3/notices/".$notice->getId(), $payload[0]['contribution']['example']['noticeUrl']);
+        $this->assertStringEndsWith('/api/v3/notices/'.$notice->getId(), $payload[0]['contribution']['example']['noticeUrl']);
     }
 }

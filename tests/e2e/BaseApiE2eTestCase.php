@@ -8,6 +8,7 @@ abstract class BaseApiE2eTestCase extends FixtureAwareWebTestCase
 {
     /**
      * @param string $url
+     *
      * @return array the response payload
      */
     protected function makeApiRequest($url)

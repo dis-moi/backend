@@ -9,19 +9,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VisibilityType extends AbstractType
 {
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'choices' => array(
+        $resolver->setDefaults([
+            'choices' => [
                 'Archived' => NoticeVisibility::ARCHIVED_VISIBILITY(),
                 'Private' => NoticeVisibility::PRIVATE_VISIBILITY(),
                 'Public' => NoticeVisibility::PUBLIC_VISIBILITY(),
-            ),
-            'empty_data' =>  NoticeVisibility::getDefault()
-        ));
+            ],
+            'empty_data' => NoticeVisibility::getDefault(),
+        ]);
     }
 
     /**

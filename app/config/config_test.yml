@@ -19,6 +19,6 @@ doctrine:
     dbal:
         driver:   pdo_mysql
         host:     dbtest
-        dbname:   craft
+        dbname:   kraftbackenddev
         user:     root
         password: password

@@ -6,8 +6,8 @@ use AppBundle\Controller\Api\GetContributorAction;
 use AppBundle\Repository\ContributorRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class GetContributorActionTest extends TestCase
 {

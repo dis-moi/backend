@@ -3,12 +3,10 @@
  * Created by PhpStorm.
  * User: insitu
  * Date: 21/02/19
- * Time: 18:01
+ * Time: 18:01.
  */
 
-
 namespace AppBundle\EventListener;
-
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,7 +15,6 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class HttpExceptionListener
 {
-
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $exception = $event->getException();
@@ -31,7 +28,8 @@ class HttpExceptionListener
         }
     }
 
-    private function isJsonRequest(Request $request) {
+    private function isJsonRequest(Request $request)
+    {
         return 'json' === $request->getContentType();
     }
 }

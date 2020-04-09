@@ -39,9 +39,8 @@ class PostNoticeRatingAction extends BaseAction
         }
 
         try {
-          $rating = $this->serializer->deserialize($request->getContent(), Rating::class, 'json', ['notice' => $notice]);
-        }
-        catch (\Exception $e) {
+            $rating = $this->serializer->deserialize($request->getContent(), Rating::class, 'json', ['notice' => $notice]);
+        } catch (\Exception $e) {
             throw new UnprocessableEntityHttpException($e->getMessage(), $e);
         }
 

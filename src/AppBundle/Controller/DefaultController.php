@@ -16,7 +16,6 @@ class DefaultController extends Controller
 
     /**
      * DefaultController constructor.
-     * @param RatingRepository $ratingRepository
      */
     public function __construct(RatingRepository $ratingRepository)
     {
@@ -25,11 +24,12 @@ class DefaultController extends Controller
 
     /**
      * @Route("/debug-sentry")
+     *
      * @throws Exception
      */
     public function debug_sentry()
     {
-      throw new Exception('My first Sentry error!');
+        throw new Exception('My first Sentry error!');
     }
 
     /**
@@ -46,8 +46,8 @@ class DefaultController extends Controller
     /**
      * @Route("/notice-graph/{id}", name="notice_graph", options={"expose"=true})
      */
-    public function noticeGraphAction(Request $request, Notice $notice) {
-
+    public function noticeGraphAction(Request $request, Notice $notice)
+    {
         $badgeData = $this->ratingRepository
             ->getGraphDataByNoticeTypes($notice, [Rating::BADGE]);
         $displayData = $this->ratingRepository
@@ -71,7 +71,7 @@ class DefaultController extends Controller
             'click_data' => array_values($clickData),
             'like_data' => array_values($likeData),
             'dislike_data' => array_values($dislikeData),
-            'dismiss_data' => array_values($dismissData)
+            'dismiss_data' => array_values($dismissData),
         ]);
     }
 }

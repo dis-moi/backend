@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller\Api;
 
 use Domain\Service\SubscriptionsTrackingService;
@@ -12,36 +13,33 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class PostSubscriptionsAction extends BaseAction
 {
-  /**
-   * @var SubscriptionsTrackingService
-   */
-  private $subscriptionsTrackingService;
+    /**
+     * @var SubscriptionsTrackingService
+     */
+    private $subscriptionsTrackingService;
 
-  public function __construct(SerializerInterface $serializer, SubscriptionsTrackingService $subscriptionsTrackingService)
-  {
-    parent::__construct($serializer);
-    $this->subscriptionsTrackingService = $subscriptionsTrackingService;
-  }
-
-  /**
-   * @Route("/subscriptions/{extensionId}")
-   * @Method("POST")
-   */
-  public function __invoke(Request $request)
-  {
-    $extensionId = $request->get('extensionId', null);
-
-    $contributorsIds = json_decode($request->getContent());
-
-    try
+    public function __construct(SerializerInterface $serializer, SubscriptionsTrackingService $subscriptionsTrackingService)
     {
-      $this->subscriptionsTrackingService->refreshSubscriptions($extensionId, $contributorsIds);
-    }
-    catch (Exception $e)
-    {
-      throw new UnprocessableEntityHttpException($e->getMessage(), $e);
+        parent::__construct($serializer);
+        $this->subscriptionsTrackingService = $subscriptionsTrackingService;
     }
 
-    return new JsonResponse('', 204, [], true);
-  }
+    /**
+     * @Route("/subscriptions/{extensionId}")
+     * @Method("POST")
+     */
+    public function __invoke(Request $request)
+    {
+        $extensionId = $request->get('extensionId', null);
+
+        $contributorsIds = json_decode($request->getContent());
+
+        try {
+            $this->subscriptionsTrackingService->refreshSubscriptions($extensionId, $contributorsIds);
+        } catch (Exception $e) {
+            throw new UnprocessableEntityHttpException($e->getMessage(), $e);
+        }
+
+        return new JsonResponse('', 204, [], true);
+    }
 }

@@ -41,7 +41,7 @@ abstract class FixtureAwareWebTestCase extends WebTestCase
         $fixtureDir = '../src/AppBundle/DataFixtures/ORM';
 
         $loader = new ContainerAwareLoader($client->getContainer());
-        $loader->loadFromDirectory(sprintf("%s/%s", $rootDir, $fixtureDir));
+        $loader->loadFromDirectory(sprintf('%s/%s', $rootDir, $fixtureDir));
         static::$referenceRepository = new ProxyReferenceRepository(static::$client->getContainer()->get('doctrine')->getManager());
         $purger = new ORMPurger();
         $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=0'));
