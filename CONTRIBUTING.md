@@ -9,17 +9,15 @@ The following is a set of guidelines for contributing to DisMoi.
 These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 
-#### Table Of Contents
+## Code of conduct
 
-[Code of Conduct](#code-of-conduct)
+This project and everyone participating in it is governed by the [DisMoi Code of Conduct](CODE_OF_CONDUCT.md).
+By participating, you are expected to uphold this code.
 
-[How Can I Contribute?](#how-can-i-contribute)
+## Lang
 
-[Styleguides](#styleguides)
-
-## Code of Conduct
-
-This project and everyone participating in it is governed by the [DisMoi Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. 
+Most members of the team do speak :fr: **French** but not all as their mother tongue.
+Since the team is international, we use :gb: **English** as the default lang in code, docs, issues, etc.
 
 ## How Can I Contribute?
 
@@ -105,9 +103,11 @@ While the prerequisites above must be satisfied prior to having your pull reques
 
 All JavaScript must adhere to [PHP The Right Way](https://phptherightway.com/#code_style_guide) code style.
 
+We also use [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) to enforce @Symfony code style.
+
 ### Git Commit Messages
 
-We use Angular commit messages guidelines
+We use [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) messages guidelines
 
 Each commit message consists of a **header**, a **body** and a **footer**.  The header has a special
 format that includes a **type**, a **scope** and a **subject**:

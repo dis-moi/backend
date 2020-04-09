@@ -1,32 +1,41 @@
-Backend DisMoi
+DisMoi Backend
 ================
 
-➡ [Site DisMoi](https://www.dismoi.io)
+[![Build Status](https://semaphoreci.com/api/v1/projects/1ab935cc-487c-4be9-92a0-b0c90098cd58/1038377/shields_badge.svg)](https://semaphoreci.com/lmem/kraft-backend)
 
-L’information vient à vous, au moment où vous en avez besoin
+> _Dis moi_ means _Tell me_ in :fr: French.
 
-Internautes, media, experts vous informent directement sur les pages web visitées
+**DisMoi** is a web extension empowering anyone to post additional information on a web page.
+When you follow someone, its information will show up when you visit the commented web page.
 
-Dismoi est une plateforme de services web et mobile d’information contextuelle.
+To lean more about the uses cases, visits the :fr: [**DisMoi** Website](https://www.dismoi.io/).
 
-Elle permet à tout un chacun d’être librement informé en fonction de son contexte d’action, quelque soit sa situation : visite d’une page web, entrée dans un lieu, évaluation d’un produit dans un magasin, lecture d’un article de presse, etc. 
+This the backend API and backoffice serving [**DisMoi** Extension](https://github.com/dis-moi/extension).
 
-Réciproquement, Dismoi permet au porteur d’information (journaliste, commerçant, militant, association, expert, acteur public, citoyen…) de la transmettre en fonction du contexte du destinataire, dans les situations où il en a vraiment besoin : prévention contre une arnaque, alternative à un produit, décryptage d’une fakenews, expérience d’un proche, recommandation d’un contenu, etc. 
+## Contributing
 
-Par exemple, une association peut prévenir un consommateur que le produit qu’il consulte a été testé et comparé avec d’autres, et qu’il existe de meilleures alternatives.
+You’re welcome to help ! Please read the [**DisMoi** Contributing Guidelines](CONTRIBUTING.md).
 
-Grâce à Dismoi, le diffuseur n’a plus besoin d’exploiter les données personnelles des personnes pour les cibler. Et la valeur de son information n’est plus soumise au diktat de l’actualité : elle est affichée à ceux qui en ont besoin. 
+## Follow us
+- 🌐 Web: https://www.dismoi.io
+- 🐦 Twitter: https://twitter.com/DisMoiCompagnon
 
-La première brique de la plateforme a été lancée en octobre 2019 sous forme d’extension navigateur Chrome et Firefox sur ordinateur/tablette. Elle permet aux internautes, médias et experts de poster et recevoir des informations en fonction de la page web visitée. Il existe aujourd’hui plus de 400 contributions visibles sur des milliers de pages web, par plus de 6000 utilisateurs.
+## LICENSE
 
-Cette application a 2 responsabilités :
-- API for the [DisMoi extension](https://github.com/dis-moi/extension/)
-- Interface d’administration
+[GNU GPL v3](LICENSE)
 
-## Suivez-nous:
-- 🌐 Site : https://www.dismoi.io
-- 🐦 Twitter : https://twitter.com/Bulles_du_Web
-
-##### Staging Status
-
-[![Build Status](https://semaphoreci.com/api/v1/projects/1ab935cc-487c-4be9-92a0-b0c90098cd58/1038377/shields_badge.svg)](https://semaphoreci.com/lmem/kraft-backend) [![Assertible status](https://assertible.com/apis/0a0c7a46-c0ff-4fc8-87fc-1cc1e5f933d4/status?api_token=2eF0Xz6R6s6CKi3Y&environment=staging)](https://assertible.com/dashboard#/services/0a0c7a46-c0ff-4fc8-87fc-1cc1e5f933d4/results)
+> Le Même en Mieux est un assistant d’achat indépendant des vendeurs et des marques.
+> Copyright (C) 2016 INSITU SAS
+>
+> This program is free software: you can redistribute it and/or modify
+> it under the terms of the GNU General Public License as published by
+> the Free Software Foundation, either version 3 of the License, or
+> (at your option) any later version.
+>
+> This program is distributed in the hope that it will be useful,
+> but WITHOUT ANY WARRANTY; without even the implied warranty of
+> MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+> GNU General Public License for more details.
+>
+> You should have received a copy of the GNU General Public License
+> along with this program. If not, see <http://www.gnu.org/licenses/>.
