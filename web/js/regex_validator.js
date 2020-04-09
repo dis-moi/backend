@@ -160,7 +160,7 @@
             noticeExcludeField.value,
             exampleField.value,
             loose
-        ) : undefined;
+        ) : undefined;
 
         regexField.setCustomValidity('');
         matchingContextExcludeField.setCustomValidity('');
