@@ -12,7 +12,7 @@ To lean more about the uses cases, visits the :fr: [**DisMoi** Website](https://
 
 This the backend API and backoffice serving [**DisMoi** Extension](https://github.com/dis-moi/extension).
 
-## Contributing
+## Contributing
 
 You’re welcome to help ! Please read the [**DisMoi** Contributing Guidelines](CONTRIBUTING.md).
 

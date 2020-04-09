@@ -50,9 +50,13 @@ Provide more context by answering these questions:
 
 Unsure where to begin contributing ? You can start by looking through these [Help wanted issues][help-wanted] issues.
 
-#### Local development
+### Local development
 
-##### Dev (w/ docker)
+#### Environment Variables
+
+You can edit .env to your liking (optional). This file should be .gitignored some time. 
+
+#### Dev (w/ docker)
 
 The first run may take few minutes since images are to be built,
 composer has to install project dependencies and doctrine has to
@@ -62,7 +66,7 @@ migrate databases and load fixtures. Subsequent runs are much faster.
 $ docker-compose up
 ```
 
-##### Aliases
+#### Aliases
 
 Some aliases are conveniently made available... 
 
@@ -73,7 +77,7 @@ $ aphp bin/console assets:install web
 $ dMigrate && dLoad
 ```
 
-##### Tests
+#### Tests
 
 Setup and migrate test database and run phpunit:
 
@@ -81,7 +85,7 @@ Setup and migrate test database and run phpunit:
 $ runtests
 ```
 
-##### Admin access
+#### Admin access
 [http://localhost:8088](http://localhost:8088)
 
 
@@ -168,6 +172,13 @@ reference GitHub issues that this commit **Closes**.
 
 **Breaking Changes** should start with the word `BREAKING CHANGE:` with a space or two newlines. The rest of the commit message is then used for this.
 
+## Deployment
+
+Here’s some information on how to deploy to [CleverCloud](https://www.clever-cloud.com):
+
+[Using CleverCloud](docs/using_clever_cloud.md) 
+
+--------------------------------------------
 
 Thanks! :heart: :heart: :heart:
 

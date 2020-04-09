@@ -19,3 +19,4 @@
 /web/media/
 .env_prod
 /.clever.json
+.wakatime-project
