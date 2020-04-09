@@ -9,27 +9,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IntentionType extends AbstractType
 {
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'choices' => array(
+        $resolver->setDefaults([
+            'choices' => [
                 'Approval' => NoticeIntention::APPROVAL(),
                 'Disapproval' => NoticeIntention::DISAPPROVAL(),
                 'Information' => NoticeIntention::INFORMATION(),
                 'Alternative' => NoticeIntention::ALTERNATIVE(),
                 'Other' => NoticeIntention::OTHER(),
-            ),
-            'empty_data' =>  NoticeIntention::getDefault(),
-        ));
+            ],
+            'empty_data' => NoticeIntention::getDefault(),
+        ]);
     }
 
     /**
      * @return mixed
      */
-    public function getParent(){
+    public function getParent()
+    {
         return ChoiceType::class;
     }
 }

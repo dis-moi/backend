@@ -1,8 +1,6 @@
 <?php
 
-
 namespace AppBundle\Serializer;
-
 
 use AppBundle\Serializer\Serializable\Picture;
 use AppBundle\Serializer\Serializable\Thumb;
@@ -40,16 +38,18 @@ class PictureNormalizer implements NormalizerInterface, NormalizerAwareInterface
         $this->normalizer = $normalizer;
     }
 
-    public function supportsNormalization($data, $format = null) : bool
+    public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof Picture;
     }
 
-    public function normalize($object, $format = null, array $context = array()) : array
+    public function normalize($object, $format = null, array $context = []): array
     {
-        if (!($object instanceof Picture)) throw new InvalidArgumentException();
-
+        if (!($object instanceof Picture)) {
+            throw new InvalidArgumentException();
+        }
         $path = $this->uploader->asset($object->getUploadable(), 'imageFile');
+
         return array_map(
             function (Thumb $thumb) use ($path) {
                 return [
@@ -59,5 +59,4 @@ class PictureNormalizer implements NormalizerInterface, NormalizerAwareInterface
             $object->getThumbs()
         );
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller;
 
 use AppBundle\Repository\MatchingContextRepository;
@@ -30,7 +31,7 @@ class AdminApiController
             throw new NotFoundHttpException('No matching contexts exists');
         }
 
-        $json = $this->serializer->serialize($matchingContexts, 'json', ['groups' => [ 'v3:list' ]]);
+        $json = $this->serializer->serialize($matchingContexts, 'json', ['groups' => ['v3:list']]);
 
         return new JsonResponse($json, 200, [], true);
     }

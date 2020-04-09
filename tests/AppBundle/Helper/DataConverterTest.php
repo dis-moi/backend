@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\AppBundle\Helper;
 
 use AppBundle\Helper\DataConverter;
@@ -8,8 +9,8 @@ class DataConverterTest extends TestCase
 {
     public function test_convert_newline_to_paragraph_converts_single_line()
     {
-        $content = "My simple content";
-        $this->assertEquals("<p>My simple content</p>", DataConverter::convertNewLinesToParagraphs($content));
+        $content = 'My simple content';
+        $this->assertEquals('<p>My simple content</p>', DataConverter::convertNewLinesToParagraphs($content));
     }
 
     public function test_convert_newline_to_paragraph_converts_regular_multi_lines()

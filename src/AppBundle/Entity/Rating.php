@@ -25,7 +25,7 @@ class Rating
     const DISMISS = 'dismiss';
     const UNDISMISS = 'undismiss';
 
-    const REPORT  = 'report';
+    const REPORT = 'report';
 
     /**
      * @var int
@@ -63,18 +63,17 @@ class Rating
     private $reason;
 
     /**
-     * @param Notice $notice
      * @param string $type
      * @param array $context
      * @param string $reason
      */
-   public function __construct(Notice $notice, $type, Context $context, $reason)
-   {
-       $this->setNotice($notice);
-       $this->setType($type);
-       $this->setContext($context);
-       $this->setReason($reason);
-   }
+    public function __construct(Notice $notice, $type, Context $context, $reason)
+    {
+        $this->setNotice($notice);
+        $this->setType($type);
+        $this->setContext($context);
+        $this->setReason($reason);
+    }
 
     /**
      * @return int
@@ -139,9 +138,6 @@ class Rating
         return $this->context;
     }
 
-    /**
-     * @param Context $context
-     */
     public function setContext(Context $context)
     {
         $this->context = $context;

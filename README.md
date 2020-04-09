@@ -23,7 +23,6 @@ You’re welcome to help ! Please read the [**DisMoi** Contributing Guidelines
 ## LICENSE
 
 [GNU GPL v3](LICENSE)
-
 > Le Même en Mieux est un assistant d’achat indépendant des vendeurs et des marques.
 > Copyright (C) 2016 INSITU SAS
 >

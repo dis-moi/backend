@@ -28,8 +28,8 @@ class GetMatchingContextsAction extends BaseAction
     public function __invoke(Request $request)
     {
         $contributors = $request->get('contributors', null);
-        if(!empty($contributors) && is_string($contributors)) {
-            $contributors = explode(',', rtrim(ltrim($contributors,'['), ']'));
+        if (!empty($contributors) && is_string($contributors)) {
+            $contributors = explode(',', rtrim(ltrim($contributors, '['), ']'));
         }
         $matchingContexts = $this->repository->findAllPublicMatchingContext($contributors);
 

@@ -7,13 +7,10 @@ use Doctrine\DBAL\Schema\Schema;
 
 class Version20181228134252 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE notice ADD notice_type_id INT NOT NULL, CHANGE description message LONGTEXT NOT NULL, CHANGE title title VARCHAR(255) DEFAULT NULL COLLATE utf8_unicode_ci');
 
@@ -25,7 +22,7 @@ class Version20181228134252 extends AbstractMigration
 
     /**
      * Retrieve `recommendation_criterion` table data & setup new notice *-1 Type w/ the first criterion/type found
-     * then delete the table
+     * then delete the table.
      */
     public function postUp(Schema $schema)
     {
@@ -53,13 +50,10 @@ class Version20181228134252 extends AbstractMigration
         $this->connection->exec('CREATE INDEX IDX_480D45C2C54C8C93 ON notice (notice_type_id)');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE notice DROP FOREIGN KEY FK_480D45C2C54C8C93');
         $this->addSql('DROP INDEX IDX_480D45C2C54C8C93 ON notice');

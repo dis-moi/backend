@@ -4,21 +4,19 @@ namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\DomainName;
 use AppBundle\Entity\DomainsSet;
-use AppBundle\Entity\MatchingContext;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadDomainData extends AbstractFixture implements DependentFixtureInterface
 {
-
     public function load(ObjectManager $manager)
     {
-        $domainName1 = new DomainName("first.domainname.fr");
+        $domainName1 = new DomainName('first.domainname.fr');
         $manager->persist($domainName1);
         $this->addReference('first_domain', $domainName1);
 
-        $domainName2 = new DomainName("second.domainname.fr");
+        $domainName2 = new DomainName('second.domainname.fr');
         $manager->persist($domainName2);
         $this->addReference('second_domain', $domainName2);
 

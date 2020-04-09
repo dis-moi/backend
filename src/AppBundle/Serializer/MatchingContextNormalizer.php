@@ -1,11 +1,12 @@
 <?php
+
 namespace AppBundle\Serializer;
 
 use AppBundle\Entity\MatchingContext;
 use AppBundle\Helper\PregEscaper;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class MatchingContextNormalizer implements NormalizerInterface
 {
@@ -18,24 +19,26 @@ class MatchingContextNormalizer implements NormalizerInterface
         $this->escaper = $escaper;
     }
 
-    public function supportsNormalization($data, $format = null) : bool
+    public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof MatchingContext;
     }
 
-    public function normalize($object, $format = null, array $context = array()) : array
+    public function normalize($object, $format = null, array $context = []): array
     {
-        if (!($object instanceof MatchingContext)) throw new InvalidArgumentException();
+        if (!($object instanceof MatchingContext)) {
+            throw new InvalidArgumentException();
+        }
 
         return array_filter([
             'noticeId' => $object->getNotice()->getId(),
             'noticeUrl' => $this->router->generate(
                 'app_api_getnoticeaction__invoke',
-                [ 'id' => $object->getNotice()->getId() ],
+                ['id' => $object->getNotice()->getId()],
                 RouterInterface::ABSOLUTE_URL),
             'urlRegex' => $object->getFullUrlRegex($this->escaper),
             'excludeUrlRegex' => $object->getCompleteExcludeUrlRegex(),
-            'querySelector' => $object->getQuerySelector()
+            'querySelector' => $object->getQuerySelector(),
         ]);
     }
 }

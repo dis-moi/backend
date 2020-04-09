@@ -3,23 +3,22 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\Entity\Notice;
-use AppBundle\Helper\NoticeVisibility;
 use AppBundle\Helper\NoticeIntention;
+use AppBundle\Helper\NoticeVisibility;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class LoadNoticeData extends AbstractFixture implements DependentFixtureInterface
 {
-
     public function load(ObjectManager $manager)
     {
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor'));
-        $notice->setMessage("<a href=\"http://link2.com\">baz</a>
+        $notice->setMessage('<a href="http://link2.com">baz</a>
 message
-<a href=\"http://link.com?foo=bar\">foo</a>
-with https://bulles.fr.");
+<a href="http://link.com?foo=bar">foo</a>
+with https://bulles.fr.');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::ALTERNATIVE());
         $this->addReference('notice_type_ecology', $notice);
@@ -27,7 +26,7 @@ with https://bulles.fr.");
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor2'));
-        $notice->setMessage("");
+        $notice->setMessage('');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::ALTERNATIVE());
         $this->addReference('notice_type_ecology_and_politics', $notice);
@@ -35,7 +34,7 @@ with https://bulles.fr.");
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor'));
-        $notice->setMessage("");
+        $notice->setMessage('');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::ALTERNATIVE());
         $notice->setExpires((new \DateTime())->modify('+3days'));
@@ -44,7 +43,7 @@ with https://bulles.fr.");
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor3'));
-        $notice->setMessage("");
+        $notice->setMessage('');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::OTHER());
         $this->addReference('notice_other', $notice);
@@ -52,7 +51,7 @@ with https://bulles.fr.");
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor_disabled'));
-        $notice->setMessage("");
+        $notice->setMessage('');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::INFORMATION());
         $this->addReference('notice_disabled', $notice);
@@ -60,7 +59,7 @@ with https://bulles.fr.");
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor2'));
-        $notice->setMessage("");
+        $notice->setMessage('');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::INFORMATION());
         $notice->setExpires((new \DateTime())->modify('-3days'));
@@ -69,7 +68,7 @@ with https://bulles.fr.");
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor2'));
-        $notice->setMessage("");
+        $notice->setMessage('');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::INFORMATION());
         $notice->setExpires((new \DateTime())->modify('-3days'));
@@ -79,13 +78,13 @@ with https://bulles.fr.");
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor'));
-        $notice->setMessage("Celle-ci n’est pas publique");
+        $notice->setMessage('Celle-ci n’est pas publique');
         $this->addReference('notice_private', $notice);
         $manager->persist($notice);
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor_fame'));
-        $notice->setMessage("This notice has been liked 3 times and displayed 4 times.");
+        $notice->setMessage('This notice has been liked 3 times and displayed 4 times.');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::ALTERNATIVE());
         $this->addReference('notice_liked', $notice);
@@ -93,7 +92,7 @@ with https://bulles.fr.");
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor_fame'));
-        $notice->setMessage("This notice has been liked 3 times and displayed 5 times.");
+        $notice->setMessage('This notice has been liked 3 times and displayed 5 times.');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::ALTERNATIVE());
         $this->addReference('notice_liked_displayed', $notice);
@@ -101,7 +100,7 @@ with https://bulles.fr.");
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor_fame'));
-        $notice->setMessage("This notice has been liked 2 times and displayed 6 times.");
+        $notice->setMessage('This notice has been liked 2 times and displayed 6 times.');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::ALTERNATIVE());
         $this->addReference('notice_displayed', $notice);
@@ -109,7 +108,7 @@ with https://bulles.fr.");
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor_fame'));
-        $notice->setMessage("I am archived");
+        $notice->setMessage('I am archived');
         $notice->setVisibility(NoticeVisibility::ARCHIVED_VISIBILITY());
         $notice->setIntention(NoticeIntention::ALTERNATIVE());
         $this->addReference('notice_type_ecology_archived', $notice);

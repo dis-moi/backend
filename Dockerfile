@@ -24,15 +24,19 @@ RUN	apk add --no-cache --virtual .build-deps \
 		mysql-dev \
 		zlib-dev \
 		freetype-dev \
-        libjpeg-turbo-dev \
-        libpng-dev
+		libjpeg-turbo-dev \
+		libpng-dev \
+		libxml2-dev
+
 RUN	docker-php-ext-configure zip --with-libzip && \
 	docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include && \
 	docker-php-ext-install -j$(nproc) \
 		intl \
 		pdo_mysql \
 		zip \
-		gd
+		gd \
+		xml \
+		mbstring
 
 RUN pecl install apcu-${APCU_VERSION} && docker-php-ext-enable apcu opcache
 RUN pecl install xdebug-2.7.2 && docker-php-ext-enable xdebug

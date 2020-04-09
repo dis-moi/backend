@@ -10,16 +10,12 @@ use Doctrine\DBAL\Schema\Schema;
  */
 class Version20181228142357 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE contributor DROP organization, DROP updated_at, DROP image');
-
 
         $this->addSql('DROP INDEX IDX_665341C1D173940B ON matching_context');
         $this->addSql('ALTER TABLE matching_context CHANGE notice_id notice_id INT DEFAULT NULL, CHANGE description description VARCHAR(255) DEFAULT NULL, CHANGE excludeUrlRegex excludeUrlRegex VARCHAR(255) DEFAULT NULL');
@@ -37,13 +33,10 @@ class Version20181228142357 extends AbstractMigration
         $this->addSql('ALTER TABLE notice_channel ADD CONSTRAINT FK_FF9A87EB72F5A1AA FOREIGN KEY (channel_id) REFERENCES channel (id) ON DELETE CASCADE');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema)
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE contributor ADD organization VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, ADD updated_at DATETIME DEFAULT \'NULL\', ADD image VARCHAR(255) DEFAULT \'NULL\' COLLATE utf8_unicode_ci');
         $this->addSql('CREATE INDEX IDX_665341C1D173940B ON matching_context (notice_id)');

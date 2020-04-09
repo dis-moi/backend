@@ -10,9 +10,6 @@ use Doctrine\DBAL\Schema\Schema;
  */
 class Version20161026114206 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needsv
@@ -26,15 +23,11 @@ class Version20161026114206 extends AbstractMigration
         $this->addSql('INSERT INTO alternative(recommendation_id, label, urlToRedirect) SELECT recommendation_id, label, url  FROM resource_copy;');
     }
 
-    /**
-     * @param Schema $schema
-     */
     public function down(Schema $schema)
     {
         $this->addSql('DELETE FROM resource');
         $this->addSql('INSERT resource SELECT * FROM resource_copy');
         $this->addSql('DELETE FROM alternative');
         $this->addSql('INSERT alternative SELECT * FROM alternative_copy');
-
     }
 }

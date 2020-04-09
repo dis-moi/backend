@@ -1,4 +1,5 @@
 <?php
+
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Contributor;
@@ -36,7 +37,6 @@ class AdminController extends BaseAdminController
         $this->get('fos_user.user_manager')->updateUser($user, false);
     }
 
-
     // Override Notice Search
     // Jalil: Override but does the same as super-class ?
     protected function createNoticeSearchQueryBuilder($entityClass, $searchQuery, array $searchableFields, $sortField = null, $sortDirection = null, $dqlFilter = null)
@@ -46,8 +46,9 @@ class AdminController extends BaseAdminController
 
     protected function findAll($entityClass, $page = 1, $maxPerPage = 15, $sortField = null, $sortDirection = null, $dqlFilter = null)
     {
-        if ($entityClass !== Contributor::class)
-          return parent::findAll($entityClass, $page, $maxPerPage, $sortField, $sortDirection, $dqlFilter);
+        if (Contributor::class !== $entityClass) {
+            return parent::findAll($entityClass, $page, $maxPerPage, $sortField, $sortDirection, $dqlFilter);
+        }
 
         $contributors = $this->contributorRepository->getAll();
 
@@ -63,7 +64,7 @@ class AdminController extends BaseAdminController
         $query = trim($this->request->query->get('query'));
         // if the search query is empty, redirect to the 'list' action
         if ('' === $query) {
-            $queryParameters = array_replace($this->request->query->all(), array('action' => 'list', 'query' => null));
+            $queryParameters = array_replace($this->request->query->all(), ['action' => 'list', 'query' => null]);
             $queryParameters = array_filter($queryParameters);
 
             return $this->redirect($this->get('router')->generate('easyadmin', $queryParameters));
@@ -82,17 +83,17 @@ class AdminController extends BaseAdminController
         );
         $fields = $this->entity['list']['fields'];
 
-        $this->dispatch(EasyAdminEvents::POST_SEARCH, array(
+        $this->dispatch(EasyAdminEvents::POST_SEARCH, [
             'fields' => $fields,
             'paginator' => $paginator,
-        ));
+        ]);
 
-        $parameters = array(
+        $parameters = [
             'paginator' => $paginator,
             'fields' => $fields,
             'delete_form_template' => $this->createDeleteForm($this->entity['name'], '__id__')->createView(),
-        );
+        ];
 
-        return $this->executeDynamicMethod('render<EntityName>Template', array('search', $this->entity['templates']['list'], $parameters));
+        return $this->executeDynamicMethod('render<EntityName>Template', ['search', $this->entity['templates']['list'], $parameters]);
     }
 }

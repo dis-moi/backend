@@ -19,4 +19,5 @@
 /web/media/
 .env_prod
 /.clever.json
+.php_cs.cache
 .wakatime-project

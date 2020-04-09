@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * RestrictedContext
+ * RestrictedContext.
  *
  * @ORM\Table(name="restricted_context")
  * @ORM\Entity
@@ -31,21 +31,18 @@ class RestrictedContext
      */
     private $urlRegex;
 
-
     /**
      * Get id.
-     *
      */
-    public function getId() : ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
      * Set urlRegex.
-     *
      */
-    public function setUrlRegex(string $urlRegex) : RestrictedContext
+    public function setUrlRegex(string $urlRegex): RestrictedContext
     {
         $this->urlRegex = $urlRegex;
 
@@ -54,9 +51,8 @@ class RestrictedContext
 
     /**
      * Get urlRegex.
-     *
      */
-    public function getUrlRegex() : ?string
+    public function getUrlRegex(): ?string
     {
         return $this->urlRegex;
     }

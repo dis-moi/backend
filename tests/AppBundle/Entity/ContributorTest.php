@@ -2,8 +2,8 @@
 
 namespace Tests\AppBundle\Entity;
 
-use AppBundle\Entity\Notice;
 use AppBundle\Entity\Contributor;
+use AppBundle\Entity\Notice;
 use Tests\FixtureAwareWebTestCase;
 
 class ContributorTest extends FixtureAwareWebTestCase
