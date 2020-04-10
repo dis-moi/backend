@@ -1,0 +1,2100 @@
+{
+  "id": "1265686",
+  "username": "adistance11user",
+  "email": null,
+  "firstname": null,
+  "lastname": null,
+  "metadatas": {},
+  "books": [
+    {
+      "id": "9782047344088",
+      "title": "Missions 2de - Anglais A2\/B1 - 2010 - Manuel num\u00e9rique \u00e9l\u00e8ve",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-03-31T12:42:30+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/3\/3-1_2-9782047344088.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/3\/3-1_2-9782047344088.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/3\/3-1_2-9782047344088.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047344088",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Anglais"
+        ],
+        "level_title": [
+          "2de"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/3\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/3\/online",
+      "size": 382,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047344118",
+      "title": "BORDAS APUNTATE 2nde",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-03-31T17:46:16+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/66\/66-1_2-9782047344118.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/66\/66-1_2-9782047344118.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/66\/66-1_2-9782047344118.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047344118",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Espagnol"
+        ],
+        "level_title": [
+          "2de"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/66\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/66\/online",
+      "size": 471,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047344149",
+      "title": "BORDAS WELTEN NEU 2nde",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-03-31T18:06:53+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/67\/67-1_2-9782047344149.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/67\/67-1_2-9782047344149.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/67\/67-1_2-9782047344149.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047344149",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Allemand"
+        ],
+        "level_title": [
+          "2de"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/67\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/67\/online",
+      "size": 261,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047345054",
+      "title": "NEW Missions 2de - Anglais A2\/B1 - 2014 - Manuel num\u00e9rique \u00e9l\u00e8ve",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-03-31T19:19:29+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/70\/70-1_2-9782047345054.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/70\/70-1_2-9782047345054.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/70\/70-1_2-9782047345054.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047345054",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Anglais"
+        ],
+        "level_title": [
+          "2de"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/70\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/70\/online",
+      "size": 473,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047345092",
+      "title": "SES 1re ES - Coll\u00b0 Passard & Perl - 2014 - Manuel num\u00e9rique \u00e9l\u00e8ve",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-03-31T20:30:33+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/72\/72-1_2-9782047345092.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/72\/72-1_2-9782047345092.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/72\/72-1_2-9782047345092.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047345092",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Sciences \u00e9conomiques et sociales"
+        ],
+        "level_title": [
+          "1re ES"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/72\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/72\/online",
+      "size": 748,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047346327",
+      "title": "Indice Tle S enseignement sp\u00e9cifique - 2012 - Manuel num\u00e9rique \u00e9l\u00e8ve",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-03-31T21:43:07+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/74\/74-1_2-9782047346327.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/74\/74-1_2-9782047346327.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/74\/74-1_2-9782047346327.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047346327",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Math\u00e9matiques"
+        ],
+        "level_title": [
+          "Terminale S"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/74\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/74\/online",
+      "size": 351,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047346235",
+      "title": "ESPACE Physique-Chimie Tle S enseignement sp\u00e9cifique (\u00c9d. 2012), Version \u00e9l\u00e8ve multisupports",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-03-31T23:44:10+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/91\/91-1_2-9782047346235.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/91\/91-1_2-9782047346235.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/91\/91-1_2-9782047346235.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047346235",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Physique-Chimie"
+        ],
+        "level_title": [
+          "Terminale S"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/91\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/91\/online",
+      "size": 767,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047344057",
+      "title": "BORDAS SVT 2nde",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T01:01:15+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/106\/106-1_2-9782047344057.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/106\/106-1_2-9782047344057.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/106\/106-1_2-9782047344057.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047344057",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Sciences de la Vie et de la Terre"
+        ],
+        "level_title": [
+          "2de"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/106\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/106\/online",
+      "size": 440,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047344064",
+      "title": "Physique-Chimie 2de - Coll\u00b0 ESPACE - 2010 - Manuel num\u00e9rique \u00e9l\u00e8ve",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T01:26:45+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/107\/107-1_2-9782047344064.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/107\/107-1_2-9782047344064.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/107\/107-1_2-9782047344064.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047344064",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Physique-Chimie"
+        ],
+        "level_title": [
+          "2de"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/107\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/107\/online",
+      "size": 368,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047344095",
+      "title": "BORDAS MISSIONS 1re",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T01:51:32+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/108\/108-1_2-9782047344095.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/108\/108-1_2-9782047344095.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/108\/108-1_2-9782047344095.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047344095",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Anglais"
+        ],
+        "level_title": [
+          "1re"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/108\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/108\/online",
+      "size": 673,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047344101",
+      "title": "BORDAS MISSIONS Tle",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T02:11:40+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/109\/109-1_2-9782047344101.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/109\/109-1_2-9782047344101.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/109\/109-1_2-9782047344101.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047344101",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Anglais"
+        ],
+        "level_title": [
+          "Terminale"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/109\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/109\/online",
+      "size": 402,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047344125",
+      "title": "BORDAS APUNTATE 1re",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T02:34:46+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/110\/110-1_2-9782047344125.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/110\/110-1_2-9782047344125.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/110\/110-1_2-9782047344125.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047344125",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Espagnol"
+        ],
+        "level_title": [
+          "1re"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/110\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/110\/online",
+      "size": 439,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047344132",
+      "title": "BORDAS APUNTATE Tle",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T04:33:36+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/115\/115-1_2-9782047344132.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/115\/115-1_2-9782047344132.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/115\/115-1_2-9782047344132.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047344132",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Espagnol"
+        ],
+        "level_title": [
+          "Terminale"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/115\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/115\/online",
+      "size": 349,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047344163",
+      "title": "BORDAS FOKUS Tle",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T04:52:20+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/116\/116-1_2-9782047344163.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/116\/116-1_2-9782047344163.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/116\/116-1_2-9782047344163.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047344163",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Allemand"
+        ],
+        "level_title": [
+          "Terminale"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/116\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/116\/online",
+      "size": 398,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047345061",
+      "title": "Fokus 2de - Allemand A2\/B1 - 2014 - Manuel num\u00e9rique \u00e9l\u00e8ve",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T05:09:20+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/117\/117-1_2-9782047345061.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/117\/117-1_2-9782047345061.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/117\/117-1_2-9782047345061.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047345061",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Allemand"
+        ],
+        "level_title": [
+          "2de"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/117\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/117\/online",
+      "size": 311,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047344927",
+      "title": "Indice 1re S - Math\u00e9matiques - 2011 - Manuel num\u00e9rique \u00e9l\u00e8ve",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T07:59:03+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/156\/156-1_2-9782047344927.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/156\/156-1_2-9782047344927.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/156\/156-1_2-9782047344927.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047344927",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Math\u00e9matiques"
+        ],
+        "level_title": [
+          "1re S"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/156\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/156\/online",
+      "size": 297,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047346792",
+      "title": "NEW Missions 1re - Anglais B1\/B2 - 2015 - Manuel num\u00e9rique \u00e9l\u00e8ve",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T06:54:04+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/160\/160-1_2-9782047346792.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/160\/160-1_2-9782047346792.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/160\/160-1_2-9782047346792.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047346792",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Anglais"
+        ],
+        "level_title": [
+          "1re"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/160\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/160\/online",
+      "size": 383,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047347393",
+      "title": "Buena Onda 2de - Espagnol A2\/B1 - 2015 - Manuel num\u00e9rique \u00e9l\u00e8ve",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T10:11:38+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/161\/161-1_2-9782047347393.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/161\/161-1_2-9782047347393.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/161\/161-1_2-9782047347393.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047347393",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Espagnol"
+        ],
+        "level_title": [
+          "2de"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/161\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/161\/online",
+      "size": 327,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047346846",
+      "title": "SES Tle ES - Coll\u00b0 Passard & Perl - 2015 - Manuel num\u00e9rique \u00e9l\u00e8ve",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T09:25:10+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/162\/162-1_2-9782047346846.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/162\/162-1_2-9782047346846.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/162\/162-1_2-9782047346846.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047346846",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Sciences \u00e9conomiques et sociales"
+        ],
+        "level_title": [
+          "Terminale ES"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/162\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/162\/online",
+      "size": 705,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047346808",
+      "title": "Fokus Neu 1re - Allemand - 2015 - Manuel num\u00e9rique \u00e9l\u00e8ve",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-01T08:48:59+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/164\/164-1_2-9782047346808.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/164\/164-1_2-9782047346808.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/164\/164-1_2-9782047346808.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047346808",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Allemand"
+        ],
+        "level_title": [
+          "1re"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/164\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/1\/164\/online",
+      "size": 469,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091144184",
+      "title": "Physique-Chimie Term S-sp\u00e9cifique - Sirius - 2012 - Manuel num\u00e9rique \u00e9l\u00e8ve",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-04-02T22:33:42+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/168\/168-1_2-9782091144184.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/168\/168-1_2-9782091144184.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/168\/168-1_2-9782091144184.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091144184",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Physique-Chimie"
+        ],
+        "level_title": [
+          "Terminale S"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/168\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/168\/online",
+      "size": 711,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091719221",
+      "title": "Cahier Transmath 6e - 2016",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-06-15T01:14:16+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/821\/821-1_2-9782091719221.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/821\/821-1_2-9782091719221.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/821\/821-1_2-9782091719221.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091719221",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "math\u00e9matiques"
+        ],
+        "level_title": [
+          "6e"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/821\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/821\/online",
+      "size": 30,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091719238",
+      "title": "Cahier Transmath 5e - 2016",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-06-15T01:15:25+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/823\/823-1_2-9782091719238.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/823\/823-1_2-9782091719238.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/823\/823-1_2-9782091719238.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091719238",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "math\u00e9matiques"
+        ],
+        "level_title": [
+          "5e"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/823\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/823\/online",
+      "size": 30,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091719245",
+      "title": "Cahier Transmath 4e - 2016",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-06-15T01:16:51+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/824\/824-1_2-9782091719245.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/824\/824-1_2-9782091719245.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/824\/824-1_2-9782091719245.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091719245",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "math\u00e9matiques"
+        ],
+        "level_title": [
+          "4e"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/824\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/824\/online",
+      "size": 30,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091719252",
+      "title": "Cahier Transmath 3e - 2016",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-06-15T01:18:04+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/826\/826-1_2-9782091719252.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/826\/826-1_2-9782091719252.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/826\/826-1_2-9782091719252.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091719252",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "math\u00e9matiques"
+        ],
+        "level_title": [
+          "3e"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/826\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/826\/online",
+      "size": 30,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091644271",
+      "title": "SCIENCES ET TECHNOLOGIES CULINAIRES 2DE STHR",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-05-21T01:25:34+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/939\/939-1_2-9782091644271.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/1\/939\/939-1_2-9782091644271.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/939\/939-1_2-9782091644271.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091644271",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Sciences et technologies culinaires"
+        ],
+        "level_title": [
+          "2de g\u00e9n\u00e9rale et techno"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/939\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/1\/939\/online",
+      "size": 45,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091131917",
+      "title": "G\u00e9ographie Terminale L-ES-S - 2016",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-08-17T02:50:20+0200",
+      "indexed_at": "2016-08-17T02:50:20+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/2\/1858\/1858-1_2-9782091131917.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/2\/1858\/1858-1_2-9782091131917.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/2\/1858\/1858-1_2-9782091131917.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091131917",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "g\u00e9ographie"
+        ],
+        "level_title": [
+          "terminale g\u00e9n\u00e9rale et technologique"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/2\/1858\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/2\/1858\/online",
+      "size": 512,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091138640",
+      "title": "Pr\u00f3xima parada Terminale",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-08-11T02:54:16+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2095\/2095-1_2-9782091138640.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/3\/2095\/2095-1_2-9782091138640.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2095\/2095-1_2-9782091138640.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091138640",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "espagnol"
+        ],
+        "level_title": [
+          "terminale g\u00e9n\u00e9rale et technologique"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2095\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2095\/online",
+      "size": 252,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091644288",
+      "title": "Sciences et technologies culinaires 1re STHR",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2016-08-12T02:54:43+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2106\/2106-1_2-9782091644288.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/3\/2106\/2106-1_2-9782091644288.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2106\/2106-1_2-9782091644288.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091644288",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Sciences et technologies culinaires"
+        ],
+        "level_title": [
+          "1re technologique"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2106\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2106\/online",
+      "size": 48,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782748521498",
+      "title": "Beno\u00eet et la bande de los Moteros",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2020-04-08T01:07:09+0200",
+      "indexed_at": "2020-04-08T01:07:09+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/3\/2344\/2344-1_2-9782748521498.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/3\/2344\/2344-1_2-9782748521498.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/3\/2344\/2344-1_2-9782748521498.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782748521498",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {},
+      "url_cover": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/3\/2344\/cover.jpg",
+      "url_prefix": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/3\/2344\/online",
+      "size": 60,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047380833",
+      "title": "Sciences sociales et politiques Term ES",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-02-11T01:19:21+0100",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/3\/2513\/2513-1_2-9782047380833.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/3\/2513\/2513-1_2-9782047380833.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/3\/2513\/2513-1_2-9782047380833.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047380833",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "sciences \u00e9conomiques et sociales"
+        ],
+        "level_title": [
+          "terminale ES"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/3\/2513\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/3\/2513\/online",
+      "size": 172,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047380796",
+      "title": "Physique-Chimie E.S.P.A.C.E Tle S - Enseignement de sp\u00e9cialit\u00e9",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-02-15T01:27:33+0100",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/3\/2541\/2541-1_2-9782047380796.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/3\/2541\/2541-1_2-9782047380796.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/3\/2541\/2541-1_2-9782047380796.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047380796",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "physique-chimie"
+        ],
+        "level_title": [
+          "terminale S"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/3\/2541\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/3\/2541\/online",
+      "size": 215,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091717050",
+      "title": "Dixit 5e  - 2017",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-03-28T01:20:41+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2685\/2685-1_2-9782091717050.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/3\/2685\/2685-1_2-9782091717050.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2685\/2685-1_2-9782091717050.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091717050",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "latin"
+        ],
+        "level_title": [
+          "5e"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2685\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2685\/online",
+      "size": 51,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091717043",
+      "title": "Dixit 4e  - 2017",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-03-28T01:19:21+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2743\/2743-1_2-9782091717043.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/3\/2743\/2743-1_2-9782091717043.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2743\/2743-1_2-9782091717043.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091717043",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "latin"
+        ],
+        "level_title": [
+          "4e"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2743\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2743\/online",
+      "size": 65,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091648316",
+      "title": "Economie BTS 1\u00e8re ann\u00e9e",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-03-28T12:09:46+0200",
+      "indexed_at": "2017-03-31T01:58:06+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2801\/2801-1_2-9782091648316.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/3\/2801\/2801-1_2-9782091648316.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2801\/2801-1_2-9782091648316.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091648316",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "\u00e9conomie"
+        ],
+        "level_title": [
+          "BTS - 1re ann\u00e9e"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2801\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/3\/2801\/online",
+      "size": 93,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047385609",
+      "title": "Maths Indice Term S Sp\u00e9cialit\u00e9 - \u00e9d. 2012",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-07-05T01:01:51+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/5\/4474\/4474-1_2-9782047385609.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/5\/4474\/4474-1_2-9782047385609.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/5\/4474\/4474-1_2-9782047385609.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047385609",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "math\u00e9matiques"
+        ],
+        "level_title": [
+          "Lyc\u00e9e g\u00e9n\u00e9ral et technologique"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/5\/4474\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/5\/4474\/online",
+      "size": 121,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782047385685",
+      "title": "Maths Indice Term ES Sp\u00e9cialit\u00e9 - \u00e9d. 2012",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-07-05T01:03:10+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/5\/4475\/4475-1_2-9782047385685.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/5\/4475\/4475-1_2-9782047385685.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/BORDAS\/bibliomanuels\/distrib_gp\/1\/5\/4475\/4475-1_2-9782047385685.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782047385685",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Math\u00e9matiques"
+        ],
+        "level_title": [
+          "Lyc\u00e9e g\u00e9n\u00e9ral et technologique"
+        ]
+      },
+      "url_cover": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/5\/4475\/cover.jpg",
+      "url_prefix": "\/epubs\/BORDAS\/bibliomanuels\/distrib_gp\/1\/5\/4475\/online",
+      "size": 74,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091152431",
+      "title": "Physique Chimie Term S Sp\u00e9cialit\u00e9 - 2012",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-08-22T15:19:21+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5020\/5020-1_2-9782091152431.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5020\/5020-1_2-9782091152431.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5020\/5020-1_2-9782091152431.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091152431",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Physique-chimie"
+        ],
+        "level_title": [
+          "Terminale S"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5020\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5020\/online",
+      "size": 256,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782099067232",
+      "title": "Crunchy CM - 2017",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2018-08-10T15:42:59+0200",
+      "indexed_at": "2018-08-10T15:42:59+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5103\/5103-1_2-9782099067232.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5103\/5103-1_2-9782099067232.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5103\/5103-1_2-9782099067232.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782099067232",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Anglais"
+        ],
+        "level_title": [
+          "CM1"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5103\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5103\/online",
+      "size": 921,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782099067164",
+      "title": "Vivre les maths CM1 - 2017",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-08-26T05:52:36+0200",
+      "indexed_at": "2017-08-28T21:12:13+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5148\/5148-1_2-9782099067164.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5148\/5148-1_2-9782099067164.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5148\/5148-1_2-9782099067164.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782099067164",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Math\u00e9matiques"
+        ],
+        "level_title": [
+          "CM1"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5148\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5148\/online",
+      "size": 484,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091152622",
+      "title": "SVT Term S sp\u00e9cialit\u00e9 - 2012",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2019-01-14T15:06:51+0100",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5149\/5149-1_2-9782091152622.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5149\/5149-1_2-9782091152622.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5149\/5149-1_2-9782091152622.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091152622",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Sciences de la vie et de la Terre"
+        ],
+        "level_title": [
+          "Terminale S"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5149\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5149\/online",
+      "size": 210,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091152721",
+      "title": "Juntos 1re ST",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-08-22T17:46:02+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5152\/5152-1_2-9782091152721.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5152\/5152-1_2-9782091152721.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5152\/5152-1_2-9782091152721.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091152721",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "espagnol (LVER)"
+        ],
+        "level_title": [
+          "1re STMG"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5152\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5152\/online",
+      "size": 545,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091152738",
+      "title": "Juntos Term ST",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-08-22T17:50:57+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5153\/5153-1_2-9782091152738.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5153\/5153-1_2-9782091152738.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5153\/5153-1_2-9782091152738.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091152738",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "espagnol (LVER)"
+        ],
+        "level_title": [
+          "terminale STMG"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5153\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5153\/online",
+      "size": 549,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091149448",
+      "title": "Sirius Term S",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-09-27T17:09:27+0200",
+      "indexed_at": "2017-09-29T01:40:40+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5249\/5249-1_2-9782091149448.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5249\/5249-1_2-9782091149448.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5249\/5249-1_2-9782091149448.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091149448",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "physique-chimie"
+        ],
+        "level_title": [
+          "terminale S"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5249\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5249\/online",
+      "size": 1351,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091149202",
+      "title": "Physique-Chimie - 3e",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2018-09-13T11:48:02+0200",
+      "indexed_at": "2018-09-13T11:48:02+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5259\/5259-1_2-9782091149202.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5259\/5259-1_2-9782091149202.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5259\/5259-1_2-9782091149202.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091149202",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Physique-Chimie"
+        ],
+        "level_title": [
+          "3e"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5259\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5259\/online",
+      "size": 409,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091660318",
+      "title": "Biologie et microbiologie appliqu\u00e9es 2de 1re Tle BAC PRO ASSP A domicile et En structure",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-08-30T19:04:29+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5261\/5261-1_2-9782091660318.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5261\/5261-1_2-9782091660318.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5261\/5261-1_2-9782091660318.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091660318",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Biologie et microbiologie appliqu\u00e9es"
+        ],
+        "level_title": [
+          "2de professionnelle",
+          "1re professionnelle",
+          "terminale professionnelle"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5261\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5261\/online",
+      "size": 162,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091148328",
+      "title": "Histoire Le Quintrec Tle L-ES-S",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-09-08T17:27:20+0200",
+      "indexed_at": "2017-09-11T17:20:12+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5312\/5312-1_2-9782091148328.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5312\/5312-1_2-9782091148328.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5312\/5312-1_2-9782091148328.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091148328",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "histoire et g\u00e9ographie"
+        ],
+        "level_title": [
+          "terminale g\u00e9n\u00e9rale et technologique"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5312\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5312\/online",
+      "size": 826,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091660233",
+      "title": "Pr\u00e9vention sant\u00e9 environnement 1re Term Bac Pro - Pochette",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-10-09T17:12:16+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5459\/5459-1_2-9782091660233.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5459\/5459-1_2-9782091660233.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5459\/5459-1_2-9782091660233.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091660233",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "pr\u00e9vention - sant\u00e9 - environnement"
+        ],
+        "level_title": [
+          "1re professionnelle",
+          "terminale professionnelle"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5459\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5459\/online",
+      "size": 95,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091659251",
+      "title": "Commercialisation et services CAP Cuisine - Commercialisation et Services",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-10-18T13:16:17+0200",
+      "indexed_at": "2017-10-18T13:16:17+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5520\/5520-1_2-9782091659251.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5520\/5520-1_2-9782091659251.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5520\/5520-1_2-9782091659251.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091659251",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "service et commercialisation"
+        ],
+        "level_title": [
+          "voie CAP"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5520\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5520\/online",
+      "size": 106,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091660448",
+      "title": "Activit\u00e9s professionnelles et connaissances associ\u00e9es 2 Bac Pro MELEC",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2017-10-18T15:28:14+0200",
+      "indexed_at": "2017-10-18T15:28:14+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5528\/5528-1_2-9782091660448.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5528\/5528-1_2-9782091660448.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5528\/5528-1_2-9782091660448.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091660448",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "activit\u00e9s d\u00e9l\u00e9gu\u00e9es"
+        ],
+        "level_title": [
+          "2de professionnelle"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5528\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5528\/online",
+      "size": 95,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091712932",
+      "title": "Fran\u00e7ais - Mon cahier d'activit\u00e9s 3e",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2018-04-11T17:02:16+0200",
+      "indexed_at": "2018-04-16T09:07:48+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5931\/5931-1_2-9782091712932.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/6\/5931\/5931-1_2-9782091712932.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5931\/5931-1_2-9782091712932.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091712932",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "fran\u00e7ais"
+        ],
+        "level_title": [
+          "3e"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5931\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/6\/5931\/online",
+      "size": 104,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091712949",
+      "title": "Fran\u00e7ais - Mon cahier d'activit\u00e9s 4e",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2018-04-06T13:04:36+0200",
+      "indexed_at": "2018-04-13T11:04:55+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6051\/6051-1_2-9782091712949.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/7\/6051\/6051-1_2-9782091712949.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6051\/6051-1_2-9782091712949.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091712949",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "fran\u00e7ais"
+        ],
+        "level_title": [
+          "4e"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6051\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6051\/online",
+      "size": 87,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091717029",
+      "title": "Cahier de Latin - Dixit - 3e ",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2018-04-16T16:12:25+0200",
+      "indexed_at": null,
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6070\/6070-1_2-9782091717029.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/7\/6070\/6070-1_2-9782091717029.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6070\/6070-1_2-9782091717029.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091717029",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "latin"
+        ],
+        "level_title": [
+          "3e"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6070\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6070\/online",
+      "size": 70,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091712956",
+      "title": "Fran\u00e7ais - Mon cahier d'activit\u00e9s 5e",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2018-04-16T09:09:37+0200",
+      "indexed_at": "2018-04-12T15:47:58+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6080\/6080-1_2-9782091712956.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/7\/6080\/6080-1_2-9782091712956.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6080\/6080-1_2-9782091712956.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091712956",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "fran\u00e7ais"
+        ],
+        "level_title": [
+          "5e"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6080\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6080\/online",
+      "size": 60,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091661285",
+      "title": "Biologie et microbiologie appliqu\u00e9es - BAC PRO ASSP - Options en structure et \u00e0 domicile",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2018-05-15T11:49:23+0200",
+      "indexed_at": "2018-05-15T11:49:23+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6279\/6279-1_2-9782091661285.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/7\/6279\/6279-1_2-9782091661285.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6279\/6279-1_2-9782091661285.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091661285",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Sciences biologiques appliqu\u00e9es"
+        ],
+        "level_title": [
+          "terminale professionnelle",
+          "1re professionnelle",
+          "2de professionnelle"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6279\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6279\/online",
+      "size": 122,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782091661322",
+      "title": "Activit\u00e9s professionnelles et connaissances associ\u00e9es 1re et Term Bac Pro MELEC",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2018-05-15T13:06:42+0200",
+      "indexed_at": "2018-05-15T13:06:42+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6291\/6291-1_2-9782091661322.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/7\/6291\/6291-1_2-9782091661322.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6291\/6291-1_2-9782091661322.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782091661322",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "MELEC"
+        ],
+        "level_title": [
+          "1re professionnelle",
+          "terminale professionnelle"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6291\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6291\/online",
+      "size": 94,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782099067966",
+      "title": "Vivre les Maths CM2",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2018-07-26T09:47:16+0200",
+      "indexed_at": "2018-07-26T09:47:16+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6888\/6888-1_2-9782099067966.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/7\/6888\/6888-1_2-9782099067966.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6888\/6888-1_2-9782099067966.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782099067966",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {
+        "subject_title": [
+          "Math\u00e9matiques"
+        ],
+        "level_title": [
+          "CM2"
+        ]
+      },
+      "url_cover": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6888\/cover.jpg",
+      "url_prefix": "\/epubs\/NATHAN\/bibliomanuels\/distrib_gp\/1\/7\/6888\/online",
+      "size": 613,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782748523591",
+      "title": "Zo\u00e9 et l'\u00e9lixir of Eternal Life",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2020-03-19T18:51:55+0100",
+      "indexed_at": "2020-03-20T17:46:52+0100",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9508\/9508-1_2-9782748523591.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/10\/9508\/9508-1_2-9782748523591.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9508\/9508-1_2-9782748523591.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782748523591",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {},
+      "url_cover": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9508\/cover.jpg",
+      "url_prefix": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9508\/online",
+      "size": 75,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782748521320",
+      "title": "Jeanne et le London Mystery",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2020-03-20T17:44:34+0100",
+      "indexed_at": "2020-03-20T17:44:34+0100",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9521\/9521-1_2-9782748521320.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/10\/9521\/9521-1_2-9782748521320.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9521\/9521-1_2-9782748521320.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782748521320",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {},
+      "url_cover": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9521\/cover.jpg",
+      "url_prefix": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9521\/online",
+      "size": 33,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782748521092",
+      "title": "Martin et la mysteri\u00f6se Kreatur",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2020-04-08T01:05:24+0200",
+      "indexed_at": "2020-04-08T01:05:24+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9653\/9653-1_2-9782748521092.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/10\/9653\/9653-1_2-9782748521092.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9653\/9653-1_2-9782748521092.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782748521092",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {},
+      "url_cover": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9653\/cover.jpg",
+      "url_prefix": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9653\/online",
+      "size": 61,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782748521528",
+      "title": "Je suis un verdadero argentino !",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2020-04-08T01:08:43+0200",
+      "indexed_at": "2020-04-08T01:08:43+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9654\/9654-1_2-9782748521528.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/10\/9654\/9654-1_2-9782748521528.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9654\/9654-1_2-9782748521528.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782748521528",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {},
+      "url_cover": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9654\/cover.jpg",
+      "url_prefix": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9654\/online",
+      "size": 60,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782748521535",
+      "title": "Emma et la japanische Mangaka",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2020-04-08T01:10:33+0200",
+      "indexed_at": "2020-04-08T01:10:33+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9655\/9655-1_2-9782748521535.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/10\/9655\/9655-1_2-9782748521535.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9655\/9655-1_2-9782748521535.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782748521535",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {},
+      "url_cover": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9655\/cover.jpg",
+      "url_prefix": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9655\/online",
+      "size": 69,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782748521672",
+      "title": "Hannah et le tr\u00e9sor du Dangerous Elf",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2020-04-08T01:11:57+0200",
+      "indexed_at": "2020-04-08T01:11:57+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9656\/9656-1_2-9782748521672.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/10\/9656\/9656-1_2-9782748521672.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9656\/9656-1_2-9782748521672.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782748521672",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {},
+      "url_cover": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9656\/cover.jpg",
+      "url_prefix": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9656\/online",
+      "size": 36,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782748524710",
+      "title": "Love? in New York - Callie's journal",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2020-04-08T01:13:24+0200",
+      "indexed_at": "2020-04-08T01:13:24+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9657\/9657-1_2-9782748524710.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/10\/9657\/9657-1_2-9782748524710.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9657\/9657-1_2-9782748524710.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782748524710",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {},
+      "url_cover": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9657\/cover.jpg",
+      "url_prefix": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9657\/online",
+      "size": 16,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    },
+    {
+      "id": "9782748526950",
+      "title": "Karaok\u00e9 in London \u2013 Jeanne chante for the Climate",
+      "format": "EPUB",
+      "expired_at": null,
+      "updated_at": "2020-04-08T01:14:28+0200",
+      "indexed_at": "2020-04-08T01:14:28+0200",
+      "url_download": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9658\/9658-1_2-9782748526950.epub",
+      "url_online": "http:\/\/dl.manuel-numerique.com\/\/1\/10\/9658\/9658-1_2-9782748526950.epub",
+      "url_tablet": "http:\/\/dl.manuel-numerique.com\/\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9658\/9658-1_2-9782748526950.epub",
+      "url_local_cache": null,
+      "unique": "adistance11user$?9782748526950",
+      "number_downloads_limit": 500,
+      "number_downloads": 0,
+      "public": false,
+      "metadatas": {},
+      "url_cover": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9658\/cover.jpg",
+      "url_prefix": "\/epubs\/SYROS\/bibliomanuels\/distrib_gp\/1\/10\/9658\/online",
+      "size": 41,
+      "price_flag": "F",
+      "id_product_store": null,
+      "ebook_deep_updated_at": null,
+      "number_copy_usb": 0,
+      "number_copy_usb_limit": 3,
+      "ean_source": ""
+    }
+  ],
+  "session_token": "",
+  "books_external": []
+}
