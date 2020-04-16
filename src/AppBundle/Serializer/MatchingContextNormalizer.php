@@ -24,21 +24,22 @@ class MatchingContextNormalizer implements NormalizerInterface
         return $data instanceof MatchingContext;
     }
 
-    public function normalize($object, $format = null, array $context = []): array
+    public function normalize($matchingContext, $format = null, array $context = []): array
     {
-        if (!($object instanceof MatchingContext)) {
+        if (!($matchingContext instanceof MatchingContext)) {
             throw new InvalidArgumentException();
         }
 
         return array_filter([
-            'noticeId' => $object->getNotice()->getId(),
+            'id' => $matchingContext->getId(),
+            'noticeId' => $matchingContext->getNotice()->getId(),
             'noticeUrl' => $this->router->generate(
                 'app_api_getnoticeaction__invoke',
-                ['id' => $object->getNotice()->getId()],
+                ['id' => $matchingContext->getNotice()->getId()],
                 RouterInterface::ABSOLUTE_URL),
-            'urlRegex' => $object->getFullUrlRegex($this->escaper),
-            'excludeUrlRegex' => $object->getCompleteExcludeUrlRegex(),
-            'querySelector' => $object->getQuerySelector(),
+            'urlRegex' => $matchingContext->getFullUrlRegex($this->escaper),
+            'excludeUrlRegex' => $matchingContext->getCompleteExcludeUrlRegex(),
+            'querySelector' => $matchingContext->getQuerySelector(),
         ]);
     }
 }
