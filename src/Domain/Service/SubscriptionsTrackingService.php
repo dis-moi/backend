@@ -49,7 +49,7 @@ class SubscriptionsTrackingService
      */
     public function refreshSubscriptions(string $extensionId, array $contributorIds)
     {
-        /**
+        /*
          * @var Extension
          */
         if ($extension = $this->extensionRepository->find($extensionId)) {

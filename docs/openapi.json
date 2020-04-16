@@ -1,20 +1,22 @@
 {
   "openapi" : "3.0.2",
   "info" : {
-    "version" : "3.2.4",
-    "title" : "Notices API",
+    "title" : "DisMoi API",
+    "description": "API to fetch contributors, notices and matching contexts of dismoi.io",
+    "version" : "3.3.0",
     "contact" : { }
   },
   "paths" : {
     "/matching-contexts" : {
       "get" : {
-        "summary" : "Retrieve all matching contexts.",
+        "summary" : "Retrieve active matching contexts",
+        "description": "Only show matching contexts for visible notices",
         "tags" : [ "Matching Contexts" ],
         "parameters" : [ {
           "name" : "contributors",
           "in" : "query",
           "required" : false,
-          "description" : "Include Notices that have one of those contributors. Include all if missing.",
+          "description" : "Only include notices from one of those contributors. Include all if missing.",
           "schema" : {
             "type" : "array",
             "items" : {
@@ -25,7 +27,7 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "List of matching contexts the consumer should match  contexts with (e.g. URL, location, etc).",
+            "description" : "List of matching contexts the consumer should match contexts with (e.g. URL, location, etc).",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -198,6 +200,39 @@
           "required" : true
         }
       }
+    },
+    "/subscriptions/{extensionId}" : {
+      "post": {
+        "summary": "Notify current subscriptions of an extension instance",
+        "tags": ["Contributors"],
+        "parameters": [{
+          "name": "extensionId",
+          "in": "path",
+          "required": true,
+          "description": "Extension installation unique ID",
+          "example": "17121cb63d713880",
+          "schema": { "type": "string" }
+        }],
+        "responses": {
+          "204": {
+            "description" : "The server successfully recorded the subscriptions."
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema" : {
+                "type" : "array",
+                "items" : {
+                  "type" : "integer"
+                },
+                "uniqueItems" : true
+              }
+            }
+          },
+          "required": true
+        }
+      }
     }
   },
   "tags" : [ {
@@ -211,9 +246,11 @@
     "description" : "List of Notices’ contributors to subscribe to."
   } ],
   "servers" : [ {
-    "url" : "https://notices.lmem.net/api/v3"
+    "url" : "https://notices.bulles.fr/api/v3",
+    "description": "Production server"
   }, {
-    "url" : "https://staging-notices.lmem.net/api/v3"
+    "url" : "https://staging-notices.bulles.fr/api/v3",
+    "description": "Staging server"
   } ],
   "components" : {
     "schemas" : {
@@ -297,7 +334,7 @@
         "description" : "Type of ratings or feedback.",
         "example" : "like",
         "type" : "string",
-        "enum" : [ "like", "unlike", "dislike", "undislike", "dismiss", "undismiss", "display", "unfold", "click-message", "click-source", "report" ]
+        "enum" : [ "like", "unlike", "dislike", "undislike", "dismiss", "undismiss", "display", "unfold", "outbound-click", "badge", "report" ]
       },
       "context" : {
         "title" : "context",
@@ -346,9 +383,6 @@
             "likes" : 7,
             "dislikes" : 2
           },
-          "source" : {
-            "url" : "https://choisir.lmem.net?utm_source=lmem_assistant"
-          },
           "visibility" : "public"
         },
         "type" : "object",
@@ -373,9 +407,6 @@
             "type" : "string",
             "format" : "date"
           },
-          "source" : {
-            "$ref" : "#/components/schemas/source"
-          },
           "ratings" : {
             "$ref" : "#/components/schemas/ratings"
           },
@@ -384,20 +415,7 @@
             "enum" : [ "public", "private", "archived" ]
           }
         },
-        "required" : [ "contributor", "created", "id", "intention", "message", "ratings", "source", "visibility" ]
-      },
-      "source" : {
-        "title" : "source",
-        "type" : "object",
-        "properties" : {
-          "url" : {
-            "description" : "Source’s URL.",
-            "example" : "https://tests.menant-benjamin.fr/source/example",
-            "type" : "string",
-            "format" : "url"
-          }
-        },
-        "required" : [ "url" ]
+        "required" : [ "contributor", "created", "id", "intention", "message", "ratings", "visibility" ]
       },
       "ratings" : {
         "title" : "ratings",
@@ -447,7 +465,15 @@
               "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3"
             },
             "numberOfPublishedNotices" : 24
-          }
+          },
+          "ratings": {
+            "subscribes": 42
+          },
+          "noticesUrls": [
+            "https://staging-notices.bulles.fr/api/v3/notices/21",
+            "https://staging-notices.bulles.fr/api/v3/notices/42",
+            "https://staging-notices.bulles.fr/api/v3/notices/84",
+          ]
         },
         "type" : "object",
         "properties" : {
@@ -472,6 +498,23 @@
             "example" : 24,
             "type" : "integer",
             "deprecated" : true
+          },
+          "ratings": {
+            "type": "object",
+            "properties": {
+              "subscribes": {
+                "type": "integer",
+                "description": "Number of active extensions subscribed",
+                "example": 42
+              }
+            }
+          },
+          "noticesUrls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "https://notices.bulles.fr/api/v3/notices/221"
+            }
           },
           "contribution" : {
             "$ref" : "#/components/schemas/contribution"
