@@ -2,6 +2,11 @@
     "name": "alemaire/craft.backend.sf",
     "license": "proprietary",
     "type": "project",
+    "config": {
+        "platform": {
+            "php": "7.2"
+        }
+    },
     "autoload": {
         "psr-4": {
             "": "src/"
@@ -17,7 +22,7 @@
         }
     },
     "require": {
-        "php": ">=7.1.0",
+        "php": "~7.2.0",
         "symfony/symfony": "3.4.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",
@@ -34,7 +39,7 @@
         "ocramius/proxy-manager": "^2.0.2",
         "marc-mabe/php-enum": "^2.2",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
-        "beberlei/DoctrineExtensions": "^1.2",
+        "beberlei/doctrineextensions": "^1.2",
         "vich/uploader-bundle": "^1.7",
         "liip/imagine-bundle": "^2.0",
         "youthweb/urllinker": "^1.2",
