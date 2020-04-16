@@ -5,7 +5,8 @@
     "config": {
         "platform": {
             "php": "7.2"
-        }
+        },
+        "discard-changes": true
     },
     "autoload": {
         "psr-4": {
