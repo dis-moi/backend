@@ -30,3 +30,6 @@ services:
             - '@AppBundle\Repository\ContributorRepository'
             - '@Doctrine\ORM\EntityManagerInterface'
 
+    Domain\Service\NoticeUrlGenerator:
+        arguments:
+            - '@router'
