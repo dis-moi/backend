@@ -3,10 +3,11 @@
 namespace AppBundle\Serializer;
 
 use AppBundle\Entity\Contributor;
+use AppBundle\Entity\Notice;
 use AppBundle\Helper\DataConverter;
 use AppBundle\Serializer\Serializable\Picture;
 use AppBundle\Serializer\Serializable\Thumb;
-use Symfony\Component\Routing\RouterInterface;
+use Domain\Service\NoticeUrlGenerator;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -18,11 +19,14 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
      */
     protected $normalizer;
 
-    protected $router;
+    /**
+     * @var NoticeUrlGenerator
+     */
+    protected $noticeUrlGenerator;
 
-    public function __construct(RouterInterface $router)
+    public function __construct(NoticeUrlGenerator $noticeUrlGenerator)
     {
-        $this->router = $router;
+        $this->noticeUrlGenerator = $noticeUrlGenerator;
     }
 
     /**
@@ -54,10 +58,7 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
                 'example' => [
                     'matchingUrl' => $exampleNotice->getMatchingContexts()->first()->getExampleUrl(),
                     'noticeId' => $exampleNotice->getId(),
-                    'noticeUrl' => $this->router->generate(
-                      'app_api_getnoticeaction__invoke',
-                      ['id' => $exampleNotice->getId()],
-                      RouterInterface::ABSOLUTE_URL),
+                    'noticeUrl' => $this->noticeUrlGenerator->generate($exampleNotice),
                 ],
                 'numberOfPublishedNotices' => $object->getNoticesCount(),
             ],
@@ -67,6 +68,9 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
             'ratings' => [
                 'subscribes' => $object->getActiveSubscriptionsCount(),
             ],
+            'noticesUrls' => $object->getPublicNotices()->map(function (Notice $notice) {
+                return $this->noticeUrlGenerator->generate($notice);
+            })->toArray(),
         ];
     }
 
