@@ -21,7 +21,7 @@ abstract class FixtureAwareWebTestCase extends WebTestCase
     /** @var ReferenceRepository */
     protected static $referenceRepository;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         static::$client = static::createClient();

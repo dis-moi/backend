@@ -21,3 +21,4 @@
 /.clever.json
 .php_cs.cache
 .wakatime-project
+.phpunit.result.cache
