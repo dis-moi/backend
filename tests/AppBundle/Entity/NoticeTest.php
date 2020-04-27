@@ -17,7 +17,7 @@ class NoticeTest extends FixtureAwareWebTestCase
      */
     private $_entityManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
