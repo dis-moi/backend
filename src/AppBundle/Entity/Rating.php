@@ -64,7 +64,7 @@ class Rating
 
     /**
      * @param string $type
-     * @param array $context
+     * @param array  $context
      * @param string $reason
      */
     public function __construct(Notice $notice, $type, Context $context, $reason)
