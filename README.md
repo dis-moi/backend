@@ -3,6 +3,7 @@ DisMoi Backend
 
 [![Build Status](https://semaphoreci.com/api/v1/projects/1ab935cc-487c-4be9-92a0-b0c90098cd58/1038377/shields_badge.svg)](https://semaphoreci.com/lmem/kraft-backend)
 
+
 > _Dis moi_ means _Tell me_ in :fr: French.
 
 **DisMoi** is a web extension empowering anyone to post additional information on a web page.
@@ -11,6 +12,12 @@ When you follow someone, its information will show up when you visit the comment
 To lean more about the uses cases, visits the :fr: [**DisMoi** Website](https://www.dismoi.io/).
 
 This the backend API and backoffice serving [**DisMoi** Extension](https://github.com/dis-moi/extension).
+
+## Open API
+
+API is [described](./docs/openapi.json) as Open API specification.
+
+API is explorable on [Swagger Hub](https://app.swaggerhub.com/apis/DisMoi/Notices)
 
 ## Contributing
 
