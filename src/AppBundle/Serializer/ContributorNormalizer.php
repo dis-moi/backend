@@ -68,9 +68,9 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
             'ratings' => [
                 'subscribes' => $object->getActiveSubscriptionsCount(),
             ],
-            'noticesUrls' => $object->getPublicNotices()->map(function (Notice $notice) {
+            'noticesUrls' => array_values($object->getPublicNotices()->map(function (Notice $notice) {
                 return $this->noticeUrlGenerator->generate($notice);
-            })->toArray(),
+            })->toArray()),
         ];
     }
 
