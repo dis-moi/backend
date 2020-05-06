@@ -50,4 +50,14 @@ abstract class FixtureAwareWebTestCase extends WebTestCase
         $executor->execute($loader->getFixtures());
         $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=1'));
     }
+
+    protected function assertEqualHtml($expected, $actual)
+    {
+        $from = ['/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/> </s'];
+        $to = ['>',            '<',            '\\1',      '><'];
+        $this->assertEquals(
+            preg_replace($from, $to, $expected),
+            preg_replace($from, $to, $actual)
+        );
+    }
 }

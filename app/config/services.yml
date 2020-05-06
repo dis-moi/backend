@@ -33,3 +33,7 @@ services:
     Domain\Service\NoticeUrlGenerator:
         arguments:
             - '@router'
+
+    Domain\Service\MessagePresenter:
+        arguments:
+            $utmMedium: '%utm_medium%'

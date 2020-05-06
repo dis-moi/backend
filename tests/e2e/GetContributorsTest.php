@@ -13,13 +13,13 @@ class GetContributorsTest extends BaseApiE2eTestCase
 
         $this->assertEquals(4, count($payload));
         $this->assertEquals('John Doe', $payload[0]['name']);
-        $this->assertEquals(
-            '<p>I’m all out of bubble gum (<a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/watch?reload=9&amp;v=yMN0yvot6dM">www.youtube.com/watch</a>)</p>',
+        $this->assertEqualHtml(
+            '<p>I’m all out of bubble gum (<a href="https://www.youtube.com/watch?reload=9&v=yMN0yvot6dM&utm_medium=Dismoi_extension_navigateur" target="_blank" rel="noopener noreferrer">www.youtube.com/watch</a>)</p>',
             $payload[0]['intro']
         );
-        $this->assertContains('photo-fake.jpg', $payload[0]['avatar']['small']['url']);
-        $this->assertContains('photo-fake.jpg', $payload[0]['avatar']['normal']['url']);
-        $this->assertContains('photo-fake.jpg', $payload[0]['avatar']['large']['url']);
+        $this->assertStringContainsString('photo-fake.jpg', $payload[0]['avatar']['small']['url']);
+        $this->assertStringContainsString('photo-fake.jpg', $payload[0]['avatar']['normal']['url']);
+        $this->assertStringContainsString('photo-fake.jpg', $payload[0]['avatar']['large']['url']);
         $this->assertEquals('Contributor 2', $payload[1]['name']);
     }
 
