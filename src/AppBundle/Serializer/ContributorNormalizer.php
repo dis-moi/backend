@@ -4,9 +4,9 @@ namespace AppBundle\Serializer;
 
 use AppBundle\Entity\Contributor;
 use AppBundle\Entity\Notice;
-use AppBundle\Helper\DataConverter;
 use AppBundle\Serializer\Serializable\Picture;
 use AppBundle\Serializer\Serializable\Thumb;
+use Domain\Service\MessagePresenter;
 use Domain\Service\NoticeUrlGenerator;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
@@ -24,9 +24,15 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
      */
     protected $noticeUrlGenerator;
 
-    public function __construct(NoticeUrlGenerator $noticeUrlGenerator)
+    /**
+     * @var MessagePresenter
+     */
+    private $messagePresenter;
+
+    public function __construct(NoticeUrlGenerator $noticeUrlGenerator, MessagePresenter $messagePresenter)
     {
         $this->noticeUrlGenerator = $noticeUrlGenerator;
+        $this->messagePresenter = $messagePresenter;
     }
 
     /**
@@ -63,7 +69,7 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
                 'numberOfPublishedNotices' => $object->getNoticesCount(),
             ],
             'id' => $object->getId(),
-            'intro' => $object->getIntro() ? DataConverter::convertFullIntro($object->getIntro()) : null,
+            'intro' => $object->getIntro() ? $this->messagePresenter->present($object->getIntro()) : null,
             'name' => $object->getName(),
             'ratings' => [
                 'subscribes' => $object->getActiveSubscriptionsCount(),

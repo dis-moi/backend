@@ -48,7 +48,9 @@
         "ext-mbstring": "*",
         "sentry/sentry-symfony": "^3.0",
         "knplabs/doctrine-behaviors": "1.4",
-        "nelmio/cors-bundle": "1.5.6"
+        "nelmio/cors-bundle": "1.5.6",
+        "league/uri": "^6.2",
+        "league/uri-components": "^2.2"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^4.0",

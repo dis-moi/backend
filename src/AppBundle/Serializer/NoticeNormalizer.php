@@ -3,7 +3,7 @@
 namespace AppBundle\Serializer;
 
 use AppBundle\Entity\Notice;
-use AppBundle\Helper\DataConverter;
+use Domain\Service\MessagePresenter;
 use Domain\Service\NoticeUrlGenerator;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
@@ -21,9 +21,15 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
      */
     protected $noticeUrlGenerator;
 
-    public function __construct(NoticeUrlGenerator $noticeUrlGenerator)
+    /**
+     * @var MessagePresenter
+     */
+    private $messagePresenter;
+
+    public function __construct(NoticeUrlGenerator $noticeUrlGenerator, MessagePresenter $messagePresenter)
     {
         $this->noticeUrlGenerator = $noticeUrlGenerator;
+        $this->messagePresenter = $messagePresenter;
     }
 
     /**
@@ -51,7 +57,7 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
             'id' => $object->getId(),
             'url' => $this->noticeUrlGenerator->generate($object),
             'intention' => $object->getIntention()->getValue(),
-            'message' => DataConverter::convertFullMessage($object->getMessage()),
+            'message' => $this->messagePresenter->present($object->getMessage()),
             'modified' => $this->formatDateTime($object->getUpdated()),
             'ratings' => [
                 'likes' => $object->getLikedRatingCount(),
