@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Controller\AdminController;
 use AppBundle\Entity\DomainName;
 use AppBundle\Entity\DomainsSet;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -38,6 +39,7 @@ class MatchingContextType extends AbstractType
                         )),
                     ];
                 },
+                'query_builder' => [AdminController::class, 'getDomainsSetQueryBuilder'],
             ])
             ->add('domainNames', EntityType::class, [
                 'class' => DomainName::class,
@@ -47,6 +49,7 @@ class MatchingContextType extends AbstractType
                 'attr' => [
                     'data-widget' => 'select2',
                 ],
+                'query_builder' => [AdminController::class, 'getDomainNameQueryBuilder'],
             ])
             ->add('urlRegex', TextareaType::class, [
                 'label' => 'matchingContexts.urlRegex',

@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Contributor;
 use AppBundle\Repository\ContributorRepository;
+use Doctrine\ORM\EntityRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
 use EasyCorp\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
 use Pagerfanta\Adapter\ArrayAdapter;
@@ -95,5 +96,15 @@ class AdminController extends BaseAdminController
         ];
 
         return $this->executeDynamicMethod('render<EntityName>Template', ['search', $this->entity['templates']['list'], $parameters]);
+    }
+
+    public static function getDomainNameQueryBuilder(EntityRepository $er)
+    {
+        return $er->createQueryBuilder('domain_name')->orderBy('domain_name.name', 'ASC');
+    }
+
+    public static function getDomainsSetQueryBuilder(EntityRepository $er)
+    {
+        return $er->createQueryBuilder('domains_set')->orderBy('domains_set.name', 'ASC');
     }
 }
