@@ -72,6 +72,7 @@ domains:
   sets.nb: Nb de groupes de domaines liés
   matchingContexts: Pages cibles liées
   matchingContexts.nb: Nb d’ensemble de pages cibles liées
+  notices: Utilisé dans les bulles
   createdAt: Créé le
   updatedAt: Modifié le
 
@@ -82,6 +83,7 @@ domainsSets:
   domains.nb: Nb de domaines
   matchingContexts: Pages cibles liées
   matchingContexts.nb: Nb d’ensemble de pages cibles liées
+  notices: Utilisé dans les bulles
   createdAt: Créé le
   updatedAt: Modifié le
 
