@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 use AppBundle\EntityListener\NoticeListener;
 use AppBundle\Helper\NoticeIntention;
 use AppBundle\Helper\NoticeVisibility;
-use AppBundle\Service\DateTimeImmutable;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -113,6 +113,7 @@ class Notice
     {
         $this->matchingContexts = new ArrayCollection();
         $this->visibility = NoticeVisibility::getDefault();
+        $this->expires = (new DateTimeImmutable())->modify('+1year');
     }
 
     public function getId(): ?int
@@ -316,13 +317,6 @@ class Notice
     public function getExpires(): ?\DateTimeInterface
     {
         return $this->expires;
-    }
-
-    public function setInitialExpires(DateTimeImmutable $dateTime)
-    {
-        if (empty($this->expires)) {
-            $this->expires = $dateTime->oneYearAhead();
-        }
     }
 
     public function setExpires(\DateTime $expires = null)
