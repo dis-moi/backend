@@ -119,4 +119,11 @@ class DomainsSet
     {
         return $this->domains;
     }
+
+    public function getNotices()
+    {
+        return array_map(function (MatchingContext $mc) {
+            return $mc->getNotice();
+        }, $this->getMatchingContexts()->toArray());
+    }
 }

@@ -19,6 +19,7 @@ easy_admin:
         Notice:
             class: AppBundle\Entity\Notice
             label: menu.notices
+            actions: ['show']
             search:
                 fields:
                     - id
@@ -68,6 +69,7 @@ easy_admin:
 
             list:
                 title: title.notices
+                actions: ['show']
                 fields:
                     - { property: id, label: notices.id }
                     - { property: contributor, label: notices.contributor }
@@ -142,7 +144,6 @@ easy_admin:
                     - { property: expires, label: notices.expires }
                     - { property: unpublishedOnExpiration, label: notices.unpublishedOnExpiration }
 
-
         Contributor:
             label: menu.contributors
             class: AppBundle\Entity\Contributor
@@ -160,8 +161,6 @@ easy_admin:
                     - { property: name, label: contributors.name }
                     - { property: intro, label: contributors.intro }
                     - { property: imageFile, label: contributors.imageFile, type: vich_image }
-
-
 
         Domain:
             label: menu.domains
@@ -182,7 +181,12 @@ easy_admin:
                     - { property: id, label: domains.id }
                     - { property: name, label: domains.name }
                     - { property: sets, label: domains.sets }
-                    - { property: matchingContexts, label: domains.matchingContexts }
+                    # ugly but https://github.com/EasyCorp/EasyAdminBundle/issues/1108
+                    - {
+                        property: notices,
+                        label: domains.notices,
+                        template: '_field_notices.html.twig'
+                      }
                     - { property: createdAt, label: domains.createdAt }
                     - { property: updatedAt, label: domains.updatedAt }
 
@@ -206,7 +210,12 @@ easy_admin:
                     - { property: id, label: domainsSets.id }
                     - { property: name, label: domainsSets.name }
                     - { property: domains, label: domainsSets.domains }
-                    - { property: matchingContexts, label: domainsSets.matchingContexts }
+                    # ugly but https://github.com/EasyCorp/EasyAdminBundle/issues/1108
+                    - {
+                        property: notices,
+                        label: domainsSets.notices,
+                        template: '_field_notices.html.twig'
+                      }
                     - { property: createdAt, label: domainsSets.createdAt }
                     - { property: updatedAt, label: domainsSets.updatedAt }
 
