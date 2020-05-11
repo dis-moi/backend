@@ -169,6 +169,7 @@ easy_admin:
             list:
                 title: title.domains
                 actions: ['show']
+                sort: ['name', 'ASC']
                 fields:
                     - { property: name, label: domains.name }
                     - { property: sets, label: domains.sets.nb }
@@ -191,6 +192,7 @@ easy_admin:
             list:
                 title: title.domainsSets
                 actions: ['show']
+                sort: ['name', 'ASC']
                 fields:
                     - { property: name, label: domainsSets.name }
                     - { property: domains, label: domainsSets.domains.nb }
@@ -198,7 +200,7 @@ easy_admin:
             form:
                 fields:
                     - { property: name, label: domainsSets.name }
-                    - { property: domains, label: domainsSets.domains }
+                    - { property: domains, label: domainsSets.domains, type_options: { query_builder: [AppBundle\Controller\AdminController, getDomainNameQueryBuilder] } }
             show:
                 fields:
                     - { property: id, label: domainsSets.id }

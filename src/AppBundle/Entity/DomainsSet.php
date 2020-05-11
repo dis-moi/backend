@@ -54,6 +54,7 @@ class DomainsSet
      *   joinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")},
      *   inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
      *   )
+     * @ORM\OrderBy({"name"="ASC"})
      */
     private $domains;
 
