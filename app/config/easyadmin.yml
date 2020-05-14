@@ -177,6 +177,7 @@ easy_admin:
                 fields:
                     - { property: name, label: domains.name }
             show:
+                max_results: 100
                 fields:
                     - { property: id, label: domains.id }
                     - { property: name, label: domains.name }
@@ -206,6 +207,7 @@ easy_admin:
                     - { property: name, label: domainsSets.name }
                     - { property: domains, label: domainsSets.domains, type_options: { query_builder: [AppBundle\Controller\AdminController, getDomainNameQueryBuilder] } }
             show:
+                max_results: 100
                 fields:
                     - { property: id, label: domainsSets.id }
                     - { property: name, label: domainsSets.name }
