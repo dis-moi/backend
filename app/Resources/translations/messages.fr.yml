@@ -91,6 +91,8 @@ contributors:
   id: Id
   name: Nom
   intro: Intro
+  email: E-mail
+  website: Site
   activeSubscriptionsCount: Nombre d’abonnés actifs
   enabled: Activé
   imageFile: Image d’avatar

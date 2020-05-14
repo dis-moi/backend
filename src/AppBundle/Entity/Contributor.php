@@ -98,6 +98,20 @@ class Contributor implements ImageUploadable
     private $updatedAt;
 
     /**
+     * @var string
+     * @ORM\Column(name="email", type="string", length=255, unique=true, nullable=true)
+     * @Assert\Length(max="255")
+     */
+    private $email;
+
+    /**
+     * @var string
+     * @ORM\Column(name="website", type="string", length=255, unique=false, nullable=true)
+     * @Assert\Length(max="255")
+     */
+    private $website;
+
+    /**
      * Constructor.
      */
     public function __construct()
@@ -293,5 +307,25 @@ class Contributor implements ImageUploadable
     public function setActiveSubscriptionsCount(int $activeSubscriptionsCount): void
     {
         $this->activeSubscriptionsCount = $activeSubscriptionsCount;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(string $website): void
+    {
+        $this->website = $website;
     }
 }
