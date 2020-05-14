@@ -3,10 +3,11 @@
 namespace AppBundle\Serializer;
 
 use AppBundle\Entity\Contributor;
-use AppBundle\Helper\DataConverter;
+use AppBundle\Entity\Notice;
 use AppBundle\Serializer\Serializable\Picture;
 use AppBundle\Serializer\Serializable\Thumb;
-use Symfony\Component\Routing\RouterInterface;
+use Domain\Service\MessagePresenter;
+use Domain\Service\NoticeUrlGenerator;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -18,11 +19,20 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
      */
     protected $normalizer;
 
-    protected $router;
+    /**
+     * @var NoticeUrlGenerator
+     */
+    protected $noticeUrlGenerator;
 
-    public function __construct(RouterInterface $router)
+    /**
+     * @var MessagePresenter
+     */
+    private $messagePresenter;
+
+    public function __construct(NoticeUrlGenerator $noticeUrlGenerator, MessagePresenter $messagePresenter)
     {
-        $this->router = $router;
+        $this->noticeUrlGenerator = $noticeUrlGenerator;
+        $this->messagePresenter = $messagePresenter;
     }
 
     /**
@@ -54,19 +64,19 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
                 'example' => [
                     'matchingUrl' => $exampleNotice->getMatchingContexts()->first()->getExampleUrl(),
                     'noticeId' => $exampleNotice->getId(),
-                    'noticeUrl' => $this->router->generate(
-                      'app_api_getnoticeaction__invoke',
-                      ['id' => $exampleNotice->getId()],
-                      RouterInterface::ABSOLUTE_URL),
+                    'noticeUrl' => $this->noticeUrlGenerator->generate($exampleNotice),
                 ],
                 'numberOfPublishedNotices' => $object->getNoticesCount(),
             ],
             'id' => $object->getId(),
-            'intro' => $object->getIntro() ? DataConverter::convertFullIntro($object->getIntro()) : null,
+            'intro' => $object->getIntro() ? $this->messagePresenter->present($object->getIntro()) : null,
             'name' => $object->getName(),
             'ratings' => [
                 'subscribes' => $object->getActiveSubscriptionsCount(),
             ],
+            'noticesUrls' => array_values($object->getPublicNotices()->map(function (Notice $notice) {
+                return $this->noticeUrlGenerator->generate($notice);
+            })->toArray()),
         ];
     }
 

@@ -30,3 +30,10 @@ services:
             - '@AppBundle\Repository\ContributorRepository'
             - '@Doctrine\ORM\EntityManagerInterface'
 
+    Domain\Service\NoticeUrlGenerator:
+        arguments:
+            - '@router'
+
+    Domain\Service\MessagePresenter:
+        arguments:
+            $utmMedium: '%utm_medium%'

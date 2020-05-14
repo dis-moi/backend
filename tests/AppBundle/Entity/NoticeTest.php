@@ -17,7 +17,7 @@ class NoticeTest extends FixtureAwareWebTestCase
      */
     private $_entityManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -58,20 +58,21 @@ class NoticeTest extends FixtureAwareWebTestCase
         /** @var Contributor $contributor */
         $contributor = $this->_getReference('contributor2');
 
+        $now = new DateTime();
         $notice = new Notice();
         $notice->setContributor($contributor);
         $notice->setMessage('Dumb message...');
 
-        $created = $notice->getCreated();
         $expires = $notice->getExpires();
+        $this->assertEquals(1, $now->diff($expires, true)->y);
+        $this->assertInstanceOf(DateTimeImmutable::class, $expires);
+
+        $created = $notice->getCreated();
         $this->assertEmpty($created);
-        $this->assertEmpty($expires);
 
         $this->_entityManager->persist($notice);
         $created = $notice->getCreated();
         $expires = $notice->getExpires();
         $this->assertInstanceOf(DateTime::class, $created);
-        $this->assertInstanceOf(DateTimeImmutable::class, $expires);
-        $this->assertEquals(1, $created->diff($expires, true)->y);
     }
 }

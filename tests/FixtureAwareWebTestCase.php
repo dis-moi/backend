@@ -21,7 +21,7 @@ abstract class FixtureAwareWebTestCase extends WebTestCase
     /** @var ReferenceRepository */
     protected static $referenceRepository;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         static::$client = static::createClient();
@@ -49,5 +49,15 @@ abstract class FixtureAwareWebTestCase extends WebTestCase
         $executor->setReferenceRepository(static::$referenceRepository);
         $executor->execute($loader->getFixtures());
         $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=1'));
+    }
+
+    protected function assertEqualHtml($expected, $actual)
+    {
+        $from = ['/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/> </s'];
+        $to = ['>',            '<',            '\\1',      '><'];
+        $this->assertEquals(
+            preg_replace($from, $to, $expected),
+            preg_replace($from, $to, $actual)
+        );
     }
 }

@@ -56,6 +56,7 @@ class DomainName
      *   joinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")},
      *   inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
      *   )
+     * @ORM\OrderBy({"name" = "ASC"})
      */
     private $sets;
 
@@ -110,5 +111,12 @@ class DomainName
         $this->name = $name;
 
         return $this;
+    }
+
+    public function getNotices()
+    {
+        return array_map(function (MatchingContext $mc) {
+            return $mc->getNotice();
+        }, $this->getMatchingContexts()->toArray());
     }
 }
