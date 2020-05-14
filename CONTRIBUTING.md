@@ -105,7 +105,7 @@ While the prerequisites above must be satisfied prior to having your pull reques
 
 ### PHP Styleguide
 
-All JavaScript must adhere to [PHP The Right Way](https://phptherightway.com/#code_style_guide) code style.
+All JavaScript must adhere to [PHP The Right Way](https://phptherightway.com/#code_style_guide) code style.
 
 We also use [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) to enforce @Symfony code style.
 
