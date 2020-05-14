@@ -176,6 +176,7 @@ easy_admin:
                 fields:
                     - { property: name, label: domains.name }
             show:
+                max_results: 100
                 fields:
                     - { property: id, label: domains.id }
                     - { property: name, label: domains.name }
@@ -204,6 +205,7 @@ easy_admin:
                     - { property: name, label: domainsSets.name }
                     - { property: domains, label: domainsSets.domains }
             show:
+                max_results: 100
                 fields:
                     - { property: id, label: domainsSets.id }
                     - { property: name, label: domainsSets.name }
