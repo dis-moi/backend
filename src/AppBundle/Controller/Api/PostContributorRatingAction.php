@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
 
-// TODO: Remove when not used anymore
+// TODO: Remove when not used anymore
 class PostContributorRatingAction extends BaseAction
 {
     protected $contributorRepository;

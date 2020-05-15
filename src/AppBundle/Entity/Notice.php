@@ -349,4 +349,18 @@ class Notice
     {
         $this->excludeUrlRegex = $excludeUrlRegex;
     }
+
+    public function getExampleUrl(): ?string
+    {
+        $first = $this->getMatchingContexts()
+            ->filter(function (MatchingContext $mc) {
+                return (bool) $mc->getExampleUrl();
+            })
+            ->first();
+        if ($first) {
+            return $first->getExampleUrl();
+        } else {
+            return null;
+        }
+    }
 }

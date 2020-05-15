@@ -3,7 +3,7 @@
   "info" : {
     "title" : "DisMoi API",
     "description": "API to fetch contributors, notices and matching contexts of dismoi.io",
-    "version" : "3.3.0",
+    "version" : "3.4.0",
     "contact" : { }
   },
   "paths" : {
@@ -63,6 +63,34 @@
         }
       }
     },
+    "/notices" : {
+      "get" : {
+        "summary" : "Retrieve notices’ list.",
+        "tags" : [ "Notices" ],
+        "parameters" : [ {
+          "name" : "contributor",
+          "in" : "query",
+          "required" : false,
+          "description" : "Only include notices from one of this contributor. Include all if missing.",
+          "example": 6,
+          "schema" : {
+              "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Notices list",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/NoticeEntityWithContributorId"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/notices/{noticeId}" : {
       "get" : {
         "summary" : "Retrieve a Notice by its id.",
@@ -83,7 +111,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/NoticeEntity"
+                  "$ref" : "#/components/schemas/NoticeEntityWithContributorDetails"
                 }
               }
             }
@@ -354,8 +382,55 @@
         },
         "required" : [ "url" ]
       },
-      "NoticeEntity" : {
+      "NoticeEntityWithContributorId": {
         "title" : "Notice Entity",
+        "example" : {
+          "id" : 6,
+          "contributorId" : 42,
+          "message" : "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
+          "visibility" : "public",
+          "exampleUrl": "http://dismoi.io",
+          "ratings" : {
+            "likes" : 7,
+            "dislikes" : 2
+          },
+          "created" : "2018-01-25",
+          "modified" : "2019-03-30"
+        },
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "example":  {
+            "type" : "string"
+          },
+          "ratings" : {
+            "$ref" : "#/components/schemas/ratings"
+          },
+          "visibility" : {
+            "type" : "string",
+            "enum" : [ "public", "private", "archived" ]
+          },
+          "created" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "modified" : {
+            "type" : "string",
+            "format" : "date"
+          },
+          "contributorId" : {
+            "type" : "integer"
+          }
+        },
+        "required" : [ "contributor", "created", "id", "message", "ratings", "visibility" ]
+      },
+      "NoticeEntityWithContributorDetails": {
+        "title" : "Notice Entity with Contributor Details",
         "example" : {
           "contributor" : {
             "id" : 42,
@@ -377,7 +452,7 @@
           },
           "created" : "2018-01-25",
           "id" : 6,
-          "intention" : "alternative",
+          "exampleUrl" : "https://dismoi.io",
           "message" : "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
           "modified" : "2019-03-30",
           "ratings" : {
@@ -398,8 +473,8 @@
           "id" : {
             "type" : "integer"
           },
-          "intention" : {
-            "$ref" : "#/components/schemas/intention"
+          "exampleUrl" : {
+            "type" : "string"
           },
           "message" : {
             "type" : "string"
@@ -416,7 +491,7 @@
             "enum" : [ "public", "private", "archived" ]
           }
         },
-        "required" : [ "contributor", "created", "id", "intention", "message", "ratings", "visibility" ]
+        "required" : [ "contributor", "created", "id", "message", "ratings", "visibility" ]
       },
       "ratings" : {
         "title" : "ratings",
@@ -434,12 +509,6 @@
           }
         },
         "required" : [ "likes", "dislikes" ]
-      },
-      "intention" : {
-        "title" : "intention",
-        "example" : "approval",
-        "type" : "string",
-        "enum" : [ "approval", "disapproval", "alternative", "information", "other" ]
       },
       "ContributorEntity" : {
         "title" : "Contributor Entity",
@@ -474,7 +543,7 @@
           "noticesUrls": [
             "https://staging-notices.bulles.fr/api/v3/notices/21",
             "https://staging-notices.bulles.fr/api/v3/notices/42",
-            "https://staging-notices.bulles.fr/api/v3/notices/84",
+            "https://staging-notices.bulles.fr/api/v3/notices/84"
           ]
         },
         "type" : "object",

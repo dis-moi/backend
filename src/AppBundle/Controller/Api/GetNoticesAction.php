@@ -10,30 +10,37 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class GetNoticeAction extends BaseAction
+class GetNoticesAction extends BaseAction
 {
-    protected $repository;
+    /**
+     * @var NoticeRepository
+     */
+    private $repository;
 
     public function __construct(SerializerInterface $serializer, NoticeRepository $repository)
     {
         parent::__construct($serializer);
-
         $this->repository = $repository;
     }
 
     /**
-     * @Route("/notices/{id}")
+     * @Route("/notices")
      * @Method("GET")
      */
     public function __invoke(Request $request)
     {
-        $id = $request->get('id', null);
-        $notice = $this->repository->getOne($id);
+        $contributorId = $request->get('contributor', null);
 
-        if (!$notice) {
-            throw new NotFoundHttpException('Notice not found.');
+        if ($contributorId) {
+            $notices = $this->repository->getByContributor($contributorId);
+        } else {
+            $notices = $this->repository->getAll();
         }
 
-        return $this->createResponse($notice, [NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS => true]);
+        if (!is_array($notices)) {
+            throw new NotFoundHttpException('No notices found');
+        }
+
+        return $this->createResponse($notices, [NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS => false]);
     }
 }

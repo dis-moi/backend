@@ -156,7 +156,7 @@
         const domainNames = getAllRelatedDomains(matchingContextField);
 
         const status = regexField.value ? validateUrlRegexp(
-            domainNames.length ? domainNames.map(injectRegexToDomain(regexField.value)) : [regexField.value],
+            domainNames.length ? domainNames.map(injectRegexToDomain(regexField.value)) : [regexField.value],
             matchingContextExcludeField.value,
             noticeExcludeField.value,
             exampleField.value,
