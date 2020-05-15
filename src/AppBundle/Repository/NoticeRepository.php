@@ -16,37 +16,51 @@ class NoticeRepository extends BaseRepository
      */
     public function getOne($id)
     {
-        return $this->createQueryForPublicNotices()
+        $queryBuilder = $this->repository->createQueryBuilder('n')
+            ->select('n,c')
+            ->leftJoin('n.contributor', 'c')
             ->where('n.id = :id')
-            ->setParameter('id', $id)
-            ->getQuery()
-            ->getOneOrNullResult();
+            ->andWhere('c.enabled = true')
+            ->setParameter('id', $id);
+
+        return self::addNoticeExpirationLogic($queryBuilder)->getQuery()->getOneOrNullResult();
     }
 
     public function getAll()
     {
-        return $this->createQueryForPublicNotices()
-            ->getQuery()
-            ->getResult();
+        $queryBuilder = $this->repository->createQueryBuilder('n')
+            ->leftJoin('n.contributor', 'c')
+            ->andWhere('c.enabled = true');
+
+        return self::addNoticeExpirationLogic($queryBuilder)->getQuery()->getOneOrNullResult();
     }
 
     public function getByContributor($contributorId)
     {
-        return $this->createQueryForPublicNotices()
+        $queryBuilder = $this->createQueryForPublicNotices('n')
+            ->select('n,c')
             ->where('n.contributor = :contributorId')
-            ->setParameter('contributorId', $contributorId)
-            ->getQuery()
-            ->getResult();
+            ->leftJoin('n.contributor', 'c')
+            ->where('n.id = :id')
+            ->andWhere('c.enabled = true')
+            ->setParameter('contributorId', $contributorId);
+
+        return self::addNoticeExpirationLogic($queryBuilder)->getQuery()->getOneOrNullResult();
     }
 
-    private function createQueryForPublicNotices()
+    /**
+     * @param string $noticeAlias
+     *
+     * @return QueryBuilder
+     */
+    private function createQueryForPublicNotices($noticeAlias = 'n')
     {
-        $queryBuilder = $this->repository->createQueryBuilder('n')
-            ->select('n,c')
-            ->leftJoin('n.contributor', 'c')
+        $queryBuilder = $this->repository->createQueryBuilder($noticeAlias)
+            ->select(sprintf('%s,c', $noticeAlias))
+            ->leftJoin(sprintf('%s.contributor', $noticeAlias), 'c')
             ->andWhere('c.enabled = true');
 
-        return self::addNoticeExpirationLogic($queryBuilder);
+        return self::addNoticeExpirationLogic($queryBuilder, $noticeAlias);
     }
 
     /**
