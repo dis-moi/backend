@@ -69,6 +69,7 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
                 'numberOfPublishedNotices' => $object->getNoticesCount(),
             ],
             'id' => $object->getId(),
+            'website' => $object->getWebsite(),
             'intro' => $object->getIntro() ? $this->messagePresenter->present($object->getIntro()) : null,
             'name' => $object->getName(),
             'ratings' => [

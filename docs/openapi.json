@@ -360,6 +360,7 @@
           "contributor" : {
             "id" : 42,
             "name" : "Mediapart",
+            "website" : "mediapart.com",
             "intro" : "Journal d’information numérique, indépendant et participatif",
             "avatar" : {
               "small" : {
@@ -445,6 +446,7 @@
         "example" : {
           "id" : 42,
           "name" : "Mediapart",
+          "website" : "mediapart.com",
           "intro" : "Journal d’information numérique, indépendant et participatif",
           "avatar" : {
             "small" : {
@@ -484,6 +486,11 @@
           "name" : {
             "example" : "Mediapart",
             "type" : "string"
+          },
+          "website": {
+            "example": "https://dismoi.io",
+            "type": "string",
+            "nullable": true
           },
           "intro" : {
             "example" : "Journal d'information numérique, indépendant et participatif",
