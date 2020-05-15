@@ -5,6 +5,7 @@ namespace Domain\Service;
 use League\Uri\Uri;
 use League\Uri\UriModifier;
 use function Sentry\captureException;
+use Throwable;
 use Youthweb\UrlLinker\UrlLinker;
 
 class MessagePresenter
@@ -89,7 +90,7 @@ class MessagePresenter
                 Uri::createFromString(trim($url)),
                 "utm_medium=$this->utmMedium"
             );
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             captureException($e);
         }
     }
