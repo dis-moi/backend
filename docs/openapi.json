@@ -405,7 +405,7 @@
           "message" : {
             "type" : "string"
           },
-          "example":  {
+          "exampleUrl":  {
             "type" : "string"
           },
           "ratings" : {

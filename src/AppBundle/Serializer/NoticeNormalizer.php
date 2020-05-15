@@ -56,7 +56,7 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
             'url' => $this->noticeUrlGenerator->generate($notice),
             'message' => $this->messagePresenter->present($notice->getMessage()),
             'visibility' => $notice->getVisibility()->getValue(),
-            'example' => $notice->getExampleUrl(),
+            'exampleUrl' => $notice->getExampleUrl(),
             'ratings' => [
                 'likes' => $notice->getLikedRatingCount(),
                 'dislikes' => $notice->getDislikedRatingCount(),
