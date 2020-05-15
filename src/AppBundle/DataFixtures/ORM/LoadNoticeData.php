@@ -51,7 +51,7 @@ with https://bulles.fr.');
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor_disabled'));
-        $notice->setMessage('');
+        $notice->setMessage('Notice by a disabled contributor');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setIntention(NoticeIntention::INFORMATION());
         $this->addReference('notice_disabled', $notice);
