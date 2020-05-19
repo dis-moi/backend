@@ -153,14 +153,17 @@ easy_admin:
                 fields:
                     - { property: id, label: contributors.id }
                     - { property: name, label: contributors.name }
+                    - { property: email, label: contributors.email }
                     - { property: intro, label: contributors.intro }
                     - { property: activeSubscriptionsCount, label: contributors.activeSubscriptionsCount }
                     - { property: enabled, label: contributors.enabled }
             form:
                 fields:
                     - { property: name, label: contributors.name }
+                    - { property: email, label: contributors.email }
+                    - { property: website, label: contributors.website }
                     - { property: intro, label: contributors.intro }
-                    - { property: imageFile, label: contributors.imageFile, type: vich_image }
+                    - { property: imageFile, label: contributors.imageFile, type: vich_image, help: '200x200 pixels, JPG, PNG' }
 
         Domain:
             label: menu.domains
@@ -177,6 +180,7 @@ easy_admin:
                 fields:
                     - { property: name, label: domains.name }
             show:
+                max_results: 100
                 fields:
                     - { property: id, label: domains.id }
                     - { property: name, label: domains.name }
@@ -206,6 +210,7 @@ easy_admin:
                     - { property: name, label: domainsSets.name }
                     - { property: domains, label: domainsSets.domains, type_options: { query_builder: [AppBundle\Controller\AdminController, getDomainNameQueryBuilder] } }
             show:
+                max_results: 100
                 fields:
                     - { property: id, label: domainsSets.id }
                     - { property: name, label: domainsSets.name }

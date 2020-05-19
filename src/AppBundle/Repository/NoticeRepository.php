@@ -23,9 +23,34 @@ class NoticeRepository extends BaseRepository
             ->andWhere('c.enabled = true')
             ->setParameter('id', $id);
 
-        return self::addNoticeExpirationLogic($queryBuilder)
-            ->getQuery()->getOneOrNullResult()
-        ;
+        return self::addNoticeExpirationLogic($queryBuilder)->getQuery()->getOneOrNullResult();
+    }
+
+    public function getAll()
+    {
+        return $this->createQueryForPublicNotices('n')->getQuery()->getResult();
+    }
+
+    public function getByContributor($contributorId)
+    {
+        return $this->createQueryForPublicNotices('n')
+            ->where('n.contributor = :contributorId')
+            ->setParameter('contributorId', $contributorId)->getQuery()->getResult();
+    }
+
+    /**
+     * @param string $noticeAlias
+     *
+     * @return QueryBuilder
+     */
+    private function createQueryForPublicNotices($noticeAlias = 'n')
+    {
+        $queryBuilder = $this->repository->createQueryBuilder($noticeAlias)
+            ->select(sprintf('%s,c', $noticeAlias))
+            ->leftJoin(sprintf('%s.contributor', $noticeAlias), 'c')
+            ->andWhere('c.enabled = true');
+
+        return self::addNoticeExpirationLogic($queryBuilder, $noticeAlias);
     }
 
     /**

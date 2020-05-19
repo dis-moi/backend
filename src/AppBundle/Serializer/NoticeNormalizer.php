@@ -45,26 +45,33 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
         return $data instanceof Notice;
     }
 
-    public function normalize($object, $format = null, array $context = []): array
+    public function normalize($notice, $format = null, array $context = []): array
     {
-        if (!($object instanceof Notice)) {
+        if (!($notice instanceof Notice)) {
             throw new InvalidArgumentException();
         }
 
-        return [
-            'contributor' => $this->normalizer->normalize($object->getContributor(), $format, $context),
-            'created' => $this->formatDateTime($object->getCreated()),
-            'id' => $object->getId(),
-            'url' => $this->noticeUrlGenerator->generate($object),
-            'intention' => $object->getIntention()->getValue(),
-            'message' => $this->messagePresenter->present($object->getMessage()),
-            'modified' => $this->formatDateTime($object->getUpdated()),
+        $base = [
+            'id' => $notice->getId(),
+            'url' => $this->noticeUrlGenerator->generate($notice),
+            'message' => $this->messagePresenter->present($notice->getMessage()),
+            'visibility' => $notice->getVisibility()->getValue(),
+            'exampleUrl' => $notice->getExampleUrl(),
             'ratings' => [
-                'likes' => $object->getLikedRatingCount(),
-                'dislikes' => $object->getDislikedRatingCount(),
+                'likes' => $notice->getLikedRatingCount(),
+                'dislikes' => $notice->getDislikedRatingCount(),
             ],
-            'visibility' => $object->getVisibility()->getValue(),
+            'created' => $this->formatDateTime($notice->getCreated()),
+            'modified' => $this->formatDateTime($notice->getUpdated()),
         ];
+
+        if ($context[NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS]) {
+            $base['contributor'] = $this->normalizer->normalize($notice->getContributor(), $format, $context);
+        } else {
+            $base['contributorId'] = $notice->getContributor()->getId();
+        }
+
+        return $base;
     }
 
     protected function formatDateTime(\DateTime $datetime): string

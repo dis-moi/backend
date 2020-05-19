@@ -14,15 +14,17 @@ abstract class BaseAction
         $this->serializer = $serializer;
     }
 
-    protected function createResponse($content, $status = 200, $headers = [])
+    protected function createResponse($content, $serializerOptions = [])
     {
-        $json = $this->serialize($content);
+        $status = 200;
+        $headers = [];
+        $json = $this->serialize($content, $serializerOptions);
 
         return new JsonResponse($json, $status, $headers, true);
     }
 
-    protected function serialize($content)
+    protected function serialize($content, $serializerOptions = [])
     {
-        return $this->serializer->serialize($content, 'json', ['groups' => ['v3:list']]);
+        return $this->serializer->serialize($content, 'json', $serializerOptions);
     }
 }
