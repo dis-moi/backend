@@ -7,12 +7,12 @@ use MabeEnum\Enum;
 class NoticeVisibility extends Enum
 {
     const PUBLIC_VISIBILITY = 'public';
-    const PRIVATE_VISIBILITY = 'private'; // draft
+    const PRIVATE_VISIBILITY = 'private';
     const ARCHIVED_VISIBILITY = 'archived';
 
     public static function getDefault()
     {
-        return self::PRIVATE_VISIBILITY();
+        return self::PUBLIC_VISIBILITY();
     }
 
     public function __toString()
