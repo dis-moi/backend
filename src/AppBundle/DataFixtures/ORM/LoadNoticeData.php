@@ -78,6 +78,7 @@ with https://bulles.fr.');
 
         $notice = new Notice();
         $notice->setContributor($this->getReference('contributor'));
+        $notice->setVisibility(NoticeVisibility::PRIVATE_VISIBILITY());
         $notice->setMessage('Celle-ci n’est pas publique');
         $this->addReference('notice_private', $notice);
         $manager->persist($notice);
