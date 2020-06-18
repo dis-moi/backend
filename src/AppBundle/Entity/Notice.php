@@ -5,11 +5,15 @@ namespace AppBundle\Entity;
 use AppBundle\EntityListener\NoticeListener;
 use AppBundle\Helper\NoticeIntention;
 use AppBundle\Helper\NoticeVisibility;
+use DateTime;
 use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Notice.
@@ -17,6 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="notice")
  * @ORM\Entity
  * @ORM\EntityListeners({NoticeListener::class})
+ * @Vich\Uploadable
  */
 class Notice
 {
@@ -82,25 +87,25 @@ class Notice
     private $ratings;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime")
      */
     private $updated;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime")
      */
     private $created;
 
     /**
-     * @var \DateTimeInterface
+     * @var DateTimeInterface
      *
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $expires = null;
+    private $expires;
 
     /**
      * @var bool
@@ -109,11 +114,30 @@ class Notice
      */
     private $unpublishedOnExpiration = false;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="screenshot", type="string", length=255, nullable=true)
+     */
+    private $screenshot;
+
+    /**
+     * @var File
+     *
+     * @Vich\UploadableField(mapping="notice_screenshots", fileNameProperty="screenshot")
+     */
+    private $screenshotFile;
+
     public function __construct()
     {
         $this->matchingContexts = new ArrayCollection();
         $this->visibility = NoticeVisibility::getDefault();
         $this->expires = (new DateTimeImmutable())->modify('+1year');
+    }
+
+    private function markUpdated(): void
+    {
+        $this->updated = new DateTime('now');
     }
 
     public function getId(): ?int
@@ -348,6 +372,29 @@ class Notice
     public function setExcludeUrlRegex(?string $excludeUrlRegex): void
     {
         $this->excludeUrlRegex = $excludeUrlRegex;
+    }
+
+    public function getScreenshot(): ?string
+    {
+        return $this->screenshot;
+    }
+
+    public function setScreenshot(string $screenshot): void
+    {
+        $this->screenshot = $screenshot;
+    }
+
+    public function getScreenshotFile(): ?File
+    {
+        return $this->screenshotFile;
+    }
+
+    public function setScreenshotFile(File $screenshotFile): void
+    {
+        $this->screenshotFile = $screenshotFile;
+        if ($screenshotFile) {
+            $this->markUpdated();
+        }
     }
 
     public function getExampleUrl(): ?string
