@@ -36,6 +36,7 @@ easy_admin:
                 fields:
                     - { property: message, label: notices.message }
                     - { property: contributor, label: notices.contributor }
+                    - { property: screenshot, template: 'vich_uploader_screenshot.html.twig', label: notices.screenshot }
                     - { property: note, label: notices.note }
                     - { property: visibility, label: notices.visibility }
                     - { property: excludeUrlRegex, label: notices.excludeUrlRegex }
@@ -47,6 +48,7 @@ easy_admin:
                     - { type: group, label: notices.groups.publication, icon: comments }
                     - { property: message, label: notices.message }
                     - { property: contributor, label: notices.contributor, type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
+                    - { property: screenshotFile, label: notices.screenshot, type: vich_image, help: '612x480 pixels, JPG, PNG' }
                     - { property: note, label: notices.note }
                     - { property: visibility, label: notices.visibility, type: 'AppBundle\Form\VisibilityType' }
                     - { type: group, label: notices.groups.matchingContexts, icon: 'paper-plane', columns: 6 }
@@ -147,16 +149,19 @@ easy_admin:
         Contributor:
             label: menu.contributors
             class: AppBundle\Entity\Contributor
+            controller: AppBundle\Controller\ContributorAdminController
             list:
                 title: title.contributors
                 sort: [name, ASC]
                 fields:
                     - { property: id, label: contributors.id }
+                    - { property: image, template: 'vich_uploader_image.html.twig', label: contributors.image }
                     - { property: name, label: contributors.name }
                     - { property: email, label: contributors.email }
                     - { property: intro, label: contributors.intro }
                     - { property: activeSubscriptionsCount, label: contributors.activeSubscriptionsCount }
                     - { property: enabled, label: contributors.enabled }
+                    - { property: starredNotice, type: object, template: 'notice_in_list.html.twig', label: contributors.starredNotice }
             form:
                 fields:
                     - { property: name, label: contributors.name }
@@ -164,6 +169,8 @@ easy_admin:
                     - { property: website, label: contributors.website }
                     - { property: intro, label: contributors.intro }
                     - { property: imageFile, label: contributors.imageFile, type: vich_image, help: '200x200 pixels, JPG, PNG' }
+                    - { property: bannerImageFile, label: contributors.bannerImageFile, type: vich_image, help: '652x200 pixels, JPG, PNG' }
+                    - { property: starredNotice, label: contributors.starredNotice }
 
         Domain:
             label: menu.domains

@@ -15,7 +15,7 @@ class AdminController extends BaseAdminController
     /**
      * @var ContributorRepository
      */
-    private $contributorRepository;
+    protected $contributorRepository;
 
     public function __construct(ContributorRepository $repository)
     {
