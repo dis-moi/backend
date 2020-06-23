@@ -352,6 +352,10 @@ class Contributor implements ImageUploadable
     public function getTheirMostLikedOrDisplayedNotice(): ?Notice
     {
         if ($notices = $this->getPublicNotices()) {
+            if ($this->getStarredNotice()) {
+                return $this->getStarredNotice();
+            }
+
             $noticesArray = $notices->toArray();
 
             return array_reduce($noticesArray, function (?Notice $acc, Notice $curr) {
