@@ -5,11 +5,13 @@ namespace AppBundle\Serializer;
 use AppBundle\Entity\Notice;
 use Domain\Service\MessagePresenter;
 use Domain\Service\NoticeUrlGenerator;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
-class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
+class NoticeNormalizer extends EntityWithImageNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
     /**
      * @var NormalizerInterface
@@ -26,8 +28,9 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
      */
     private $messagePresenter;
 
-    public function __construct(NoticeUrlGenerator $noticeUrlGenerator, MessagePresenter $messagePresenter)
+    public function __construct(NoticeUrlGenerator $noticeUrlGenerator, MessagePresenter $messagePresenter, UploaderHelper $uploader, RequestStack $requestStack)
     {
+        parent::__construct($uploader, $requestStack);
         $this->noticeUrlGenerator = $noticeUrlGenerator;
         $this->messagePresenter = $messagePresenter;
     }
@@ -57,6 +60,7 @@ class NoticeNormalizer implements NormalizerInterface, NormalizerAwareInterface
             'message' => $this->messagePresenter->present($notice->getMessage()),
             'visibility' => $notice->getVisibility()->getValue(),
             'exampleUrl' => $notice->getExampleUrl(),
+            'screenshot' => $this->getImageAbsoluteUrl($notice, 'screenshotFile'),
             'ratings' => [
                 'likes' => $notice->getLikedRatingCount(),
                 'dislikes' => $notice->getDislikedRatingCount(),

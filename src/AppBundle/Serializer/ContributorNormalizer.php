@@ -8,11 +8,13 @@ use AppBundle\Serializer\Serializable\Picture;
 use AppBundle\Serializer\Serializable\Thumb;
 use Domain\Service\MessagePresenter;
 use Domain\Service\NoticeUrlGenerator;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
-class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInterface
+class ContributorNormalizer extends EntityWithImageNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
     /**
      * @var NormalizerInterface
@@ -29,8 +31,9 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
      */
     private $messagePresenter;
 
-    public function __construct(NoticeUrlGenerator $noticeUrlGenerator, MessagePresenter $messagePresenter)
+    public function __construct(NoticeUrlGenerator $noticeUrlGenerator, MessagePresenter $messagePresenter, UploaderHelper $uploader, RequestStack $requestStack)
     {
+        parent::__construct($uploader, $requestStack);
         $this->noticeUrlGenerator = $noticeUrlGenerator;
         $this->messagePresenter = $messagePresenter;
     }
@@ -48,34 +51,42 @@ class ContributorNormalizer implements NormalizerInterface, NormalizerAwareInter
         return $data instanceof Contributor;
     }
 
-    public function normalize($object, $format = null, array $context = []): array
+    public function normalize($contributor, $format = null, array $context = []): array
     {
-        if (!($object instanceof Contributor)) {
+        if (!($contributor instanceof Contributor)) {
             throw new InvalidArgumentException();
         }
-        $exampleNotice = $object->getTheirMostLikedOrDisplayedNotice();
+        $exampleNotice = $contributor->getTheirMostLikedOrDisplayedNotice();
 
         return [
-            'avatar' => !empty($object->getImage()) ?
-                $this->normalizer->normalize(self::avatarWithThumbs($object), $format, $context) :
+            'id' => $contributor->getId(),
+            'name' => $contributor->getName(),
+            'website' => $contributor->getWebsite(),
+            'intro' => $contributor->getIntro() ? $this->messagePresenter->present($contributor->getIntro()) : null,
+            'avatar' => !empty($contributor->getImage()) ?
+                $this->normalizer->normalize(self::avatarWithThumbs($contributor), $format, $context) :
                 null,
-            'contributions' => $object->getNoticesCount(),
+            'banner' => $this->getImageAbsoluteUrl($contributor, 'bannerImageFile'),
+            'contributions' => $contributor->getNoticesCount(),
             'contribution' => [
-                'example' => [
-                    'matchingUrl' => $exampleNotice->getMatchingContexts()->first()->getExampleUrl(),
+                'example' => [/* Deprecated */
+                    'matchingUrl' => $exampleNotice->getMatchingContexts()->first() ? $exampleNotice->getMatchingContexts()->first()->getExampleUrl() : null,
                     'noticeId' => $exampleNotice->getId(),
                     'noticeUrl' => $this->noticeUrlGenerator->generate($exampleNotice),
+                    'screenshot' => $this->getImageAbsoluteUrl($exampleNotice, 'screenshotFile'),
                 ],
-                'numberOfPublishedNotices' => $object->getNoticesCount(),
+                'starred' => [
+                    'matchingUrl' => $exampleNotice->getMatchingContexts()->first() ? $exampleNotice->getMatchingContexts()->first()->getExampleUrl() : null,
+                    'noticeId' => $exampleNotice->getId(),
+                    'noticeUrl' => $this->noticeUrlGenerator->generate($exampleNotice),
+                    'screenshot' => $this->getImageAbsoluteUrl($exampleNotice, 'screenshotFile'),
+                ],
+                'numberOfPublishedNotices' => $contributor->getNoticesCount(),
             ],
-            'id' => $object->getId(),
-            'website' => $object->getWebsite(),
-            'intro' => $object->getIntro() ? $this->messagePresenter->present($object->getIntro()) : null,
-            'name' => $object->getName(),
             'ratings' => [
-                'subscribes' => $object->getActiveSubscriptionsCount(),
+                'subscribes' => $contributor->getActiveSubscriptionsCount(),
             ],
-            'noticesUrls' => array_values($object->getPublicNotices()->map(function (Notice $notice) {
+            'noticesUrls' => array_values($contributor->getPublicNotices()->map(function (Notice $notice) {
                 return $this->noticeUrlGenerator->generate($notice);
             })->toArray()),
         ];
