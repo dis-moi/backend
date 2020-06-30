@@ -62,10 +62,31 @@ class Contributor implements ImageUploadable
     private $imageFile;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="banner_image", type="string", length=255, nullable=true)
+     */
+    private $bannerImage;
+
+    /**
+     * @var File
+     *
+     * @Vich\UploadableField(mapping="contributor_banners", fileNameProperty="bannerImage")
+     */
+    private $bannerImageFile;
+
+    /**
      * @ORM\OneToMany(targetEntity="Notice", mappedBy="contributor")
      * @ORM\OrderBy({"updated" = "ASC"})
      */
     private $notices;
+
+    /** @var Notice
+     *
+     * @ORM\OneToOne(targetEntity=Notice::class, cascade={"persist"})
+     * @ORM\JoinColumn(name="starred_notice", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    private $starredNotice;
 
     /**
      * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor")
@@ -120,6 +141,11 @@ class Contributor implements ImageUploadable
         $this->subscriptions = new ArrayCollection();
     }
 
+    private function markUpdated(): void
+    {
+        $this->updatedAt = new DateTime('now');
+    }
+
     /**
      * Get id.
      *
@@ -166,20 +192,33 @@ class Contributor implements ImageUploadable
         return $this->intro;
     }
 
-    public function setImageFile(File $image = null)
+    public function setImageFile(File $image = null): void
     {
         $this->imageFile = $image;
         // VERY IMPORTANT:
         // It is required that at least one field changes if you are using Doctrine,
         // otherwise the event listeners won't be called and the file is lost
         if ($image) {
-            $this->updatedAt = new \DateTime('now');
+            $this->markUpdated();
         }
     }
 
-    public function getImageFile()
+    public function setBannerImageFile(File $bannerImage = null): void
+    {
+        $this->bannerImageFile = $bannerImage;
+        if ($bannerImage) {
+            $this->markUpdated();
+        }
+    }
+
+    public function getImageFile(): ?File
     {
         return $this->imageFile;
+    }
+
+    public function getBannerImageFile(): ?File
+    {
+        return $this->bannerImageFile;
     }
 
     public function setImage($image)
@@ -220,61 +259,6 @@ class Contributor implements ImageUploadable
     public function getNotices(): ?Collection
     {
         return $this->notices;
-    }
-
-    public function getPublicNotices(): ?Collection
-    {
-        return $this->getNotices()->filter(function (Notice $notice) {
-            return $notice->hasPublicVisibility();
-        });
-    }
-
-    public function getNoticesCount(): int
-    {
-        if ($notices = $this->getPublicNotices()) {
-            return $this->getPublicNotices()->count();
-        } else {
-            return 0;
-        }
-    }
-
-    public function getTheirMostLikedOrDisplayedNotice(): ?Notice
-    {
-        if ($notices = $this->getPublicNotices()) {
-            $noticesArray = $notices->toArray();
-
-            return array_reduce($noticesArray, function (?Notice $acc, Notice $curr) {
-                // First iteration...
-                if (is_null($acc)) {
-                    return $curr;
-                }
-
-                // Compare likes at the first place...
-                $currLikes = $curr->getLikedRatingCount();
-                $accLikes = $acc->getLikedRatingCount();
-                if ($currLikes > $accLikes) {
-                    return $curr;
-                }
-                if ($currLikes < $accLikes) {
-                    return $acc;
-                }
-
-                // Likes equality, compare displays then...
-                $currDisplays = $curr->getDisplayedRatingCount();
-                $accDisplays = $acc->getDisplayedRatingCount();
-                if ($currDisplays > $accDisplays) {
-                    return $curr;
-                }
-                if ($currDisplays < $accDisplays) {
-                    return $acc;
-                }
-
-                // Likes and Displays equalities, just pick the first in...
-                return $acc;
-            });
-        } else {
-            return null;
-        }
     }
 
     /*
@@ -327,5 +311,84 @@ class Contributor implements ImageUploadable
     public function setWebsite(string $website): void
     {
         $this->website = $website;
+    }
+
+    public function getBannerImage(): ?string
+    {
+        return $this->bannerImage;
+    }
+
+    public function setBannerImage(string $bannerImage): void
+    {
+        $this->bannerImage = $bannerImage;
+    }
+
+    public function setStarredNotice(Notice $notice): void
+    {
+        $this->starredNotice = $notice;
+    }
+
+    public function getStarredNotice(): ?Notice
+    {
+        return $this->starredNotice;
+    }
+
+    public function getPublicNotices(): ?Collection
+    {
+        return $this->getNotices()->filter(function (Notice $notice) {
+            return $notice->hasPublicVisibility();
+        });
+    }
+
+    public function getNoticesCount(): int
+    {
+        if ($notices = $this->getPublicNotices()) {
+            return $this->getPublicNotices()->count();
+        } else {
+            return 0;
+        }
+    }
+
+    public function getTheirMostLikedOrDisplayedNotice(): ?Notice
+    {
+        if ($notices = $this->getPublicNotices()) {
+            if ($this->getStarredNotice()) {
+                return $this->getStarredNotice();
+            }
+
+            $noticesArray = $notices->toArray();
+
+            return array_reduce($noticesArray, function (?Notice $acc, Notice $curr) {
+                // First iteration...
+                if (is_null($acc)) {
+                    return $curr;
+                }
+
+                // Compare likes at the first place...
+                $currLikes = $curr->getLikedRatingCount();
+                $accLikes = $acc->getLikedRatingCount();
+                if ($currLikes > $accLikes) {
+                    return $curr;
+                }
+                if ($currLikes < $accLikes) {
+                    return $acc;
+                }
+
+                // Likes equality, compare displays then...
+                $currDisplays = $curr->getDisplayedRatingCount();
+                $accDisplays = $acc->getDisplayedRatingCount();
+                if ($currDisplays > $accDisplays) {
+                    return $curr;
+                }
+                if ($currDisplays < $accDisplays) {
+                    return $acc;
+                }
+
+                // Likes and Displays equalities, just pick the first in...
+                return $acc;
+            });
+        } else {
+            return null;
+        }
     }
 }

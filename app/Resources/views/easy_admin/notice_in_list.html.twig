@@ -1,0 +1,7 @@
+{% if value %}
+<a href="{{ path('easyadmin', { entity: 'Notice', action: 'show', id: value.id, referer: '' }) }}">
+    {{ value.message|default('Message vide') }}
+    <br>
+    ({{ value.matchingContexts[0] is defined ? value.matchingContexts[0].exampleUrl }})
+</a>
+{% endif %}

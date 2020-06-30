@@ -3,8 +3,10 @@
   "info" : {
     "title" : "DisMoi API",
     "description": "API to fetch contributors, notices and matching contexts of dismoi.io",
-    "version" : "3.4.0",
-    "contact" : { }
+    "version" : "3.5.0",
+    "contact" : {
+      "url": "https://www.dismoi.io/"
+    }
   },
   "paths" : {
     "/matching-contexts" : {
@@ -390,6 +392,7 @@
           "message" : "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
           "visibility" : "public",
           "exampleUrl": "http://dismoi.io",
+          "screenshot": "https://example.org/assets/s1m2a3l4l5.jpg",
           "ratings" : {
             "likes" : 7,
             "dislikes" : 2
@@ -407,6 +410,9 @@
           },
           "exampleUrl":  {
             "type" : "string"
+          },
+          "screenshot": {
+            "type": "string"
           },
           "ratings" : {
             "$ref" : "#/components/schemas/ratings"
@@ -448,11 +454,13 @@
                 "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
               }
             },
+            "banner" : "https://example.org/assets/s1m2a3l4l5.jpg",
             "contributions" : 24
           },
           "created" : "2018-01-25",
           "id" : 6,
           "exampleUrl" : "https://dismoi.io",
+          "screenshot" : "https://example.org/assets/s1m2a3l4l5.jpg",
           "message" : "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
           "modified" : "2019-03-30",
           "ratings" : {
@@ -475,6 +483,9 @@
           },
           "exampleUrl" : {
             "type" : "string"
+          },
+          "screenshot": {
+            "type": "string"
           },
           "message" : {
             "type" : "string"
@@ -528,12 +539,14 @@
               "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
             }
           },
+          "banner" : "https://example.org/assets/s1m2a3l4l5.jpg",
           "contributions" : 24,
           "contribution" : {
             "example" : {
               "matchingUrl" : "https://match.in/context/url",
               "noticeId" : 3,
-              "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3"
+              "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3",
+              "screenshot" : "https://example.org/assets/s1m2a3l4l5.jpg"
             },
             "numberOfPublishedNotices" : 24
           },
@@ -544,7 +557,8 @@
             "https://staging-notices.bulles.fr/api/v3/notices/21",
             "https://staging-notices.bulles.fr/api/v3/notices/42",
             "https://staging-notices.bulles.fr/api/v3/notices/84"
-          ]
+          ],
+          "starredNotice": 41
         },
         "type" : "object",
         "properties" : {
@@ -568,6 +582,9 @@
           },
           "avatar" : {
             "$ref" : "#/components/schemas/picture"
+          },
+          "banner" : {
+            "type": "string"
           },
           "contributions" : {
             "description" : "DEPRECATED: use “contribution.numberOfPublishedNotices” instead. The total number of contributions this contributor has published.",
@@ -621,21 +638,56 @@
       "contribution" : {
         "title" : "contribution infos",
         "example" : {
-          "example" : {
+          "starred" : {
             "matchingUrl" : "https://match.in/context/url",
             "noticeId" : 3,
-            "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3"
+            "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3",
+            "screenshot" : "https://example.org/assets/s1m2a3l4l5.jpg"
           },
           "numberOfPublishedNotices" : 24
         },
         "type" : "object",
         "properties" : {
           "example" : {
-            "description" : "An example of a notice the contributor has created.",
+            "description" : "DEPRECATED: Use 'starred' instead",
+            "type" : "object",
+            "deprecated": true,
             "example" : {
               "matchingUrl" : "https://match.in/context/url",
               "noticeId" : 3,
-              "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3"
+              "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3",
+              "screenshot" : "https://example.org/assets/s1m2a3l4l5.jpg"
+            },
+            "properties" : {
+              "matchingUrl" : {
+                "description" : "The URL of a publicly available Web resource, where the notice should show up.",
+                "example" : "https://match.in/context/url",
+                "type" : "string",
+                "format" : "url"
+              },
+              "noticeId" : {
+                "example" : 3,
+                "type" : "integer"
+              },
+              "noticeUrl" : {
+                "description" : "The URL of the notice, should one had to fetch it.",
+                "example" : "https://notices.lmem.net/api/v3/notices/3",
+                "type" : "string",
+                "format" : "url"
+              },
+              "screenshot": {
+                "type": "string"
+              }
+            },
+            "required" : [ "matchingUrl", "noticeId", "noticeUrl", "screenshot" ]
+          },
+          "starred" : {
+            "description" : "Contributor’s starred notice.",
+            "example" : {
+              "matchingUrl" : "https://match.in/context/url",
+              "noticeId" : 3,
+              "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3",
+              "screenshot" : "https://example.org/assets/s1m2a3l4l5.jpg"
             },
             "type" : "object",
             "properties" : {
@@ -654,9 +706,12 @@
                 "example" : "https://notices.lmem.net/api/v3/notices/3",
                 "type" : "string",
                 "format" : "url"
+              },
+              "screenshot": {
+                "type": "string"
               }
             },
-            "required" : [ "matchingUrl", "noticeId", "noticeUrl" ]
+            "required" : [ "matchingUrl", "noticeId", "noticeUrl", "screenshot" ]
           },
           "numberOfPublishedNotices" : {
             "description" : "The total number of contributions this contributor has published.",

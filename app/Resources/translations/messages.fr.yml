@@ -36,6 +36,7 @@ notices:
   message: Message
   visibility: Visibilité
   note: Note privée
+  screenshot: Capture d’écran
   matchingContexts: Ensemble de pages cibles
   badgedRatingCount: Badges
   displayedRatingCount: Vues
@@ -96,6 +97,10 @@ contributors:
   activeSubscriptionsCount: Nombre d’abonnés actifs
   enabled: Activé
   imageFile: Image d’avatar
+  image: Avatar
+  bannerImageFile: Image de bannière
+  banner: Bannière
+  starredNotice: Bulle phare
 
 users:
   username: Identifiant
