@@ -44,14 +44,12 @@ class MatchingContextRepository extends BaseRepository
     {
         $queryBuilder = $this->repository->createQueryBuilder('mc')
             ->select('mc')
-            ->leftJoin('mc.notice', 'notice')
-            ->leftJoin('notice.contributor', 'contributor')
+            ->leftJoin('mc.notice', 'n')
+            ->leftJoin('n.contributor', 'contributor')
             ->andWhere('contributor.enabled = true')
-            ->andWhere('notice.visibility=:visibility')
-            ->setParameter('visibility', NoticeVisibility::PUBLIC_VISIBILITY())
         ;
 
-        return NoticeRepository::addNoticeExpirationLogic($queryBuilder, 'notice');
+        return NoticeRepository::addNoticeVisibilityLogic($queryBuilder);
     }
 
     /**
