@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use AppBundle\EntityListener\NoticeListener;
-use AppBundle\Helper\NoticeIntention;
 use AppBundle\Helper\NoticeVisibility;
 use DateTime;
 use DateTimeImmutable;
@@ -53,11 +52,6 @@ class Notice
      * @ORM\Column(name="excludeUrlRegex", type="text", nullable=true)
      */
     private $excludeUrlRegex;
-
-    /**
-     * @ORM\Column(name="intention", type="string", options={"default" : "other"})
-     */
-    private $intention;
 
     /**
      * @ORM\ManyToOne(targetEntity=Contributor::class, inversedBy="notices", cascade={"persist"}, fetch="EAGER")
@@ -174,25 +168,6 @@ class Notice
     public function getMatchingContexts(): ?Collection
     {
         return $this->matchingContexts;
-    }
-
-    /**
-     * @throw InvalidArgumentException
-     */
-    public function setIntention(NoticeIntention $intention): Notice
-    {
-        $this->intention = $intention->getValue();
-
-        return $this;
-    }
-
-    public function getIntention(): ?NoticeIntention
-    {
-        if (!$this->intention) {
-            return NoticeIntention::getDefault();
-        }
-
-        return NoticeIntention::get($this->intention);
     }
 
     public function __toString(): string
