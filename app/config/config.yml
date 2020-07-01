@@ -62,6 +62,7 @@ doctrine:
         #   3. Uncomment next line:
         #path:     "%database_path%"
         server_version:       5.5
+        persistent: false
 
     orm:
         default_entity_manager: default
