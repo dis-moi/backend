@@ -32,4 +32,31 @@ class GetNoticeTest extends BaseApiE2eTestCase
         static::$client->request('GET', '/api/v3/notices/'.$notice->getId());
         $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
     }
+
+    public function testFailGetPrivateNotice()
+    {
+        /** @var Notice $notice */
+        $notice = static::$referenceRepository->getReference('notice_private');
+
+        static::$client->request('GET', '/api/v3/notices/'.$notice->getId());
+        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
+    }
+
+    public function testFailGetArchivedNotice()
+    {
+        /** @var Notice $notice */
+        $notice = static::$referenceRepository->getReference('notice_type_ecology_archived');
+
+        static::$client->request('GET', '/api/v3/notices/'.$notice->getId());
+        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
+    }
+
+    public function testFailGetUnpublishedNotice()
+    {
+        /** @var Notice $notice */
+        $notice = static::$referenceRepository->getReference('notice_expired_unpublished');
+
+        static::$client->request('GET', '/api/v3/notices/'.$notice->getId());
+        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
+    }
 }
