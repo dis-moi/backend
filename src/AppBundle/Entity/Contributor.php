@@ -62,14 +62,14 @@ class Contributor implements ImageUploadable
     private $imageFile;
 
     /**
-     * @var string
+     * @var string | null
      *
      * @ORM\Column(name="banner_image", type="string", length=255, nullable=true)
      */
     private $bannerImage;
 
     /**
-     * @var File
+     * @var File | null
      *
      * @Vich\UploadableField(mapping="contributor_banners", fileNameProperty="bannerImage")
      */
@@ -141,29 +141,25 @@ class Contributor implements ImageUploadable
         $this->subscriptions = new ArrayCollection();
     }
 
-    private function markUpdated(): void
+    private function markUpdated(): Contributor
     {
         $this->updatedAt = new DateTime('now');
+
+        return $this;
     }
 
     /**
      * Get id.
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * Set name.
-     *
-     * @param string $name
-     *
-     * @return Contributor
      */
-    public function setName($name)
+    public function setName(string $name): Contributor
     {
         $this->name = $name;
 
@@ -172,10 +168,8 @@ class Contributor implements ImageUploadable
 
     /**
      * Get name.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -192,7 +186,7 @@ class Contributor implements ImageUploadable
         return $this->intro;
     }
 
-    public function setImageFile(File $image = null): void
+    public function setImageFile(?File $image = null): Contributor
     {
         $this->imageFile = $image;
         // VERY IMPORTANT:
@@ -201,14 +195,18 @@ class Contributor implements ImageUploadable
         if ($image) {
             $this->markUpdated();
         }
+
+        return $this;
     }
 
-    public function setBannerImageFile(File $bannerImage = null): void
+    public function setBannerImageFile(?File $bannerImage = null): Contributor
     {
         $this->bannerImageFile = $bannerImage;
         if ($bannerImage) {
             $this->markUpdated();
         }
+
+        return $this;
     }
 
     public function getImageFile(): ?File
@@ -221,27 +219,27 @@ class Contributor implements ImageUploadable
         return $this->bannerImageFile;
     }
 
-    public function setImage($image)
+    public function setImage($image): Contributor
     {
         $this->image = $image;
+
+        return $this;
     }
 
-    public function getImage()
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }
 
     /**
      * Add notice.
-     *
-     * @return Contributor
      */
-    public function addNotice(Notice $notice)
+    public function addNotice(Notice $notice): Contributor
     {
         $this->notices[] = $notice;
 
@@ -251,9 +249,11 @@ class Contributor implements ImageUploadable
     /**
      * Remove notice.
      */
-    public function removeNotice(Notice $notice)
+    public function removeNotice(Notice $notice): Contributor
     {
         $this->notices->removeElement($notice);
+
+        return $this;
     }
 
     public function getNotices(): ?Collection
@@ -269,10 +269,7 @@ class Contributor implements ImageUploadable
         return $this->activeSubscriptionsCount;
     }
 
-    /**
-     * @return bool
-     */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->enabled;
     }
@@ -280,17 +277,21 @@ class Contributor implements ImageUploadable
     /**
      * @param bool $enabled
      */
-    public function setEnabled($enabled)
+    public function setEnabled($enabled): Contributor
     {
         $this->enabled = $enabled;
+
+        return $this;
     }
 
     /**
      * ⚠ Should not be used outside of repo.
      */
-    public function setActiveSubscriptionsCount(int $activeSubscriptionsCount): void
+    public function setActiveSubscriptionsCount(int $activeSubscriptionsCount): Contributor
     {
         $this->activeSubscriptionsCount = $activeSubscriptionsCount;
+
+        return $this;
     }
 
     public function getEmail(): ?string
@@ -298,9 +299,11 @@ class Contributor implements ImageUploadable
         return $this->email;
     }
 
-    public function setEmail(string $email): void
+    public function setEmail(string $email): Contributor
     {
         $this->email = $email;
+
+        return $this;
     }
 
     public function getWebsite(): ?string
@@ -308,9 +311,11 @@ class Contributor implements ImageUploadable
         return $this->website;
     }
 
-    public function setWebsite(string $website): void
+    public function setWebsite(string $website): Contributor
     {
         $this->website = $website;
+
+        return $this;
     }
 
     public function getBannerImage(): ?string
@@ -318,14 +323,18 @@ class Contributor implements ImageUploadable
         return $this->bannerImage;
     }
 
-    public function setBannerImage(string $bannerImage): void
+    public function setBannerImage(?string $bannerImage): Contributor
     {
         $this->bannerImage = $bannerImage;
+
+        return $this;
     }
 
-    public function setStarredNotice(Notice $notice): void
+    public function setStarredNotice(Notice $notice): Contributor
     {
         $this->starredNotice = $notice;
+
+        return $this;
     }
 
     public function getStarredNotice(): ?Notice
