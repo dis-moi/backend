@@ -89,6 +89,9 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
             'noticesUrls' => array_values($contributor->getPublicNotices()->map(function (Notice $notice) {
                 return $this->noticeUrlGenerator->generate($notice);
             })->toArray()),
+            'relayedNoticesUrls' => $contributor->getPublicRelays()->map(function (Notice $notice) {
+                return $this->noticeUrlGenerator->generate($notice);
+            })->toArray(),
         ];
     }
 

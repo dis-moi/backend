@@ -11,11 +11,11 @@ class LoadSubscriptionData extends AbstractFixture implements DependentFixtureIn
 {
     public function load(ObjectManager $manager)
     {
-        $subscription1 = new Subscription($this->getReference('contributor'), $this->getReference('extension_1'));
+        $subscription1 = new Subscription($this->getReference('john_doe'), $this->getReference('extension_1'));
         $manager->persist($subscription1);
-        $subscription2 = new Subscription($this->getReference('contributor'), $this->getReference('extension_2'));
+        $subscription2 = new Subscription($this->getReference('john_doe'), $this->getReference('extension_2'));
         $manager->persist($subscription2);
-        $subscription3 = new Subscription($this->getReference('contributor'), $this->getReference('extension_3'));
+        $subscription3 = new Subscription($this->getReference('john_doe'), $this->getReference('extension_3'));
         $manager->persist($subscription3);
 
         $manager->flush();

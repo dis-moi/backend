@@ -33,6 +33,7 @@ title:
 notices:
   id: id
   contributor: Contributeur
+  relayers: Relayeurs
   message: Message
   visibility: Visibilité
   note: Note privée

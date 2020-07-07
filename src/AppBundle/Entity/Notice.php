@@ -122,9 +122,17 @@ class Notice
      */
     private $screenshotFile;
 
+    /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="notice", cascade={"persist"})
+     */
+    private $relays;
+
     public function __construct()
     {
         $this->matchingContexts = new ArrayCollection();
+        $this->relays = new ArrayCollection();
         $this->visibility = NoticeVisibility::getDefault();
         $this->expires = (new DateTimeImmutable())->modify('+1year');
     }
@@ -389,5 +397,33 @@ class Notice
         } else {
             return null;
         }
+    }
+
+    public function getRelayers(): Collection
+    {
+        return $this->relays->map(static function (Relay $relay) {
+            return $relay->getContributor();
+        });
+    }
+
+    public function addRelayer(Contributor $contributor): Notice
+    {
+        $this->relays[] = new Relay($contributor, $this);
+
+        return $this;
+    }
+
+    public function removeRelayer(Contributor $contributor): Notice
+    {
+        $this->relays->removeElement(current(array_filter($this->relays->toArray(), static function (Relay $relay) use ($contributor) {
+            return $relay->getContributor()->getId() === $contributor->getId();
+        })));
+
+        return $this;
+    }
+
+    public function getRelayersCount(): int
+    {
+        return $this->getRelayers()->count();
     }
 }
