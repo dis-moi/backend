@@ -211,6 +211,11 @@ class Notice
         return $this->getVisibility() === NoticeVisibility::PUBLIC_VISIBILITY();
     }
 
+    public function isUnpublished(): bool
+    {
+        return null !== $this->getExpires() && $this->isUnpublishedOnExpiration() && $this->getExpires() < new DateTime('now');
+    }
+
     public function getNote(): ?string
     {
         return $this->note;

@@ -3,72 +3,65 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Notice;
+use AppBundle\Helper\NoticeVisibility;
 use Doctrine\ORM\QueryBuilder;
 
 class NoticeRepository extends BaseRepository
 {
+    public function getAll()
+    {
+        return $this->createQueryForPublicNotices()
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @param int|null $id
      *
-     * @return Notice|null
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultExceptionAlias
      */
-    public function getOne($id)
+    public function getOne(int $id): ?Notice
     {
-        $queryBuilder = $this->repository->createQueryBuilder('n')
-            ->select('n,c')
-            ->leftJoin('n.contributor', 'c')
-            ->where('n.id = :id')
-            ->andWhere('c.enabled = true')
-            ->setParameter('id', $id);
-
-        return self::addNoticeExpirationLogic($queryBuilder)->getQuery()->getOneOrNullResult();
+        return $this->createQueryForPublicNotices('n')
+            ->andWhere('n.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
-    public function getAll()
-    {
-        return $this->createQueryForPublicNotices('n')->getQuery()->getResult();
-    }
-
-    public function getByContributor($contributorId)
+    public function getByContributor(int $contributorId)
     {
         return $this->createQueryForPublicNotices('n')
             ->where('n.contributor = :contributorId')
-            ->setParameter('contributorId', $contributorId)->getQuery()->getResult();
+            ->setParameter('contributorId', $contributorId)
+            ->getQuery()
+            ->getResult();
     }
 
-    /**
-     * @param string $noticeAlias
-     *
-     * @return QueryBuilder
-     */
-    private function createQueryForPublicNotices($noticeAlias = 'n')
+    private function createQueryForPublicNotices(string $noticeAlias = 'n', string $contributorAlias = 'c'): QueryBuilder
     {
         $queryBuilder = $this->repository->createQueryBuilder($noticeAlias)
-            ->select(sprintf('%s,c', $noticeAlias))
-            ->leftJoin(sprintf('%s.contributor', $noticeAlias), 'c')
-            ->andWhere('c.enabled = true');
+            ->select("$noticeAlias, $contributorAlias")
+            ->leftJoin("$noticeAlias.contributor", $contributorAlias)
+            ->where("$contributorAlias.enabled = true");
 
-        return self::addNoticeExpirationLogic($queryBuilder, $noticeAlias);
+        return self::addNoticeVisibilityLogic($queryBuilder, $noticeAlias);
     }
 
-    /**
-     * @param string $noticeAlias
-     *
-     * @return QueryBuilder
-     */
-    public static function addNoticeExpirationLogic(QueryBuilder $queryBuilder, $noticeAlias = 'n')
+    public static function addNoticeExpirationLogic(QueryBuilder $queryBuilder, string $noticeAlias = 'n'): QueryBuilder
     {
-        return $queryBuilder->andWhere(sprintf('%s.expires >= CURRENT_TIMESTAMP() OR %s.expires IS NULL OR (%s.expires <= CURRENT_TIMESTAMP() AND %s.unpublishedOnExpiration = false)',
-                    $noticeAlias, $noticeAlias, $noticeAlias, $noticeAlias)
-        );
+        return $queryBuilder
+            ->andWhere("$noticeAlias.expires >= CURRENT_TIMESTAMP() OR $noticeAlias.expires IS NULL OR ($noticeAlias.expires <= CURRENT_TIMESTAMP() AND $noticeAlias.unpublishedOnExpiration = false)");
     }
 
-    /**
-     * @return string
-     */
-    public function getResourceClassName()
+    public static function addNoticeVisibilityLogic(QueryBuilder $queryBuilder, string $noticeAlias = 'n'): QueryBuilder
+    {
+        return self::addNoticeExpirationLogic($queryBuilder, $noticeAlias)
+            ->andWhere("$noticeAlias.visibility=:visibility")
+            ->setParameter('visibility', NoticeVisibility::PUBLIC_VISIBILITY());
+    }
+
+    public function getResourceClassName(): string
     {
         return Notice::class;
     }

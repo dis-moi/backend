@@ -352,10 +352,10 @@ class Contributor implements ImageUploadable
     public function getNoticesCount(): int
     {
         if ($notices = $this->getPublicNotices()) {
-            return $this->getPublicNotices()->count();
-        } else {
-            return 0;
+            return $notices->count();
         }
+
+        return 0;
     }
 
     public function getTheirMostLikedOrDisplayedNotice(): ?Notice
@@ -365,9 +365,11 @@ class Contributor implements ImageUploadable
                 return $this->getStarredNotice();
             }
 
-            $noticesArray = $notices->toArray();
+            $noticesArray = array_filter($notices->toArray(), static function (Notice $notice) {
+                return $notice->hasPublicVisibility() && !$notice->isUnpublished();
+            });
 
-            return array_reduce($noticesArray, function (?Notice $acc, Notice $curr) {
+            return array_reduce($noticesArray, static function (?Notice $acc, Notice $curr) {
                 // First iteration...
                 if (is_null($acc)) {
                     return $curr;
@@ -396,8 +398,8 @@ class Contributor implements ImageUploadable
                 // Likes and Displays equalities, just pick the first in...
                 return $acc;
             });
-        } else {
-            return null;
         }
+
+        return null;
     }
 }

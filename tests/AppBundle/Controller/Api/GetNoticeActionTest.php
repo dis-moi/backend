@@ -3,6 +3,7 @@
 namespace Tests\AppBundle\Controller\Api;
 
 use AppBundle\Controller\Api\GetNoticeAction;
+use AppBundle\Entity\Notice;
 use AppBundle\Repository\NoticeRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,13 +25,15 @@ class GetNoticeActionTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        $notice = new Notice();
+
         $request->expects($this->once())->method('get')
             ->with('id')->willReturn(33);
         $repository->expects($this->once())->method('getOne')
             ->with(33)
-            ->willReturn('notice');
+            ->willReturn($notice);
         $serializer->expects($this->once())->method('serialize')
-            ->with('notice')
+            ->with($notice)
             ->willReturn('json');
 
         $action = new GetNoticeAction($serializer, $repository);
