@@ -28,10 +28,13 @@ class PostNoticeRatingActionTest extends TestCase
         $request = $this->getMockBuilder(Request::class)
             ->getMock();
 
-        $request->expects($this->once())->method('getContent')
-            ->willReturn('foo');
+        $request->expects($this->once())
+            ->method('getContent')->willReturn('foo');
+        $request->expects($this->once())
+            ->method('get')->with('id')->willReturn(42);
 
         $noticeRepository->expects($this->once())->method('getOne')
+            ->with(42)
             ->willReturn($notice);
 
         $serializer->expects($this->once())->method('deserialize')

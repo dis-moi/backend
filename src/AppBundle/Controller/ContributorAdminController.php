@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\NoticeRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\FormBuilder;
@@ -17,9 +18,11 @@ class ContributorAdminController extends AdminController
         $options = $formBuilder->get('starredNotice')->getOptions();
         unset($options['choice_loader']);
         $options['query_builder'] = static function (EntityRepository $repo) use ($contributorId) {
-            return $repo->createQueryBuilder('n')
+            return NoticeRepository::addNoticeVisibilityLogic(
+                $repo->createQueryBuilder('n')
                 ->where('n.contributor = :contributorId')
-                ->setParameter('contributorId', $contributorId);
+                ->setParameter('contributorId', $contributorId)
+            );
         };
         $formBuilder->add('starredNotice', EntityType::class, $options);
 

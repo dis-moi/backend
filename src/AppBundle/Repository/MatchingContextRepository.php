@@ -8,10 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 
 class MatchingContextRepository extends BaseRepository
 {
-    /**
-     * @return array
-     */
-    public function findAllWithPrivateVisibility()
+    public function findAllWithPrivateVisibility(): array
     {
         return $this->repository->createQueryBuilder('mc')
             ->leftJoin('mc.notice', 'n')
@@ -20,16 +17,13 @@ class MatchingContextRepository extends BaseRepository
             ->getQuery()->execute();
     }
 
-    /**
-     * @return array
-     */
-    public function findAllPublicMatchingContext(array $contributors = null)
+    public function findAllPublicMatchingContext(array $contributors = null): array
     {
-        $queryBuilder = $this->createQueryForPublicMatchingContexts();
+        $queryBuilder = $this->createQueryForPublicMatchingContexts('mc', 'n', 'c');
 
         if ($contributors) {
             $queryBuilder
-                ->andWhere('contributor.id IN (:contributors)')
+                ->andWhere('c.id IN (:contributors)')
                 ->setParameter('contributors', $contributors)
             ;
         }
@@ -37,27 +31,19 @@ class MatchingContextRepository extends BaseRepository
         return $queryBuilder->getQuery()->execute();
     }
 
-    /**
-     * @return QueryBuilder
-     */
-    public function createQueryForPublicMatchingContexts()
+    public function createQueryForPublicMatchingContexts($matchingContextAlias = 'mc', $noticeAlias = 'n', $contributorAlias = 'c'): QueryBuilder
     {
-        $queryBuilder = $this->repository->createQueryBuilder('mc')
-            ->select('mc')
-            ->leftJoin('mc.notice', 'notice')
-            ->leftJoin('notice.contributor', 'contributor')
-            ->andWhere('contributor.enabled = true')
-            ->andWhere('notice.visibility=:visibility')
-            ->setParameter('visibility', NoticeVisibility::PUBLIC_VISIBILITY())
+        $queryBuilder = $this->repository->createQueryBuilder($matchingContextAlias)
+            ->select($matchingContextAlias)
+            ->leftJoin("$matchingContextAlias.notice", $noticeAlias)
+            ->leftJoin("$noticeAlias.contributor", $contributorAlias)
+            ->andWhere("$contributorAlias.enabled = true")
         ;
 
-        return NoticeRepository::addNoticeExpirationLogic($queryBuilder, 'notice');
+        return NoticeRepository::addNoticeVisibilityLogic($queryBuilder, 'n');
     }
 
-    /**
-     * @return string
-     */
-    public function getResourceClassName()
+    public function getResourceClassName(): string
     {
         return MatchingContext::class;
     }
