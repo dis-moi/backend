@@ -23,24 +23,38 @@ class MessagePresenterTest extends TestCase
         $this->assertEqualHtml('<p>My simple content</p>', $this->messagePresenter->present($content));
     }
 
-    public function test_convert_newline_to_paragraph_converts_regular_multi_lines()
+    public function test_convert_newline_to_line_break_converts_regular_multi_lines()
     {
         $content = "My simple content\nWith some other content. ";
-        $expectedContent = "<p>My simple content</p>\n<p>With some other content. </p>";
+        $expectedContent = '<p>My simple content<br />With some other content. </p>';
         $this->assertEqualHtml($expectedContent, $this->messagePresenter->present($content));
     }
 
-    public function test_convert_newline_to_paragraph_works_with_crlf_multi_lines()
+    public function test_convert_newline_to_line_break_works_with_crlf_multi_lines()
     {
         $content = "My simple content\r\nWith some other content. ";
-        $expectedContent = "<p>My simple content</p>\n<p>With some other content. </p>";
+        $expectedContent = '<p>My simple content<br />With some other content. </p>';
         $this->assertEqualHtml($expectedContent, $this->messagePresenter->present($content));
     }
 
-    public function test_convert_newline_to_paragraph_works_with_cr_multi_lines()
+    public function test_convert_newline_to_line_break_works_with_cr_multi_lines()
     {
         $content = "My simple content\rWith some other content. ";
-        $expectedContent = "<p>My simple content</p>\n<p>With some other content. </p>";
+        $expectedContent = '<p>My simple content<br />With some other content. </p>';
+        $this->assertEqualHtml($expectedContent, $this->messagePresenter->present($content));
+    }
+
+    public function test_convert_2_new_lines_to_paragraph_converts_regular_multi_lines()
+    {
+        $content = "My simple content\n\nWith some other content. ";
+        $expectedContent = '<p>My simple content</p><p>With some other content. </p>';
+        $this->assertEqualHtml($expectedContent, $this->messagePresenter->present($content));
+    }
+
+    public function test_convert_3_new_lines_to_paragraph_converts_regular_multi_lines()
+    {
+        $content = "My simple content\n\n\nWith some other content. ";
+        $expectedContent = '<p>My simple content</p><p>With some other content. </p>';
         $this->assertEqualHtml($expectedContent, $this->messagePresenter->present($content));
     }
 

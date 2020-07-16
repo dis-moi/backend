@@ -42,11 +42,7 @@ class MessagePresenter
 
     private function convertNewLinesToParagraphs(string $content): string
     {
-        $content = str_replace("\r\n", "\n", $content);
-        $content = str_replace("\r", "\n", $content);
-        $pattern = '/^(.*)$/m';
-
-        return preg_replace($pattern, '<p>$1</p>', $content);
+        return preg_replace('/(?:<br[^>]*\/>\s*){2,}/', '</p><p>', '<p>'.nl2br($content).'</p>');
     }
 
     private function addTargetBlankAndUtmToLinks(string $message): string
