@@ -38,13 +38,13 @@ notices:
   note: Note privée
   screenshot: Capture d’écran
   matchingContexts: Ensemble de pages cibles
-  badgedRatingCount: Badges
-  displayedRatingCount: Vues
-  unfoldedRatingCount: Dépliées
-  clickedRatingCount: Cliquées
-  likedRatingCount: Aimées
+  badgedRatingCount: Badge
+  displayedRatingCount: Aperçu
+  unfoldedRatingCount: Détail
+  clickedRatingCount: Hyperlien
+  likedRatingCount: Aimé
   dislikedRatingCount: Déplu
-  dismissedRatingCount: Ignorées
+  dismissedRatingCount: Supprimé
   created: Crée
   updated: Modifiée
   expires: Expire

@@ -330,7 +330,7 @@ class Contributor implements ImageUploadable
         return $this;
     }
 
-    public function setStarredNotice(Notice $notice): Contributor
+    public function setStarredNotice(?Notice $notice): Contributor
     {
         $this->starredNotice = $notice;
 
