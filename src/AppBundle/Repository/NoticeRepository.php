@@ -32,7 +32,7 @@ class NoticeRepository extends BaseRepository
     public function getByContributor(int $contributorId)
     {
         return $this->createQueryForPublicNotices('n')
-            ->where('n.contributor = :contributorId')
+            ->andWhere('n.contributor = :contributorId')
             ->setParameter('contributorId', $contributorId)
             ->getQuery()
             ->getResult();
