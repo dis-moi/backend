@@ -3,7 +3,7 @@
   "info" : {
     "title" : "DisMoi API",
     "description": "API to fetch contributors, notices and matching contexts of dismoi.io",
-    "version" : "3.5.0",
+    "version" : "3.6.0",
     "contact" : {
       "url": "https://www.dismoi.io/"
     }
@@ -462,6 +462,7 @@
           "exampleUrl" : "https://dismoi.io",
           "screenshot" : "https://example.org/assets/s1m2a3l4l5.jpg",
           "message" : "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
+          "strippedMessage" : "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
           "modified" : "2019-03-30",
           "ratings" : {
             "likes" : 7,
@@ -489,6 +490,10 @@
           },
           "message" : {
             "type" : "string"
+          },
+          "strippedMessage" : {
+            "type" : "string",
+            "description": "same as message, but without links (anchors)"
           },
           "modified" : {
             "type" : "string",
