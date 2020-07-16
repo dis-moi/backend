@@ -70,6 +70,7 @@ restrictedContexts:
 domains:
   id: Id
   name: Nom du domaine
+  path: Chemin
   sets: Groupes de domaines liés
   sets.nb: Nb de groupes de domaines liés
   matchingContexts: Pages cibles liées

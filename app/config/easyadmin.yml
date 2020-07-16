@@ -194,17 +194,18 @@ easy_admin:
                 actions: ['show']
                 sort: ['name', 'ASC']
                 fields:
-                    - { property: name, label: domains.name }
+                    - { property: prettyName, label: domains.name }
                     - { property: sets, label: domains.sets.nb }
                     - { property: matchingContexts, label: domains.matchingContexts.nb }
             form:
                 fields:
                     - { property: name, label: domains.name }
+                    - { property: path, label: domains.path }
             show:
                 max_results: 100
                 fields:
                     - { property: id, label: domains.id }
-                    - { property: name, label: domains.name }
+                    - { property: prettyName, label: domains.name }
                     - { property: sets, label: domains.sets }
                     # ugly but https://github.com/EasyCorp/EasyAdminBundle/issues/1108
                     - {
