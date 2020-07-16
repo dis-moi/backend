@@ -32,6 +32,14 @@ class MessagePresenter
         return $message;
     }
 
+    public function strip(string $message): string
+    {
+        $message = strip_tags($message);
+        $message = $this->convertNewLinesToParagraphs($message);
+
+        return $message;
+    }
+
     private function convertNewLinesToParagraphs(string $content): string
     {
         $content = str_replace("\r\n", "\n", $content);

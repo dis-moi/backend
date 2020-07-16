@@ -58,6 +58,7 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements NormalizerIn
             'id' => $notice->getId(),
             'url' => $this->noticeUrlGenerator->generate($notice),
             'message' => $this->messagePresenter->present($notice->getMessage()),
+            'strippedMessage' => $this->messagePresenter->strip($notice->getMessage()),
             'visibility' => $notice->getVisibility()->getValue(),
             'exampleUrl' => $notice->getExampleUrl(),
             'screenshot' => $this->getImageAbsoluteUrl($notice, 'screenshotFile'),
