@@ -164,7 +164,7 @@ easy_admin:
                     - { property: starredNotice, type: object, template: 'notice_in_list.html.twig', label: contributors.starredNotice }
             form:
                 fields:
-                    - { property: name, label: contributors.name }
+                    - { property: name, label: contributors.name, type_options: { required: true } }
                     - { property: email, label: contributors.email }
                     - { property: website, label: contributors.website }
                     - { property: intro, label: contributors.intro }
