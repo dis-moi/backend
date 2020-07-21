@@ -151,7 +151,7 @@ class Contributor implements ImageUploadable
     /**
      * Get id.
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -159,7 +159,7 @@ class Contributor implements ImageUploadable
     /**
      * Set name.
      */
-    public function setName(string $name): Contributor
+    public function setName(?string $name): Contributor
     {
         $this->name = $name;
 
@@ -169,7 +169,7 @@ class Contributor implements ImageUploadable
     /**
      * Get name.
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -219,7 +219,7 @@ class Contributor implements ImageUploadable
         return $this->bannerImageFile;
     }
 
-    public function setImage($image): Contributor
+    public function setImage(?string $image): Contributor
     {
         $this->image = $image;
 
@@ -256,7 +256,7 @@ class Contributor implements ImageUploadable
         return $this;
     }
 
-    public function getNotices(): ?Collection
+    public function getNotices(): Collection
     {
         return $this->notices;
     }
@@ -299,7 +299,7 @@ class Contributor implements ImageUploadable
         return $this->email;
     }
 
-    public function setEmail(string $email): Contributor
+    public function setEmail(?string $email): Contributor
     {
         $this->email = $email;
 
@@ -311,7 +311,7 @@ class Contributor implements ImageUploadable
         return $this->website;
     }
 
-    public function setWebsite(string $website): Contributor
+    public function setWebsite(?string $website): Contributor
     {
         $this->website = $website;
 
@@ -342,7 +342,7 @@ class Contributor implements ImageUploadable
         return $this->starredNotice;
     }
 
-    public function getPublicNotices(): ?Collection
+    public function getPublicNotices(): Collection
     {
         return $this->getNotices()->filter(function (Notice $notice) {
             return $notice->hasPublicVisibility();
