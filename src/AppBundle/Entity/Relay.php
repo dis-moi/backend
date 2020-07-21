@@ -26,7 +26,7 @@ class Relay
      * @ORM\JoinColumn(nullable=false)
      * @ORM\Id
      */
-    private $contributor;
+    private $relayedBy;
 
     /**
      * @var Notice
@@ -48,22 +48,22 @@ class Relay
     {
         $this->relayedAt = new DateTime();
         $this->notice = $notice;
-        $this->contributor = $contributor;
+        $this->relayedBy = $contributor;
     }
 
     public function __toString()
     {
-        return "{$this->contributor} relayed {$this->notice}";
+        return "{$this->relayedBy} relayed {$this->notice}";
     }
 
-    public function getContributor(): Contributor
+    public function getRelayedBy(): Contributor
     {
-        return $this->contributor;
+        return $this->relayedBy;
     }
 
-    public function setContributor(Contributor $contributor): Relay
+    public function setRelayedBy(Contributor $relayedBy): Relay
     {
-        $this->contributor = $contributor;
+        $this->relayedBy = $relayedBy;
 
         return $this;
     }

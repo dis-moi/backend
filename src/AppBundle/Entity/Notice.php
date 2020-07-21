@@ -402,7 +402,7 @@ class Notice
     public function getRelayers(): Collection
     {
         return $this->relays->map(static function (Relay $relay) {
-            return $relay->getContributor();
+            return $relay->getRelayedBy();
         });
     }
 
@@ -416,7 +416,7 @@ class Notice
     public function removeRelayer(Contributor $contributor): Notice
     {
         $this->relays->removeElement(current(array_filter($this->relays->toArray(), static function (Relay $relay) use ($contributor) {
-            return $relay->getContributor()->getId() === $contributor->getId();
+            return $relay->getRelayedBy()->getId() === $contributor->getId();
         })));
 
         return $this;

@@ -39,7 +39,7 @@ class MatchingContextRepository extends BaseRepository
             ->leftJoin("$matchingContextAlias.notice", $noticeAlias)
             ->leftJoin("$noticeAlias.contributor", $contributorAlias)
             ->leftJoin('AppBundle:Relay', 'r', Join::WITH, "r.notice = $noticeAlias.id")
-            ->leftJoin('r.contributor', 'rc')
+            ->leftJoin('r.relayedBy', 'rc')
             ->andWhere("$contributorAlias.enabled = true")
         ;
 
