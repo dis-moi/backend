@@ -43,7 +43,9 @@ class NoticeRepository extends BaseRepository
         $queryBuilder = $this->repository->createQueryBuilder($noticeAlias)
             ->select("$noticeAlias, $contributorAlias")
             ->leftJoin("$noticeAlias.contributor", $contributorAlias)
-            ->where("$contributorAlias.enabled = true");
+            ->where("$contributorAlias.enabled = true")
+            ->orderBy("$noticeAlias.created", 'DESC')
+        ;
 
         return self::addNoticeVisibilityLogic($queryBuilder, $noticeAlias);
     }
