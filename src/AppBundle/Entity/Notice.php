@@ -359,9 +359,11 @@ class Notice
         return $this->screenshot;
     }
 
-    public function setScreenshot(string $screenshot): void
+    public function setScreenshot(?string $screenshot): Notice
     {
         $this->screenshot = $screenshot;
+
+        return $this;
     }
 
     public function getScreenshotFile(): ?File
@@ -369,12 +371,14 @@ class Notice
         return $this->screenshotFile;
     }
 
-    public function setScreenshotFile(File $screenshotFile): void
+    public function setScreenshotFile(?File $screenshotFile): Notice
     {
         $this->screenshotFile = $screenshotFile;
         if ($screenshotFile) {
             $this->markUpdated();
         }
+
+        return $this;
     }
 
     public function getExampleUrl(): ?string
