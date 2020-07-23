@@ -37,6 +37,13 @@ class DomainName
      */
     private $name;
 
+    /** @var string
+     *
+     * @ORM\Column(name="path", type="string", length=255, nullable=false)
+     * @Assert\Regex("/^\/([\w\d]+[-_%.\/\w\d]*)?$/")
+     */
+    private $path;
+
     /**
      * @var Collection
      *
@@ -66,13 +73,14 @@ class DomainName
     public function __construct(string $name = '')
     {
         $this->name = $name;
+        $this->path = '/';
         $this->matchingContexts = new ArrayCollection();
         $this->sets = new ArrayCollection();
     }
 
     public function __toString(): string
     {
-        return $this->name;
+        return $this->getPrettyName();
     }
 
     /**
@@ -91,6 +99,16 @@ class DomainName
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getPrettyName(): string
+    {
+        return $this->name.('/' === $this->path ? '' : $this->path);
+    }
+
+    public function getFullName(): string
+    {
+        return $this->name.$this->path;
     }
 
     public function getMatchingContexts(): Collection
@@ -118,5 +136,17 @@ class DomainName
         return array_map(function (MatchingContext $mc) {
             return $mc->getNotice();
         }, $this->getMatchingContexts()->toArray());
+    }
+
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    public function setPath(?string $path): DomainName
+    {
+        $this->path = $path;
+
+        return $this;
     }
 }
