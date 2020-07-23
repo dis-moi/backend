@@ -2,6 +2,7 @@
 
 namespace AppBundle\Serializer;
 
+use AppBundle\Entity\Contributor;
 use AppBundle\Entity\Notice;
 use Domain\Service\MessagePresenter;
 use Domain\Service\NoticeUrlGenerator;
@@ -72,8 +73,14 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements NormalizerIn
 
         if ($context[NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS]) {
             $base['contributor'] = $this->normalizer->normalize($notice->getContributor(), $format, $context);
+            $base['relayers'] = $notice->getRelayers()->map(function (Contributor $contributor) use ($format, $context) {
+                return $this->normalizer->normalize($contributor, $format, $context);
+            })->toArray();
         } else {
             $base['contributorId'] = $notice->getContributor()->getId();
+            $base['relayersIds'] = $notice->getRelayers()->map(static function (Contributor $contributor) {
+                return $contributor->getId();
+            })->toArray();
         }
 
         return $base;

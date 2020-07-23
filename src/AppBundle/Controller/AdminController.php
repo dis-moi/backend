@@ -103,6 +103,11 @@ class AdminController extends BaseAdminController
         return $er->createQueryBuilder('domain_name')->orderBy('domain_name.name', 'ASC');
     }
 
+    public static function getAllContributorsQueryBuilder(EntityRepository $er)
+    {
+        return $er->createQueryBuilder('contributor')->orderBy('contributor.name', 'ASC');
+    }
+
     public static function getDomainsSetQueryBuilder(EntityRepository $er)
     {
         return $er->createQueryBuilder('domains_set')->orderBy('domains_set.name', 'ASC');

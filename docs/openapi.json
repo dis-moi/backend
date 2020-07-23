@@ -389,6 +389,7 @@
         "example" : {
           "id" : 6,
           "contributorId" : 42,
+          "relayersIds": [43, 44],
           "message" : "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
           "visibility" : "public",
           "exampleUrl": "http://dismoi.io",
@@ -404,6 +405,16 @@
         "properties" : {
           "id" : {
             "type" : "integer"
+          },
+          "contributorId" : {
+            "type" : "integer"
+          },
+          "relayersIds": {
+            "type": "array",
+            "items" : {
+              "type" : "integer"
+            },
+            "uniqueItems" : true
           },
           "message" : {
             "type" : "string"
@@ -428,12 +439,9 @@
           "modified" : {
             "type" : "string",
             "format" : "date"
-          },
-          "contributorId" : {
-            "type" : "integer"
           }
         },
-        "required" : [ "contributor", "created", "id", "message", "ratings", "visibility" ]
+        "required" : [ "contributor", "relayersIds", "created", "id", "message", "ratings", "visibility" ]
       },
       "NoticeEntityWithContributorDetails": {
         "title" : "Notice Entity with Contributor Details",
@@ -457,6 +465,46 @@
             "banner" : "https://example.org/assets/s1m2a3l4l5.jpg",
             "contributions" : 24
           },
+          "relayers": [
+            {
+              "id" : 43,
+              "name" : "Que Choisir",
+              "website" : "quechoisir.com",
+              "intro" : "True story",
+              "avatar" : {
+                "small" : {
+                  "url" : "https://example.org/assets/s1m2a3l4l5.jpg"
+                },
+                "normal" : {
+                  "url" : "https://example.org/assets/n1o2r3m4a5l6.jpg"
+                },
+                "large" : {
+                  "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
+                }
+              },
+              "banner" : "https://example.org/assets/s1m2a3l4l5.jpg",
+              "contributions" : 242
+            },
+            {
+              "id" : 44,
+              "name" : "Le Monde",
+              "website" : "lemonde.fr",
+              "intro" : "La Planète",
+              "avatar" : {
+                "small" : {
+                  "url" : "https://example.org/assets/s1m2a3l4l5.jpg"
+                },
+                "normal" : {
+                  "url" : "https://example.org/assets/n1o2r3m4a5l6.jpg"
+                },
+                "large" : {
+                  "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
+                }
+              },
+              "banner" : "https://example.org/assets/s1m2a3l4l5.jpg",
+              "contributions" : 524
+            }
+          ],
           "created" : "2018-01-25",
           "id" : 6,
           "exampleUrl" : "https://dismoi.io",
@@ -474,6 +522,13 @@
         "properties" : {
           "contributor" : {
             "$ref" : "#/components/schemas/ContributorEntity"
+          },
+          "relayers" : {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContributorEntity"
+            },
+            "uniqueItems": true
           },
           "created" : {
             "type" : "string",
@@ -563,6 +618,10 @@
             "https://staging-notices.bulles.fr/api/v3/notices/42",
             "https://staging-notices.bulles.fr/api/v3/notices/84"
           ],
+          "relayedNoticesUrls": [
+            "https://staging-notices.bulles.fr/api/v3/notices/31",
+            "https://staging-notices.bulles.fr/api/v3/notices/412"
+          ],
           "starredNotice": 41
         },
         "type" : "object",
@@ -608,6 +667,13 @@
             }
           },
           "noticesUrls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "example": "https://notices.bulles.fr/api/v3/notices/221"
+            }
+          },
+          "relayedNoticesUrls": {
             "type": "array",
             "items": {
               "type": "string",

@@ -16,7 +16,7 @@ class LoadContributorData extends AbstractFixture
         $contributor->setWebsite('johndoe.com');
         $contributor->setEmail('john@doe.com');
         $contributor->setImage('photo-fake.jpg');
-        $this->addReference('contributor', $contributor);
+        $this->addReference('john_doe', $contributor);
         $manager->persist($contributor);
 
         $contributor = new Contributor();
@@ -26,7 +26,7 @@ class LoadContributorData extends AbstractFixture
 
         $contributor = new Contributor();
         $contributor->setName('Jane Doe');
-        $this->addReference('contributor3', $contributor);
+        $this->addReference('jane_doe', $contributor);
         $manager->persist($contributor);
 
         $contributor = new Contributor();
@@ -37,7 +37,7 @@ class LoadContributorData extends AbstractFixture
 
         $contributor = new Contributor();
         $contributor->setName('Famous Contributor');
-        $this->addReference('contributor_fame', $contributor);
+        $this->addReference('famous_contributor', $contributor);
         $manager->persist($contributor);
 
         $contributor = new Contributor();

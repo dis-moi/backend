@@ -12,8 +12,13 @@ class LoadNoticeData extends AbstractFixture implements DependentFixtureInterfac
 {
     public function load(ObjectManager $manager)
     {
+        $johnDoe = $this->getReference('john_doe');
+        $janeDoe = $this->getReference('jane_doe');
+        $famousContributor = $this->getReference('famous_contributor');
+        $contributor2 = $this->getReference('contributor2');
+
         $notice = new Notice();
-        $notice->setContributor($this->getReference('contributor'));
+        $notice->setContributor($johnDoe);
         $notice->setMessage('<a href="http://link2.com">baz</a>
 message
 <a href="http://link.com?foo=bar">foo</a>
@@ -23,14 +28,14 @@ with https://bulles.fr.');
         $manager->persist($notice);
 
         $notice = new Notice();
-        $notice->setContributor($this->getReference('contributor2'));
+        $notice->setContributor($contributor2);
         $notice->setMessage('');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $this->addReference('notice_type_ecology_and_politics', $notice);
         $manager->persist($notice);
 
         $notice = new Notice();
-        $notice->setContributor($this->getReference('contributor'));
+        $notice->setContributor($johnDoe);
         $notice->setMessage('');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setExpires((new \DateTime())->modify('+3days'));
@@ -38,7 +43,7 @@ with https://bulles.fr.');
         $manager->persist($notice);
 
         $notice = new Notice();
-        $notice->setContributor($this->getReference('contributor3'));
+        $notice->setContributor($janeDoe);
         $notice->setMessage('');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $this->addReference('notice_other', $notice);
@@ -52,7 +57,7 @@ with https://bulles.fr.');
         $manager->persist($notice);
 
         $notice = new Notice();
-        $notice->setContributor($this->getReference('contributor2'));
+        $notice->setContributor($contributor2);
         $notice->setMessage('');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setExpires((new \DateTime())->modify('-3days'));
@@ -60,7 +65,7 @@ with https://bulles.fr.');
         $manager->persist($notice);
 
         $notice = new Notice();
-        $notice->setContributor($this->getReference('contributor2'));
+        $notice->setContributor($contributor2);
         $notice->setMessage('');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setExpires((new \DateTime())->modify('-3days'));
@@ -69,35 +74,37 @@ with https://bulles.fr.');
         $manager->persist($notice);
 
         $notice = new Notice();
-        $notice->setContributor($this->getReference('contributor'));
+        $notice->setContributor($johnDoe);
         $notice->setVisibility(NoticeVisibility::PRIVATE_VISIBILITY());
         $notice->setMessage('Celle-ci n’est pas publique');
         $this->addReference('notice_private', $notice);
         $manager->persist($notice);
 
         $notice = new Notice();
-        $notice->setContributor($this->getReference('contributor_fame'));
+        $notice->setContributor($famousContributor);
         $notice->setMessage('This notice has been liked 3 times and displayed 4 times.');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $this->addReference('notice_liked', $notice);
         $manager->persist($notice);
 
         $notice = new Notice();
-        $notice->setContributor($this->getReference('contributor_fame'));
+        $notice->setContributor($famousContributor);
+        $notice->addRelayer($johnDoe);
+        $notice->addRelayer($janeDoe);
         $notice->setMessage('This notice has been liked 3 times and displayed 5 times.');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $this->addReference('notice_liked_displayed', $notice);
         $manager->persist($notice);
 
         $notice = new Notice();
-        $notice->setContributor($this->getReference('contributor_fame'));
+        $notice->setContributor($famousContributor);
         $notice->setMessage('This notice has been liked 2 times and displayed 6 times.');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $this->addReference('notice_displayed', $notice);
         $manager->persist($notice);
 
         $notice = new Notice();
-        $notice->setContributor($this->getReference('contributor_fame'));
+        $notice->setContributor($famousContributor);
         $notice->setMessage('I am archived');
         $notice->setVisibility(NoticeVisibility::ARCHIVED_VISIBILITY());
         $this->addReference('notice_type_ecology_archived', $notice);

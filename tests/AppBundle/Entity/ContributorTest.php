@@ -11,7 +11,7 @@ class ContributorTest extends FixtureAwareWebTestCase
     public function testItGetTheirMostLikedNotice()
     {
         /** @var Contributor $contributor */
-        $contributor = static::$referenceRepository->getReference('contributor');
+        $contributor = static::$referenceRepository->getReference('john_doe');
         /** @var Notice $notice */
         $notice = static::$referenceRepository->getReference('notice_type_ecology');
 
@@ -22,7 +22,7 @@ class ContributorTest extends FixtureAwareWebTestCase
     public function testItGetTheirMostDisplayedNotice()
     {
         /** @var Contributor $contributor */
-        $contributor = static::$referenceRepository->getReference('contributor_fame');
+        $contributor = static::$referenceRepository->getReference('famous_contributor');
         /** @var Notice $notice */
         $notice = static::$referenceRepository->getReference('notice_liked_displayed');
 

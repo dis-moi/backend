@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\MatchingContext;
 use AppBundle\Helper\NoticeVisibility;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 
 class MatchingContextRepository extends BaseRepository
@@ -23,7 +24,7 @@ class MatchingContextRepository extends BaseRepository
 
         if ($contributors) {
             $queryBuilder
-                ->andWhere('c.id IN (:contributors)')
+                ->andWhere('c.id IN (:contributors) OR rc.id IN (:contributors)')
                 ->setParameter('contributors', $contributors)
             ;
         }
@@ -37,6 +38,8 @@ class MatchingContextRepository extends BaseRepository
             ->select($matchingContextAlias)
             ->leftJoin("$matchingContextAlias.notice", $noticeAlias)
             ->leftJoin("$noticeAlias.contributor", $contributorAlias)
+            ->leftJoin('AppBundle:Relay', 'r', Join::WITH, "r.notice = $noticeAlias.id")
+            ->leftJoin('r.relayedBy', 'rc')
             ->andWhere("$contributorAlias.enabled = true")
         ;
 
