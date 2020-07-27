@@ -39,7 +39,7 @@ class DomainName
 
     /** @var string
      *
-     * @ORM\Column(name="path", type="string", length=255, nullable=false)
+     * @ORM\Column(name="path", type="string", length=255, nullable=true)
      * @Assert\Regex("/^\/([\w\d]+[-_%.\/\w\d]*)?$/")
      */
     private $path;
@@ -103,7 +103,7 @@ class DomainName
 
     public function getPrettyName(): string
     {
-        return $this->name.('/' === $this->path ? '' : $this->path);
+        return $this->getFullName();
     }
 
     public function getFullName(): string
