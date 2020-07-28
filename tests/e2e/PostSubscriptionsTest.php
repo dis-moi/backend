@@ -10,7 +10,7 @@ class PostSubscriptionsTest extends BaseApiE2eTestCase
     {
         /** @var Contributor $contributor */
         $extension1 = static::$referenceRepository->getReference('extension_1');
-        $contributor = static::$referenceRepository->getReference('contributor');
+        $contributor = static::$referenceRepository->getReference('john_doe');
 
         $content = json_encode([
       $contributor->getId(),

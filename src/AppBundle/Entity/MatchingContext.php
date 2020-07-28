@@ -12,7 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 function flatten(array $array)
 {
     $return = [];
-    array_walk_recursive($array, function ($a) use (&$return) { $return[] = $a; });
+    array_walk_recursive($array, function ($a) use (&$return) {
+        $return[] = $a;
+    });
 
     return $return;
 }
@@ -189,10 +191,11 @@ class MatchingContext
             return $this->urlRegex;
         }
 
-        return '('.join('|',
-          array_map(function (DomainName $dn) use ($escaper) {
-              return escape($dn->getName(), $escaper);
-          }, $domains)
+        return '('.implode(
+            '|',
+            array_map(static function (DomainName $dn) use ($escaper) {
+                return escape($dn->getFullName(), $escaper);
+            }, $domains)
         ).')'.$this->urlRegex;
     }
 

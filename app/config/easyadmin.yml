@@ -36,6 +36,7 @@ easy_admin:
                 fields:
                     - { property: message, label: notices.message }
                     - { property: contributor, label: notices.contributor }
+                    - { property: relayers, label: notices.relayers }
                     - { property: screenshot, template: 'vich_uploader_screenshot.html.twig', label: notices.screenshot }
                     - { property: note, label: notices.note }
                     - { property: visibility, label: notices.visibility }
@@ -48,6 +49,15 @@ easy_admin:
                     - { type: group, label: notices.groups.publication, icon: comments }
                     - { property: message, label: notices.message }
                     - { property: contributor, label: notices.contributor, type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
+                    - {
+                        property: relayers,
+                        label: notices.relayers,
+                        type: easyadmin_autocomplete,
+                        type_options: {
+                            class: 'AppBundle\Entity\Contributor',
+                            multiple: true
+                        }
+                      }
                     - { property: screenshotFile, label: notices.screenshot, type: vich_image, help: '612x480 pixels, JPG, PNG' }
                     - { property: note, label: notices.note }
                     - { property: visibility, label: notices.visibility, type: 'AppBundle\Form\VisibilityType' }
@@ -75,6 +85,10 @@ easy_admin:
                 fields:
                     - { property: id, label: notices.id }
                     - { property: contributor, label: notices.contributor }
+                    - {
+                        property: relayersCount,
+                        label: notices.relayers
+                      }
                     - { property: message, label: notices.message }
                     - { property: visibility, label: notices.visibility }
                     - { property: matchingContexts, label: notices.matchingContexts }
@@ -180,17 +194,18 @@ easy_admin:
                 actions: ['show']
                 sort: ['name', 'ASC']
                 fields:
-                    - { property: name, label: domains.name }
+                    - { property: prettyName, label: domains.name }
                     - { property: sets, label: domains.sets.nb }
                     - { property: matchingContexts, label: domains.matchingContexts.nb }
             form:
                 fields:
                     - { property: name, label: domains.name }
+                    - { property: path, label: domains.path }
             show:
                 max_results: 100
                 fields:
                     - { property: id, label: domains.id }
-                    - { property: name, label: domains.name }
+                    - { property: prettyName, label: domains.name }
                     - { property: sets, label: domains.sets }
                     # ugly but https://github.com/EasyCorp/EasyAdminBundle/issues/1108
                     - {

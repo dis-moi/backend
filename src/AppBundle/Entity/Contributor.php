@@ -133,11 +133,19 @@ class Contributor implements ImageUploadable
     private $website;
 
     /**
+     * @var Collection
+     *
+     * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="relayedBy", cascade={"persist"})
+     */
+    private $relayedNotices;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         $this->notices = new ArrayCollection();
+        $this->relayedNotices = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
     }
 
@@ -344,9 +352,24 @@ class Contributor implements ImageUploadable
 
     public function getPublicNotices(): Collection
     {
-        return $this->getNotices()->filter(function (Notice $notice) {
+        return $this->getNotices()->filter(static function (Notice $notice) {
             return $notice->hasPublicVisibility();
         });
+    }
+
+    public function getPublicRelays(): ?Collection
+    {
+        return $this->getRelayedNotices()->filter(static function (Notice $notice) {
+            return $notice->hasPublicVisibility();
+        });
+    }
+
+    public function getPublicNoticesWithRelays(): ?array
+    {
+        return array_merge(
+            $this->getPublicNotices()->toArray(),
+            $this->getPublicRelays()->toArray()
+        );
     }
 
     public function getNoticesCount(): int
@@ -401,5 +424,28 @@ class Contributor implements ImageUploadable
         }
 
         return null;
+    }
+
+    public function getRelayedNotices(): Collection
+    {
+        return $this->relayedNotices->map(static function (Relay $relay) {
+            return $relay->getNotice();
+        });
+    }
+
+    public function addRelayedNotice(Notice $notice): Contributor
+    {
+        $this->relayedNotices[] = new Relay($this, $notice);
+
+        return $this;
+    }
+
+    public function removeRelayedNotice(Notice $notice): Contributor
+    {
+        $this->relayedNotices->removeElement(current(array_filter($this->relayedNotices->toArray(), static function (Relay $relay) use ($notice) {
+            return $relay->getNotice()->getId() === $notice->getId();
+        })));
+
+        return $this;
     }
 }

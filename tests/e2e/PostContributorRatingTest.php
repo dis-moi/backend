@@ -9,7 +9,7 @@ class PostContributorRatingTest extends BaseApiE2eTestCase
     public function testPostContributorRating()
     {
         /** @var Contributor $contributor */
-        $contributor = static::$referenceRepository->getReference('contributor');
+        $contributor = static::$referenceRepository->getReference('john_doe');
 
         $content = json_encode([
             'ratingType' => 'subscribe',

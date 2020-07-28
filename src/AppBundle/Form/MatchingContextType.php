@@ -33,7 +33,7 @@ class MatchingContextType extends AbstractType
                     return [
                         'data-domains' => join(',', array_map(
                             function (DomainName $domainName) {
-                                return $domainName->getName();
+                                return $domainName->getPrettyName();
                             },
                             $domainsSet->getDomains()->toArray()
                         )),
