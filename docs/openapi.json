@@ -69,16 +69,38 @@
       "get" : {
         "summary" : "Retrieve notices’ list.",
         "tags" : [ "Notices" ],
-        "parameters" : [ {
-          "name" : "contributor",
-          "in" : "query",
-          "required" : false,
-          "description" : "Only include notices from one of this contributor. Include all if missing.",
-          "example": 6,
-          "schema" : {
+        "parameters" : [
+          {
+            "name" : "offset",
+            "in" : "query",
+            "required" : true,
+            "description" : "How many notices to skip (pagination)",
+            "example": 6,
+            "schema" : {
+                "type" : "integer"
+            }
+          },
+          {
+            "name" : "limit",
+            "in" : "query",
+            "required" : true,
+            "description" : "How many notices to fetch",
+            "example": 6,
+            "schema" : {
+                "type" : "integer"
+            }
+          },
+          {
+            "name" : "contributor",
+            "in" : "query",
+            "required" : false,
+            "description" : "Only include notices from one of this contributor. Include all if missing.",
+            "example": 6,
+            "schema" : {
               "type" : "integer"
+            }
           }
-        } ],
+        ],
         "responses" : {
           "200" : {
             "description" : "Notices list",
