@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Serializer;
 
 use AppBundle\Entity\Contributor;
@@ -41,7 +43,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
     /**
      * Sets the owning Normalizer object.
      */
-    public function setNormalizer(NormalizerInterface $normalizer)
+    public function setNormalizer(NormalizerInterface $normalizer): void
     {
         $this->normalizer = $normalizer;
     }
@@ -51,12 +53,27 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
         return $data instanceof Contributor;
     }
 
+    /**
+     * Normalizes an object into a set of arrays/scalars.
+     *
+     * @param mixed   $contributor Contributor to normalize
+     * @param ?string $format      Format the normalization result will be encoded as
+     * @param array   $context     Context options for the normalizer
+     *
+     * @throws InvalidArgumentException   Occurs when the object given is not a supported type for the normalizer
+     * @throws CircularReferenceException Occurs when the normalizer detects a circular reference when no circular
+     *                                    reference handler can fix it
+     * @throws LogicException             Occurs when the normalizer is not called in an expected context
+     * @throws ExceptionInterface         Occurs for all the other cases of errors
+     */
     public function normalize($contributor, $format = null, array $context = []): array
     {
         if (!($contributor instanceof Contributor)) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException('The normalized object must be of type Contributor');
         }
         $exampleNotice = $contributor->getTheirMostLikedOrDisplayedNotice();
+        $exampleNoticeMatchingContexts = $exampleNotice ? $exampleNotice->getMatchingContexts() : null;
+        $relays = $contributor->getPublicRelays();
 
         return [
             'id' => $contributor->getId(),
@@ -69,18 +86,18 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
             'banner' => $this->getImageAbsoluteUrl($contributor, 'bannerImageFile'),
             'contributions' => $contributor->getNoticesCount(),
             'contribution' => [
-                'example' => [/* Deprecated */
-                    'matchingUrl' => $exampleNotice->getMatchingContexts()->first() ? $exampleNotice->getMatchingContexts()->first()->getExampleUrl() : null,
+                'example' => $exampleNotice && $exampleNoticeMatchingContexts ? [/* Deprecated */
+                    'matchingUrl' => $exampleNoticeMatchingContexts->first() ? $exampleNoticeMatchingContexts->first()->getExampleUrl() : null,
                     'noticeId' => $exampleNotice->getId(),
                     'noticeUrl' => $this->noticeUrlGenerator->generate($exampleNotice),
                     'screenshot' => $this->getImageAbsoluteUrl($exampleNotice, 'screenshotFile'),
-                ],
-                'starred' => [
-                    'matchingUrl' => $exampleNotice->getMatchingContexts()->first() ? $exampleNotice->getMatchingContexts()->first()->getExampleUrl() : null,
+                ] : null,
+                'starred' => $exampleNotice && $exampleNoticeMatchingContexts ? [
+                    'matchingUrl' => $exampleNoticeMatchingContexts->first() ? $exampleNoticeMatchingContexts->first()->getExampleUrl() : null,
                     'noticeId' => $exampleNotice->getId(),
                     'noticeUrl' => $this->noticeUrlGenerator->generate($exampleNotice),
                     'screenshot' => $this->getImageAbsoluteUrl($exampleNotice, 'screenshotFile'),
-                ],
+                ] : null,
                 'numberOfPublishedNotices' => $contributor->getNoticesCount(),
             ],
             'ratings' => [
@@ -89,9 +106,9 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
             'noticesUrls' => array_values($contributor->getPublicNotices()->map(function (Notice $notice) {
                 return $this->noticeUrlGenerator->generate($notice);
             })->toArray()),
-            'relayedNoticesUrls' => $contributor->getPublicRelays()->map(function (Notice $notice) {
+            'relayedNoticesUrls' => $relays ? $relays->map(function (Notice $notice) {
                 return $this->noticeUrlGenerator->generate($notice);
-            })->toArray(),
+            })->toArray() : null,
         ];
     }
 
@@ -100,6 +117,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
         return Picture::fromContributor($contributor)
             ->addThumb(Thumb::fromName(Thumb::SMALL))
             ->addThumb(Thumb::fromName(Thumb::NORMAL))
-            ->addThumb(Thumb::fromName(Thumb::LARGE));
+            ->addThumb(Thumb::fromName(Thumb::LARGE))
+            ->addThumb(Thumb::fromName(Thumb::EXTRA_LARGE));
     }
 }

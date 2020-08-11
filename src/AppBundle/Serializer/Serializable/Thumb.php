@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Serializer\Serializable;
 
 class Thumb
@@ -7,10 +9,12 @@ class Thumb
     public const SMALL = 'small';
     public const NORMAL = 'normal';
     public const LARGE = 'large';
+    public const EXTRA_LARGE = 'extra_large';
 
     private const SMALL_FILTER = 's_thumb';
     private const NORMAL_FILTER = 'm_thumb';
     private const LARGE_FILTER = 'l_thumb';
+    private const EXTRA_LARGE_FILTER = 'xl_thumb';
 
     private $name;
     private $filter;
@@ -27,6 +31,9 @@ class Thumb
                 break;
             case self::LARGE:
                 $this->filter = self::LARGE_FILTER;
+                break;
+            case self::EXTRA_LARGE:
+                $this->filter = self::EXTRA_LARGE_FILTER;
                 break;
             default:
                 throw new \TypeError("Unknown thumbnail’s name '$name'; should be small, normal or large.");
