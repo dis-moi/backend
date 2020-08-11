@@ -73,7 +73,6 @@ class DomainName
     public function __construct(string $name = '')
     {
         $this->name = $name;
-        $this->path = '/';
         $this->matchingContexts = new ArrayCollection();
         $this->sets = new ArrayCollection();
     }
