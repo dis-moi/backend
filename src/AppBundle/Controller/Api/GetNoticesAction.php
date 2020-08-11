@@ -30,14 +30,16 @@ class GetNoticesAction extends BaseAction
     public function __invoke(Request $request)
     {
         $contributorId = $request->get('contributor', null);
+        $limit = $request->get('limit', 1000);
+        $offset = $request->get('offset', 0);
 
         if ($contributorId) {
-            $notices = $this->repository->getByContributor($contributorId);
+            $notices = $this->repository->getPageByContributor($contributorId, $limit, $offset);
         } else {
-            $notices = $this->repository->getAll();
+            $notices = $this->repository->getPage($limit, $offset);
         }
 
-        if (!is_array($notices)) {
+        if (!is_iterable($notices)) {
             throw new NotFoundHttpException('No notices found');
         }
 
