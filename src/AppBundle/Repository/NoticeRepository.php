@@ -4,21 +4,25 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Notice;
 use AppBundle\Helper\NoticeVisibility;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class NoticeRepository extends BaseRepository
 {
-    public function getAll()
+    public function getPage($limit, $offset): Paginator
     {
-        return $this->createQueryForPublicNotices()
-            ->getQuery()
-            ->getResult();
+        return self::getPaginator(
+            $this->createQueryForPublicNotices(),
+            $limit,
+            $offset
+        );
     }
 
     /**
      * @param int|null $id
      *
-     * @throws NonUniqueResultExceptionAlias
+     * @throws NonUniqueResultException
      */
     public function getOne(int $id): ?Notice
     {
@@ -29,22 +33,25 @@ class NoticeRepository extends BaseRepository
             ->getOneOrNullResult();
     }
 
-    public function getByContributor(int $contributorId)
+    public function getPageByContributor(int $contributorId, $limit, $offset): Paginator
     {
-        return $this->createQueryForPublicNotices('n')
-            ->andWhere('n.contributor = :contributorId')
-            ->setParameter('contributorId', $contributorId)
-            ->getQuery()
-            ->getResult();
+        return self::getPaginator(
+            $this->createQueryForPublicNotices('n')
+                ->andWhere('n.contributor = :contributorId')
+                ->setParameter('contributorId', $contributorId),
+            $limit,
+            $offset
+        );
     }
 
     private function createQueryForPublicNotices(string $noticeAlias = 'n', string $contributorAlias = 'c'): QueryBuilder
     {
         $queryBuilder = $this->repository->createQueryBuilder($noticeAlias)
-            ->select("$noticeAlias, $contributorAlias")
+            ->select($noticeAlias)
             ->leftJoin("$noticeAlias.contributor", $contributorAlias)
             ->where("$contributorAlias.enabled = true")
             ->orderBy("$noticeAlias.created", 'DESC')
+            ->addOrderBy("$noticeAlias.id", 'DESC')
         ;
 
         return self::addNoticeVisibilityLogic($queryBuilder, $noticeAlias);
@@ -61,6 +68,16 @@ class NoticeRepository extends BaseRepository
         return self::addNoticeExpirationLogic($queryBuilder, $noticeAlias)
             ->andWhere("$noticeAlias.visibility=:visibility")
             ->setParameter('visibility', NoticeVisibility::PUBLIC_VISIBILITY());
+    }
+
+    public static function getPaginator(QueryBuilder $queryBuilder, int $limit, int $offset): Paginator
+    {
+        return new Paginator(
+            $queryBuilder
+                ->setFirstResult($offset)
+                ->setMaxResults($limit),
+            ['fetchJoinCollection' => true]
+        );
     }
 
     public function getResourceClassName(): string

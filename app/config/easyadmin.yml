@@ -182,7 +182,7 @@ easy_admin:
                     - { property: email, label: contributors.email }
                     - { property: website, label: contributors.website }
                     - { property: intro, label: contributors.intro }
-                    - { property: imageFile, label: contributors.imageFile, type: vich_image, help: '200x200 pixels, JPG, PNG' }
+                    - { property: imageFile, label: contributors.imageFile, type: vich_image, help: 'Au moins 200x200 pixels, JPG, PNG' }
                     - { property: bannerImageFile, label: contributors.bannerImageFile, type: vich_image, help: '652x200 pixels, JPG, PNG' }
                     - { property: starredNotice, label: contributors.starredNotice }
 
