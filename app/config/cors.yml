@@ -11,6 +11,6 @@ nelmio_cors:
         forced_allow_origin_value: ~
     paths:
         '^/api/v3/':
-            allow_origin: ['^https?://localhost:[0-9]+', 'https?:\/\/(\w+\.)*dismoi\.io']
+            allow_origin: ['^https?://localhost:[0-9]+', 'https?:\/\/(\S+\.)*dismoi\.io']
             allow_methods: ['POST', 'GET']
             max_age: 3600
