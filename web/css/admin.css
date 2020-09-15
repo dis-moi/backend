@@ -28,7 +28,8 @@ body.new textarea#expirednotice_note{
 
 body.new .field-matching_context textarea,
 body.edit .field-matching_context textarea,
-textarea#notice_excludeUrlRegex {
+textarea#notice_excludeUrlRegex,
+textarea#expirednotice_excludeUrlRegex {
     min-height: 50px;
 }
 

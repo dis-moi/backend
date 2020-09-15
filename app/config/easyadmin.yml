@@ -155,7 +155,7 @@ easy_admin:
                             by_reference: false
                         }
                       }
-                    - { property: excludeUrlRegex, label: notices.excludeUrlRegex, type: text }
+                    - { property: excludeUrlRegex, label: notices.excludeUrlRegex, type: textarea }
                     - { type: group, label: Cycle de vie, icon: recycle, columns: 6 }
                     - { property: expires, label: notices.expires }
                     - { property: unpublishedOnExpiration, label: notices.unpublishedOnExpiration }
