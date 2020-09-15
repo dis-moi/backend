@@ -1,7 +1,7 @@
 (function () {
     const matchingContextFieldSelector = ' .field-matching_context ';
     const formGroupSelector = ' .form-group ';
-    const excludeUrlRegexFieldSelector = 'textarea#notice_excludeUrlRegex';
+    const excludeUrlRegexFieldSelector = 'textarea[id$="excludeUrlRegex"]';
 
     const elements = (jQueryQuery) => Array.from(jQueryQuery);
     const single = (jQueryElements) => elements(jQueryElements)[0];
@@ -156,7 +156,7 @@
         const domainNames = getAllRelatedDomains(matchingContextField);
 
         const status = regexField.value ? validateUrlRegexp(
-            domainNames.length ? domainNames.map(injectRegexToDomain(regexField.value)) : [regexField.value],
+            domainNames.length ? domainNames.map(injectRegexToDomain(regexField.value)) : [regexField.value],
             matchingContextExcludeField.value,
             noticeExcludeField.value,
             exampleField.value,
