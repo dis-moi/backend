@@ -8,9 +8,9 @@ nelmio_cors:
         max_age: 0
         hosts: []
         origin_regex: true
-        forced_allow_origin_value: ~
+        forced_allow_origin_value: '*'
     paths:
         '^/api/v3/':
-            allow_origin: ['^https?://localhost:[0-9]+', 'https?:\/\/(\w+\.)*dismoi\.io']
+            allow_origin: ['^https?://localhost:[0-9]+', 'https?:\/\/(\S+\.)*dismoi\.io']
             allow_methods: ['POST', 'GET']
             max_age: 3600
