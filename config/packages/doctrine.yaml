@@ -18,8 +18,8 @@ doctrine:
                 date_format: DoctrineExtensions\Query\Mysql\DateFormat
         mappings:
             App:
-                is_bundle: false
                 type: annotation
+                is_bundle: false
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App

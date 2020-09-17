@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Domain\Model\Enum\CategoryName;
@@ -104,13 +106,6 @@ class Contributor implements ImageUploadable
      */
     private $notices;
 
-    /** @var Notice
-     *
-     * @ORM\OneToOne(targetEntity=Notice::class, cascade={"persist"})
-     * @ORM\JoinColumn(name="starred_notice", referencedColumnName="id", nullable=true, onDelete="SET NULL")
-     */
-    private $starredNotice;
-
     /**
      * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor", orphanRemoval=true)
      * @ORM\OrderBy({"created" = "DESC"})
@@ -154,6 +149,13 @@ class Contributor implements ImageUploadable
      * @Assert\Length(max="255")
      */
     private $website;
+
+    /** @var Collection|
+     *
+     * @ORM\OneToMany(targetEntity=Pin::class, mappedBy="contributor", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @ORM\OrderBy({"rank"="ASC"})
+     */
+    private $pins;
 
     /**
      * @var Collection
@@ -410,18 +412,6 @@ class Contributor implements ImageUploadable
         return $this->previewImageFile;
     }
 
-    public function setStarredNotice(?Notice $notice): Contributor
-    {
-        $this->starredNotice = $notice;
-
-        return $this;
-    }
-
-    public function getStarredNotice(): ?Notice
-    {
-        return $this->starredNotice;
-    }
-
     public function getPublicNotices(): Collection
     {
         return $this->getNotices()->filter(static function (Notice $notice) {
@@ -429,7 +419,7 @@ class Contributor implements ImageUploadable
         });
     }
 
-    public function getPublicRelays(): ?Collection
+    public function getPublicRelays(): Collection
     {
         return $this->getRelayedNotices()->filter(static function (Notice $notice) {
             return $notice->hasPublicVisibility();
@@ -453,49 +443,42 @@ class Contributor implements ImageUploadable
         return 0;
     }
 
-    public function getTheirMostLikedOrDisplayedNotice(): ?Notice
+    public function getPinnedNotices(): Collection
     {
-        if ($notices = $this->getPublicNotices()) {
-            if ($this->getStarredNotice()) {
-                return $this->getStarredNotice();
+        return $this->pins->map(static function (Pin $pin) {
+            return $pin->getNotice();
+        });
+    }
+
+    public function setPinnedNotices(ArrayCollection $givenNotices): Contributor
+    {
+        /** @var Notice $givenNotice */
+        foreach ($givenNotices as $givenNotice) {
+            $existingPin = $this->pins
+                ->filter(function (Pin $existingPin) use ($givenNotice) {
+                    return $existingPin->getNotice()->getId() === $givenNotice->getId();
+                })
+                ->first();
+
+            if (null !== $givenNotice->getPinnedRank()) {
+                if ($existingPin) {
+                    $existingPin->setRank($givenNotice->getPinnedRank());
+                } else {
+                    $this->pins[] = new Pin($this, $givenNotice, $givenNotice->getPinnedRank());
+                }
             }
-
-            $noticesArray = array_filter($notices->toArray(), static function (Notice $notice) {
-                return $notice->hasPublicVisibility() && !$notice->isUnpublished();
-            });
-
-            return array_reduce($noticesArray, static function (?Notice $acc, Notice $curr) {
-                // First iteration...
-                if (is_null($acc)) {
-                    return $curr;
-                }
-
-                // Compare likes at the first place...
-                $currLikes = $curr->getLikedRatingCount();
-                $accLikes = $acc->getLikedRatingCount();
-                if ($currLikes > $accLikes) {
-                    return $curr;
-                }
-                if ($currLikes < $accLikes) {
-                    return $acc;
-                }
-
-                // Likes equality, compare displays then...
-                $currDisplays = $curr->getDisplayedRatingCount();
-                $accDisplays = $acc->getDisplayedRatingCount();
-                if ($currDisplays > $accDisplays) {
-                    return $curr;
-                }
-                if ($currDisplays < $accDisplays) {
-                    return $acc;
-                }
-
-                // Likes and Displays equalities, just pick the first in...
-                return $acc;
-            });
         }
 
-        return null;
+        foreach ($this->pins as $existingPin) {
+            $inGiven = $givenNotices->filter(function (Notice $givenNotice) use ($existingPin) {
+                return $givenNotice->getId() === $existingPin->getNotice()->getId();
+            })->first();
+            if (!$inGiven) {
+                $this->pins->removeElement($existingPin);
+            }
+        }
+
+        return $this;
     }
 
     public function getRelayedNotices(): Collection

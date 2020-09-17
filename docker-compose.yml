@@ -5,6 +5,8 @@ services:
     build:
       context: .
       target: platform_php
+#    extra_hosts:
+#      - "host.docker.internal:$DOCKERHOST"
     depends_on:
     - db
     - dbtest

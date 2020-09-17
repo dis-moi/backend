@@ -644,7 +644,8 @@
             "https://staging-notices.bulles.fr/api/v3/notices/31",
             "https://staging-notices.bulles.fr/api/v3/notices/412"
           ],
-          "starredNotice": 41
+          "starredNotice": 41,
+          "pinnedNotices": [41, 40]
         },
         "type" : "object",
         "properties" : {

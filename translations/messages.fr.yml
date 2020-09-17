@@ -117,7 +117,7 @@ contributors:
   bannerImageFile: Image de bannière
   bannerImageFile.help: '652x200 pixels, JPG, PNG'
   banner: Bannière
-  starredNotice: Bulle phare
+  pinnedNotices: Bulles phares
   categories: Catégories
   title: Titre
   previewImageFile: Image d'aperçu

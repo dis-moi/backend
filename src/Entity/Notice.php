@@ -129,6 +129,13 @@ class Notice
      */
     private $relays;
 
+    /**
+     * This is only used a temporary storage when saving pins in form (Ugly).
+     *
+     * @var int
+     */
+    private $pinnedRank;
+
     public function __construct()
     {
         $this->matchingContexts = new ArrayCollection();
@@ -436,5 +443,17 @@ class Notice
     public function getRelayersCount(): int
     {
         return $this->getRelayers()->count();
+    }
+
+    public function getPinnedRank(): ?int
+    {
+        return $this->pinnedRank;
+    }
+
+    public function setPinnedRank(int $pinnedRank): Notice
+    {
+        $this->pinnedRank = $pinnedRank;
+
+        return $this;
     }
 }
