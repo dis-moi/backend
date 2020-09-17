@@ -75,25 +75,6 @@ class Contributor implements ImageUploadable
      */
     private $bannerImageFile;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Notice", mappedBy="contributor")
-     * @ORM\OrderBy({"updated" = "ASC"})
-     */
-    private $notices;
-
-    /** @var Notice
-     *
-     * @ORM\OneToOne(targetEntity=Notice::class, cascade={"persist"})
-     * @ORM\JoinColumn(name="starred_notice", referencedColumnName="id", nullable=true, onDelete="SET NULL")
-     */
-    private $starredNotice;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor")
-     * @ORM\OrderBy({"created" = "DESC"})
-     */
-    private $subscriptions;
-
     private $activeSubscriptionsCount = 0;
 
     /**
@@ -133,11 +114,30 @@ class Contributor implements ImageUploadable
     private $website;
 
     /**
+     * @ORM\OneToMany(targetEntity="Notice", mappedBy="contributor")
+     * @ORM\OrderBy({"updated" = "ASC"})
+     */
+    private $notices;
+
+    /** @var Collection|
+     *
+     * @ORM\OneToOne(targetEntity=Notice::class, cascade={"persist"})
+     * @ORM\JoinColumn(name="starred_notice", referencedColumnName="id", nullable=true, onDelete="SET NULL")
+     */
+    private $starred;
+
+    /**
      * @var Collection
      *
      * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="relayedBy", cascade={"persist"})
      */
     private $relayedNotices;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor")
+     * @ORM\OrderBy({"created" = "DESC"})
+     */
+    private $subscriptions;
 
     /**
      * Constructor.
@@ -379,51 +379,6 @@ class Contributor implements ImageUploadable
         }
 
         return 0;
-    }
-
-    public function getTheirMostLikedOrDisplayedNotice(): ?Notice
-    {
-        if ($notices = $this->getPublicNotices()) {
-            if ($this->getStarredNotice()) {
-                return $this->getStarredNotice();
-            }
-
-            $noticesArray = array_filter($notices->toArray(), static function (Notice $notice) {
-                return $notice->hasPublicVisibility() && !$notice->isUnpublished();
-            });
-
-            return array_reduce($noticesArray, static function (?Notice $acc, Notice $curr) {
-                // First iteration...
-                if (is_null($acc)) {
-                    return $curr;
-                }
-
-                // Compare likes at the first place...
-                $currLikes = $curr->getLikedRatingCount();
-                $accLikes = $acc->getLikedRatingCount();
-                if ($currLikes > $accLikes) {
-                    return $curr;
-                }
-                if ($currLikes < $accLikes) {
-                    return $acc;
-                }
-
-                // Likes equality, compare displays then...
-                $currDisplays = $curr->getDisplayedRatingCount();
-                $accDisplays = $acc->getDisplayedRatingCount();
-                if ($currDisplays > $accDisplays) {
-                    return $curr;
-                }
-                if ($currDisplays < $accDisplays) {
-                    return $acc;
-                }
-
-                // Likes and Displays equalities, just pick the first in...
-                return $acc;
-            });
-        }
-
-        return null;
     }
 
     public function getRelayedNotices(): Collection

@@ -1,3 +1,10 @@
 knp_doctrine_behaviors:
   timestampable: true
   # All others behaviors are disabled
+services:
+  gedmo.listener.sortable:
+    class: Gedmo\Sortable\SortableListener
+    tags:
+      - { name: doctrine.event_subscriber, connection: default }
+    calls:
+      - [ setAnnotationReader, [ "@annotation_reader" ] ]

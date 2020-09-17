@@ -70,6 +70,13 @@ doctrine:
             default:
                 naming_strategy: doctrine.orm.naming_strategy.underscore
                 auto_mapping: true
+                mappings:
+                    sortable:
+                        type: annotation
+                        alias: Gedmo
+                        prefix: Gedmo\Sortable\Entity
+                        # make sure vendor library location is correct
+                        dir: "%kernel.project_dir%/vendor/gedmo/doctrine-extensions/lib/Gedmo/Sortable/Entity"
                 filters:
                     matching_context_public_filter: AppBundle\Doctrine\MatchingContextPublicFilter
                 dql:
