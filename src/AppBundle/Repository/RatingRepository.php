@@ -106,7 +106,7 @@ class RatingRepository extends BaseRepository
             : $nextRange;
     }
 
-    public function getResourceClassName(): string
+    public function getClassName(): string
     {
         return Rating::class;
     }

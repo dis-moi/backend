@@ -4,11 +4,12 @@ namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\Persistence\ObjectRepository;
 
 /**
  * @see https://www.tomasvotruba.cz/blog/2017/10/16/how-to-use-repository-with-doctrine-as-service-in-symfony/
  */
-abstract class BaseRepository
+abstract class BaseRepository implements ObjectRepository
 {
     /**
      * @var EntityRepository
@@ -23,12 +24,12 @@ abstract class BaseRepository
     /**
      * @return string
      */
-    abstract public function getResourceClassName();
+    abstract public function getClassName();
 
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-        $this->repository = $entityManager->getRepository($this->getResourceClassName());
+        $this->repository = $entityManager->getRepository($this->getClassName());
     }
 
     public function findAll()

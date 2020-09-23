@@ -7,6 +7,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Domain\Model\Enum\CategoryName;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -138,6 +139,14 @@ class Contributor implements ImageUploadable
      * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="relayedBy", cascade={"persist"})
      */
     private $relayedNotices;
+
+    /**
+     * @var array
+     * @see CategoryName
+     *
+     * @ORM\Column(name="categories", type="simple_array", nullable=true)
+     */
+    private $categories = [];
 
     /**
      * Constructor.
@@ -447,5 +456,32 @@ class Contributor implements ImageUploadable
         })));
 
         return $this;
+    }
+
+    public function getCategories(): array
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(string $categoryName): void
+    {
+        if (!in_array($categoryName, $this->categories)) {
+            $this->categories[] = $categoryName;
+        }
+    }
+
+    public function removeCategory(string $categoryName): void
+    {
+        $this->categories = array_filter(
+            $this->categories,
+            function ($cn) use ($categoryName) {
+                return $cn !== $categoryName;
+            }
+        );
+    }
+
+    public function setCategories(array $categories): void
+    {
+        $this->categories = $categories;
     }
 }

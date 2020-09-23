@@ -5,6 +5,7 @@ namespace AppBundle\DataFixtures\ORM;
 use AppBundle\Entity\Contributor;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Domain\Model\Enum\CategoryName;
 
 class LoadContributorData extends AbstractFixture
 {
@@ -21,11 +22,13 @@ class LoadContributorData extends AbstractFixture
 
         $contributor = new Contributor();
         $contributor->setName('Contributor 2');
+        $contributor->addCategory(CategoryName::CULTURE);
         $this->addReference('contributor2', $contributor);
         $manager->persist($contributor);
 
         $contributor = new Contributor();
         $contributor->setName('Jane Doe');
+        $contributor->setCategories([CategoryName::INFOS, CategoryName::MILITANT]);
         $this->addReference('jane_doe', $contributor);
         $manager->persist($contributor);
 
@@ -37,11 +40,13 @@ class LoadContributorData extends AbstractFixture
 
         $contributor = new Contributor();
         $contributor->setName('Famous Contributor');
+        $contributor->addCategory(CategoryName::CONSO);
         $this->addReference('famous_contributor', $contributor);
         $manager->persist($contributor);
 
         $contributor = new Contributor();
         $contributor->setName('Paul Bismuth');
+        $contributor->addCategory(CategoryName::PRO);
         $this->addReference('contributor_lazy', $contributor);
         $manager->persist($contributor);
 
