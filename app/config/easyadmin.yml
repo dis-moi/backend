@@ -1,8 +1,6 @@
 easy_admin:
     site_name: 'DisMoi'
     design:
-        form_theme:
-            - horizontal
         assets:
             css:
                 - 'css/admin.css'
