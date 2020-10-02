@@ -12,7 +12,7 @@ class ExtensionRepository extends BaseRepository
         parent::__construct($entityManager);
     }
 
-    public function getResourceClassName()
+    public function getClassName()
     {
         return Extension::class;
     }

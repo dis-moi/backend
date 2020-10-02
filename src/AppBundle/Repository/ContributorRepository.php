@@ -95,7 +95,7 @@ class ContributorRepository extends BaseRepository
     /**
      * @return string
      */
-    public function getResourceClassName()
+    public function getClassName()
     {
         return Contributor::class;
     }

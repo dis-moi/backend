@@ -179,6 +179,11 @@ easy_admin:
             form:
                 fields:
                     - { property: name, label: contributors.name, type_options: { required: true } }
+                    - {
+                        property: categories,
+                        label: contributors.categories,
+                        type: 'AppBundle\Form\CategoryNameType'
+                      }
                     - { property: email, label: contributors.email }
                     - { property: website, label: contributors.website }
                     - { property: intro, label: contributors.intro }

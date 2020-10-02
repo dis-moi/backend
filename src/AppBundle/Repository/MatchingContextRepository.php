@@ -46,7 +46,7 @@ class MatchingContextRepository extends BaseRepository
         return NoticeRepository::addNoticeVisibilityLogic($queryBuilder, 'n');
     }
 
-    public function getResourceClassName(): string
+    public function getClassName(): string
     {
         return MatchingContext::class;
     }

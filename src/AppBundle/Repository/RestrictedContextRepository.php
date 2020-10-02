@@ -9,7 +9,7 @@ class RestrictedContextRepository extends BaseRepository
     /**
      * @return string
      */
-    public function getResourceClassName()
+    public function getClassName()
     {
         return RestrictedContext::class;
     }

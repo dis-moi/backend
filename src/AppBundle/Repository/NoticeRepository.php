@@ -80,7 +80,7 @@ class NoticeRepository extends BaseRepository
         );
     }
 
-    public function getResourceClassName(): string
+    public function getClassName(): string
     {
         return Notice::class;
     }
