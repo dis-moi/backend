@@ -53,7 +53,7 @@
         "league/uri-components": "^2.2"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^4.0",
+        "symfony/phpunit-bridge": "^5.1.7",
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "friendsofphp/php-cs-fixer": "^2.16"
     },
