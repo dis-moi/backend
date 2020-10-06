@@ -1,11 +1,20 @@
 # Entities
 MatchingContext: Pages cibles
 Notice: Bulle
+ExpiredNotice: Bulle expirée
 RestrictedContext: Page exclue
 Domain: Nom de domaine
 DomainsSet: Groupe de noms de domaines
 Contributor: Contributeur
 User: Utilisateur
+ID: ID
+Lifecycle: Cycle de vie
+Archived: Archivé
+Private: Privée
+Public: Publique
+
+ROLE_USER: Normal
+ROLE_ADMIN: Administrateur
 
 # Easy Admin Menu
 menu:
@@ -21,7 +30,7 @@ menu:
 # Easy Admin Pages
 title:
   notices: Toutes les bulles
-  expiredNotices: Bulle expirées
+  expiredNotices: Bulles expirées
   matchingContexts: Ensemble de pages cibles
   restrictedContexts: Pages exclues (global)
   domains: Noms de domaines
@@ -38,6 +47,7 @@ notices:
   visibility: Visibilité
   note: Note privée
   screenshot: Capture d’écran
+  screenshot.help: "%612x480% pixels, JPG, PNG"
   matchingContexts: Ensemble de pages cibles
   badgedRatingCount: Badge
   displayedRatingCount: Aperçu
@@ -79,6 +89,7 @@ domains:
   createdAt: Créé le
   updatedAt: Modifié le
 
+
 domainsSets:
   id: Id
   name: Nom du groupe
@@ -101,8 +112,10 @@ contributors:
   activeSubscriptionsCount: Nombre d’abonnés actifs
   enabled: Activé
   imageFile: Image d’avatar
+  imageFile.help: 'Au moins 200x200 pixels, JPG, PNG'
   image: Avatar
   bannerImageFile: Image de bannière
+  bannerImageFile.help: '652x200 pixels, JPG, PNG'
   banner: Bannière
   starredNotice: Bulle phare
   categories: Catégories
@@ -118,4 +131,4 @@ users:
   roles: Rôles
 
 # Easy Admin
-form.label.delete: Supprimer l’image ?
+form.label.delete: Supprimer l’image ?
