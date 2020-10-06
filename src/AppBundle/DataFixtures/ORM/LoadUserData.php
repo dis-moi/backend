@@ -7,6 +7,7 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
 class LoadUserData implements FixtureInterface, ContainerAwareInterface
 {
@@ -23,7 +24,8 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
         $userManager = $this->container->get('fos_user.user_manager');
-        $factory = $this->container->get('security.encoder_factory');
+
+        $encoder = new MessageDigestPasswordEncoder('sha512', true, 5000);
 
         /** @var User $user */
         $user = $userManager->createUser();
@@ -33,8 +35,6 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
         $user->setEnabled(true);
         $user->setRoles(['ROLE_SUPER_ADMIN']);
 
-        // the 'security.password_encoder' service requires Symfony 2.6 or higher
-        $encoder = $factory->getEncoder($user);
         $password = $encoder->encodePassword('LM3M!P4SSW0RD', $user->getSalt());
 
         $user->setPassword($password);
