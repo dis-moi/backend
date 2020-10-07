@@ -47,30 +47,26 @@ easy_admin:
                     - { type: group, label: notices.groups.publication, icon: comments }
                     - { property: message, label: notices.message }
                     - { property: contributor, label: notices.contributor, type_options: { 'query_builder': 'AppBundle\Repository\ContributorRepository::getOrderedList' }}
-                    - {
-                        property: relayers,
-                        label: notices.relayers,
-                        type: easyadmin_autocomplete,
-                        type_options: {
-                            class: 'AppBundle\Entity\Contributor',
-                            multiple: true
-                        }
+                    - property: relayers,
+                      label: notices.relayers,
+                      type: easyadmin_autocomplete,
+                      type_options: {
+                          class: 'AppBundle\Entity\Contributor',
+                          multiple: true
                       }
                     - { property: screenshotFile, label: notices.screenshot, type: vich_image, help: notices.screenshot.help }
                     - { property: note, label: notices.note }
                     - { property: visibility, label: notices.visibility, type: 'AppBundle\Form\VisibilityType' }
                     - { type: group, label: notices.groups.matchingContexts, icon: 'paper-plane', columns: 6 }
-                    - {
-                        property: matchingContexts,
-                        type: collection,
-                        label: notices.matchingContexts,
-                        type_options: {
-                            required: true,
-                            entry_type: 'AppBundle\Form\MatchingContextType',
-                            allow_add: true,
-                            allow_delete: true,
-                            by_reference: false
-                        }
+                    - property: matchingContexts,
+                      type: collection,
+                      label: notices.matchingContexts,
+                      type_options: {
+                          required: true,
+                          entry_type: 'AppBundle\Form\MatchingContextType',
+                          allow_add: true,
+                          allow_delete: true,
+                          by_reference: false
                       }
                     - { property: excludeUrlRegex, label: notices.excludeUrlRegex, type: textarea }
                     - { type: group, label: Lifecycle, icon: recycle, columns: 6 }
@@ -83,10 +79,8 @@ easy_admin:
                 fields:
                     - { property: id, label: notices.id }
                     - { property: contributor, label: notices.contributor }
-                    - {
-                        property: relayersCount,
-                        label: notices.relayers
-                      }
+                    - property: relayersCount,
+                      label: notices.relayers
                     - { property: message, label: notices.message }
                     - { property: visibility, label: notices.visibility }
                     - { property: matchingContexts, label: notices.matchingContexts }
@@ -141,17 +135,15 @@ easy_admin:
                     - { property: note, label: notices.note }
                     - { property: visibility, label: notices.visibility, type: 'AppBundle\Form\VisibilityType' }
                     - { type: group, label: notices.groups.matchingContexts, icon: 'paper-plane', columns: 6 }
-                    - {
-                        property: matchingContexts,
-                        type: collection,
-                        label: notices.matchingContexts,
-                        type_options: {
-                            required: true,
-                            entry_type: 'AppBundle\Form\MatchingContextType',
-                            allow_add: true,
-                            allow_delete: true,
-                            by_reference: false
-                        }
+                    - property: matchingContexts,
+                      type: collection,
+                      label: notices.matchingContexts,
+                      type_options: {
+                          required: true,
+                          entry_type: 'AppBundle\Form\MatchingContextType',
+                          allow_add: true,
+                          allow_delete: true,
+                          by_reference: false
                       }
                     - { property: excludeUrlRegex, label: notices.excludeUrlRegex, type: textarea }
                     - { type: group, label: Lifecycle, icon: recycle, columns: 6 }
@@ -214,11 +206,9 @@ easy_admin:
                     - { property: prettyName, label: domains.name }
                     - { property: sets, label: domains.sets }
                     # ugly but https://github.com/EasyCorp/EasyAdminBundle/issues/1108
-                    - {
-                        property: notices,
-                        label: domains.notices,
-                        template: '_field_notices.html.twig'
-                      }
+                    - property: notices,
+                      label: domains.notices,
+                      template: '_field_notices.html.twig'
                     - { property: createdAt, label: domains.createdAt }
                     - { property: updatedAt, label: domains.updatedAt }
 
@@ -244,11 +234,9 @@ easy_admin:
                     - { property: name, label: domainsSets.name }
                     - { property: domains, label: domainsSets.domains }
                     # ugly but https://github.com/EasyCorp/EasyAdminBundle/issues/1108
-                    - {
-                        property: notices,
-                        label: domainsSets.notices,
-                        template: '_field_notices.html.twig'
-                      }
+                    - property: notices,
+                      label: domainsSets.notices,
+                      template: '_field_notices.html.twig'
                     - { property: createdAt, label: domainsSets.createdAt }
                     - { property: updatedAt, label: domainsSets.updatedAt }
 

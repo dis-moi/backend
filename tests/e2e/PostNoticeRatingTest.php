@@ -9,7 +9,7 @@ class PostNoticeRatingTest extends BaseApiE2eTestCase
     public function testPostNoticeRating()
     {
         /** @var Notice $notice */
-        $notice = static::$referenceRepository->getReference('notice_type_ecology');
+        $notice = $this->referenceRepository->getReference('notice_type_ecology');
 
         $content = json_encode([
             'ratingType' => 'like',
@@ -21,14 +21,14 @@ class PostNoticeRatingTest extends BaseApiE2eTestCase
             'reason' => 'foo',
         ]);
 
-        static::$client->request('POST', '/api/v3/notices/'.$notice->getId().'/ratings', [], [], [], $content);
-        $this->assertEquals(204, static::$client->getResponse()->getStatusCode());
+        $this->client->request('POST', '/api/v3/notices/'.$notice->getId().'/ratings', [], [], [], $content);
+        $this->assertEquals(204, $this->client->getResponse()->getStatusCode());
     }
 
     public function testPostNoticeRatingWrongType()
     {
         /** @var Notice $notice */
-        $notice = static::$referenceRepository->getReference('notice_type_ecology');
+        $notice = $this->referenceRepository->getReference('notice_type_ecology');
 
         $content = json_encode([
             'ratingType' => 'wrongtype',
@@ -40,7 +40,7 @@ class PostNoticeRatingTest extends BaseApiE2eTestCase
             'reason' => 'foo',
         ]);
 
-        static::$client->request('POST', '/api/v3/notices/'.$notice->getId().'/ratings', [], [], [], $content);
-        $this->assertEquals(422, static::$client->getResponse()->getStatusCode());
+        $this->client->request('POST', '/api/v3/notices/'.$notice->getId().'/ratings', [], [], [], $content);
+        $this->assertEquals(422, $this->client->getResponse()->getStatusCode());
     }
 }

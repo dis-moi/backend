@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
+use App\Domain\Factory\CategoryFactory;
+use App\Domain\Model\Category;
 use Doctrine\Persistence\ObjectRepository;
-use Domain\Factory\CategoryFactory;
-use Domain\Model\Category;
 
 class CategoryRepository implements ObjectRepository
 {

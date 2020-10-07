@@ -10,11 +10,11 @@ class GetContributorTest extends BaseApiE2eTestCase
     public function testGetContributor()
     {
         /** @var Contributor $contributor */
-        $contributor = static::$referenceRepository->getReference('john_doe');
-        $JohnDoeNotice = static::$referenceRepository->getReference('notice_type_ecology');
-        $privateNotice = static::$referenceRepository->getReference('notice_private');
+        $contributor = $this->referenceRepository->getReference('john_doe');
+        $JohnDoeNotice = $this->referenceRepository->getReference('notice_type_ecology');
+        $privateNotice = $this->referenceRepository->getReference('notice_private');
         /** @var Notice $relayedNotice */
-        $relayedNotice = static::$referenceRepository->getReference('notice_liked_displayed');
+        $relayedNotice = $this->referenceRepository->getReference('notice_liked_displayed');
 
         $payload = $this->makeApiRequest('/api/v3/contributors/'.$contributor->getId());
 
@@ -38,9 +38,9 @@ class GetContributorTest extends BaseApiE2eTestCase
     public function testFailGetDisabledNotice()
     {
         /** @var Contributor $contributor */
-        $contributor = static::$referenceRepository->getReference('contributor_disabled');
+        $contributor = $this->referenceRepository->getReference('contributor_disabled');
 
-        static::$client->request('GET', '/api/v3/contributors/'.$contributor->getId());
-        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/api/v3/contributors/'.$contributor->getId());
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 }

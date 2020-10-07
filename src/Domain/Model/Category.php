@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Model;
+namespace App\Domain\Model;
 
 use Doctrine\Common\Inflector\Inflector;
 

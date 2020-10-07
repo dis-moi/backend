@@ -11,9 +11,9 @@ class ContributorTest extends FixtureAwareWebTestCase
     public function testItGetTheirMostLikedNotice()
     {
         /** @var Contributor $contributor */
-        $contributor = static::$referenceRepository->getReference('john_doe');
+        $contributor = $this->referenceRepository->getReference('john_doe');
         /** @var Notice $notice */
-        $notice = static::$referenceRepository->getReference('notice_type_ecology');
+        $notice = $this->referenceRepository->getReference('notice_type_ecology');
 
         $mostLikedOrDisplayedNotice = $contributor->getTheirMostLikedOrDisplayedNotice();
         $this->assertEquals($notice->getId(), $mostLikedOrDisplayedNotice->getId());
@@ -22,9 +22,9 @@ class ContributorTest extends FixtureAwareWebTestCase
     public function testItGetTheirMostDisplayedNotice()
     {
         /** @var Contributor $contributor */
-        $contributor = static::$referenceRepository->getReference('famous_contributor');
+        $contributor = $this->referenceRepository->getReference('famous_contributor');
         /** @var Notice $notice */
-        $notice = static::$referenceRepository->getReference('notice_liked_displayed');
+        $notice = $this->referenceRepository->getReference('notice_liked_displayed');
 
         $mostLikedOrDisplayedNotice = $contributor->getTheirMostLikedOrDisplayedNotice();
         $this->assertEquals($notice->getId(), $mostLikedOrDisplayedNotice->getId());

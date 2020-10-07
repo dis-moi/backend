@@ -1,9 +1,9 @@
 <?php
 
-namespace Domain\Factory;
+namespace App\Domain\Factory;
 
-use Domain\Model\Category;
-use Domain\Model\Enum\CategoryName;
+use App\Domain\Model\Category;
+use App\Domain\Model\Enum\CategoryName;
 
 class CategoryFactory
 {

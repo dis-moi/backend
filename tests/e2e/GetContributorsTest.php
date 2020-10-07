@@ -54,9 +54,9 @@ class GetContributorsTest extends BaseApiE2eTestCase
         $payload = $this->makeApiRequest('/api/v3/contributors');
 
         /** @var MatchingContext $mc */
-        $mc = static::$referenceRepository->getReference('matchingContext_1');
+        $mc = $this->referenceRepository->getReference('matchingContext_1');
         /** @var Notice $notice */
-        $notice = static::$referenceRepository->getReference('notice_type_ecology');
+        $notice = $this->referenceRepository->getReference('notice_type_ecology');
 
         $this->assertEquals($mc->getExampleUrl(), $payload[0]['contribution']['example']['matchingUrl']);
         $this->assertEquals($notice->getId(), $payload[0]['contribution']['example']['noticeId']);

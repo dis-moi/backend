@@ -8,8 +8,6 @@ services:
     depends_on:
     - db
     - dbtest
-    env_file:
-    - .env
 
   db:
     container_name: kraft-backend_db

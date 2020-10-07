@@ -17,9 +17,9 @@ if [ "$1" = 'php-fpm' ] || [ "$1" = 'bin/console' ]; then
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX web/media
 	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX web/media
 
-    mkdir -p web/uploads
-	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX web/uploads
-	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX web/uploads
+    mkdir -p public/uploads
+	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX public/uploads
+	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX public/uploads
 
 	setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
 	setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var

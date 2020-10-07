@@ -1,10 +1,10 @@
 <?php
 
-namespace AppBundle\Controller\Api;
+namespace App\Controller\Api;
 
-use AppBundle\Repository\CategoryRepository;
-use AppBundle\Repository\NoticeRepository;
-use Domain\Model\Enum\CategoryName;
+use App\Domain\Model\Enum\CategoryName;
+use App\Repository\CategoryRepository;
+use App\Repository\NoticeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;

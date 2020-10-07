@@ -21,7 +21,7 @@ class MatchingContextTest extends FixtureAwareWebTestCase
         $escaper = new FakeEscaper();
 
         /** @var MatchingContext $mc */
-        $mc = static::$referenceRepository->getReference('mc_with_domain_name');
+        $mc = $this->referenceRepository->getReference('mc_with_domain_name');
         $regex = $mc->getFullUrlRegex($escaper);
         self::assertEquals('(duckduckgo.com|www.bing.com|www.google.fr|www.qwant.com|www.yahoo.com|first.domainname.fr|second.domainname.fr)'.$mc->getUrlRegex(), $regex);
 
@@ -29,7 +29,7 @@ class MatchingContextTest extends FixtureAwareWebTestCase
         self::assertEquals('(duckduckgo.com|www.bing.com|www.google.fr|www.qwant.com|www.yahoo.com|first.domainname.fr|second.domainname.fr)'.$mc->getUrlRegex(), $regex);
 
         /** @var MatchingContext $mc */
-        $mc = static::$referenceRepository->getReference('mc_without_domain_name');
+        $mc = $this->referenceRepository->getReference('mc_without_domain_name');
         $regex = $mc->getFullUrlRegex($escaper);
         self::assertEquals($mc->getUrlRegex(), $regex);
     }

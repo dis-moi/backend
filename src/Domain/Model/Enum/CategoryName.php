@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Model\Enum;
+namespace App\Domain\Model\Enum;
 
 use MabeEnum\Enum;
 

@@ -9,13 +9,13 @@ class PostContributorRatingTest extends BaseApiE2eTestCase
     public function testPostContributorRating()
     {
         /** @var Contributor $contributor */
-        $contributor = static::$referenceRepository->getReference('john_doe');
+        $contributor = $this->referenceRepository->getReference('john_doe');
 
         $content = json_encode([
             'ratingType' => 'subscribe',
         ]);
 
-        static::$client->request('POST', '/api/v3/contributors/'.$contributor->getId().'/ratings', [], [], [], $content);
-        $this->assertEquals(204, static::$client->getResponse()->getStatusCode());
+        $this->client->request('POST', '/api/v3/contributors/'.$contributor->getId().'/ratings', [], [], [], $content);
+        $this->assertEquals(204, $this->client->getResponse()->getStatusCode());
     }
 }

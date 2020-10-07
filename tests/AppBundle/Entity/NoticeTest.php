@@ -7,13 +7,26 @@ use AppBundle\Entity\MatchingContext;
 use AppBundle\Entity\Notice;
 use DateTime;
 use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Tests\FixtureAwareWebTestCase;
 
 class NoticeTest extends FixtureAwareWebTestCase
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $_entityManager;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->_entityManager = self::$container->get('doctrine')->getManager();
+    }
+
     protected function _getReference(string $name)
     {
-        return static::$referenceRepository->getReference($name);
+        return $this->referenceRepository->getReference($name);
     }
 
     public function testUpdated()
@@ -23,20 +36,20 @@ class NoticeTest extends FixtureAwareWebTestCase
         $currentDatetime = $notice->getUpdated();
 
         $notice->setMessage('foo');
-        parent::$entityManager->flush();
+        $this->_entityManager->flush();
 
         /** @var Notice $persistedNotice */
-        $persistedNotice = parent::$entityManager->getRepository(Notice::class)->find($notice->getId());
+        $persistedNotice = $this->_entityManager->getRepository(Notice::class)->find($notice->getId());
         $this->assertGreaterThan($currentDatetime, $persistedNotice->getUpdated());
         $currentDatetime = $persistedNotice->getUpdated();
 
         /** @var MatchingContext $matchingContext */
         $matchingContext = $this->_getReference('matchingContext_1');
         $matchingContext->setDescription('bar');
-        parent::$entityManager->flush();
+        $this->_entityManager->flush();
 
         /** @var Notice $persistedNotice */
-        $persistedNotice = parent::$entityManager->getRepository(Notice::class)->find($notice->getId());
+        $persistedNotice = $this->_entityManager->getRepository(Notice::class)->find($notice->getId());
         $this->assertGreaterThan($currentDatetime, $persistedNotice->getUpdated());
     }
 
@@ -57,7 +70,7 @@ class NoticeTest extends FixtureAwareWebTestCase
         $created = $notice->getCreated();
         $this->assertEmpty($created);
 
-        parent::$entityManager->persist($notice);
+        $this->_entityManager->persist($notice);
         $created = $notice->getCreated();
         $expires = $notice->getExpires();
         $this->assertInstanceOf(DateTime::class, $created);
@@ -70,11 +83,10 @@ class NoticeTest extends FixtureAwareWebTestCase
         /** @var Contributor $contributor */
         $contributor2 = $this->_getReference('contributor2');
         $notice->addRelayer($contributor2);
-        parent::$entityManager->flush();
+        $this->_entityManager->flush();
 
-        parent::$entityManager->clear();
-        /* @var Notice $persistedNotice */
-        $persistedNotice = parent::$entityManager->getRepository(Notice::class)->find($notice->getId());
+        /** @var Notice $persistedNotice */
+        $persistedNotice = $this->_entityManager->getRepository(Notice::class)->find($notice->getId());
         $this->assertEquals(1, $persistedNotice->getRelayersCount());
     }
 
@@ -84,14 +96,12 @@ class NoticeTest extends FixtureAwareWebTestCase
         $notice = $this->_getReference('notice_liked_displayed');
         /** @var Contributor $johnDoe */
         $johnDoe = $this->_getReference('john_doe');
-        $initialRelayersCount = $notice->getRelayersCount();
         $notice->removeRelayer($johnDoe);
-        self::assertEquals($initialRelayersCount - 1, $notice->getRelayersCount());
-        parent::$entityManager->flush();
+        $this->assertEquals(1, $notice->getRelayersCount());
+        $this->_entityManager->flush();
 
-        parent::$entityManager->clear();
         /** @var Notice $persistedNotice */
-        $persistedNotice = parent::$entityManager->getRepository(Notice::class)->find($notice->getId());
-        self::assertEquals($initialRelayersCount - 1, $persistedNotice->getRelayersCount());
+        $persistedNotice = $this->_entityManager->getRepository(Notice::class)->find($notice->getId());
+        $this->assertEquals($notice->getRelayersCount(), $persistedNotice->getRelayersCount());
     }
 }
