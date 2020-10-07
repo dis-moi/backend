@@ -32,7 +32,7 @@
         "doctrine/orm": "^2.3",
         "doctrine/doctrine-bundle": "^1.2",
         "doctrine/doctrine-cache-bundle": "^1.4",
-        "doctrine/doctrine-migrations-bundle": "^3.0.1",
+        "doctrine/doctrine-migrations-bundle": "^v1.3.2",
         "sensio/framework-extra-bundle": "^5.6.1",
         "friendsofsymfony/user-bundle": "^2.1.2",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
