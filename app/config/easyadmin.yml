@@ -79,8 +79,7 @@ easy_admin:
                 fields:
                     - { property: id, label: notices.id }
                     - { property: contributor, label: notices.contributor }
-                    - property: relayersCount,
-                      label: notices.relayers
+                    - { property: relayersCount, label: notices.relayers }
                     - { property: message, label: notices.message }
                     - { property: visibility, label: notices.visibility }
                     - { property: matchingContexts, label: notices.matchingContexts }
