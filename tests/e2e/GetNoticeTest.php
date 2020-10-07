@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\e2e;
+namespace App\Tests\e2e;
 
-use AppBundle\Entity\Notice;
+use App\Entity\Notice;
 
 class GetNoticeTest extends BaseApiE2eTestCase
 {

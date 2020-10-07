@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\e2e;
+namespace App\Tests\e2e;
 
 class GetMatchingContextsTest extends BaseApiE2eTestCase
 {

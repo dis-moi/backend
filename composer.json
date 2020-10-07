@@ -10,34 +10,28 @@
     },
     "autoload": {
         "psr-4": {
-            "": "src/"
-        },
-        "classmap": [
-            "app/AppKernel.php",
-            "app/AppCache.php"
-        ]
+            "App\\": "src/"
+        }
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "App\\Tests\\": "tests/"
         }
     },
     "require": {
         "php": "~7.3.0",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "symfony/symfony": "^4.4.15",
         "symfony/swiftmailer-bundle": "^v3.5.1",
-        "symfony/monolog-bundle": "^3.6.0",
+        "symfony/monolog-bundle": "^3.6",
         "doctrine/orm": "^2.3",
         "doctrine/doctrine-bundle": "^1.2",
         "doctrine/doctrine-cache-bundle": "^1.4",
         "doctrine/doctrine-migrations-bundle": "^v1.3.2",
-        "sensio/framework-extra-bundle": "^5.6.1",
+        "sensio/framework-extra-bundle": "^5.6",
         "friendsofsymfony/user-bundle": "^2.1.2",
         "friendsofsymfony/jsrouting-bundle": "^2.2",
         "easycorp/easyadmin-bundle": "^1.17",
-        "incenteev/composer-parameter-handler": "^2.0",
         "ocramius/proxy-manager": "^2.0.2",
         "marc-mabe/php-enum": "^2.2",
         "beberlei/doctrineextensions": "^1.2",
@@ -48,16 +42,34 @@
         "knplabs/doctrine-behaviors": "1.4",
         "nelmio/cors-bundle": "1.5.6",
         "league/uri": "^6.2",
-        "league/uri-components": "^2.2"
+        "league/uri-components": "^2.2",
+        "symfony/flex": "^1.9",
+        "symfony/asset": "4.4.*",
+        "symfony/mailer": "4.4.*",
+        "symfony/form": "4.4.*",
+        "symfony/security-bundle": "4.4.*",
+        "symfony/translation": "4.4.*",
+        "symfony/validator": "4.4.*",
+        "composer/package-versions-deprecated": "^1.11",
+        "symfony/twig-bundle": "4.4.*",
+        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.1.7",
-        "doctrine/doctrine-fixtures-bundle": "^3.3.2",
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "symfony/dotenv": "4.4.*",
+        "symfony/maker-bundle": "^1.21",
+        "symfony/stopwatch": "^4.4",
+        "symfony/web-profiler-bundle": "^4.4",
+        "symfony/browser-kit": "4.4.*"
+    },
+    "conflict": {
+        "symfony/symfony": "*"
     },
     "scripts": {
         "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
@@ -65,7 +77,6 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
@@ -74,20 +85,17 @@
         ],
         "fix": [
             "php-cs-fixer fix"
-        ]
+        ],
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "security-checker security:check": "script"
+        }
     },
     "extra": {
         "symfony": {
             "require": "4.4.*"
         },
-        "symfony-app-dir": "app",
-        "symfony-bin-dir": "bin",
-        "symfony-var-dir": "var",
-        "symfony-web-dir": "web",
-        "symfony-tests-dir": "tests",
-        "symfony-assets-install": "relative",
-        "incenteev-parameters": {
-            "file": "app/config/parameters.yml"
-        }
+        "symfony-assets-install": "relative"
     }
 }

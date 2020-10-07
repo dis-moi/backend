@@ -1,8 +1,8 @@
 <?php
 
-namespace Domain\Service;
+namespace App\Domain\Service;
 
-use AppBundle\Entity\Notice;
+use App\Entity\Notice;
 use Symfony\Component\Routing\RouterInterface;
 
 class NoticeUrlGenerator

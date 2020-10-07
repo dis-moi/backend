@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\e2e;
+namespace App\Tests\e2e;
 
 class GetNoticesTest extends BaseApiE2eTestCase
 {

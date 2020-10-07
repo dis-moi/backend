@@ -19,8 +19,8 @@ services:
       - php
     volumes:
       - type: bind
-        source: ./web
-        target: /var/www/web
+        source: ./public
+        target: /var/www/public
         volume:
           nocopy: true
         read_only: true

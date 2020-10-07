@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace App\Tests;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\ProxyReferenceRepository;
@@ -36,7 +36,7 @@ abstract class FixtureAwareWebTestCase extends WebTestCase
         $this->referenceRepository = new ProxyReferenceRepository($entityManager);
 
         $rootDir = self::$kernel->getRootDir();
-        $fixtureDir = '../src/AppBundle/DataFixtures/ORM';
+        $fixtureDir = '../src/DataFixtures';
 
         $loader = new ContainerAwareLoader(self::$kernel->getContainer());
         $loader->loadFromDirectory(sprintf('%s/%s', $rootDir, $fixtureDir));

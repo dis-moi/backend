@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\e2e;
+namespace App\Tests\e2e;
 
-use Tests\FixtureAwareWebTestCase;
+use App\Tests\FixtureAwareWebTestCase;
 
 abstract class BaseApiE2eTestCase extends FixtureAwareWebTestCase
 {

@@ -1,0 +1,4 @@
+api_v3:
+  resource: ../src/Controller/Api/
+  type:     annotation
+  prefix:   /api/v3

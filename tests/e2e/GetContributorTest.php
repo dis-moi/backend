@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\e2e;
+namespace App\Tests\e2e;
 
-use AppBundle\Entity\Contributor;
-use AppBundle\Entity\Notice;
+use App\Entity\Contributor;
+use App\Entity\Notice;
 
 class GetContributorTest extends BaseApiE2eTestCase
 {

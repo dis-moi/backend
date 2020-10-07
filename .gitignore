@@ -1,4 +1,3 @@
-/app/config/parameters.yml
 /build
 /phpunit.xml
 /var/*
@@ -12,11 +11,8 @@
 /var/logs/*
 !var/logs/.gitkeep
 /vendor
-/web/bundles/
 .idea
 *.php~
-/web/uploads/
-/web/media/
 .env_prod
 /.clever.json
 .php_cs.cache

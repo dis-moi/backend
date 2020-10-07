@@ -2,7 +2,7 @@
 
 namespace Tests\Domain\Service;
 
-use Domain\Service\MessagePresenter;
+use App\Domain\Service\MessagePresenter;
 use PHPUnit\Framework\TestCase;
 
 const UTM_MEDIUM = 'UTM_MEDIUM';

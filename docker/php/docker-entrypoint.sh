@@ -7,7 +7,7 @@ if [ "${1#-}" != "$1" ]; then
 fi
 
 composer install --no-progress --no-suggest
-bin/console assets:install web
+bin/console assets:install public
 
 wait-for db:3306 -- bin/console doctrine:migrations:migrate -n
 wait-for db:3306 -- bin/console doctrine:fixtures:load -n
