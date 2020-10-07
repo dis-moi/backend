@@ -77,6 +77,20 @@ class Contributor implements ImageUploadable
     private $bannerImageFile;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="preview_image", type="string", length=255, nullable=true)
+     */
+    private $previewImage;
+
+    /**
+     * @var File
+     *
+     * @Vich\UploadableField(mapping="contributor_previews", fileNameProperty="previewImage")
+     */
+    private $previewImageFile;
+
+    /**
      * @ORM\OneToMany(targetEntity="Notice", mappedBy="contributor")
      * @ORM\OrderBy({"updated" = "ASC"})
      */
@@ -142,6 +156,7 @@ class Contributor implements ImageUploadable
 
     /**
      * @var array
+     *
      * @see CategoryName
      *
      * @ORM\Column(name="categories", type="simple_array", nullable=true)
@@ -203,6 +218,18 @@ class Contributor implements ImageUploadable
         return $this->intro;
     }
 
+    public function setImage(?string $image): Contributor
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
     public function setImageFile(?File $image = null): Contributor
     {
         $this->imageFile = $image;
@@ -216,36 +243,9 @@ class Contributor implements ImageUploadable
         return $this;
     }
 
-    public function setBannerImageFile(?File $bannerImage = null): Contributor
-    {
-        $this->bannerImageFile = $bannerImage;
-        if ($bannerImage) {
-            $this->markUpdated();
-        }
-
-        return $this;
-    }
-
     public function getImageFile(): ?File
     {
         return $this->imageFile;
-    }
-
-    public function getBannerImageFile(): ?File
-    {
-        return $this->bannerImageFile;
-    }
-
-    public function setImage(?string $image): Contributor
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
-    public function getImage(): ?string
-    {
-        return $this->image;
     }
 
     public function __toString(): string
@@ -345,6 +345,49 @@ class Contributor implements ImageUploadable
         $this->bannerImage = $bannerImage;
 
         return $this;
+    }
+
+    public function setBannerImageFile(?File $bannerImage = null): Contributor
+    {
+        $this->bannerImageFile = $bannerImage;
+        if ($bannerImage) {
+            $this->markUpdated();
+        }
+
+        return $this;
+    }
+
+    public function getBannerImageFile(): ?File
+    {
+        return $this->bannerImageFile;
+    }
+
+    public function setPreviewImage(?string $previewImage): Contributor
+    {
+        $this->previewImage = $previewImage;
+
+        return $this;
+    }
+
+    public function getPreviewImage(): ?string
+    {
+        return $this->previewImage;
+    }
+
+    public function setPreviewImageFile(?File $previewImage = null): Contributor
+    {
+        $this->previewImageFile = $previewImage;
+
+        if ($previewImage) {
+            $this->markUpdated();
+        }
+
+        return $this;
+    }
+
+    public function getPreviewImageFile(): ?File
+    {
+        return $this->previewImageFile;
     }
 
     public function setStarredNotice(?Notice $notice): Contributor

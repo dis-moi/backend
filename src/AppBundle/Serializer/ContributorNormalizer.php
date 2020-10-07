@@ -84,6 +84,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
                 $this->normalizer->normalize(self::avatarWithThumbs($contributor), $format, $context) :
                 null,
             'banner' => $this->getImageAbsoluteUrl($contributor, 'bannerImageFile'),
+            'preview' => $this->getImageAbsoluteUrl($contributor, 'previewImageFile'),
             'contributions' => $contributor->getNoticesCount(),
             'contribution' => [
                 'example' => $exampleNotice && $exampleNoticeMatchingContexts ? [/* Deprecated */

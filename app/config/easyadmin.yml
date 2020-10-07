@@ -189,6 +189,7 @@ easy_admin:
                     - { property: intro, label: contributors.intro }
                     - { property: imageFile, label: contributors.imageFile, type: vich_image, help: 'Au moins 200x200 pixels, JPG, PNG' }
                     - { property: bannerImageFile, label: contributors.bannerImageFile, type: vich_image, help: '652x200 pixels, JPG, PNG' }
+                    - { property: previewImageFile, label: contributors.previewImageFile, type: vich_image, help: '1200x630 pixels, JPG, PNG. Pour le partage sur les réseaux sociaux.' }
                     - { property: starredNotice, label: contributors.starredNotice }
 
         Domain:

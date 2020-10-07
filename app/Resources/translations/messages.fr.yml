@@ -101,6 +101,7 @@ contributors:
   imageFile: Image d’avatar
   image: Avatar
   bannerImageFile: Image de bannière
+  previewImageFile: Image d'aperçu
   banner: Bannière
   starredNotice: Bulle phare
   categories: Catégories
