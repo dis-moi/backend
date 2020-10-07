@@ -47,7 +47,7 @@ notices:
   visibility: Visibilité
   note: Note privée
   screenshot: Capture d’écran
-  screenshot.help: "%612x480% pixels, JPG, PNG"
+  screenshot.help: "612x480 pixels, JPG, PNG"
   matchingContexts: Ensemble de pages cibles
   badgedRatingCount: Badge
   displayedRatingCount: Aperçu
