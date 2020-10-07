@@ -189,8 +189,10 @@ easy_admin:
                     - { property: intro, label: contributors.intro }
                     - { property: imageFile, label: contributors.imageFile, type: vich_image, help: 'Au moins 200x200 pixels, JPG, PNG' }
                     - { property: bannerImageFile, label: contributors.bannerImageFile, type: vich_image, help: '652x200 pixels, JPG, PNG' }
-                    - { property: previewImageFile, label: contributors.previewImageFile, type: vich_image, help: '1200x630 pixels, JPG, PNG. Pour le partage sur les réseaux sociaux.' }
                     - { property: starredNotice, label: contributors.starredNotice }
+                    - { type: group, label: contributors.groups.social_media, icon: 'paper-plane', columns: 1 }
+                    - { property: title, label: contributors.title, help: "Ce titre remplace le nom du contributor lors d'un partage." }
+                    - { property: previewImageFile, label: contributors.previewImageFile, type: vich_image, help: '1200x630 pixels, JPG, PNG.' }
 
         Domain:
             label: menu.domains

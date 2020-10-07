@@ -43,6 +43,14 @@ class Contributor implements ImageUploadable
     /**
      * @var string
      *
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @Assert\Length(max="255")
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="intro", type="string", length=255, nullable=true)
      * @Assert\Length(max="255")
      */
@@ -204,6 +212,18 @@ class Contributor implements ImageUploadable
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function setTitle(?string $title): Contributor
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
     }
 
     public function setIntro(?string $intro): Contributor
