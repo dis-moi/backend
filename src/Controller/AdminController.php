@@ -5,10 +5,15 @@ namespace App\Controller;
 use App\Entity\Contributor;
 use App\Repository\ContributorRepository;
 use Doctrine\ORM\EntityRepository;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AdminController as BaseAdminController;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController as BaseAdminController;
 use EasyCorp\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
+use EasyCorp\Bundle\EasyAdminBundle\Search\QueryBuilder;
+use FOS\UserBundle\Doctrine\UserManager;
+use FOS\UserBundle\Model\UserManagerInterface;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouterInterface;
 
 class AdminController extends BaseAdminController
 {
@@ -16,33 +21,48 @@ class AdminController extends BaseAdminController
      * @var ContributorRepository
      */
     protected $contributorRepository;
+    /**
+     * @var UserManager
+     */
+    private $userManager;
+    /**
+     * @var QueryBuilder
+     */
+    private $queryBuilder;
+    /**
+     * @var Router
+     */
+    private $router;
 
-    public function __construct(ContributorRepository $repository)
+    public function __construct(ContributorRepository $repository, UserManagerInterface $userManager, QueryBuilder $queryBuilder, RouterInterface $router)
     {
         $this->contributorRepository = $repository;
+        $this->userManager = $userManager;
+        $this->queryBuilder = $queryBuilder;
+        $this->router = $router;
     }
 
     // Override User CRUD
     public function createNewUserEntity()
     {
-        return $this->get('fos_user.user_manager')->createUser();
+        return $this->userManager->createUser();
     }
 
     public function prePersistUserEntity($user)
     {
-        $this->get('fos_user.user_manager')->updateUser($user, false);
+        $this->userManager->updateUser($user, false);
     }
 
     public function preUpdateUserEntity($user)
     {
-        $this->get('fos_user.user_manager')->updateUser($user, false);
+        $this->userManager->updateUser($user, false);
     }
 
     // Override Notice Search
     // Jalil: Override but does the same as super-class ?
     protected function createNoticeSearchQueryBuilder($entityClass, $searchQuery, array $searchableFields, $sortField = null, $sortDirection = null, $dqlFilter = null)
     {
-        return $this->get('easyadmin.query_builder')->createSearchQueryBuilder($this->entity, $searchQuery, $sortField, $sortDirection, $dqlFilter);
+        return $this->queryBuilder->createSearchQueryBuilder($this->entity, $searchQuery, $sortField, $sortDirection, $dqlFilter);
     }
 
     protected function findAll($entityClass, $page = 1, $maxPerPage = 15, $sortField = null, $sortDirection = null, $dqlFilter = null)
@@ -68,7 +88,7 @@ class AdminController extends BaseAdminController
             $queryParameters = array_replace($this->request->query->all(), ['action' => 'list', 'query' => null]);
             $queryParameters = array_filter($queryParameters);
 
-            return $this->redirect($this->get('router')->generate('easyadmin', $queryParameters));
+            return $this->redirect($this->router->generate('easyadmin', $queryParameters));
         }
 
         $searchableFields = $this->entity['search']['fields'];
