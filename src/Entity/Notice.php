@@ -34,7 +34,7 @@ class Notice
     private $id;
 
     /**
-     * @ORM\Column(name="visibility", type="string", options={"default" : "private"})
+     * @ORM\Column(name="visibility", type="string", options={"default"="private"})
      */
     private $visibility;
 
