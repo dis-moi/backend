@@ -91,6 +91,8 @@ domainsSets:
   updatedAt: Modifié le
 
 contributors:
+  groups:
+    social_media: Partage sur les réseaux sociaux
   id: Id
   name: Nom
   intro: Intro
@@ -104,6 +106,8 @@ contributors:
   banner: Bannière
   starredNotice: Bulle phare
   categories: Catégories
+  title: Titre
+  previewImageFile: Image d'aperçu
 
 users:
   username: Identifiant

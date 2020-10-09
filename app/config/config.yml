@@ -107,6 +107,12 @@ vich_uploader:
             namer:
                 service: Vich\UploaderBundle\Naming\PropertyNamer
                 options: { property: 'id' }
+        contributor_previews:
+            uri_prefix:         /uploads/contributor_previews
+            upload_destination: "%kernel.project_dir%/web/uploads/contributor_previews"
+            namer:
+                service: Vich\UploaderBundle\Naming\PropertyNamer
+                options: { property: 'id' }
         notice_screenshots:
             uri_prefix:         /uploads/notice_screenshots
             upload_destination: "%kernel.project_dir%/web/uploads/notice_screenshots"

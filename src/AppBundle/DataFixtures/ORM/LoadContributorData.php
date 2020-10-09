@@ -40,6 +40,7 @@ class LoadContributorData extends AbstractFixture
 
         $contributor = new Contributor();
         $contributor->setName('Famous Contributor');
+        $contributor->setTitle('Famous Contributor Awesome Title');
         $contributor->addCategory(CategoryName::CONSO);
         $this->addReference('famous_contributor', $contributor);
         $manager->persist($contributor);
