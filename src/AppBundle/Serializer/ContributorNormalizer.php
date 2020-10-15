@@ -78,6 +78,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
         return [
             'id' => $contributor->getId(),
             'name' => $contributor->getName(),
+            'title' => $contributor->getTitle(),
             'website' => $contributor->getWebsite(),
             'intro' => $contributor->getIntro() ? $this->messagePresenter->present($contributor->getIntro()) : null,
             'avatar' => !empty($contributor->getImage()) ?
