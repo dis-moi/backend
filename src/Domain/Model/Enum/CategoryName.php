@@ -10,10 +10,9 @@ use MabeEnum\Enum;
 class CategoryName extends Enum
 {
     const CONSO = 'Conso';
-    const INFOS = 'Infos & média';
-    const PRO = 'Professionnel';
-    const MILITANT = 'Militant';
     const CULTURE = 'Culture & Loisir';
+    const MILITANT = 'Militant';
+    const DIVERS = 'Divers';
 
     public static function getChoices()
     {
