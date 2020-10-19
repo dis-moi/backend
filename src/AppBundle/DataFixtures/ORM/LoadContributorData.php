@@ -28,7 +28,7 @@ class LoadContributorData extends AbstractFixture
 
         $contributor = new Contributor();
         $contributor->setName('Jane Doe');
-        $contributor->setCategories([CategoryName::INFOS, CategoryName::MILITANT]);
+        $contributor->setCategories([CategoryName::CULTURE, CategoryName::MILITANT]);
         $this->addReference('jane_doe', $contributor);
         $manager->persist($contributor);
 
@@ -47,7 +47,7 @@ class LoadContributorData extends AbstractFixture
 
         $contributor = new Contributor();
         $contributor->setName('Paul Bismuth');
-        $contributor->addCategory(CategoryName::PRO);
+        $contributor->addCategory(CategoryName::DIVERS);
         $this->addReference('contributor_lazy', $contributor);
         $manager->persist($contributor);
 
