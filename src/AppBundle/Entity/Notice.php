@@ -125,7 +125,7 @@ class Notice
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="notice", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="notice", cascade={"persist", "remove"})
      */
     private $relays;
 

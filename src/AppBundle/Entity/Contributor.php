@@ -158,7 +158,7 @@ class Contributor implements ImageUploadable
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="relayedBy", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="relayedBy", cascade={"persist", "remove"})
      */
     private $relayedNotices;
 
