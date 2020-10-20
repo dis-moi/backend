@@ -75,4 +75,33 @@ class NoticeTest extends FixtureAwareWebTestCase
         $expires = $notice->getExpires();
         $this->assertInstanceOf(DateTime::class, $created);
     }
+
+    public function testAddRelayer()
+    {
+        /** @var Notice $notice */
+        $notice = $this->_getReference('notice_type_ecology');
+        /** @var Contributor $contributor */
+        $contributor2 = $this->_getReference('contributor2');
+        $notice->addRelayer($contributor2);
+        $this->_entityManager->flush();
+
+        /** @var Notice $persistedNotice */
+        $persistedNotice = $this->_entityManager->getRepository(Notice::class)->find($notice->getId());
+        $this->assertEquals(1, $persistedNotice->getRelayersCount());
+    }
+
+    public function testRemoveRelayer()
+    {
+        /** @var Notice $notice */
+        $notice = $this->_getReference('notice_liked_displayed');
+        /** @var Contributor $johnDoe */
+        $johnDoe = $this->_getReference('john_doe');
+        $notice->removeRelayer($johnDoe);
+        $this->assertEquals(1, $notice->getRelayersCount());
+        $this->_entityManager->flush();
+
+        /** @var Notice $persistedNotice */
+        $persistedNotice = $this->_entityManager->getRepository(Notice::class)->find($notice->getId());
+        $this->assertEquals($notice->getRelayersCount(), $persistedNotice->getRelayersCount());
+    }
 }
