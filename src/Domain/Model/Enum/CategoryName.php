@@ -10,7 +10,7 @@ use MabeEnum\Enum;
 class CategoryName extends Enum
 {
     const CONSO = 'Conso';
-    const CULTURE = 'Culture & Loisir';
+    const CULTURE = 'Culture & Société';
     const MILITANT = 'Militant';
     const DIVERS = 'Divers';
 
