@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AppBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 
 /**
  * Subscription.
@@ -13,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Subscription
 {
-    const DAYS_TO_BE_CONSIDERED_ACTIVE = 15;
+    public const DAYS_TO_BE_CONSIDERED_ACTIVE = 7;
 
     /**
      * @var Contributor
@@ -54,7 +57,7 @@ class Subscription
         $this->extension = $extension;
     }
 
-    public function confirm()
+    public function confirm(): void
     {
         $this->updated = new DateTime('now');
     }
@@ -92,6 +95,10 @@ class Subscription
 
     public static function getFreshnessDate(): DateTime
     {
-        return new DateTime('-'.self::DAYS_TO_BE_CONSIDERED_ACTIVE.'days');
+        try {
+            return new DateTime('-'.self::DAYS_TO_BE_CONSIDERED_ACTIVE.'days');
+        } catch (Exception $e) {
+            return new DateTime();
+        }
     }
 }
