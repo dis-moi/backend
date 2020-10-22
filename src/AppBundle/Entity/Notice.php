@@ -125,7 +125,7 @@ class Notice
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="notice", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="notice", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $relays;
 
@@ -419,9 +419,16 @@ class Notice
 
     public function removeRelayer(Contributor $contributor): Notice
     {
-        $this->relays->removeElement(current(array_filter($this->relays->toArray(), static function (Relay $relay) use ($contributor) {
-            return $relay->getRelayedBy()->getId() === $contributor->getId();
-        })));
+        $this->relays->removeElement(
+            current(
+                array_filter(
+                    $this->relays->toArray(),
+                    static function (Relay $relay) use ($contributor) {
+                        return $relay->getRelayedBy()->getId() === $contributor->getId();
+                    }
+                )
+            )
+        );
 
         return $this;
     }
