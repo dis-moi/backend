@@ -142,6 +142,7 @@ class Contributor implements ImageUploadable
 
     /**
      * @var array
+     *
      * @see CategoryName
      *
      * @ORM\Column(name="categories", type="simple_array", nullable=true)
