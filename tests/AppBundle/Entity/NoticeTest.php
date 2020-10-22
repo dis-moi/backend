@@ -72,7 +72,8 @@ class NoticeTest extends FixtureAwareWebTestCase
         $notice->addRelayer($contributor2);
         parent::$entityManager->flush();
 
-        /** @var Notice $persistedNotice */
+        parent::$entityManager->clear();
+        /* @var Notice $persistedNotice */
         $persistedNotice = parent::$entityManager->getRepository(Notice::class)->find($notice->getId());
         $this->assertEquals(1, $persistedNotice->getRelayersCount());
     }
@@ -83,12 +84,14 @@ class NoticeTest extends FixtureAwareWebTestCase
         $notice = $this->_getReference('notice_liked_displayed');
         /** @var Contributor $johnDoe */
         $johnDoe = $this->_getReference('john_doe');
+        $initialRelayersCount = $notice->getRelayersCount();
         $notice->removeRelayer($johnDoe);
-        $this->assertEquals(1, $notice->getRelayersCount());
+        self::assertEquals($initialRelayersCount - 1, $notice->getRelayersCount());
         parent::$entityManager->flush();
 
+        parent::$entityManager->clear();
         /** @var Notice $persistedNotice */
         $persistedNotice = parent::$entityManager->getRepository(Notice::class)->find($notice->getId());
-        $this->assertEquals($notice->getRelayersCount(), $persistedNotice->getRelayersCount());
+        self::assertEquals($initialRelayersCount - 1, $persistedNotice->getRelayersCount());
     }
 }
