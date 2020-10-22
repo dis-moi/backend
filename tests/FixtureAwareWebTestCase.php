@@ -10,22 +10,20 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\DataFixtures\ContainerAwareLoader;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\DependencyInjection\Container;
 
 abstract class FixtureAwareWebTestCase extends WebTestCase
 {
     /** @var Client */
     protected static $client;
-    /** @var Container */
-    protected static $container;
     /** @var ReferenceRepository */
     protected static $referenceRepository;
+    /** @var EntityManagerInterface */
+    protected static $entityManager;
 
     public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         static::$client = static::createClient();
-        static::$container = static::$client->getContainer();
         static::loadFixtures(static::$client);
     }
 
@@ -35,6 +33,7 @@ abstract class FixtureAwareWebTestCase extends WebTestCase
         $doctrine = $container->get('doctrine');
         /** @var EntityManagerInterface $entityManager */
         $entityManager = $doctrine->getManager();
+        self::$entityManager = $entityManager;
         static::$referenceRepository = new ProxyReferenceRepository($entityManager);
 
         $rootDir = $client->getKernel()->getRootDir();
@@ -51,11 +50,11 @@ abstract class FixtureAwareWebTestCase extends WebTestCase
         $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=1'));
     }
 
-    protected function assertEqualHtml($expected, $actual)
+    protected static function assertEqualHtml($expected, $actual)
     {
         $from = ['/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/> </s'];
         $to = ['>',            '<',            '\\1',      '><'];
-        $this->assertEquals(
+        self::assertEquals(
             preg_replace($from, $to, $expected),
             preg_replace($from, $to, $actual)
         );
