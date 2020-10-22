@@ -112,7 +112,7 @@ class Contributor implements ImageUploadable
     private $starredNotice;
 
     /**
-     * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor")
+     * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor", orphanRemoval=true)
      * @ORM\OrderBy({"created" = "DESC"})
      */
     private $subscriptions;
@@ -158,7 +158,7 @@ class Contributor implements ImageUploadable
     /**
      * @var Collection
      *
-     * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="relayedBy", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="relayedBy", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $relayedNotices;
 

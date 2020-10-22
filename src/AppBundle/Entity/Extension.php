@@ -24,7 +24,7 @@ class Extension
 
     /**
      * @var PersistentCollection
-     * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="extension")
+     * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="extension", orphanRemoval=true)
      * @ORM\OrderBy({"created" = "DESC"})
      */
     private $subscriptions;
