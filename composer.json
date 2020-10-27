@@ -34,6 +34,7 @@
         "symfony/translation": "4.4.*",
         "symfony/validator": "4.4.*",
         "symfony/twig-bundle": "4.4.*",
+        "symfony/yaml": "4.4.*",
         "doctrine/orm": "^2.3",
         "doctrine/doctrine-bundle": "^1.2",
         "doctrine/doctrine-cache-bundle": "^1.4",
