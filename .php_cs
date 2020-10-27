@@ -4,7 +4,7 @@ $finder = PhpCsFixer\Finder::create()
     ->path('app/')
     ->path('src/')
     ->path('tests/')
-    ->path('web/')
+    ->path('public/')
     ->in(__DIR__)
 ;
 

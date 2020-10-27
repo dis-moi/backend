@@ -1,13 +1,13 @@
 <?php
 
-namespace Domain\Service;
+namespace App\Domain\Service;
 
-use AppBundle\Entity\Contributor;
-use AppBundle\Entity\Extension;
-use AppBundle\Entity\Subscription;
-use AppBundle\Repository\ContributorRepository;
-use AppBundle\Repository\ExtensionRepository;
-use AppBundle\Repository\SubscriptionRepository;
+use App\Entity\Contributor;
+use App\Entity\Extension;
+use App\Entity\Subscription;
+use App\Repository\ContributorRepository;
+use App\Repository\ExtensionRepository;
+use App\Repository\SubscriptionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use DomainException;

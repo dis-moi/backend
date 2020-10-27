@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\e2e;
+namespace App\Tests\e2e;
 
 class GetNoticesTest extends BaseApiE2eTestCase
 {
@@ -14,11 +14,11 @@ class GetNoticesTest extends BaseApiE2eTestCase
             return $noticeData['id'];
         }, $payload);
 
-        self::assertContains(static::$referenceRepository->getReference('notice_type_ecology')->getId(), $ids);
-        self::assertNotContains(static::$referenceRepository->getReference('notice_private')->getId(), $ids);
-        self::assertNotContains(static::$referenceRepository->getReference('notice_type_ecology_archived')->getId(), $ids);
-        self::assertNotContains(static::$referenceRepository->getReference('notice_expired_unpublished')->getId(), $ids);
-        self::assertNotContains(static::$referenceRepository->getReference('notice_disabled')->getId(), $ids);
+        self::assertContains($this->referenceRepository->getReference('notice_type_ecology')->getId(), $ids);
+        self::assertNotContains($this->referenceRepository->getReference('notice_private')->getId(), $ids);
+        self::assertNotContains($this->referenceRepository->getReference('notice_type_ecology_archived')->getId(), $ids);
+        self::assertNotContains($this->referenceRepository->getReference('notice_expired_unpublished')->getId(), $ids);
+        self::assertNotContains($this->referenceRepository->getReference('notice_disabled')->getId(), $ids);
     }
 
     public function testGetPaginatedNotices(): void

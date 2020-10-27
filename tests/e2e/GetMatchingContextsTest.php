@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\e2e;
+namespace App\Tests\e2e;
 
 class GetMatchingContextsTest extends BaseApiE2eTestCase
 {
@@ -21,8 +21,8 @@ class GetMatchingContextsTest extends BaseApiE2eTestCase
     {
         $url = '/api/v3/matchingcontexts';
         if ($contributors) {
-            $url .= '?'.implode('&', array_map(static function ($contributorReference) {
-                return 'contributors[]='.static::$referenceRepository->getReference($contributorReference)->getId();
+            $url .= '?'.implode('&', array_map(function ($contributorReference) {
+                return 'contributors[]='.$this->referenceRepository->getReference($contributorReference)->getId();
             }, $contributors));
         }
         $payload = $this->makeApiRequest($url);

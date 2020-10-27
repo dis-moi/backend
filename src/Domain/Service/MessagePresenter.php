@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Service;
+namespace App\Domain\Service;
 
 use League\Uri\Uri;
 use League\Uri\UriModifier;

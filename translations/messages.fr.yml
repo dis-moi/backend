@@ -1,0 +1,134 @@
+# Entities
+MatchingContext: Pages cibles
+Notice: Bulle
+ExpiredNotice: Bulle expirée
+RestrictedContext: Page exclue
+Domain: Nom de domaine
+DomainsSet: Groupe de noms de domaines
+Contributor: Contributeur
+User: Utilisateur
+ID: ID
+Lifecycle: Cycle de vie
+Archived: Archivé
+Private: Privée
+Public: Publique
+
+ROLE_USER: Normal
+ROLE_ADMIN: Administrateur
+
+# Easy Admin Menu
+menu:
+  notices: Bulles
+  matchingContexts: Pages cibles
+  expiredNotices: Bulles expirées
+  restrictedContexts: Pages exclues (global)
+  domains: Domaines
+  domainsSets: Groupes de domaines
+  contributors: Contributeurs
+  users: Utilisateurs
+
+# Easy Admin Pages
+title:
+  notices: Toutes les bulles
+  expiredNotices: Bulles expirées
+  matchingContexts: Ensemble de pages cibles
+  restrictedContexts: Pages exclues (global)
+  domains: Noms de domaines
+  domainsSets: Groupes de domaines
+  contributors: Contributeurs
+  users: Utilisateurs
+
+# Entities properties
+notices:
+  id: id
+  contributor: Contributeur
+  relayers: Relayeurs
+  message: Message
+  visibility: Visibilité
+  note: Note privée
+  screenshot: Capture d’écran
+  screenshot.help: "612x480 pixels, JPG, PNG"
+  matchingContexts: Ensemble de pages cibles
+  badgedRatingCount: Badge
+  displayedRatingCount: Aperçu
+  unfoldedRatingCount: Détail
+  clickedRatingCount: Hyperlien
+  likedRatingCount: Aimé
+  dislikedRatingCount: Déplu
+  dismissedRatingCount: Supprimé
+  created: Crée
+  updated: Modifiée
+  expires: Expire
+  unpublishedOnExpiration: Dépubliée à expiration
+  excludeUrlRegex: Regex d'exclusion (Pour toute la bulle)
+  groups:
+    publication: Publication
+    matchingContexts: Ensembles de pages cibles
+
+matchingContexts:
+  description: Description
+  exampleUrl: Exemple d’URL
+  domainsSets: Groupe de domaines
+  domainNames: Domaines
+  urlRegex: Regex recherchée
+  excludeUrlRegex: Regex d'exclusion
+  notice: Bulle
+
+restrictedContexts:
+  urlRegex: URL Regex d’exclusion globale
+
+domains:
+  id: Id
+  name: Nom du domaine
+  path: Chemin
+  sets: Groupes de domaines liés
+  sets.nb: Nb de groupes de domaines liés
+  matchingContexts: Pages cibles liées
+  matchingContexts.nb: Nb d’ensemble de pages cibles liées
+  notices: Utilisé dans les bulles
+  createdAt: Créé le
+  updatedAt: Modifié le
+
+
+domainsSets:
+  id: Id
+  name: Nom du groupe
+  domains: Domaines
+  domains.nb: Nb de domaines
+  matchingContexts: Pages cibles liées
+  matchingContexts.nb: Nb d’ensemble de pages cibles liées
+  notices: Utilisé dans les bulles
+  createdAt: Créé le
+  updatedAt: Modifié le
+
+contributors:
+  groups:
+    social_media: Partage sur les réseaux sociaux
+  id: Id
+  name: Nom
+  intro: Intro
+  email: E-mail
+  website: Site
+  activeSubscriptionsCount: Nombre d’abonnés actifs
+  enabled: Activé
+  imageFile: Image d’avatar
+  imageFile.help: 'Au moins 200x200 pixels, JPG, PNG'
+  image: Avatar
+  bannerImageFile: Image de bannière
+  bannerImageFile.help: '652x200 pixels, JPG, PNG'
+  banner: Bannière
+  starredNotice: Bulle phare
+  categories: Catégories
+  title: Titre
+  previewImageFile: Image d'aperçu
+
+users:
+  username: Identifiant
+  email: Adresse e-mail
+  enabled: Activé
+  plainPassword: Mot de passe
+  lastLogin: Dernière connexion
+  roles: Rôles
+
+# Easy Admin
+form.label.delete: Supprimer l’image ?

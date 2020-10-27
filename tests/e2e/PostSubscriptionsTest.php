@@ -1,22 +1,22 @@
 <?php
 
-namespace Tests\e2e;
+namespace App\Tests\e2e;
 
-use AppBundle\Entity\Contributor;
+use App\Entity\Contributor;
 
 class PostSubscriptionsTest extends BaseApiE2eTestCase
 {
     public function testPostSubscriptions()
     {
         /** @var Contributor $contributor */
-        $extension1 = static::$referenceRepository->getReference('extension_1');
-        $contributor = static::$referenceRepository->getReference('john_doe');
+        $extension1 = $this->referenceRepository->getReference('extension_1');
+        $contributor = $this->referenceRepository->getReference('john_doe');
 
         $content = json_encode([
       $contributor->getId(),
     ]);
 
-        static::$client->request('POST', '/api/v3/subscriptions/'.$contributor->getId(), [], [], [], $content);
-        $this->assertEquals(204, static::$client->getResponse()->getStatusCode());
+        $this->client->request('POST', '/api/v3/subscriptions/'.$contributor->getId(), [], [], [], $content);
+        $this->assertEquals(204, $this->client->getResponse()->getStatusCode());
     }
 }

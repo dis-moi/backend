@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace App\Tests;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\ProxyReferenceRepository;
@@ -14,38 +14,37 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 abstract class FixtureAwareWebTestCase extends WebTestCase
 {
     /** @var Client */
-    protected static $client;
+    protected $client;
     /** @var ReferenceRepository */
-    protected static $referenceRepository;
-    /** @var EntityManagerInterface */
-    protected static $entityManager;
+    protected $referenceRepository;
 
-    public static function setUpBeforeClass(): void
+    protected function setUp(): void
     {
-        parent::setUpBeforeClass();
-        static::$client = static::createClient();
-        static::loadFixtures(static::$client);
+        parent::setUp();
+
+        self::bootKernel();
+
+        $this->client = self::createClient();
+        $this->loadFixtures();
     }
 
-    protected static function loadFixtures(Client $client)
+    protected function loadFixtures()
     {
-        $container = $client->getContainer();
-        $doctrine = $container->get('doctrine');
+        $doctrine = self::$container->get('doctrine');
         /** @var EntityManagerInterface $entityManager */
         $entityManager = $doctrine->getManager();
-        self::$entityManager = $entityManager;
-        static::$referenceRepository = new ProxyReferenceRepository($entityManager);
+        $this->referenceRepository = new ProxyReferenceRepository($entityManager);
 
-        $rootDir = $client->getKernel()->getRootDir();
-        $fixtureDir = '../src/AppBundle/DataFixtures/ORM';
+        $rootDir = self::$kernel->getRootDir();
+        $fixtureDir = '../src/DataFixtures';
 
-        $loader = new ContainerAwareLoader($client->getContainer());
+        $loader = new ContainerAwareLoader(self::$kernel->getContainer());
         $loader->loadFromDirectory(sprintf('%s/%s', $rootDir, $fixtureDir));
-        static::$referenceRepository = new ProxyReferenceRepository(static::$client->getContainer()->get('doctrine')->getManager());
+        $this->referenceRepository = new ProxyReferenceRepository(self::$kernel->getContainer()->get('doctrine')->getManager());
         $purger = new ORMPurger();
         $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=0'));
         $executor = new ORMExecutor($entityManager, $purger);
-        $executor->setReferenceRepository(static::$referenceRepository);
+        $executor->setReferenceRepository($this->referenceRepository);
         $executor->execute($loader->getFixtures());
         $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=1'));
     }

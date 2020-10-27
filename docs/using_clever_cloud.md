@@ -11,11 +11,11 @@ Before starting, you need to create a **MySQL addon** on CleverCloud.
 Then in `Environment variables`, you have to add the corresponding environment variables:
 
 ```
-SYMFONY__DATABASE__USER=user
-SYMFONY__DATABASE__PASSWORD=pass
-SYMFONY__DATABASE__NAME=symfony
-SYMFONY__DATABASE__HOST=host
-SYMFONY__DATABASE__PORT=3306
+DATABASE_USER=lmem
+DATABASE_PASSWORD=meml
+DATABASE_NAME=kraftbackenddev
+DATABASE_HOST=kraft-backend_db
+DATABASE_PORT=3306
 ```
 
 You must also set the Symfony environment to prod by adding the `SYMFONY_ENV` key with the `prod` value.

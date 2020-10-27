@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\e2e;
+namespace App\Tests\e2e;
 
-use AppBundle\Entity\Notice;
+use App\Entity\Notice;
 
 class GetNoticeTest extends BaseApiE2eTestCase
 {
     public function testGetNotice()
     {
         /** @var Notice $notice */
-        $notice = static::$referenceRepository->getReference('notice_type_ecology');
+        $notice = $this->referenceRepository->getReference('notice_type_ecology');
 
         $payload = $this->makeApiRequest('/api/v3/notices/'.$notice->getId());
 
@@ -27,36 +27,36 @@ with <a href="https://bulles.fr?utm_medium=Dismoi_extension_navigateur" target="
     public function testFailGetDisabledNotice()
     {
         /** @var Notice $notice */
-        $notice = static::$referenceRepository->getReference('notice_disabled');
+        $notice = $this->referenceRepository->getReference('notice_disabled');
 
-        static::$client->request('GET', '/api/v3/notices/'.$notice->getId());
-        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/api/v3/notices/'.$notice->getId());
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
     public function testFailGetPrivateNotice()
     {
         /** @var Notice $notice */
-        $notice = static::$referenceRepository->getReference('notice_private');
+        $notice = $this->referenceRepository->getReference('notice_private');
 
-        static::$client->request('GET', '/api/v3/notices/'.$notice->getId());
-        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/api/v3/notices/'.$notice->getId());
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
     public function testFailGetArchivedNotice()
     {
         /** @var Notice $notice */
-        $notice = static::$referenceRepository->getReference('notice_type_ecology_archived');
+        $notice = $this->referenceRepository->getReference('notice_type_ecology_archived');
 
-        static::$client->request('GET', '/api/v3/notices/'.$notice->getId());
-        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/api/v3/notices/'.$notice->getId());
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
     public function testFailGetUnpublishedNotice()
     {
         /** @var Notice $notice */
-        $notice = static::$referenceRepository->getReference('notice_expired_unpublished');
+        $notice = $this->referenceRepository->getReference('notice_expired_unpublished');
 
-        static::$client->request('GET', '/api/v3/notices/'.$notice->getId());
-        $this->assertEquals(404, static::$client->getResponse()->getStatusCode());
+        $this->client->request('GET', '/api/v3/notices/'.$notice->getId());
+        $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 }
