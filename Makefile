@@ -3,11 +3,18 @@ EXEC_PHP_ND = docker-compose exec -e SYMFONY_DEPRECATIONS_HELPER=disabled php
 SYMFONY = $(EXEC_PHP) bin/console
 COMPOSER = $(EXEC_PHP) composer
 
-setup-tests:
-	docker-compose -f docker-compose.yml -f docker-compose.ci.yml build
-	docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
+up:
+	docker-compose build
+	docker-compose up -d
 	sleep 20
 	$(COMPOSER) install --no-interaction
+	$(SYMFONY) cache:clear
+	$(SYMFONY) assets:install public --symlink
+	$(SYMFONY) doctrine:migrations:migrate -n
+	$(SYMFONY) doctrine:fixtures:load -n
+
+composer-update:
+	$(COMPOSER) update
 
 test:
 	$(SYMFONY) doctrine:migrations:migrate -n --env=test
@@ -19,14 +26,17 @@ test-no-deprecation:
 	$(SYMFONY) cache:clear --env=test
 	$(EXEC_PHP_ND) bin/phpunit
 
-qtest:
+retest:
 	$(EXEC_PHP) bin/phpunit
 
-qtest-no-deprecation:
+retest-no-deprecation:
 	$(EXEC_PHP_ND) bin/phpunit
+
+cs-fix:
+	$(COMPOSER) fix
+
+stop:
+	docker-compose stop
 
 down:
 	docker-compose down
-
-fix:
-	$(COMPOSER) fix

@@ -45,3 +45,4 @@
 ###< symfony/phpunit-bridge ###
 
 /public/uploads/
+/logs
