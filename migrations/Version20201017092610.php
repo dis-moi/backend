@@ -28,6 +28,8 @@ final class Version20201017092610 extends AbstractMigration
         $this->addSql('CREATE INDEX INDEX_PIN_CONTRIBUTOR ON pin (contributor_id)');
         $this->addSql('CREATE INDEX INDEX_PIN_NOTICE ON pin (notice_id)');
 
+        $this->addSql('INSERT INTO pin (contributor_id, notice_id, `rank`) SELECT id, starred_notice, 0 FROM contributor WHERE starred_notice IS NOT NULL');
+
         $this->addSql('ALTER TABLE contributor DROP FOREIGN KEY starred_notice___fk');
         $this->addSql('ALTER TABLE contributor DROP COLUMN starred_notice');
     }
