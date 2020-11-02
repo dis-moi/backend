@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -142,6 +143,16 @@ class Notice
         $this->relays = new ArrayCollection();
         $this->visibility = NoticeVisibility::getDefault();
         $this->expires = (new DateTimeImmutable())->modify('+1year');
+    }
+
+    /**
+     * @return \Closure
+     */
+    public static function equals(Notice $notice)
+    {
+        return static function (Notice $other) use ($notice) {
+            return $notice->getId() === $other->getId();
+        };
     }
 
     private function markUpdated(): void

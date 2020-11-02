@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Domain\Model\Enum\CategoryName;
+use App\Helper\CollectionHelper;
 use App\Helper\ImageUploadable;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -445,13 +447,23 @@ class Contributor implements ImageUploadable
 
     public function getPinnedNotices(): Collection
     {
-        return $this->pins->map(static function (Pin $pin) {
-            return $pin->getNotice();
-        });
+        return CollectionHelper::sort(
+                $this->pins,
+                static function (Pin $a, Pin $b) {
+                    return ($a->getRank() < $b->getRank()) ? -1 : 1;
+                }
+            )
+            ->map(static function (Pin $pin) {
+                return $pin->getNotice()->setPinnedRank($pin->getRank());
+            });
     }
 
     public function setPinnedNotices(ArrayCollection $givenNotices): Contributor
     {
+        if ($givenNotices->count() > 5) {
+            throw new InvalidArgumentException('No more than 5 pinned notices by contributor please');
+        }
+
         /** @var Notice $givenNotice */
         foreach ($givenNotices as $givenNotice) {
             $existingPin = $this->pins

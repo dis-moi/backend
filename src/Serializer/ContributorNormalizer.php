@@ -10,12 +10,19 @@ use App\Entity\Contributor;
 use App\Entity\Notice;
 use App\Serializer\Serializable\Picture;
 use App\Serializer\Serializable\Thumb;
+use LogicException;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Serializer\Exception\CircularReferenceException;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
+/**
+ * Class ContributorNormalizer
+ * @package App\Serializer
+ */
 class ContributorNormalizer extends EntityWithImageNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
     /**
@@ -48,9 +55,26 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
         $this->normalizer = $normalizer;
     }
 
+    /**
+     * Checks whether the given class is supported for normalization by this normalizer.
+     *
+     * @param mixed  $data   Data to normalize
+     * @param string | null $format The format being (de-)serialized from or into
+     *
+     * @return bool
+     */
     public function supportsNormalization($data, $format = null): bool
     {
         return $data instanceof Contributor;
+    }
+
+    private static function avatarWithThumbs(Contributor $contributor): Picture
+    {
+        return Picture::fromContributor($contributor)
+            ->addThumb(Thumb::fromName(Thumb::SMALL))
+            ->addThumb(Thumb::fromName(Thumb::NORMAL))
+            ->addThumb(Thumb::fromName(Thumb::LARGE))
+            ->addThumb(Thumb::fromName(Thumb::EXTRA_LARGE));
     }
 
     /**
@@ -71,7 +95,9 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
         if (!($contributor instanceof Contributor)) {
             throw new InvalidArgumentException('The normalized object must be of type Contributor');
         }
-        $exampleNotice = $contributor->getTheirMostLikedOrDisplayedNotice();
+
+        $pinnedNotices = $contributor->getPinnedNotices();
+        $exampleNotice = $pinnedNotices->first() ?: $contributor->getPublicNotices()->first();
         $exampleNoticeMatchingContexts = $exampleNotice ? $exampleNotice->getMatchingContexts() : null;
         $relays = $contributor->getPublicRelays();
 
@@ -100,6 +126,17 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
                     'noticeUrl' => $this->noticeUrlGenerator->generate($exampleNotice),
                     'screenshot' => $this->getImageAbsoluteUrl($exampleNotice, 'screenshotFile'),
                 ] : null,
+                'pinnedNotices' => $pinnedNotices->map(function (Notice $notice) {
+                    $matchingContexts = $notice->getMatchingContexts();
+
+                    return [
+                        'rank' => $notice->getPinnedRank(),
+                        'matchingUrl' => $matchingContexts && $matchingContexts->first() ? $matchingContexts->first()->getExampleUrl() : null,
+                        'noticeId' => $notice->getId(),
+                        'noticeUrl' => $this->noticeUrlGenerator->generate($notice),
+                        'screenshot' => $this->getImageAbsoluteUrl($notice, 'screenshotFile'),
+                    ];
+                })->toArray(),
                 'numberOfPublishedNotices' => $contributor->getNoticesCount(),
             ],
             'ratings' => [
@@ -113,14 +150,5 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
             })->toArray() : null,
             'categories' => $contributor->getCategories(),
         ];
-    }
-
-    private static function avatarWithThumbs(Contributor $contributor): Picture
-    {
-        return Picture::fromContributor($contributor)
-            ->addThumb(Thumb::fromName(Thumb::SMALL))
-            ->addThumb(Thumb::fromName(Thumb::NORMAL))
-            ->addThumb(Thumb::fromName(Thumb::LARGE))
-            ->addThumb(Thumb::fromName(Thumb::EXTRA_LARGE));
     }
 }

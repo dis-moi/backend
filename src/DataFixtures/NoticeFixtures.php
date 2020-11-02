@@ -113,9 +113,14 @@ with https://bulles.fr.');
         $this->addReference('notice_type_ecology_archived', $notice);
         $manager->persist($notice);
 
+        $manager->flush();
+
         $famousContributor->setPinnedNotices(new ArrayCollection([
-            $noticeLikedDisplayed, $noticeLiked, $noticeDisplayed,
+            $noticeLikedDisplayed->setPinnedRank(0),
+            $noticeLiked->setPinnedRank(1),
+            $noticeDisplayed->setPinnedRank(2),
         ]));
+
         $manager->flush();
     }
 
