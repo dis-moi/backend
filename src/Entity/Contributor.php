@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Domain\Model\Enum\CategoryName;
-use App\Helper\CollectionHelper;
 use App\Helper\ImageUploadable;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -156,7 +155,7 @@ class Contributor implements ImageUploadable
     /** @var ArrayCollection|
      *
      * @ORM\OneToMany(targetEntity=Pin::class, mappedBy="contributor", cascade={"persist", "remove"}, orphanRemoval=true)
-     * @ORM\OrderBy({"rank"="ASC"})
+     * @ORM\OrderBy({"sort"="ASC"})
      */
     private $pins;
 
@@ -449,9 +448,9 @@ class Contributor implements ImageUploadable
     public function getPinnedNotices(): ArrayCollection
     {
         return $this->pins
-            ->matching(new Criteria(null, ['rank' => Criteria::ASC]))
+            ->matching(new Criteria(null, ['sort' => Criteria::ASC]))
             ->map(static function (Pin $pin) {
-                return $pin->getNotice()->setPinnedRank($pin->getRank());
+                return $pin->getNotice()->setPinnedSort($pin->getSort());
             });
     }
 
@@ -469,11 +468,11 @@ class Contributor implements ImageUploadable
                 })
                 ->first();
 
-            if (null !== $givenNotice->getPinnedRank()) {
+            if (null !== $givenNotice->getPinnedSort()) {
                 if ($existingPin) {
-                    $existingPin->setRank($givenNotice->getPinnedRank());
+                    $existingPin->setSort($givenNotice->getPinnedSort());
                 } else {
-                    $this->pins[] = new Pin($this, $givenNotice, $givenNotice->getPinnedRank());
+                    $this->pins[] = new Pin($this, $givenNotice, $givenNotice->getPinnedSort());
                 }
             }
         }

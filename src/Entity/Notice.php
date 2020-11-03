@@ -135,7 +135,7 @@ class Notice
      *
      * @var int
      */
-    private $pinnedRank;
+    private $pinnedSort;
 
     public function __construct()
     {
@@ -456,14 +456,14 @@ class Notice
         return $this->getRelayers()->count();
     }
 
-    public function getPinnedRank(): ?int
+    public function getPinnedSort(): ?int
     {
-        return $this->pinnedRank;
+        return $this->pinnedSort;
     }
 
-    public function setPinnedRank(int $pinnedRank): Notice
+    public function setPinnedSort(int $pinnedSort): Notice
     {
-        $this->pinnedRank = $pinnedRank;
+        $this->pinnedSort = $pinnedSort;
 
         return $this;
     }

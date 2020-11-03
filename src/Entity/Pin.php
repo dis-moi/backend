@@ -41,15 +41,15 @@ class Pin
     /**
      * @var int
      *
-     * @ORM\Column(name="rank",type="integer")
+     * @ORM\Column(name="sort",type="integer")
      */
-    private $rank;
+    private $sort;
 
-    public function __construct(Contributor $contributor, Notice $notice, int $rank)
+    public function __construct(Contributor $contributor, Notice $notice, int $sort)
     {
         $this->notice = $notice;
         $this->contributor = $contributor;
-        $this->rank = $rank;
+        $this->sort = $sort;
     }
 
     public function __toString(): string
@@ -81,14 +81,14 @@ class Pin
         return $this;
     }
 
-    public function getRank(): int
+    public function getSort(): int
     {
-        return $this->rank;
+        return $this->sort;
     }
 
-    public function setRank(int $rank): Pin
+    public function setSort(int $sort): Pin
     {
-        $this->rank = $rank;
+        $this->sort = $sort;
 
         return $this;
     }

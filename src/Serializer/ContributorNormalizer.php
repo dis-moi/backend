@@ -130,7 +130,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
                     $matchingContexts = $notice->getMatchingContexts();
 
                     return [
-                        'rank' => $notice->getPinnedRank(),
+                        'sort' => $notice->getPinnedSort(),
                         'matchingUrl' => $matchingContexts && $matchingContexts->first() ? $matchingContexts->first()->getExampleUrl() : null,
                         'noticeId' => $notice->getId(),
                         'noticeUrl' => $this->noticeUrlGenerator->generate($notice),
