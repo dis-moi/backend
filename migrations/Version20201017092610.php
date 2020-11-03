@@ -17,7 +17,7 @@ final class Version20201017092610 extends AbstractMigration
             CREATE TABLE pin (
                 contributor_id INT NOT NULL,
                 notice_id INT NOT NULL,
-                rank INT NOT NULL,
+                `rank` INT NOT NULL,
                 PRIMARY KEY(contributor_id, notice_id)
             )
             DEFAULT CHARACTER SET UTF8 COLLATE UTF8_unicode_ci
