@@ -32,9 +32,9 @@ class PinnedNoticesType extends EasyAdminAutocompleteType
 
                 /** @var Notice $notice */
                 foreach ($formData as $notice) {
-                    foreach ($this->givenNoticeIds as $rank => $id) {
+                    foreach ($this->givenNoticeIds as $sort => $id) {
                         if ((int) $id === $notice->getId()) {
-                            $notice->setPinnedRank((int) $rank);
+                            $notice->setPinnedSort((int) $sort);
                         }
                     }
                 }

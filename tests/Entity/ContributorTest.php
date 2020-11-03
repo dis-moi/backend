@@ -33,10 +33,10 @@ class ContributorTest extends FixtureAwareWebTestCase
         self::assertCount(3, $contributor->getPinnedNotices());
 
         $contributor->setPinnedNotices(new ArrayCollection([
-            $noticeLikedDisplayed->setPinnedRank(0),
-            $noticeEcology->setPinnedRank(1),
-            $noticeLiked->setPinnedRank(2),
-            $noticeDisplayed->setPinnedRank(3),
+            $noticeLikedDisplayed->setPinnedSort(0),
+            $noticeEcology->setPinnedSort(1),
+            $noticeLiked->setPinnedSort(2),
+            $noticeDisplayed->setPinnedSort(3),
         ]));
 
         $newSelection = $contributor->getPinnedNotices();
@@ -44,19 +44,19 @@ class ContributorTest extends FixtureAwareWebTestCase
 
         self::assertEquals(
             0,
-            CollectionHelper::find($newSelection, Notice::equals($noticeLikedDisplayed))->getPinnedRank()
+            CollectionHelper::find($newSelection, Notice::equals($noticeLikedDisplayed))->getPinnedSort()
         );
         self::assertEquals(
             1,
-            CollectionHelper::find($newSelection, Notice::equals($noticeEcology))->getPinnedRank()
+            CollectionHelper::find($newSelection, Notice::equals($noticeEcology))->getPinnedSort()
         );
         self::assertEquals(
             2,
-            CollectionHelper::find($newSelection, Notice::equals($noticeLiked))->getPinnedRank()
+            CollectionHelper::find($newSelection, Notice::equals($noticeLiked))->getPinnedSort()
         );
         self::assertEquals(
             3,
-            CollectionHelper::find($newSelection, Notice::equals($noticeDisplayed))->getPinnedRank()
+            CollectionHelper::find($newSelection, Notice::equals($noticeDisplayed))->getPinnedSort()
         );
     }
 
@@ -73,8 +73,8 @@ class ContributorTest extends FixtureAwareWebTestCase
         self::assertCount(3, $contributor->getPinnedNotices());
 
         $contributor->setPinnedNotices(new ArrayCollection([
-            $noticeLikedDisplayed->setPinnedRank(0),
-            $noticeLiked->setPinnedRank(1),
+            $noticeLikedDisplayed->setPinnedSort(0),
+            $noticeLiked->setPinnedSort(1),
         ]));
 
         $newSelection = $contributor->getPinnedNotices();
@@ -82,11 +82,11 @@ class ContributorTest extends FixtureAwareWebTestCase
 
         self::assertEquals(
             0,
-            CollectionHelper::find($newSelection, Notice::equals($noticeLikedDisplayed))->getPinnedRank()
+            CollectionHelper::find($newSelection, Notice::equals($noticeLikedDisplayed))->getPinnedSort()
         );
         self::assertEquals(
             1,
-            CollectionHelper::find($newSelection, Notice::equals($noticeLiked))->getPinnedRank()
+            CollectionHelper::find($newSelection, Notice::equals($noticeLiked))->getPinnedSort()
         );
     }
 
@@ -105,9 +105,9 @@ class ContributorTest extends FixtureAwareWebTestCase
         self::assertCount(3, $contributor->getPinnedNotices());
 
         $contributor->setPinnedNotices(new ArrayCollection([
-            $noticeLikedDisplayed->setPinnedRank(0),
-            $noticeLiked->setPinnedRank(2),
-            $noticeDisplayed->setPinnedRank(1),
+            $noticeLikedDisplayed->setPinnedSort(0),
+            $noticeLiked->setPinnedSort(2),
+            $noticeDisplayed->setPinnedSort(1),
         ]));
 
         $newSelection = $contributor->getPinnedNotices();
@@ -115,15 +115,15 @@ class ContributorTest extends FixtureAwareWebTestCase
 
         self::assertEquals(
             0,
-            CollectionHelper::find($newSelection, Notice::equals($noticeLikedDisplayed))->getPinnedRank()
+            CollectionHelper::find($newSelection, Notice::equals($noticeLikedDisplayed))->getPinnedSort()
         );
         self::assertEquals(
             1,
-            CollectionHelper::find($newSelection, Notice::equals($noticeDisplayed))->getPinnedRank()
+            CollectionHelper::find($newSelection, Notice::equals($noticeDisplayed))->getPinnedSort()
         );
         self::assertEquals(
             2,
-            CollectionHelper::find($newSelection, Notice::equals($noticeLiked))->getPinnedRank()
+            CollectionHelper::find($newSelection, Notice::equals($noticeLiked))->getPinnedSort()
         );
     }
 
@@ -150,12 +150,12 @@ class ContributorTest extends FixtureAwareWebTestCase
         $this->expectException(InvalidArgumentException::class);
 
         $contributor->setPinnedNotices(new ArrayCollection([
-            $noticeLikedDisplayed->setPinnedRank(0),
-            $noticeLiked->setPinnedRank(1),
-            $noticeDisplayed->setPinnedRank(2),
-            $noticeEcology->setPinnedRank(3),
-            $noticeEcologyAndPolitics->setPinnedRank(4),
-            $noticeOther->setPinnedRank(5),
+            $noticeLikedDisplayed->setPinnedSort(0),
+            $noticeLiked->setPinnedSort(1),
+            $noticeDisplayed->setPinnedSort(2),
+            $noticeEcology->setPinnedSort(3),
+            $noticeEcologyAndPolitics->setPinnedSort(4),
+            $noticeOther->setPinnedSort(5),
         ]));
     }
 }

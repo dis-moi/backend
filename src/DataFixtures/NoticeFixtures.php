@@ -116,9 +116,9 @@ with https://bulles.fr.');
         $manager->flush();
 
         $famousContributor->setPinnedNotices(new ArrayCollection([
-            $noticeLikedDisplayed->setPinnedRank(0),
-            $noticeLiked->setPinnedRank(1),
-            $noticeDisplayed->setPinnedRank(2),
+            $noticeLikedDisplayed->setPinnedSort(0),
+            $noticeLiked->setPinnedSort(1),
+            $noticeDisplayed->setPinnedSort(2),
         ]));
 
         $manager->flush();
