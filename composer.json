@@ -56,7 +56,8 @@
         "composer/package-versions-deprecated": "^1.11",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
-        "symfony/apache-pack": "^1.0"
+        "symfony/apache-pack": "^1.0",
+        "ezyang/htmlpurifier": "^4.13"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.1.7",
