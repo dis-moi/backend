@@ -168,7 +168,7 @@ class Notice
 
     public function setMessage(string $message): Notice
     {
-        $this->message = strip_tags($message, '<p><a>');
+        $this->message = strip_tags((new \HTMLPurifier())->purify($message), '<p><a>');
 
         return $this;
     }

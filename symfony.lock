@@ -14,6 +14,9 @@
     "composer/composer": {
         "version": "1.10.13"
     },
+    "composer/package-versions-deprecated": {
+        "version": "1.11.99"
+    },
     "composer/semver": {
         "version": "1.7.1"
     },
@@ -132,6 +135,9 @@
     },
     "egulias/email-validator": {
         "version": "2.1.22"
+    },
+    "ezyang/htmlpurifier": {
+        "version": "v4.13.0"
     },
     "fig/link-util": {
         "version": "1.1.1"
