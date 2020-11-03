@@ -5,6 +5,7 @@ easy_admin:
       css:
         - 'css/admin.css'
       js:
+        - 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js'
         - 'js/regex_validator.js'
         - 'js/chartjs/moment.min.js'
         - 'js/chartjs/Chart.js'
@@ -119,9 +120,9 @@ easy_admin:
           - { property: note, label: notices.note }
           - { property: visibility, label: notices.visibility, type: 'App\Form\VisibilityType' }
           - { type: group, label: notices.groups.matchingContexts, icon: 'paper-plane', columns: 6 }
-          - property: matchingContexts,
-            type: collection,
-            label: notices.matchingContexts,
+          - property: matchingContexts
+            type: collection
+            label: notices.matchingContexts
             type_options: {
               required: true,
               entry_type: 'App\Form\MatchingContextType',
@@ -137,7 +138,6 @@ easy_admin:
     Contributor:
       label: menu.contributors
       class: App\Entity\Contributor
-      controller: App\Controller\ContributorAdminController
       list:
         title: title.contributors
         sort: [name, ASC]
@@ -149,18 +149,21 @@ easy_admin:
           - { property: intro, label: contributors.intro }
           - { property: activeSubscriptionsCount, label: contributors.activeSubscriptionsCount }
           - { property: enabled, label: contributors.enabled }
-          - { property: starredNotice, type: object, template: 'easy_admin/notice_in_list.html.twig', label: contributors.starredNotice }
+          - { property: pinnedNotice, type: object, template: 'easy_admin/notice_in_list.html.twig', label: contributors.pinnedNotice }
       form:
         fields:
+          - { type: group, label: 'Identité', icon: 'paper-plane', columns: 6 }
           - { property: name, label: contributors.name, type_options: { required: true } }
-          - { property: categories, label: contributors.categories, type: 'App\Form\CategoryNameType' }
           - { property: email, label: contributors.email }
           - { property: website, label: contributors.website }
-          - { property: intro, label: contributors.intro }
+          - { property: categories, label: contributors.categories, type: 'App\Form\CategoryNameType' }
+          - { type: group, label: 'profil', icon: 'paper-plane', columns: 6 }
+          - { property: intro, label: contributors.intro, type: textarea }
+          - { property: pinnedNotices, label: contributors.pinnedNotices, type: 'App\Form\PinnedNoticesType', type_options: { class: App\Entity\Notice, multiple: true,  label_attr: { class: 'col-lg-3' }, attr: { class: 'col-lg-9' }  } }
+          - { type: group, label: 'Médias', icon: 'paper-plane', columns: 6 }
           - { property: imageFile, label: contributors.imageFile, type: vich_image, help: contributors.imageFile.help }
           - { property: bannerImageFile, label: contributors.bannerImageFile, type: vich_image, help: contributors.bannerImageFile.help }
-          - { property: starredNotice, label: contributors.starredNotice }
-          - { type: group, label: contributors.groups.social_media, icon: 'paper-plane' }
+          - { type: group, label: contributors.groups.social_media, icon: 'paper-plane', columns: 6 }
           - { property: title, label: contributors.title, help: "Ce titre remplace le nom du contributor lors d'un partage." }
           - { property: previewImageFile, label: contributors.previewImageFile, type: vich_image, help: '1200x630 pixels, JPG, PNG.' }
 
@@ -206,7 +209,7 @@ easy_admin:
       form:
         fields:
           - { property: name, label: domainsSets.name }
-          - { property: domains, label: domainsSets.domains, type_options: { query_builder: [App\Controller\AdminController, getDomainNameQueryBuilder] } }
+          - { property: domains, label: domainsSets.domains, type: easyadmin_autocomplete }
       show:
         max_results: 100
         fields:

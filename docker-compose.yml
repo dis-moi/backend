@@ -5,6 +5,8 @@ services:
     build:
       context: .
       target: platform_php
+    volumes:
+    - .:/var/www
     depends_on:
     - db
     - dbtest

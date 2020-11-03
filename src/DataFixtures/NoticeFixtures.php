@@ -2,9 +2,11 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Contributor;
 use App\Entity\Notice;
 use App\Helper\NoticeVisibility;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
@@ -14,6 +16,7 @@ class NoticeFixtures extends Fixture implements DependentFixtureInterface
     {
         $johnDoe = $this->getReference('john_doe');
         $janeDoe = $this->getReference('jane_doe');
+        /** @var Contributor $famousContributor */
         $famousContributor = $this->getReference('famous_contributor');
         $contributor2 = $this->getReference('contributor2');
 
@@ -80,28 +83,28 @@ with https://bulles.fr.');
         $this->addReference('notice_private', $notice);
         $manager->persist($notice);
 
-        $notice = new Notice();
-        $notice->setContributor($famousContributor);
-        $notice->setMessage('This notice has been liked 3 times and displayed 4 times.');
-        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
-        $this->addReference('notice_liked', $notice);
-        $manager->persist($notice);
+        $noticeLiked = new Notice();
+        $noticeLiked->setContributor($famousContributor);
+        $noticeLiked->setMessage('This notice has been liked 3 times and displayed 4 times.');
+        $noticeLiked->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $this->addReference('notice_liked', $noticeLiked);
+        $manager->persist($noticeLiked);
 
-        $notice = new Notice();
-        $notice->setContributor($famousContributor);
-        $notice->addRelayer($johnDoe);
-        $notice->addRelayer($janeDoe);
-        $notice->setMessage('This notice has been liked 3 times and displayed 5 times.');
-        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
-        $this->addReference('notice_liked_displayed', $notice);
-        $manager->persist($notice);
+        $noticeLikedDisplayed = new Notice();
+        $noticeLikedDisplayed->setContributor($famousContributor);
+        $noticeLikedDisplayed->addRelayer($johnDoe);
+        $noticeLikedDisplayed->addRelayer($janeDoe);
+        $noticeLikedDisplayed->setMessage('This notice has been liked 3 times and displayed 5 times.');
+        $noticeLikedDisplayed->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $this->addReference('notice_liked_displayed', $noticeLikedDisplayed);
+        $manager->persist($noticeLikedDisplayed);
 
-        $notice = new Notice();
-        $notice->setContributor($famousContributor);
-        $notice->setMessage('This notice has been liked 2 times and displayed 6 times.');
-        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
-        $this->addReference('notice_displayed', $notice);
-        $manager->persist($notice);
+        $noticeDisplayed = new Notice();
+        $noticeDisplayed->setContributor($famousContributor);
+        $noticeDisplayed->setMessage('This notice has been liked 2 times and displayed 6 times.');
+        $noticeDisplayed->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $this->addReference('notice_displayed', $noticeDisplayed);
+        $manager->persist($noticeDisplayed);
 
         $notice = new Notice();
         $notice->setContributor($famousContributor);
@@ -109,6 +112,14 @@ with https://bulles.fr.');
         $notice->setVisibility(NoticeVisibility::ARCHIVED_VISIBILITY());
         $this->addReference('notice_type_ecology_archived', $notice);
         $manager->persist($notice);
+
+        $manager->flush();
+
+        $famousContributor->setPinnedNotices(new ArrayCollection([
+            $noticeLikedDisplayed->setPinnedRank(0),
+            $noticeLiked->setPinnedRank(1),
+            $noticeDisplayed->setPinnedRank(2),
+        ]));
 
         $manager->flush();
     }

@@ -1,192 +1,45 @@
 {
-  "openapi" : "3.0.2",
-  "info" : {
-    "title" : "DisMoi API",
+  "openapi": "3.0.2",
+  "info": {
+    "title": "DisMoi API",
     "description": "API to fetch contributors, notices and matching contexts of dismoi.io",
-    "version" : "3.6.0",
-    "contact" : {
+    "version": "3.6.0",
+    "contact": {
       "url": "https://www.dismoi.io/"
     }
   },
-  "paths" : {
-    "/matching-contexts" : {
-      "get" : {
-        "summary" : "Retrieve active matching contexts",
+  "paths": {
+    "/matching-contexts": {
+      "get": {
+        "summary": "Retrieve active matching contexts",
         "description": "Only show matching contexts for visible notices",
-        "tags" : [ "Matching Contexts" ],
-        "parameters" : [ {
-          "name" : "contributors",
-          "in" : "query",
-          "required" : false,
-          "description" : "Only include notices from one of those contributors. Include all if missing.",
-          "schema" : {
-            "type" : "array",
-            "items" : {
-              "type" : "integer"
-            },
-            "uniqueItems" : true
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "List of matching contexts the consumer should match contexts with (e.g. URL, location, etc).",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/MatchingContextEntity"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/restricted-contexts" : {
-      "get" : {
-        "summary" : "Retrieve all restricted contexts.",
-        "tags" : [ "Matching Contexts" ],
-        "responses" : {
-          "200" : {
-            "description" : "List of contexts the consumer should not match against. E.g. bank accounts, backoffices, dashboards, etc.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/RestrictedContextEntity"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/notices" : {
-      "get" : {
-        "summary" : "Retrieve notices’ list.",
-        "tags" : [ "Notices" ],
-        "parameters" : [
+        "tags": [
+          "Matching Contexts"
+        ],
+        "parameters": [
           {
-            "name" : "offset",
-            "in" : "query",
-            "required" : true,
-            "description" : "How many notices to skip (pagination)",
-            "example": 6,
-            "schema" : {
-                "type" : "integer"
-            }
-          },
-          {
-            "name" : "limit",
-            "in" : "query",
-            "required" : true,
-            "description" : "How many notices to fetch",
-            "example": 6,
-            "schema" : {
-                "type" : "integer"
-            }
-          },
-          {
-            "name" : "contributor",
-            "in" : "query",
-            "required" : false,
-            "description" : "Only include notices from one of this contributor. Include all if missing.",
-            "example": 6,
-            "schema" : {
-              "type" : "integer"
+            "name": "contributors",
+            "in": "query",
+            "required": false,
+            "description": "Only include notices from one of those contributors. Include all if missing.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              },
+              "uniqueItems": true
             }
           }
         ],
-        "responses" : {
-          "200" : {
-            "description" : "Notices list",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/NoticeEntityWithContributorId"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/notices/{noticeId}" : {
-      "get" : {
-        "summary" : "Retrieve a Notice by its id.",
-        "tags" : [ "Notices" ],
-        "parameters" : [ {
-          "name" : "noticeId",
-          "in" : "path",
-          "required" : true,
-          "description" : "Id of the Notice.",
-          "example" : 6,
-          "schema" : {
-            "type" : "integer"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Here comes a complete Notice entity for the consumer to display.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/NoticeEntityWithContributorDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/notices/{noticeId}/ratings" : {
-      "post" : {
-        "summary" : "Users can rate a Notice to give feedback to contributors.",
-        "tags" : [ "Notices" ],
-        "parameters" : [ {
-          "name" : "noticeId",
-          "in" : "path",
-          "required" : true,
-          "description" : "Id of the Notice.",
-          "example" : 6,
-          "schema" : {
-            "type" : "integer"
-          }
-        } ],
-        "responses" : {
-          "204" : {
-            "description" : "The server successfully recorded the rating."
-          }
-        },
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/NoticeRatingEntity"
-              }
-            }
-          },
-          "required" : true
-        }
-      }
-    },
-    "/contributors" : {
-      "get" : {
-        "summary" : "Every Notice has one Contributor. Consumers can then filter Notices by contributors.",
-        "tags" : [ "Contributors" ],
-        "responses" : {
-          "200" : {
-            "description" : "List of contributors the consumers can subscribe to.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/ContributorEntity"
+        "responses": {
+          "200": {
+            "description": "List of matching contexts the consumer should match contexts with (e.g. URL, location, etc).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MatchingContextEntity"
                   }
                 }
               }
@@ -195,26 +48,22 @@
         }
       }
     },
-    "/contributors/{contributorId}" : {
-      "get" : {
-        "tags" : [ "Contributors" ],
-        "parameters" : [ {
-          "name" : "contributorId",
-          "in" : "path",
-          "required" : true,
-          "description" : "Id of the Contributor.",
-          "example" : 42,
-          "schema" : {
-            "type" : "integer"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "A contributor the consumers can subscribe to.",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ContributorEntity"
+    "/restricted-contexts": {
+      "get": {
+        "summary": "Retrieve all restricted contexts.",
+        "tags": [
+          "Matching Contexts"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of contexts the consumer should not match against. E.g. bank accounts, backoffices, dashboards, etc.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RestrictedContextEntity"
+                  }
                 }
               }
             }
@@ -222,63 +71,246 @@
         }
       }
     },
-    "/contributors/{contributorId}/ratings" : {
-      "post" : {
-        "summary" : "Every consumer can rate a contributor as they subscribe or unsubscribe them.",
-        "tags" : [ "Contributors" ],
-        "parameters" : [ {
-          "name" : "contributorId",
-          "in" : "path",
-          "required" : true,
-          "description" : "Id of the Contributor.",
-          "example" : 42,
-          "schema" : {
-            "type" : "integer"
-          }
-        } ],
-        "responses" : {
-          "204" : {
-            "description" : "The server successfully recorded the rating."
-          }
-        },
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/ContributorRatingEntity"
-              }
+    "/notices": {
+      "get": {
+        "summary": "Retrieve notices’ list.",
+        "tags": [
+          "Notices"
+        ],
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": true,
+            "description": "How many notices to skip (pagination)",
+            "example": 6,
+            "schema": {
+              "type": "integer"
             }
           },
-          "required" : true
+          {
+            "name": "limit",
+            "in": "query",
+            "required": true,
+            "description": "How many notices to fetch",
+            "example": 6,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "contributor",
+            "in": "query",
+            "required": false,
+            "description": "Only include notices from one of this contributor. Include all if missing.",
+            "example": 6,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notices list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticeEntityWithContributorId"
+                }
+              }
+            }
+          }
         }
       }
     },
-    "/subscriptions/{extensionId}" : {
+    "/notices/{noticeId}": {
+      "get": {
+        "summary": "Retrieve a Notice by its id.",
+        "tags": [
+          "Notices"
+        ],
+        "parameters": [
+          {
+            "name": "noticeId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the Notice.",
+            "example": 6,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Here comes a complete Notice entity for the consumer to display.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticeEntityWithContributorDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notices/{noticeId}/ratings": {
       "post": {
-        "summary": "Notify current subscriptions of an extension instance",
-        "tags": ["Contributors"],
-        "parameters": [{
-          "name": "extensionId",
-          "in": "path",
-          "required": true,
-          "description": "Extension installation unique ID",
-          "example": "17121cb63d713880",
-          "schema": { "type": "string" }
-        }],
+        "summary": "Users can rate a Notice to give feedback to contributors.",
+        "tags": [
+          "Notices"
+        ],
+        "parameters": [
+          {
+            "name": "noticeId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the Notice.",
+            "example": 6,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
         "responses": {
           "204": {
-            "description" : "The server successfully recorded the subscriptions."
+            "description": "The server successfully recorded the rating."
           }
         },
         "requestBody": {
           "content": {
             "application/json": {
-              "schema" : {
-                "type" : "array",
-                "items" : {
-                  "type" : "integer"
+              "schema": {
+                "$ref": "#/components/schemas/NoticeRatingEntity"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/contributors": {
+      "get": {
+        "summary": "Every Notice has one Contributor. Consumers can then filter Notices by contributors.",
+        "tags": [
+          "Contributors"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of contributors the consumers can subscribe to.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ContributorEntity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contributors/{contributorId}": {
+      "get": {
+        "tags": [
+          "Contributors"
+        ],
+        "parameters": [
+          {
+            "name": "contributorId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the Contributor.",
+            "example": 42,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A contributor the consumers can subscribe to.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContributorEntity"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contributors/{contributorId}/ratings": {
+      "post": {
+        "summary": "Every consumer can rate a contributor as they subscribe or unsubscribe them.",
+        "tags": [
+          "Contributors"
+        ],
+        "parameters": [
+          {
+            "name": "contributorId",
+            "in": "path",
+            "required": true,
+            "description": "Id of the Contributor.",
+            "example": 42,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The server successfully recorded the rating."
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContributorRatingEntity"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/subscriptions/{extensionId}": {
+      "post": {
+        "summary": "Notify current subscriptions of an extension instance",
+        "tags": [
+          "Contributors"
+        ],
+        "parameters": [
+          {
+            "name": "extensionId",
+            "in": "path",
+            "required": true,
+            "description": "Extension installation unique ID",
+            "example": "17121cb63d713880",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The server successfully recorded the subscriptions."
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
                 },
-                "uniqueItems" : true
+                "uniqueItems": true
               }
             }
           },
@@ -287,350 +319,415 @@
       }
     }
   },
-  "tags" : [ {
-    "name" : "Matching Contexts",
-    "description" : "List of contexts to match or to not match against."
-  }, {
-    "name" : "Notices",
-    "description" : "Entity to be displayed whenever matching contexts trigger."
-  }, {
-    "name" : "Contributors",
-    "description" : "List of Notices’ contributors to subscribe to."
-  } ],
-  "servers" : [ {
-    "url" : "https://notices.bulles.fr/api/v3",
-    "description": "Production server"
-  }, {
-    "url" : "https://staging-notices.bulles.fr/api/v3",
-    "description": "Staging server"
-  } ],
-  "components" : {
-    "schemas" : {
-      "RestrictedContextEntity" : {
-        "title" : "Restricted Context Entity",
-        "example" : {
-          "urlRegex" : "https?://(app|dash|console)\\."
+  "tags": [
+    {
+      "name": "Matching Contexts",
+      "description": "List of contexts to match or to not match against."
+    },
+    {
+      "name": "Notices",
+      "description": "Entity to be displayed whenever matching contexts trigger."
+    },
+    {
+      "name": "Contributors",
+      "description": "List of Notices’ contributors to subscribe to."
+    }
+  ],
+  "servers": [
+    {
+      "url": "https://notices.bulles.fr/api/v3",
+      "description": "Production server"
+    },
+    {
+      "url": "https://staging-notices.bulles.fr/api/v3",
+      "description": "Staging server"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "RestrictedContextEntity": {
+        "title": "Restricted Context Entity",
+        "example": {
+          "urlRegex": "https?://(app|dash|console)\\."
         },
-        "type" : "object",
-        "properties" : {
-          "urlRegex" : {
-            "example" : "https://(app|dash|console)\\.",
-            "type" : "string"
+        "type": "object",
+        "properties": {
+          "urlRegex": {
+            "example": "https://(app|dash|console)\\.",
+            "type": "string"
           }
         },
-        "required" : [ "urlRegex" ]
+        "required": [
+          "urlRegex"
+        ]
       },
-      "MatchingContextEntity" : {
-        "title" : "Matching Context Entity",
-        "example" : {
-          "noticeId" : 6,
-          "noticeUrl" : "https://notices.lmem.net/api/v3/notices/6",
-          "urlRegex" : "http://tests.menant-benjamin.fr/?$",
-          "excludeUrlRegex" : "google",
-          "querySelector" : "[itemType=\"http://schema.org/Product\"]"
+      "MatchingContextEntity": {
+        "title": "Matching Context Entity",
+        "example": {
+          "noticeId": 6,
+          "noticeUrl": "https://notices.lmem.net/api/v3/notices/6",
+          "urlRegex": "http://tests.menant-benjamin.fr/?$",
+          "excludeUrlRegex": "google",
+          "querySelector": "[itemType=\"http://schema.org/Product\"]"
         },
-        "type" : "object",
-        "properties" : {
-          "noticeId" : {
-            "example" : 3,
-            "type" : "integer"
+        "type": "object",
+        "properties": {
+          "noticeId": {
+            "example": 3,
+            "type": "integer"
           },
-          "noticeUrl" : {
-            "example" : "https://notices.lmem.net/api/v3/notices/3",
-            "type" : "string",
-            "format" : "url"
+          "noticeUrl": {
+            "example": "https://notices.lmem.net/api/v3/notices/3",
+            "type": "string",
+            "format": "url"
           },
-          "urlRegex" : {
-            "example" : "20minutes.fr/societe/1860259-20160606-violences-policieres-quarante-huit-enquetes-judiciaires-ouvertes-police-polices",
-            "type" : "string"
+          "urlRegex": {
+            "example": "20minutes.fr/societe/1860259-20160606-violences-policieres-quarante-huit-enquetes-judiciaires-ouvertes-police-polices",
+            "type": "string"
           },
-          "excludeUrlRegex" : {
-            "example" : "google",
-            "type" : "string",
-            "nullable" : true
+          "excludeUrlRegex": {
+            "example": "google",
+            "type": "string",
+            "nullable": true
           },
-          "querySelector" : {
-            "example" : "[itemType=\"http://schema.org/Product\"]",
-            "type" : "string",
-            "nullable" : true
+          "querySelector": {
+            "example": "[itemType=\"http://schema.org/Product\"]",
+            "type": "string",
+            "nullable": true
           }
         },
-        "required" : [ "noticeId", "noticeUrl", "urlRegex" ]
+        "required": [
+          "noticeId",
+          "noticeUrl",
+          "urlRegex"
+        ]
       },
-      "NoticeRatingEntity" : {
-        "title" : "Notice Rating Entity",
-        "example" : {
-          "ratingType" : "like",
-          "context" : {
-            "url" : "https://en.wikipedia.org/",
-            "geolocation" : "geo:37.786971,-122.399677;u=35"
+      "NoticeRatingEntity": {
+        "title": "Notice Rating Entity",
+        "example": {
+          "ratingType": "like",
+          "context": {
+            "url": "https://en.wikipedia.org/",
+            "geolocation": "geo:37.786971,-122.399677;u=35"
           }
         },
-        "type" : "object",
-        "properties" : {
-          "ratingType" : {
-            "$ref" : "#/components/schemas/ratingType"
+        "type": "object",
+        "properties": {
+          "ratingType": {
+            "$ref": "#/components/schemas/ratingType"
           },
-          "context" : {
-            "$ref" : "#/components/schemas/context"
+          "context": {
+            "$ref": "#/components/schemas/context"
           },
-          "reason" : {
-            "description" : "Hint about a report.",
-            "type" : "string"
+          "reason": {
+            "description": "Hint about a report.",
+            "type": "string"
           }
         },
-        "required" : [ "ratingType" ]
+        "required": [
+          "ratingType"
+        ]
       },
-      "ratingType" : {
-        "title" : "ratingType",
-        "description" : "Type of ratings or feedback.",
-        "example" : "like",
-        "type" : "string",
-        "enum" : [ "like", "unlike", "dislike", "undislike", "dismiss", "undismiss", "display", "unfold", "outbound-click", "badge", "report" ]
+      "ratingType": {
+        "title": "ratingType",
+        "description": "Type of ratings or feedback.",
+        "example": "like",
+        "type": "string",
+        "enum": [
+          "like",
+          "unlike",
+          "dislike",
+          "undislike",
+          "dismiss",
+          "undismiss",
+          "display",
+          "unfold",
+          "outbound-click",
+          "badge",
+          "report"
+        ]
       },
-      "context" : {
-        "title" : "context",
-        "type" : "object",
-        "properties" : {
-          "url" : {
-            "description" : "URL the notice’s matching context actually matched.",
-            "example" : "https://tests.menant-benjamin.fr/",
-            "type" : "string",
-            "format" : "url"
+      "context": {
+        "title": "context",
+        "type": "object",
+        "properties": {
+          "url": {
+            "description": "URL the notice’s matching context actually matched.",
+            "example": "https://tests.menant-benjamin.fr/",
+            "type": "string",
+            "format": "url"
           },
-          "geolocation" : {
-            "description" : "Geo URI scheme (RFC 5870) of who’s giving feedbacks.",
-            "type" : "string",
-            "format" : "geouri"
+          "geolocation": {
+            "description": "Geo URI scheme (RFC 5870) of who’s giving feedbacks.",
+            "type": "string",
+            "format": "geouri"
           }
         },
-        "required" : [ "url" ]
+        "required": [
+          "url"
+        ]
       },
       "NoticeEntityWithContributorId": {
-        "title" : "Notice Entity",
-        "example" : {
-          "id" : 6,
-          "contributorId" : 42,
-          "relayersIds": [43, 44],
-          "message" : "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
-          "visibility" : "public",
+        "title": "Notice Entity",
+        "example": {
+          "id": 6,
+          "contributorId": 42,
+          "relayersIds": [
+            43,
+            44
+          ],
+          "message": "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
+          "visibility": "public",
           "exampleUrl": "http://dismoi.io",
           "screenshot": "https://example.org/assets/s1m2a3l4l5.jpg",
-          "ratings" : {
-            "likes" : 7,
-            "dislikes" : 2
+          "ratings": {
+            "likes": 7,
+            "dislikes": 2
           },
-          "created" : "2018-01-25",
-          "modified" : "2019-03-30"
+          "created": "2018-01-25",
+          "modified": "2019-03-30"
         },
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer"
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
           },
-          "contributorId" : {
-            "type" : "integer"
+          "contributorId": {
+            "type": "integer"
           },
           "relayersIds": {
             "type": "array",
-            "items" : {
-              "type" : "integer"
+            "items": {
+              "type": "integer"
             },
-            "uniqueItems" : true
+            "uniqueItems": true
           },
-          "message" : {
-            "type" : "string"
+          "message": {
+            "type": "string"
           },
-          "exampleUrl":  {
-            "type" : "string"
+          "exampleUrl": {
+            "type": "string"
           },
           "screenshot": {
             "type": "string"
           },
-          "ratings" : {
-            "$ref" : "#/components/schemas/ratings"
+          "ratings": {
+            "$ref": "#/components/schemas/ratings"
           },
-          "visibility" : {
-            "type" : "string",
-            "enum" : [ "public", "private", "archived" ]
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "private",
+              "archived"
+            ]
           },
-          "created" : {
-            "type" : "string",
-            "format" : "date"
+          "created": {
+            "type": "string",
+            "format": "date"
           },
-          "modified" : {
-            "type" : "string",
-            "format" : "date"
+          "modified": {
+            "type": "string",
+            "format": "date"
           }
         },
-        "required" : [ "contributor", "relayersIds", "created", "id", "message", "ratings", "visibility" ]
+        "required": [
+          "contributor",
+          "relayersIds",
+          "created",
+          "id",
+          "message",
+          "ratings",
+          "visibility"
+        ]
       },
       "NoticeEntityWithContributorDetails": {
-        "title" : "Notice Entity with Contributor Details",
-        "example" : {
-          "contributor" : {
-            "id" : 42,
-            "name" : "Mediapart",
-            "website" : "mediapart.com",
-            "intro" : "Journal d’information numérique, indépendant et participatif",
-            "avatar" : {
-              "small" : {
-                "url" : "https://example.org/assets/s1m2a3l4l5.jpg"
+        "title": "Notice Entity with Contributor Details",
+        "example": {
+          "contributor": {
+            "id": 42,
+            "name": "Mediapart",
+            "website": "mediapart.com",
+            "intro": "Journal d’information numérique, indépendant et participatif",
+            "avatar": {
+              "small": {
+                "url": "https://example.org/assets/s1m2a3l4l5.jpg"
               },
-              "normal" : {
-                "url" : "https://example.org/assets/n1o2r3m4a5l6.jpg"
+              "normal": {
+                "url": "https://example.org/assets/n1o2r3m4a5l6.jpg"
               },
-              "large" : {
-                "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
+              "large": {
+                "url": "https://example.org/assets/l1a2r3g4e5.jpg"
               }
             },
-            "banner" : "https://example.org/assets/s1m2a3l4l5.jpg",
-            "contributions" : 24
+            "banner": "https://example.org/assets/s1m2a3l4l5.jpg",
+            "contributions": 24
           },
           "relayers": [
             {
-              "id" : 43,
-              "name" : "Que Choisir",
-              "website" : "quechoisir.com",
-              "intro" : "True story",
-              "avatar" : {
-                "small" : {
-                  "url" : "https://example.org/assets/s1m2a3l4l5.jpg"
+              "id": 43,
+              "name": "Que Choisir",
+              "website": "quechoisir.com",
+              "intro": "True story",
+              "avatar": {
+                "small": {
+                  "url": "https://example.org/assets/s1m2a3l4l5.jpg"
                 },
-                "normal" : {
-                  "url" : "https://example.org/assets/n1o2r3m4a5l6.jpg"
+                "normal": {
+                  "url": "https://example.org/assets/n1o2r3m4a5l6.jpg"
                 },
-                "large" : {
-                  "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
+                "large": {
+                  "url": "https://example.org/assets/l1a2r3g4e5.jpg"
                 }
               },
-              "banner" : "https://example.org/assets/s1m2a3l4l5.jpg",
-              "contributions" : 242
+              "banner": "https://example.org/assets/s1m2a3l4l5.jpg",
+              "contributions": 242
             },
             {
-              "id" : 44,
-              "name" : "Le Monde",
-              "website" : "lemonde.fr",
-              "intro" : "La Planète",
-              "avatar" : {
-                "small" : {
-                  "url" : "https://example.org/assets/s1m2a3l4l5.jpg"
+              "id": 44,
+              "name": "Le Monde",
+              "website": "lemonde.fr",
+              "intro": "La Planète",
+              "avatar": {
+                "small": {
+                  "url": "https://example.org/assets/s1m2a3l4l5.jpg"
                 },
-                "normal" : {
-                  "url" : "https://example.org/assets/n1o2r3m4a5l6.jpg"
+                "normal": {
+                  "url": "https://example.org/assets/n1o2r3m4a5l6.jpg"
                 },
-                "large" : {
-                  "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
+                "large": {
+                  "url": "https://example.org/assets/l1a2r3g4e5.jpg"
                 }
               },
-              "banner" : "https://example.org/assets/s1m2a3l4l5.jpg",
-              "contributions" : 524
+              "banner": "https://example.org/assets/s1m2a3l4l5.jpg",
+              "contributions": 524
             }
           ],
-          "created" : "2018-01-25",
-          "id" : 6,
-          "exampleUrl" : "https://dismoi.io",
-          "screenshot" : "https://example.org/assets/s1m2a3l4l5.jpg",
-          "message" : "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
-          "strippedMessage" : "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
-          "modified" : "2019-03-30",
-          "ratings" : {
-            "likes" : 7,
-            "dislikes" : 2
+          "created": "2018-01-25",
+          "id": 6,
+          "exampleUrl": "https://dismoi.io",
+          "screenshot": "https://example.org/assets/s1m2a3l4l5.jpg",
+          "message": "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
+          "strippedMessage": "<p>D'après le comparatif Cero1net des smartphones à moins de 200 €, le smartphone Road Kiiwi obtient une note de 6,6/10. Parmi les meilleures alternatives, le Azer Aquoz Z630 obtient une note de 8.1/10 : il a notamment une bien meilleure durée de batterie en navigation web : 15h56 min contre 6h47 min. Et il est vendu 40 € moins cher.</p>",
+          "modified": "2019-03-30",
+          "ratings": {
+            "likes": 7,
+            "dislikes": 2
           },
-          "visibility" : "public"
+          "visibility": "public"
         },
-        "type" : "object",
-        "properties" : {
-          "contributor" : {
-            "$ref" : "#/components/schemas/ContributorEntity"
+        "type": "object",
+        "properties": {
+          "contributor": {
+            "$ref": "#/components/schemas/ContributorEntity"
           },
-          "relayers" : {
+          "relayers": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ContributorEntity"
             },
             "uniqueItems": true
           },
-          "created" : {
-            "type" : "string",
-            "format" : "date"
+          "created": {
+            "type": "string",
+            "format": "date"
           },
-          "id" : {
-            "type" : "integer"
+          "id": {
+            "type": "integer"
           },
-          "exampleUrl" : {
-            "type" : "string"
+          "exampleUrl": {
+            "type": "string"
           },
           "screenshot": {
             "type": "string"
           },
-          "message" : {
-            "type" : "string"
+          "message": {
+            "type": "string"
           },
-          "strippedMessage" : {
-            "type" : "string",
+          "strippedMessage": {
+            "type": "string",
             "description": "same as message, but without links (anchors)"
           },
-          "modified" : {
-            "type" : "string",
-            "format" : "date"
+          "modified": {
+            "type": "string",
+            "format": "date"
           },
-          "ratings" : {
-            "$ref" : "#/components/schemas/ratings"
+          "ratings": {
+            "$ref": "#/components/schemas/ratings"
           },
-          "visibility" : {
-            "type" : "string",
-            "enum" : [ "public", "private", "archived" ]
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "private",
+              "archived"
+            ]
           }
         },
-        "required" : [ "contributor", "created", "id", "message", "ratings", "visibility" ]
+        "required": [
+          "contributor",
+          "created",
+          "id",
+          "message",
+          "ratings",
+          "visibility"
+        ]
       },
-      "ratings" : {
-        "title" : "ratings",
-        "type" : "object",
-        "properties" : {
-          "likes" : {
-            "type" : "number",
-            "example" : 12,
-            "description" : "Sum of likes (minus unlikes) for the notice"
+      "ratings": {
+        "title": "ratings",
+        "type": "object",
+        "properties": {
+          "likes": {
+            "type": "number",
+            "example": 12,
+            "description": "Sum of likes (minus unlikes) for the notice"
           },
-          "dislikes" : {
-            "type" : "number",
-            "example" : 0,
-            "description" : "Sum of dislikes (minus undislikes) for the notice"
+          "dislikes": {
+            "type": "number",
+            "example": 0,
+            "description": "Sum of dislikes (minus undislikes) for the notice"
           }
         },
-        "required" : [ "likes", "dislikes" ]
+        "required": [
+          "likes",
+          "dislikes"
+        ]
       },
-      "ContributorEntity" : {
-        "title" : "Contributor Entity",
-        "example" : {
-          "id" : 42,
-          "name" : "Mediapart",
-          "website" : "mediapart.com",
-          "intro" : "Journal d’information numérique, indépendant et participatif",
-          "avatar" : {
-            "small" : {
-              "url" : "https://example.org/assets/s1m2a3l4l5.jpg"
+      "ContributorEntity": {
+        "title": "Contributor Entity",
+        "example": {
+          "id": 42,
+          "name": "Mediapart",
+          "website": "mediapart.com",
+          "intro": "Journal d’information numérique, indépendant et participatif",
+          "avatar": {
+            "small": {
+              "url": "https://example.org/assets/s1m2a3l4l5.jpg"
             },
-            "normal" : {
-              "url" : "https://example.org/assets/n1o2r3m4a5l6.jpg"
+            "normal": {
+              "url": "https://example.org/assets/n1o2r3m4a5l6.jpg"
             },
-            "large" : {
-              "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
+            "large": {
+              "url": "https://example.org/assets/l1a2r3g4e5.jpg"
             }
           },
-          "banner" : "https://example.org/assets/s1m2a3l4l5.jpg",
-          "contributions" : 24,
-          "contribution" : {
-            "example" : {
-              "matchingUrl" : "https://match.in/context/url",
-              "noticeId" : 3,
-              "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3",
-              "screenshot" : "https://example.org/assets/s1m2a3l4l5.jpg"
-            },
-            "numberOfPublishedNotices" : 24
+          "banner": "https://example.org/assets/s1m2a3l4l5.jpg",
+          "contribution": {
+            "pinnedNotices": [
+              {
+                "matchingUrl": "https://match.in/context/url",
+                "noticeId": 3,
+                "noticeUrl": "https://notices.lmem.net/api/v3/notices/3",
+                "screenshot": "https://example.org/assets/s1m2a3l4l5.jpg"
+              },
+              {
+                "matchingUrl": "https://match.in/context/url",
+                "noticeId": 5,
+                "noticeUrl": "https://notices.lmem.net/api/v3/notices/5",
+                "screenshot": "https://example.org/assets/s1m2a3l4l5.jpg"
+              }
+            ],
+            "numberOfPublishedNotices": 24
           },
           "ratings": {
             "subscribes": 42
@@ -643,40 +740,39 @@
           "relayedNoticesUrls": [
             "https://staging-notices.bulles.fr/api/v3/notices/31",
             "https://staging-notices.bulles.fr/api/v3/notices/412"
-          ],
-          "starredNotice": 41
+          ]
         },
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "example" : 42,
-            "type" : "integer"
+        "type": "object",
+        "properties": {
+          "id": {
+            "example": 42,
+            "type": "integer"
           },
-          "name" : {
-            "example" : "Mediapart",
-            "type" : "string"
+          "name": {
+            "example": "Mediapart",
+            "type": "string"
           },
           "website": {
             "example": "https://dismoi.io",
             "type": "string",
             "nullable": true
           },
-          "intro" : {
-            "example" : "Journal d'information numérique, indépendant et participatif",
-            "type" : "string",
-            "nullable" : true
+          "intro": {
+            "example": "Journal d'information numérique, indépendant et participatif",
+            "type": "string",
+            "nullable": true
           },
-          "avatar" : {
-            "$ref" : "#/components/schemas/picture"
+          "avatar": {
+            "$ref": "#/components/schemas/picture"
           },
-          "banner" : {
+          "banner": {
             "type": "string"
           },
-          "contributions" : {
-            "description" : "DEPRECATED: use “contribution.numberOfPublishedNotices” instead. The total number of contributions this contributor has published.",
-            "example" : 24,
-            "type" : "integer",
-            "deprecated" : true
+          "contributions": {
+            "description": "DEPRECATED: use “contribution.numberOfPublishedNotices” instead. The total number of contributions this contributor has published.",
+            "example": 24,
+            "type": "integer",
+            "deprecated": true
           },
           "ratings": {
             "type": "object",
@@ -702,159 +798,231 @@
               "example": "https://notices.bulles.fr/api/v3/notices/221"
             }
           },
-          "contribution" : {
-            "$ref" : "#/components/schemas/contribution"
+          "contribution": {
+            "$ref": "#/components/schemas/contribution"
           }
         },
-        "required" : [ "id", "name", "contributions", "contribution" ]
+        "required": [
+          "id",
+          "name",
+          "contributions",
+          "contribution"
+        ]
       },
-      "ContributorRatingEntity" : {
-        "title" : "Contributor Rating Entity",
-        "example" : {
-          "ratingType" : "subscribe"
+      "ContributorRatingEntity": {
+        "title": "Contributor Rating Entity",
+        "example": {
+          "ratingType": "subscribe"
         },
-        "type" : "object",
-        "properties" : {
-          "ratingType" : {
-            "$ref" : "#/components/schemas/contributorRatingType"
+        "type": "object",
+        "properties": {
+          "ratingType": {
+            "$ref": "#/components/schemas/contributorRatingType"
           }
         },
-        "required" : [ "ratingType" ]
+        "required": [
+          "ratingType"
+        ]
       },
-      "contributorRatingType" : {
-        "title" : "subscriptionRatingType",
-        "description" : "Type of ratings for contributors.",
-        "example" : "subscribe",
-        "type" : "string",
-        "enum" : [ "subscribe", "unsubscribe", "report" ]
+      "contributorRatingType": {
+        "title": "subscriptionRatingType",
+        "description": "Type of ratings for contributors.",
+        "example": "subscribe",
+        "type": "string",
+        "enum": [
+          "subscribe",
+          "unsubscribe",
+          "report"
+        ]
       },
-      "contribution" : {
-        "title" : "contribution infos",
-        "example" : {
-          "starred" : {
-            "matchingUrl" : "https://match.in/context/url",
-            "noticeId" : 3,
-            "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3",
-            "screenshot" : "https://example.org/assets/s1m2a3l4l5.jpg"
-          },
-          "numberOfPublishedNotices" : 24
+      "contribution": {
+        "title": "contribution infos",
+        "example": {
+          "pinnedNotices": [
+            {
+              "matchingUrl": "https://match.in/context/url",
+              "noticeId": 4,
+              "noticeUrl": "https://notices.lmem.net/api/v3/notices/3",
+              "screenshot": "https://example.org/assets/s1m2a3l4l5.jpg"
+            },
+            {
+              "matchingUrl": "https://match.in/context/url",
+              "noticeId": 3,
+              "noticeUrl": "https://notices.lmem.net/api/v3/notices/4",
+              "screenshot": "https://example.org/assets/s1m2a3l4l5.jpg"
+            }
+          ],
+          "numberOfPublishedNotices": 24
         },
-        "type" : "object",
-        "properties" : {
-          "example" : {
-            "description" : "DEPRECATED: Use 'starred' instead",
-            "type" : "object",
+        "type": "object",
+        "properties": {
+          "example": {
             "deprecated": true,
-            "example" : {
-              "matchingUrl" : "https://match.in/context/url",
-              "noticeId" : 3,
-              "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3",
-              "screenshot" : "https://example.org/assets/s1m2a3l4l5.jpg"
+            "description": "DEPRECATED: Use 'pinnedNotices' instead",
+            "type": "object",
+            "example": {
+              "matchingUrl": "https://match.in/context/url",
+              "noticeId": 3,
+              "noticeUrl": "https://notices.lmem.net/api/v3/notices/3",
+              "screenshot": "https://example.org/assets/s1m2a3l4l5.jpg"
             },
-            "properties" : {
-              "matchingUrl" : {
-                "description" : "The URL of a publicly available Web resource, where the notice should show up.",
-                "example" : "https://match.in/context/url",
-                "type" : "string",
-                "format" : "url"
+            "properties": {
+              "matchingUrl": {
+                "description": "The URL of a publicly available Web resource, where the notice should show up.",
+                "example": "https://match.in/context/url",
+                "type": "string",
+                "format": "url"
               },
-              "noticeId" : {
-                "example" : 3,
-                "type" : "integer"
+              "noticeId": {
+                "example": 3,
+                "type": "integer"
               },
-              "noticeUrl" : {
-                "description" : "The URL of the notice, should one had to fetch it.",
-                "example" : "https://notices.lmem.net/api/v3/notices/3",
-                "type" : "string",
-                "format" : "url"
+              "noticeUrl": {
+                "description": "The URL of the notice, should one had to fetch it.",
+                "example": "https://notices.lmem.net/api/v3/notices/3",
+                "type": "string",
+                "format": "url"
               },
               "screenshot": {
                 "type": "string"
               }
             },
-            "required" : [ "matchingUrl", "noticeId", "noticeUrl", "screenshot" ]
+            "required": [
+              "matchingUrl",
+              "noticeId",
+              "noticeUrl",
+              "screenshot"
+            ]
           },
-          "starred" : {
-            "description" : "Contributor’s starred notice.",
-            "example" : {
-              "matchingUrl" : "https://match.in/context/url",
-              "noticeId" : 3,
-              "noticeUrl" : "https://notices.lmem.net/api/v3/notices/3",
-              "screenshot" : "https://example.org/assets/s1m2a3l4l5.jpg"
-            },
-            "type" : "object",
-            "properties" : {
-              "matchingUrl" : {
-                "description" : "The URL of a publicly available Web resource, where the notice should show up.",
-                "example" : "https://match.in/context/url",
-                "type" : "string",
-                "format" : "url"
+          "starred": {
+            "deprecated": true,
+            "description": "DEPRECATED: Use 'pinnedNotices' instead",
+            "type": "object",
+            "properties": {
+              "matchingUrl": {
+                "description": "The URL of a publicly available Web resource, where the notice should show up.",
+                "example": "https://match.in/context/url",
+                "type": "string",
+                "format": "url"
               },
-              "noticeId" : {
-                "example" : 3,
-                "type" : "integer"
+              "noticeId": {
+                "example": 3,
+                "type": "integer"
               },
-              "noticeUrl" : {
-                "description" : "The URL of the notice, should one had to fetch it.",
-                "example" : "https://notices.lmem.net/api/v3/notices/3",
-                "type" : "string",
-                "format" : "url"
+              "noticeUrl": {
+                "description": "The URL of the notice, should one had to fetch it.",
+                "example": "https://notices.lmem.net/api/v3/notices/3",
+                "type": "string",
+                "format": "url"
               },
               "screenshot": {
                 "type": "string"
               }
             },
-            "required" : [ "matchingUrl", "noticeId", "noticeUrl", "screenshot" ]
+            "required": [
+              "matchingUrl",
+              "noticeId",
+              "noticeUrl",
+              "screenshot"
+            ]
           },
-          "numberOfPublishedNotices" : {
-            "description" : "The total number of contributions this contributor has published.",
-            "example" : 24,
-            "type" : "integer"
+          "pinnedNotices": {
+            "description": "Contributor’s pinned notices",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "matchingUrl": {
+                  "description": "The URL of a publicly available Web resource, where the notice should show up.",
+                  "example": "https://match.in/context/url",
+                  "type": "string",
+                  "format": "url"
+                },
+                "noticeId": {
+                  "example": 3,
+                  "type": "integer"
+                },
+                "noticeUrl": {
+                  "description": "The URL of the notice, should one had to fetch it.",
+                  "example": "https://notices.lmem.net/api/v3/notices/3",
+                  "type": "string",
+                  "format": "url"
+                },
+                "screenshot": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "matchingUrl",
+                "noticeId",
+                "noticeUrl",
+                "screenshot"
+              ],
+              "example": {
+                "matchingUrl": "https://match.in/context/url",
+                "noticeId": 3,
+                "noticeUrl": "https://notices.lmem.net/api/v3/notices/3",
+                "screenshot": "https://example.org/assets/s1m2a3l4l5.jpg"
+              }
+            }
+          },
+          "numberOfPublishedNotices": {
+            "description": "The total number of contributions this contributor has published.",
+            "example": 24,
+            "type": "integer"
           }
         },
-        "required" : [ "numberOfPublishedNotices" ]
+        "required": [
+          "numberOfPublishedNotices"
+        ]
       },
-      "picture" : {
-        "title" : "picture",
-        "example" : {
-          "small" : {
-            "url" : "https://example.org/assets/s1m2a3l4l5.jpg"
+      "picture": {
+        "title": "picture",
+        "example": {
+          "small": {
+            "url": "https://example.org/assets/s1m2a3l4l5.jpg"
           },
-          "normal" : {
-            "url" : "https://example.org/assets/n1o2r3m4a5l6.jpg"
+          "normal": {
+            "url": "https://example.org/assets/n1o2r3m4a5l6.jpg"
           },
-          "large" : {
-            "url" : "https://example.org/assets/l1a2r3g4e5.jpg"
+          "large": {
+            "url": "https://example.org/assets/l1a2r3g4e5.jpg"
           }
         },
-        "type" : "object",
-        "properties" : {
-          "small" : {
-            "$ref" : "#/components/schemas/pictureSrc"
+        "type": "object",
+        "properties": {
+          "small": {
+            "$ref": "#/components/schemas/pictureSrc"
           },
-          "normal" : {
-            "$ref" : "#/components/schemas/pictureSrc"
+          "normal": {
+            "$ref": "#/components/schemas/pictureSrc"
           },
-          "large" : {
-            "$ref" : "#/components/schemas/pictureSrc"
+          "large": {
+            "$ref": "#/components/schemas/pictureSrc"
           }
         },
-        "required" : [ "small", "normal", "large" ],
-        "nullable" : true
+        "required": [
+          "small",
+          "normal",
+          "large"
+        ],
+        "nullable": true
       },
-      "pictureSrc" : {
-        "title" : "picture source",
-        "example" : {
-          "url" : "https://example.org/assets/s1m2a3l4l5.jpg"
+      "pictureSrc": {
+        "title": "picture source",
+        "example": {
+          "url": "https://example.org/assets/s1m2a3l4l5.jpg"
         },
-        "type" : "object",
-        "properties" : {
-          "url" : {
-            "example" : "https://example.org/assets/s1m2a3l4l5.jpg",
-            "type" : "string"
+        "type": "object",
+        "properties": {
+          "url": {
+            "example": "https://example.org/assets/s1m2a3l4l5.jpg",
+            "type": "string"
           }
         },
-        "required" : [ "url" ]
+        "required": [
+          "url"
+        ]
       }
     }
   }

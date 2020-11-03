@@ -84,3 +84,15 @@ textarea#expirednotice_excludeUrlRegex {
     text-decoration: none;
     cursor: pointer;
 }
+
+.field-group>fieldset {
+    height: 95%;
+}
+
+
+.form-widget input.form-control,
+.form-widget textarea.form-control,
+.form-widget select.form-control,
+.select2 .selection .select2-selection {
+    max-width: inherit;
+}

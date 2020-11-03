@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -129,12 +130,29 @@ class Notice
      */
     private $relays;
 
+    /**
+     * This is only used a temporary storage when saving pins in form (Ugly).
+     *
+     * @var int
+     */
+    private $pinnedRank;
+
     public function __construct()
     {
         $this->matchingContexts = new ArrayCollection();
         $this->relays = new ArrayCollection();
         $this->visibility = NoticeVisibility::getDefault();
         $this->expires = (new DateTimeImmutable())->modify('+1year');
+    }
+
+    /**
+     * @return \Closure
+     */
+    public static function equals(Notice $notice)
+    {
+        return static function (Notice $other) use ($notice) {
+            return $notice->getId() === $other->getId();
+        };
     }
 
     private function markUpdated(): void
@@ -436,5 +454,17 @@ class Notice
     public function getRelayersCount(): int
     {
         return $this->getRelayers()->count();
+    }
+
+    public function getPinnedRank(): ?int
+    {
+        return $this->pinnedRank;
+    }
+
+    public function setPinnedRank(int $pinnedRank): Notice
+    {
+        $this->pinnedRank = $pinnedRank;
+
+        return $this;
     }
 }

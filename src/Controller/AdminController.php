@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Contributor;
 use App\Repository\ContributorRepository;
+use App\Repository\NoticeRepository;
 use Doctrine\ORM\EntityRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController as BaseAdminController;
 use EasyCorp\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
@@ -33,13 +34,45 @@ class AdminController extends BaseAdminController
      * @var Router
      */
     private $router;
+    /**
+     * @var NoticeRepository
+     */
+    private $noticeRepository;
 
-    public function __construct(ContributorRepository $repository, UserManagerInterface $userManager, QueryBuilder $queryBuilder, RouterInterface $router)
+    public function __construct(ContributorRepository $repository, NoticeRepository $noticeRepository, UserManagerInterface $userManager, QueryBuilder $queryBuilder, RouterInterface $router)
     {
         $this->contributorRepository = $repository;
         $this->userManager = $userManager;
         $this->queryBuilder = $queryBuilder;
         $this->router = $router;
+        $this->noticeRepository = $noticeRepository;
+    }
+
+    protected function autocompleteAction()
+    {
+        $parameterBag = $this->request->query;
+
+        $entity = $parameterBag->get('entity');
+        $query = $parameterBag->get('query');
+
+        if ('Notice' !== $entity || !$parameterBag->get('contributor_id')) {
+            return parent::autocompleteAction();
+        }
+
+        // Here we could try to find a way to filter notices by contributor_id …
+        // … but right now $results = $this->get('easyadmin.autocomplete')->find()
+        // does not accept any DQL :-(
+
+        /*
+         * $this->noticeRepository->createQueryForPublicNotices('n', 'c')
+                    ->andWhere('c.id = :contributorId')
+                    ->andWhere('n.message = :search')
+                    ->andWhere('c.name = :search')
+                    ->setParameter('contributorId', $parameterBag->get('contributor_id'))
+                    ->setParameter('search', $query)
+        */
+
+        return parent::autocompleteAction();
     }
 
     // Override User CRUD

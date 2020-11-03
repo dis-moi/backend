@@ -1,65 +1,77 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Tests\e2e;
 
 use App\Entity\MatchingContext;
 use App\Entity\Notice;
+use App\Helper\CollectionHelper;
+use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * Class GetContributorsTest
+ * @package App\Tests\e2e
+ */
 class GetContributorsTest extends BaseApiE2eTestCase
 {
-    public function testGetContributors()
+    public function testGetContributors(): void
     {
         $payload = $this->makeApiRequest('/api/v3/contributors');
 
-        $this->assertEquals(4, count($payload));
-        $this->assertEquals('John Doe', $payload[0]['name']);
-        $this->assertEqualHtml(
+        self::assertCount(4, $payload);
+        self::assertEquals('John Doe', $payload[0]['name']);
+        self::assertEqualHtml(
             '<p>I’m all out of bubble gum (<a href="https://www.youtube.com/watch?reload=9&v=yMN0yvot6dM&utm_medium=Dismoi_extension_navigateur" target="_blank" rel="noopener noreferrer">www.youtube.com/watch</a>)</p>',
             $payload[0]['intro']
         );
-        $this->assertStringContainsString('photo-fake.jpg', $payload[0]['avatar']['small']['url']);
-        $this->assertStringContainsString('photo-fake.jpg', $payload[0]['avatar']['normal']['url']);
-        $this->assertStringContainsString('photo-fake.jpg', $payload[0]['avatar']['large']['url']);
-        $this->assertEquals('Contributor 2', $payload[1]['name']);
+        self::assertStringContainsString('photo-fake.jpg', $payload[0]['avatar']['small']['url']);
+        self::assertStringContainsString('photo-fake.jpg', $payload[0]['avatar']['normal']['url']);
+        self::assertStringContainsString('photo-fake.jpg', $payload[0]['avatar']['large']['url']);
+        self::assertEquals('Contributor 2', $payload[1]['name']);
     }
 
     /**
      * @deprecated
      */
-    public function testGetContributorsCount()
+    public function testGetContributorsCount(): void
     {
         $payload = $this->makeApiRequest('/api/v3/contributors');
 
-        $this->assertEquals(2, $payload[0]['contributions']); // 2 public + 1 private
-        $this->assertEquals(3, $payload[1]['contributions']); // 3 public
+        self::assertEquals(2, $payload[0]['contributions']); // 2 public + 1 private
+        self::assertEquals(3, $payload[1]['contributions']); // 3 public
     }
 
-    public function testGetContributorsContribCount()
+    public function testGetContributorsContribCount(): void
     {
         $payload = $this->makeApiRequest('/api/v3/contributors');
 
-        $this->assertEquals(2, $payload[0]['contribution']['numberOfPublishedNotices']); // 2 public + 1 private
-        $this->assertEquals(3, $payload[1]['contribution']['numberOfPublishedNotices']); // 3 public
+        self::assertEquals(2, $payload[0]['contribution']['numberOfPublishedNotices']); // 2 public + 1 private
+        self::assertEquals(3, $payload[1]['contribution']['numberOfPublishedNotices']); // 3 public
     }
 
-    public function testGetContributorsRatings()
+    public function testGetContributorsRatings(): void
     {
         $payload = $this->makeApiRequest('/api/v3/contributors');
 
-        $this->assertEquals(3, $payload[0]['ratings']['subscribes']);
+        self::assertEquals(3, $payload[0]['ratings']['subscribes']);
     }
 
-    public function testGetContributorsContribExample()
+    public function testGetContributorsPinnedNotices(): void
     {
         $payload = $this->makeApiRequest('/api/v3/contributors');
+
+        $fetchedContributors = $payload;
+
+        $fetchedFamousContributor = CollectionHelper::find(new ArrayCollection($fetchedContributors), static function ($contributor) { return $contributor['name'] === 'Famous Contributor'; });
+        $fetchedFirstPinnedNotice = $fetchedFamousContributor['contribution']['pinnedNotices'][0];
 
         /** @var MatchingContext $mc */
-        $mc = $this->referenceRepository->getReference('matchingContext_1');
+        $mc = $this->referenceRepository->getReference('matchingContext_liked_displayed');
         /** @var Notice $notice */
-        $notice = $this->referenceRepository->getReference('notice_type_ecology');
+        $notice = $this->referenceRepository->getReference('notice_liked_displayed');
 
-        $this->assertEquals($mc->getExampleUrl(), $payload[0]['contribution']['example']['matchingUrl']);
-        $this->assertEquals($notice->getId(), $payload[0]['contribution']['example']['noticeId']);
-        $this->assertStringEndsWith('/api/v3/notices/'.$notice->getId(), $payload[0]['contribution']['example']['noticeUrl']);
+        self::assertEquals($mc->getExampleUrl(), $fetchedFirstPinnedNotice['matchingUrl']);
+        self::assertEquals($notice->getId(), $fetchedFirstPinnedNotice['noticeId']);
+        self::assertStringEndsWith('/api/v3/notices/'.$notice->getId(), $fetchedFirstPinnedNotice['noticeUrl']);
     }
 }
