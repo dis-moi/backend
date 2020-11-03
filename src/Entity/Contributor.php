@@ -10,6 +10,7 @@ use App\Helper\ImageUploadable;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use InvalidArgumentException;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -152,7 +153,7 @@ class Contributor implements ImageUploadable
      */
     private $website;
 
-    /** @var Collection|
+    /** @var ArrayCollection|
      *
      * @ORM\OneToMany(targetEntity=Pin::class, mappedBy="contributor", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"rank"="ASC"})
@@ -445,14 +446,10 @@ class Contributor implements ImageUploadable
         return 0;
     }
 
-    public function getPinnedNotices(): Collection
+    public function getPinnedNotices(): ArrayCollection
     {
-        return CollectionHelper::sort(
-                $this->pins,
-                static function (Pin $a, Pin $b) {
-                    return ($a->getRank() < $b->getRank()) ? -1 : 1;
-                }
-            )
+        return $this->pins
+            ->matching(new Criteria(null, ['rank' => Criteria::ASC]))
             ->map(static function (Pin $pin) {
                 return $pin->getNotice()->setPinnedRank($pin->getRank());
             });
