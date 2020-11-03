@@ -5,6 +5,7 @@ namespace App\Entity;
 
 use App\EntityListener\NoticeListener;
 use App\Helper\NoticeVisibility;
+use App\Helper\StringHelper;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -198,7 +199,7 @@ class Notice
 
     public function __toString(): string
     {
-        return sprintf('(id:%d) [%s] %s', $this->getId(), $this->getContributor(), $this->getMessage());
+        return sprintf('(id:%d) [%s] %s', $this->getId(), $this->getContributor(), StringHelper::truncate($this->getMessage(), 45));
     }
 
     public function setContributor(Contributor $contributor = null): Notice
