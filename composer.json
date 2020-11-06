@@ -40,7 +40,7 @@
         "doctrine/doctrine-migrations-bundle": "^v1.3.2",
         "sensio/framework-extra-bundle": "^5.6",
         "friendsofsymfony/user-bundle": "^2.1.2",
-        "friendsofsymfony/jsrouting-bundle": "^2.2",
+        "friendsofsymfony/jsrouting-bundle": "^2.6",
         "easycorp/easyadmin-bundle": "^2",
         "ocramius/proxy-manager": "^2.0.2",
         "marc-mabe/php-enum": "^2.2",

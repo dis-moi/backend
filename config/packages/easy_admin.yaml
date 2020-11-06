@@ -5,7 +5,6 @@ easy_admin:
       css:
         - 'css/admin.css'
       js:
-        - 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js'
         - 'js/regex_validator.js'
         - 'js/chartjs/moment.min.js'
         - 'js/chartjs/Chart.js'
