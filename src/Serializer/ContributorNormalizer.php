@@ -20,8 +20,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 /**
- * Class ContributorNormalizer
- * @package App\Serializer
+ * Class ContributorNormalizer.
  */
 class ContributorNormalizer extends EntityWithImageNormalizer implements NormalizerInterface, NormalizerAwareInterface
 {
@@ -58,10 +57,8 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
     /**
      * Checks whether the given class is supported for normalization by this normalizer.
      *
-     * @param mixed  $data   Data to normalize
+     * @param mixed         $data   Data to normalize
      * @param string | null $format The format being (de-)serialized from or into
-     *
-     * @return bool
      */
     public function supportsNormalization($data, $format = null): bool
     {
@@ -98,8 +95,14 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
 
         $pinnedNotices = $contributor->getPinnedNotices();
         $exampleNotice = $pinnedNotices->first() ?: $contributor->getPublicNotices()->first();
-        $exampleNoticeMatchingContexts = $exampleNotice ? $exampleNotice->getMatchingContexts() : null;
         $relays = $contributor->getPublicRelays();
+
+        $starred = $exampleNotice && $exampleNotice->getMatchingContexts() ? [/* Deprecated */
+            'matchingUrl' => $exampleNotice->getMatchingUrl(),
+            'noticeId' => $exampleNotice->getId(),
+            'noticeUrl' => $this->noticeUrlGenerator->generate($exampleNotice),
+            'screenshot' => $this->getImageAbsoluteUrl($exampleNotice, 'screenshotFile'),
+        ] : null;
 
         return [
             'id' => $contributor->getId(),
@@ -114,24 +117,12 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
             'preview' => $this->getImageAbsoluteUrl($contributor, 'previewImageFile'),
             'contributions' => $contributor->getNoticesCount(),
             'contribution' => [
-                'example' => $exampleNotice && $exampleNoticeMatchingContexts ? [/* Deprecated */
-                    'matchingUrl' => $exampleNoticeMatchingContexts->first() ? $exampleNoticeMatchingContexts->first()->getExampleUrl() : null,
-                    'noticeId' => $exampleNotice->getId(),
-                    'noticeUrl' => $this->noticeUrlGenerator->generate($exampleNotice),
-                    'screenshot' => $this->getImageAbsoluteUrl($exampleNotice, 'screenshotFile'),
-                ] : null,
-                'starred' => $exampleNotice && $exampleNoticeMatchingContexts ? [
-                    'matchingUrl' => $exampleNoticeMatchingContexts->first() ? $exampleNoticeMatchingContexts->first()->getExampleUrl() : null,
-                    'noticeId' => $exampleNotice->getId(),
-                    'noticeUrl' => $this->noticeUrlGenerator->generate($exampleNotice),
-                    'screenshot' => $this->getImageAbsoluteUrl($exampleNotice, 'screenshotFile'),
-                ] : null,
+                'example' => $starred, /* Deprecated */
+                'starred' => $starred, /* Deprecated */
                 'pinnedNotices' => $pinnedNotices->map(function (Notice $notice) {
-                    $matchingContexts = $notice->getMatchingContexts();
-
                     return [
                         'sort' => $notice->getPinnedSort(),
-                        'matchingUrl' => $matchingContexts && $matchingContexts->first() ? $matchingContexts->first()->getExampleUrl() : null,
+                        'matchingUrl' => $notice->getMatchingUrl(),
                         'noticeId' => $notice->getId(),
                         'noticeUrl' => $this->noticeUrlGenerator->generate($notice),
                         'screenshot' => $this->getImageAbsoluteUrl($notice, 'screenshotFile'),
