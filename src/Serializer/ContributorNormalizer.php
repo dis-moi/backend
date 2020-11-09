@@ -98,7 +98,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
         $relays = $contributor->getPublicRelays();
 
         $starred = $exampleNotice && $exampleNotice->getMatchingContexts() ? [/* Deprecated */
-            'matchingUrl' => $exampleNotice->getMatchingUrl(),
+            'exampleMatchingUrl' => $exampleNotice->getExampleMatchingUrl(),
             'noticeId' => $exampleNotice->getId(),
             'noticeUrl' => $this->noticeUrlGenerator->generate($exampleNotice),
             'screenshot' => $this->getImageAbsoluteUrl($exampleNotice, 'screenshotFile'),
@@ -122,7 +122,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
                 'pinnedNotices' => $pinnedNotices->map(function (Notice $notice) {
                     return [
                         'sort' => $notice->getPinnedSort(),
-                        'matchingUrl' => $notice->getMatchingUrl(),
+                        'exampleMatchingUrl' => $notice->getExampleMatchingUrl(),
                         'noticeId' => $notice->getId(),
                         'noticeUrl' => $this->noticeUrlGenerator->generate($notice),
                         'screenshot' => $this->getImageAbsoluteUrl($notice, 'screenshotFile'),

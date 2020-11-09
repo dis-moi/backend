@@ -70,7 +70,7 @@ class GetContributorsTest extends BaseApiE2eTestCase
         /** @var Notice $notice */
         $notice = $this->referenceRepository->getReference('notice_liked_displayed');
 
-        self::assertEquals($mc->getExampleUrl(), $fetchedFirstPinnedNotice['matchingUrl']);
+        self::assertEquals($mc->getExampleUrl(), $fetchedFirstPinnedNotice['exampleMatchingUrl']);
         self::assertEquals($notice->getId(), $fetchedFirstPinnedNotice['noticeId']);
         self::assertStringEndsWith('/api/v3/notices/'.$notice->getId(), $fetchedFirstPinnedNotice['noticeUrl']);
     }

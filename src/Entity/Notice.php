@@ -409,14 +409,14 @@ class Notice
     }
 
     /**
-     * @deprecated use `getMatchingUrl` instead
+     * @deprecated use `getExampleMatchingUrl` instead
      */
     public function getExampleUrl(): ?string
     {
-        return $this->getMatchingUrl();
+        return $this->getExampleMatchingUrl();
     }
 
-    public function getMatchingUrl(): ?string
+    public function getExampleMatchingUrl(): ?string
     {
         $first = $this->getMatchingContexts()
             ->filter(function (MatchingContext $mc) {
