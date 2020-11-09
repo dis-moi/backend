@@ -181,6 +181,7 @@ class Contributor implements ImageUploadable
     public function __construct()
     {
         $this->notices = new ArrayCollection();
+        $this->pins = new ArrayCollection();
         $this->relayedNotices = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
     }
