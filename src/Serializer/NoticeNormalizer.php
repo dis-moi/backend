@@ -62,7 +62,7 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements NormalizerIn
             'strippedMessage' => $this->messagePresenter->strip($notice->getMessage()),
             'visibility' => $notice->getVisibility()->getValue(),
             'exampleUrl' => $notice->getExampleUrl(), // @deprecated
-            'matchingUrl' => $notice->getMatchingUrl(),
+            'exampleMatchingUrl' => $notice->getExampleMatchingUrl(),
             'screenshot' => $this->getImageAbsoluteUrl($notice, 'screenshotFile'),
             'ratings' => [
                 'likes' => $notice->getLikedRatingCount(),
