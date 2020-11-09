@@ -19,6 +19,7 @@ easy_admin:
       label: menu.notices
       actions: ['show']
       list:
+        max_results: 50
         title: title.notices
         actions: [ 'show' ]
         fields: &noticeListFields
@@ -86,6 +87,7 @@ easy_admin:
       disabled_actions: ['new']
       search: *noticeSearch
       list:
+        max_results: 50
         title: title.expiredNotices
         dql_filter: 'entity.expires <= CURRENT_TIMESTAMP()'
         fields: *noticeListFields
@@ -97,6 +99,7 @@ easy_admin:
       list:
         title: title.contributors
         sort: [name, ASC]
+        max_results: 50
         fields:
           - { property: id, label: contributors.id }
           - { property: image, template: 'easy_admin/vich_uploader_image.html.twig', label: contributors.image }
@@ -130,6 +133,7 @@ easy_admin:
         title: title.domains
         actions: ['show']
         sort: ['name', 'ASC']
+        max_results: 50
         fields:
           - { property: prettyName, label: domains.name }
           - { property: sets, label: domains.sets.nb }
@@ -158,6 +162,7 @@ easy_admin:
         title: title.domainsSets
         actions: ['show']
         sort: ['name', 'ASC']
+        max_results: 50
         fields:
           - { property: name, label: domainsSets.name }
           - { property: domains, label: domainsSets.domains.nb }
@@ -185,6 +190,7 @@ easy_admin:
       label: menu.restrictedContexts
       list:
         title: title.restrictedContexts
+        max_results: 50
         fields:
           - id
           - { property: urlRegex, label: restrictedContexts.urlRegex }
@@ -197,6 +203,7 @@ easy_admin:
       class: App\Entity\User
       list:
         title: title.users
+        max_results: 50
         fields:
           - { property: username, label: users.username }
           - { property: email, label: users.email }
