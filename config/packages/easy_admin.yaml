@@ -18,7 +18,27 @@ easy_admin:
       class: App\Entity\Notice
       label: menu.notices
       actions: ['show']
-      search:
+      list:
+        title: title.notices
+        actions: [ 'show' ]
+        fields: &noticeListFields
+          - { property: id, label: notices.id, css_class: 'column-id' }
+          - { property: contributor, label: notices.contributor, css_class: 'column-contributor' }
+          - { property: relayersCount, label: notices.relayers, css_class: 'column-relayers' }
+          - { property: message, label: notices.message, css_class: 'column-message' }
+          - { property: visibility, label: notices.visibility, css_class: 'column-visibility' }
+          - { property: matchingContexts, label: notices.matchingContexts, css_class: 'column-matchingContexts' }
+          - { property: badgedRatingCount, label: notices.badgedRatingCount, css_class: 'graphable column-badgedRatingCount' }
+          - { property: displayedRatingCount, label: notices.displayedRatingCount, css_class: 'graphable column-displayedRatingCount' }
+          - { property: unfoldedRatingCount, label: notices.unfoldedRatingCount, css_class: 'graphable column-unfoldedRatingCount' }
+          - { property: clickedRatingCount, label: notices.clickedRatingCount, css_class: 'graphable column-clickedRatingCount' }
+          - { property: likedRatingCount, label: notices.likedRatingCount, css_class: 'graphable column-likedRatingCount' }
+          - { property: dislikedRatingCount, label: notices.dislikedRatingCount, css_class: 'graphable column-dislikedRatingCount' }
+          - { property: dismissedRatingCount, label: notices.dismissedRatingCount, css_class: 'graphable column-dismissedRatingCount' }
+          - { property: expires, label: notices.expires, css_class: 'column-expires' }
+          - { property: created, label: notices.created, css_class: 'column-created' }
+          - { property: updated, label: notices.updated, css_class: 'column-updated' }
+      search: &noticeSearch
         fields:
           - id
           - matchingContexts.description
@@ -30,7 +50,7 @@ easy_admin:
           - message
           - note
           - expires
-      show:
+      show: &noticeShow
         fields:
           - { property: message, label: notices.message }
           - { property: contributor, label: notices.contributor }
@@ -42,97 +62,34 @@ easy_admin:
           - { property: matchingContexts, label: notices.matchingContexts }
           - { property: expires, label: notices.expires }
           - { property: unpublishedOnExpiration, label: notices.unpublishedOnExpiration }
-      form:
+      form: &noticeForm
         fields:
-          - { type: group, label: notices.groups.publication, icon: comments }
+          - { type: group, label: notices.groups.publication, icon: comments, columns: 8 }
           - { property: message, label: notices.message }
-          - { property: contributor, label: notices.contributor, type_options: { 'query_builder': 'App\Repository\ContributorRepository::getOrderedList' }}
-          - { property: relayers, label: notices.relayers, type: easyadmin_autocomplete, type_options: { class: 'App\Entity\Contributor', multiple: true }}
           - { property: screenshotFile, label: notices.screenshot, type: vich_image, help: notices.screenshot.help }
-          - { property: note, label: notices.note }
+          - { type: group, label: Lifecycle, icon: recycle, columns: 4 }
           - { property: visibility, label: notices.visibility, type: 'App\Form\VisibilityType' }
-          - { type: group, label: notices.groups.matchingContexts, icon: 'paper-plane', columns: 6 }
-          - { property: matchingContexts, type: collection, label: notices.matchingContexts, type_options: { required: true, entry_type: 'App\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false }}
-          - { property: excludeUrlRegex, label: notices.excludeUrlRegex, type: textarea }
-          - { type: group, label: Lifecycle, icon: recycle, columns: 6 }
           - { property: expires, label: notices.expires }
           - { property: unpublishedOnExpiration, label: notices.unpublishedOnExpiration }
-
-      list:
-        title: title.notices
-        actions: ['show']
-        fields:
-          - { property: id, label: notices.id, css_class: 'column-id' }
-          - { property: contributor, label: notices.contributor, css_class: 'column-contributor' }
-          - { property: relayersCount, label: notices.relayers, css_class: 'column-relayers' }
-          - { property: message, label: notices.message, css_class: 'column-message' }
-          - { property: visibility, label: notices.visibility, css_class: 'column-visibility' }
-          - { property: matchingContexts, label: notices.matchingContexts, css_class: 'column-matchingContexts' }
-          - { property : badgedRatingCount, label: notices.badgedRatingCount, css_class: 'graphable column-badgedRatingCount' }
-          - { property : displayedRatingCount, label: notices.displayedRatingCount, css_class: 'graphable column-displayedRatingCount' }
-          - { property : unfoldedRatingCount, label: notices.unfoldedRatingCount, css_class: 'graphable column-unfoldedRatingCount' }
-          - { property : clickedRatingCount, label: notices.clickedRatingCount, css_class: 'graphable column-clickedRatingCount' }
-          - { property : likedRatingCount, label: notices.likedRatingCount, css_class: 'graphable column-likedRatingCount' }
-          - { property : dislikedRatingCount, label: notices.dislikedRatingCount, css_class: 'graphable column-dislikedRatingCount' }
-          - { property : dismissedRatingCount, label: notices.dismissedRatingCount, css_class: 'graphable column-dismissedRatingCount' }
-          - { property: expires, label: notices.expires, css_class: 'column-expires' }
-          - { property: created, label: notices.created, css_class: 'column-created' }
-          - { property: updated, label: notices.updated, css_class: 'column-updated' }
+          - { type: group, label: Sources, icon: user-edit, columns: 8 }
+          - { property: contributor, label: notices.contributor, type_options: { 'query_builder': 'App\Repository\ContributorRepository::getOrderedList' }}
+          - { property: relayers, label: notices.relayers, type: easyadmin_autocomplete, type_options: { class: 'App\Entity\Contributor', multiple: true }}
+          - { type: group, label: Privé, icon: lock, columns: 4}
+          - { property: note, label: notices.note }
+          - { type: group, label: notices.groups.matchingContexts, icon: 'paper-plane', columns: 12 }
+          - { property: matchingContexts, type: collection, label: notices.matchingContexts, type_options: { required: true, entry_type: 'App\Form\MatchingContextType', allow_add: true, allow_delete: true, by_reference: false }}
+          - { property: excludeUrlRegex, label: notices.excludeUrlRegex, type: textarea }
 
     ExpiredNotice:
       class: App\Entity\Notice
       label: menu.expiredNotices
       disabled_actions: ['new']
-      search:
-        fields:
-          - matchingContexts.exampleUrl
-          - matchingContexts.urlRegex
-          - matchingContexts.excludeUrlRegex
-          - excludeUrlRegex
-          - contributor.name
-          - message
-          - note
-          - expires
+      search: *noticeSearch
       list:
         title: title.expiredNotices
         dql_filter: 'entity.expires <= CURRENT_TIMESTAMP()'
-        fields:
-          - { property: id, label: notices.id }
-          - { property: contributor, label: notices.contributor }
-          - { property: message, label: notices.message }
-          - { property: visibility, label: notices.visibility }
-          - { property: matchingContexts, label: notices.matchingContexts }
-          - { property: badgedRatingCount, label: notices.badgedRatingCount, css_class: 'graphable' }
-          - { property: displayedRatingCount, label: notices.displayedRatingCount, css_class: 'graphable' }
-          - { property: unfoldedRatingCount, label: notices.unfoldedRatingCount, css_class: 'graphable' }
-          - { property: clickedRatingCount, label: notices.clickedRatingCount, css_class: 'graphable' }
-          - { property: likedRatingCount, label: notices.likedRatingCount, css_class: 'graphable' }
-          - { property: dislikedRatingCount, label: notices.dislikedRatingCount, css_class: 'graphable' }
-          - { property: dismissedRatingCount, label: notices.dismissedRatingCount, css_class: 'graphable' }
-          - { property: expires, label: notices.expires }
-          - { property: unpublishedOnExpiration, label: notices.unpublishedOnExpiration }
-      form:
-        fields:
-          - { type: group, label: notices.groups.publication, icon: comments }
-          - { property: message, label: notices.message }
-          - { property: contributor, label: notices.contributor, type_options: { 'query_builder': 'App\Repository\ContributorRepository::getOrderedList' }}
-          - { property: note, label: notices.note }
-          - { property: visibility, label: notices.visibility, type: 'App\Form\VisibilityType' }
-          - { type: group, label: notices.groups.matchingContexts, icon: 'paper-plane', columns: 6 }
-          - property: matchingContexts
-            type: collection
-            label: notices.matchingContexts
-            type_options: {
-              required: true,
-              entry_type: 'App\Form\MatchingContextType',
-              allow_add: true,
-              allow_delete: true,
-              by_reference: false
-            }
-          - { property: excludeUrlRegex, label: notices.excludeUrlRegex, type: textarea }
-          - { type: group, label: Lifecycle, icon: recycle, columns: 6 }
-          - { property: expires, label: notices.expires }
-          - { property: unpublishedOnExpiration, label: notices.unpublishedOnExpiration }
+        fields: *noticeListFields
+      form: *noticeForm
 
     Contributor:
       label: menu.contributors

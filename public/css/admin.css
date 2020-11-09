@@ -15,6 +15,15 @@
     margin-top: 25px;
 }
 
+/* Matching context sub-form in notice form */
+#notice_matchingContexts>.form-group {
+    padding-left: 10px;
+    margin-bottom: 20px;
+    background-color: var(--gray-300);
+    border: var(--border-width) var(--border-style) var(--gray-400);
+    border-radius: var(--border-radius);
+}
+
 body.edit textarea#notice_message,
 body.edit textarea#notice_note,
 body.new textarea#notice_message,
