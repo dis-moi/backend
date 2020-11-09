@@ -1,0 +1,13 @@
+graph LR
+    subgraph browser
+    EVS[[Periodically]] -.-> EFMC{{download all matching contexts}}
+    EP[[Page navigated]] .- checks .-> EMC[(Matching contexts)]
+    EP.-if-match.->EVN{{fetch notice information}}
+    EUI>Show notice]
+    end
+    subgraph backend
+    BMC("Matching context(s)") x--x BN[Notice]
+    BMC-->EFMC-->EMC
+    BN-->EVN-->EUI
+    end
+
