@@ -50,7 +50,7 @@ class MessagePresenter
         return preg_replace_callback(
             '/<a ([^>]*)href="([^"]+)"([^>]*)>([^<]+)<\/a>/',
             function ($matches) {
-                return '<a '.$matches[1].' '.$matches[3].' href="'.$this->setUtmForUrl($matches[2]).'" target="_blank" rel="noopener noreferrer">'.$matches[4].'</a>';
+                return '<a '.$matches[1].' '.$matches[3].' href="'.$this->setUtmForUrl(strip_tags($matches[2])).'" target="_blank" rel="noopener noreferrer">'.$matches[4].'</a>';
             },
             $message
         );
