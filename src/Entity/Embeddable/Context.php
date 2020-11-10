@@ -3,12 +3,15 @@
 namespace App\Entity\Embeddable;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Embeddable
  */
 class Context
 {
+    public const CONTEXT_URL_MAX_LENGTH = 1000;
+
     /**
      * @var \DateTime
      *
@@ -19,7 +22,9 @@ class Context
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", nullable=true)
+     * @ORM\Column(name="url", type="string", length=Context::CONTEXT_URL_MAX_LENGTH, nullable=true)
+     * @Assert\Url
+     * @Assert\Length(max=Context::CONTEXT_URL_MAX_LENGTH)
      */
     private $url;
 
