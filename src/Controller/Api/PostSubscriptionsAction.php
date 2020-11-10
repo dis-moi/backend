@@ -32,7 +32,7 @@ class PostSubscriptionsAction extends BaseAction
     {
         $extensionId = $request->get('extensionId', null);
 
-        $contributorsIds = json_decode($request->getContent());
+        $contributorsIds = json_decode($request->getContent()) ?? [];
 
         try {
             $this->subscriptionsTrackingService->refreshSubscriptions($extensionId, $contributorsIds);
