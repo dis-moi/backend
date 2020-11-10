@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Entity\Embeddable\Context;
 use Doctrine\ORM\Mapping as ORM;
+use InvalidArgumentException;
+use function in_array;
 
 /**
  * @ORM\Table(name="rating")
@@ -11,21 +15,21 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Rating
 {
-    const BADGE = 'badge';
-    const DISPLAY = 'display';
-    const UNFOLD = 'unfold';
-    const OUTBOUND_CLICK = 'outbound-click';
+    public const BADGE = 'badge';
+    public const DISPLAY = 'display';
+    public const UNFOLD = 'unfold';
+    public const OUTBOUND_CLICK = 'outbound-click';
 
-    const LIKE = 'like';
-    const UNLIKE = 'unlike';
+    public const LIKE = 'like';
+    public const UNLIKE = 'unlike';
 
-    const DISLIKE = 'dislike';
-    const UNDISLIKE = 'undislike';
+    public const DISLIKE = 'dislike';
+    public const UNDISLIKE = 'undislike';
 
-    const DISMISS = 'dismiss';
-    const UNDISMISS = 'undismiss';
+    public const DISMISS = 'dismiss';
+    public const UNDISMISS = 'undismiss';
 
-    const REPORT = 'report';
+    public const REPORT = 'report';
 
     /**
      * @var int
@@ -62,12 +66,7 @@ class Rating
      */
     private $reason;
 
-    /**
-     * @param string $type
-     * @param array  $context
-     * @param string $reason
-     */
-    public function __construct(Notice $notice, $type, Context $context, $reason)
+    public function __construct(Notice $notice, string $type, Context $context, string $reason)
     {
         $this->setNotice($notice);
         $this->setType($type);
@@ -75,10 +74,7 @@ class Rating
         $this->setReason($reason);
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -94,23 +90,22 @@ class Rating
     /**
      * @param mixed $notice
      */
-    public function setNotice($notice)
+    public function setNotice($notice): Rating
     {
         $this->notice = $notice;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
 
-    /**
-     * @param string $type
-     */
-    public function setType($type)
+    public function setType(string $type): Rating
     {
         if (!in_array($type, [
             self::DISMISS,
@@ -125,37 +120,37 @@ class Rating
             self::OUTBOUND_CLICK,
             self::REPORT,
         ])) {
-            throw new \InvalidArgumentException(sprintf('Invalid value given for feedback type : %s', $type));
+            throw new InvalidArgumentException(sprintf('Invalid value given for feedback type : %s', $type));
         }
         $this->type = $type;
+
+        return $this;
     }
 
     /**
      * @return Context
      */
-    public function getContext()
+    public function getContext(): Context
     {
         return $this->context;
     }
 
-    public function setContext(Context $context)
+    public function setContext(Context $context): Rating
     {
         $this->context = $context;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getReason()
+    public function getReason(): string
     {
         return $this->reason;
     }
 
-    /**
-     * @param string $reason
-     */
-    public function setReason($reason)
+    public function setReason(string $reason): Rating
     {
         $this->reason = $reason;
+
+        return $this;
     }
 }
