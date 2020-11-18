@@ -113,6 +113,20 @@ with https://bulles.fr.');
         $this->addReference('notice_type_ecology_archived', $notice);
         $manager->persist($notice);
 
+        $notice = new Notice();
+        $notice->setContributor($famousContributor);
+        $notice->setMessage('This notice should be visible on https://www.dismoi.io/aide/');
+        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $this->addReference('notice_xpath_match', $notice);
+        $manager->persist($notice);
+
+        $notice = new Notice();
+        $notice->setContributor($famousContributor);
+        $notice->setMessage('This notice should __not__ be visible on https://www.dismoi.io/aide/');
+        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $this->addReference('notice_xpath_no_match', $notice);
+        $manager->persist($notice);
+
         $manager->flush();
 
         $famousContributor->setPinnedNotices(new ArrayCollection([

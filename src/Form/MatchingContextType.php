@@ -58,6 +58,11 @@ class MatchingContextType extends AbstractType
                 'required' => false,
                 'label' => 'matchingContexts.excludeUrlRegex',
             ])
+            ->add('xpath', TextType::class, [
+                'required' => false,
+                'label' => 'matchingContexts.xpath',
+                'help' => 'matchingContexts.xpath_help',
+            ])
             ->add('description', TextType::class, [
                 'required' => false,
                 'label' => 'matchingContexts.description',
