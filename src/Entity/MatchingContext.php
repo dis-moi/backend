@@ -106,11 +106,18 @@ class MatchingContext
     private $description;
 
     /**
-     * @var string
+     * @var string a CSS selector
      *
      * @ORM\Column(name="querySelector", type="string", length=255, nullable=true)
      */
     private $querySelector;
+
+    /**
+     * @var string an XPath expression
+     *
+     * @ORM\Column(name="xpath", type="string", length=255, nullable=true)
+     */
+    private $xpath;
 
     public function __construct()
     {
@@ -274,6 +281,22 @@ class MatchingContext
         $this->querySelector = $querySelector;
 
         return $this;
+    }
+
+    /**
+     * @return string?
+     */
+    public function getXpath(): ?string
+    {
+        return $this->xpath;
+    }
+
+    /**
+     * @param string $xpath
+     */
+    public function setXpath($xpath)
+    {
+        $this->xpath = $xpath;
     }
 
     public function getDomainNames(): Collection

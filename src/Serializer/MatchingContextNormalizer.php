@@ -40,6 +40,7 @@ class MatchingContextNormalizer implements NormalizerInterface
             'urlRegex' => $matchingContext->getFullUrlRegex($this->escaper),
             'excludeUrlRegex' => $matchingContext->getCompleteExcludeUrlRegex(),
             'querySelector' => $matchingContext->getQuerySelector(),
+            'xpath' => $matchingContext->getXpath(),
         ]);
     }
 }

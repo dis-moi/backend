@@ -71,6 +71,8 @@ matchingContexts:
   domainsSets: Groupe de domaines
   domainNames: Domaines
   urlRegex: Regex recherchée
+  xpath: XPath recherché
+  xpath_help: "/html/body/text()[contains(.,'scam')]"
   excludeUrlRegex: Regex d'exclusion
   notice: Bulle
 

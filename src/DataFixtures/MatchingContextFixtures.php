@@ -74,6 +74,26 @@ class MatchingContextFixtures extends Fixture implements DependentFixtureInterfa
         $this->addReference('mc_with_domain_name', $matchingContext);
         $manager->persist($matchingContext);
 
+        $matchingContext = new MatchingContext();
+        $matchingContext->setExampleUrl('https://www.dismoi.io/aide/');
+        $matchingContext->addDomainName($this->getReference('dismoi_domain'));
+        $matchingContext->setUrlRegex('/aide');
+        $matchingContext->setDescription("Page d'aide de Dismoi");
+        $matchingContext->setXpath("//text()[contains(.,'Aide')]");
+        $matchingContext->setNotice($this->getReference('notice_xpath_match'));
+        $this->addReference('mc_matching_xpath', $matchingContext);
+        $manager->persist($matchingContext);
+
+        $matchingContext = new MatchingContext();
+        $matchingContext->setExampleUrl('https://www.dismoi.io/aide/');
+        $matchingContext->addDomainName($this->getReference('dismoi_domain'));
+        $matchingContext->setUrlRegex('/aide');
+        $matchingContext->setDescription('No future');
+        $matchingContext->setXpath("//text()[contains(.,'No future')]");
+        $matchingContext->setNotice($this->getReference('notice_xpath_no_match'));
+        $this->addReference('mc_non_matching_xpath', $matchingContext);
+        $manager->persist($matchingContext);
+
         $manager->flush();
     }
 
