@@ -68,8 +68,8 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements NormalizerIn
                 'likes' => $notice->getLikedRatingCount(),
                 'dislikes' => $notice->getDislikedRatingCount(),
             ],
-            'created' => $this->formatDateTime($notice->getCreated()),
-            'modified' => $this->formatDateTime($notice->getUpdated()),
+            'created' => self::formatDateTime($notice->getCreated()),
+            'modified' => self::formatDateTime($notice->getUpdated()),
         ];
 
         if ($context[NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS]) {
@@ -87,7 +87,7 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements NormalizerIn
         return $base;
     }
 
-    protected function formatDateTime(\DateTime $datetime): string
+    public static function formatDateTime(\DateTime $datetime): string
     {
         return $datetime->format('c');
     }

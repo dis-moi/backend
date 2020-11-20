@@ -122,10 +122,15 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
                 'pinnedNotices' => $pinnedNotices->map(function (Notice $notice) {
                     return [
                         'sort' => $notice->getPinnedSort(),
+                        'id' => $notice->getId(),
+                        'url' => $this->noticeUrlGenerator->generate($notice),
+                        'strippedMessage' => $this->messagePresenter->strip($notice->getMessage()),
                         'exampleMatchingUrl' => $notice->getExampleMatchingUrl(),
-                        'noticeId' => $notice->getId(),
-                        'noticeUrl' => $this->noticeUrlGenerator->generate($notice),
+                        'noticeId' => $notice->getId(), // @deprecated
+                        'noticeUrl' => $this->noticeUrlGenerator->generate($notice), // @deprecated
                         'screenshot' => $this->getImageAbsoluteUrl($notice, 'screenshotFile'),
+                        'created' => NoticeNormalizer::formatDateTime($notice->getCreated()),
+                        'modified' => NoticeNormalizer::formatDateTime($notice->getUpdated()),
                     ];
                 })->toArray(),
                 'numberOfPublishedNotices' => $contributor->getNoticesCount(),
