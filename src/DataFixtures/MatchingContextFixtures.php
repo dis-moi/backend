@@ -65,7 +65,6 @@ class MatchingContextFixtures extends Fixture implements DependentFixtureInterfa
 
         $matchingContext = new MatchingContext();
         $matchingContext->setExampleUrl('https://www.domainname.fr/coucou/example');
-        $matchingContext->setDomainName('domainname.fr');
         $matchingContext->addDomainName($this->getReference('first_domain'));
         $matchingContext->addDomainName($this->getReference('second_domain'));
         $matchingContext->addDomainsSet($this->getReference('search_engines_domains_set'));
