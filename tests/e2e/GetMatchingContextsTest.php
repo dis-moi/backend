@@ -1,40 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\e2e;
+
+use App\Helper\ArrayHelper;
 
 class GetMatchingContextsTest extends BaseApiE2eTestCase
 {
-    public function getMatchingContextsData(): array
+    public function testGetUnfilteredMatchingContexts(): void
     {
-        return [
-            [null, 6, ['http://site-ecologique.fr', 'http://random-site.fr', 'http://site-ecologique-et-politique.fr', 'http://expired.fr', "(duckduckgo\.com|www\.bing\.com|www\.google\.fr|www\.qwant\.com|www\.yahoo\.com|first\.domainname\.fr|second\.domainname\.fr)/superexample", 'http://siteecologique.fr']],
-            [['john_doe', 'contributor2'], 5, ['http://site-ecologique.fr', 'http://site-ecologique-et-politique.fr', 'http://random-site.fr', 'http://expired.fr', 'http://siteecologique.fr']],
-            [['john_doe'], 3, ['http://site-ecologique.fr', 'http://random-site.fr', 'http://siteecologique.fr']],
-            [['contributor2'], 2, ['http://site-ecologique-et-politique.fr', 'http://expired.fr']],
-        ];
+        $payload = $this->makeApiRequest('/api/v3/matchingcontexts');
+
+        $this->assertMatchingContextsAllHaveValidNoticeUrls($payload);
+
+        $mcWithXPath = ArrayHelper::find($payload, function ($matchingContext) {
+            return !empty($matchingContext['xpath']);
+        });
+        self::assertNotNull($mcWithXPath);
     }
 
-    /**
-     * @dataProvider getMatchingContextsData
-     */
-    public function testGetMatchingContexts(?array $contributors, int $count, array $urlRegexes): void
+    public function testGetMatchingContextsForOneContributor(): void
     {
-        $url = '/api/v3/matchingcontexts';
-        if ($contributors) {
-            $url .= '?'.implode('&', array_map(function ($contributorReference) {
-                return 'contributors[]='.$this->referenceRepository->getReference($contributorReference)->getId();
-            }, $contributors));
-        }
-        $payload = $this->makeApiRequest($url);
+        $johnDoe = $this->referenceRepository->getReference('john_doe');
 
-        self::assertCount($count, $payload);
+        $payload = $this->makeApiRequest('/api/v3/matchingcontexts?contributors[]='.$johnDoe->getId());
 
-        foreach ($payload as $matchingContext) {
+        $this->assertMatchingContextsAllHaveValidNoticeUrls($payload);
+    }
+
+    public function testGetMatchingContextsForMultipleContributors(): void
+    {
+        $johnDoe = $this->referenceRepository->getReference('john_doe');
+        $contributor2 = $this->referenceRepository->getReference('contributor2');
+
+        $payload = $this->makeApiRequest('/api/v3/matchingcontexts?contributors[]='.$johnDoe->getId().'&contributors[]='.$contributor2->getId());
+
+        $this->assertMatchingContextsAllHaveValidNoticeUrls($payload);
+    }
+
+    private function assertMatchingContextsAllHaveValidNoticeUrls($matchingContexts)
+    {
+        foreach ($matchingContexts as $matchingContext) {
             self::assertRegExp('/^http.*\/api\/v3\/notices\/.*$/', $matchingContext['noticeUrl']);
         }
-
-        self::assertEqualsCanonicalizing($urlRegexes, array_map(static function ($matchingContext) {
-            return $matchingContext['urlRegex'];
-        }, $payload));
     }
 }

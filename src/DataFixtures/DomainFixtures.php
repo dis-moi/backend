@@ -12,6 +12,10 @@ class DomainFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
+        $disMoiDomain = new DomainName('dismoi.io');
+        $manager->persist($disMoiDomain);
+        $this->addReference('dismoi_domain', $disMoiDomain);
+
         $domainName1 = new DomainName('first.domainname.fr');
         $manager->persist($domainName1);
         $this->addReference('first_domain', $domainName1);
