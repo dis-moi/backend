@@ -8,7 +8,7 @@ class GetNoticesTest extends BaseApiE2eTestCase
     {
         $payload = $this->makeApiRequest('/api/v3/notices');
 
-        self::assertCount(8, $payload);
+        self::assertCount(10, $payload);
 
         $ids = array_map(static function ($noticeData) {
             return $noticeData['id'];
