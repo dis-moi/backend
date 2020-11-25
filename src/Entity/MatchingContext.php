@@ -59,15 +59,6 @@ class MatchingContext
     private $exampleUrl;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="domainName", type="string", length=150, nullable=true)
-     *
-     * @Assert\Regex("/^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/")
-     */
-    private $domainName;
-
-    /**
      * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="DomainName", inversedBy="matchingContexts")
@@ -148,18 +139,6 @@ class MatchingContext
     public function getExampleUrl(): ?string
     {
         return $this->exampleUrl;
-    }
-
-    public function setDomainName(string $domainName = null): MatchingContext
-    {
-        $this->domainName = $domainName;
-
-        return $this;
-    }
-
-    public function getDomainName(): ?string
-    {
-        return $this->domainName;
     }
 
     /**`
