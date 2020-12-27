@@ -1,7 +1,7 @@
 # Entities
 MatchingContext: Pages cibles
 Notice: Bulle
-ExpiredNotice: Bulle expirée
+ExpiredNotice: Bulle à mettre a jour
 RestrictedContext: Page exclue
 Domain: Nom de domaine
 DomainsSet: Groupe de noms de domaines
@@ -20,7 +20,7 @@ ROLE_ADMIN: Administrateur
 menu:
   notices: Bulles
   matchingContexts: Pages cibles
-  expiredNotices: Bulles expirées
+  expiredNotices: Bulles à mettre a jour
   restrictedContexts: Pages exclues (global)
   domains: Domaines
   domainsSets: Groupes de domaines
@@ -30,7 +30,7 @@ menu:
 # Easy Admin Pages
 title:
   notices: Toutes les bulles
-  expiredNotices: Bulles expirées
+  expiredNotices: Bulles à mettre a jour
   matchingContexts: Ensemble de pages cibles
   restrictedContexts: Pages exclues (global)
   domains: Noms de domaines
@@ -58,8 +58,8 @@ notices:
   dismissedRatingCount: Supprimé
   created: Crée
   updated: Modifiée
-  expires: Expire
-  unpublishedOnExpiration: Dépubliée à expiration
+  expires: Mise à jour
+  unpublishedOnExpiration: Dépubliée à la date de mise à jour
   excludeUrlRegex: Regex d'exclusion (Pour toute la bulle)
   groups:
     publication: Publication
