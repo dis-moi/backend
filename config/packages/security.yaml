@@ -30,5 +30,5 @@ security:
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%env(REQUIRES_CHANNEL)%' }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%env(REQUIRES_CHANNEL)%' }
-        - { path: ^/admin/, role: ROLE_ADMIN, requires_channel: '%env(REQUIRES_CHANNEL)%' }
+        - { path: ^/admin/, role: ROLE_USER, requires_channel: '%env(REQUIRES_CHANNEL)%' }
         - { path: ^/api/.+/admin, role: ROLE_ADMIN, requires_channel: '%env(REQUIRES_CHANNEL)%' }

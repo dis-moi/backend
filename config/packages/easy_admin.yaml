@@ -1,6 +1,14 @@
 easy_admin:
   site_name: 'DisMoi'
   design:
+    menu:
+      - { entity: 'Notice', label: menu.notices }
+      - { entity: 'ExpiredNotice', label: menu.expiredNotices }
+      - { entity: 'Contributor', label: menu.contributors }
+      - { entity: 'Domain', label: menu.domains }
+      - { entity: 'DomainsSet', label: menu.domainsSets, permission: 'ROLE_ADMIN' }
+      - { entity: 'RestrictedContext', label: menu.restrictedContexts, permission: 'ROLE_ADMIN' }
+      - { entity: 'User', label: menu.users, permission: 'ROLE_ADMIN' }
     assets:
       css:
         - 'css/admin.css'
@@ -16,7 +24,6 @@ easy_admin:
   entities:
     Notice:
       class: App\Entity\Notice
-      label: menu.notices
       actions: ['show']
       list:
         max_results: 50
@@ -52,6 +59,7 @@ easy_admin:
           - note
           - expires
       show: &noticeShow
+        role: ROLE_ADMIN
         fields:
           - { property: message, label: notices.message }
           - { property: contributor, label: notices.contributor }
@@ -83,7 +91,6 @@ easy_admin:
 
     ExpiredNotice:
       class: App\Entity\Notice
-      label: menu.expiredNotices
       disabled_actions: ['new']
       search: *noticeSearch
       list:
@@ -94,7 +101,6 @@ easy_admin:
       form: *noticeForm
 
     Contributor:
-      label: menu.contributors
       class: App\Entity\Contributor
       list:
         title: title.contributors
@@ -127,7 +133,6 @@ easy_admin:
           - { property: previewImageFile, label: contributors.previewImageFile, type: vich_image, help: '1200x630 pixels, JPG, PNG.' }
 
     Domain:
-      label: menu.domains
       class: App\Entity\DomainName
       list:
         title: title.domains
@@ -156,10 +161,10 @@ easy_admin:
           - { property: updatedAt, label: domains.updatedAt }
 
     DomainsSet:
-      label: menu.domainsSets
       class: App\Entity\DomainsSet
       list:
         title: title.domainsSets
+        item_permission: ROLE_ADMIN
         actions: ['show']
         sort: ['name', 'ASC']
         max_results: 50
@@ -168,10 +173,12 @@ easy_admin:
           - { property: domains, label: domainsSets.domains.nb }
           - { property: matchingContexts, label: domainsSets.matchingContexts.nb }
       form:
+        item_permission: ROLE_ADMIN
         fields:
           - { property: name, label: domainsSets.name }
           - { property: domains, label: domainsSets.domains, type: easyadmin_autocomplete }
       show:
+        item_permission: ROLE_ADMIN
         max_results: 100
         fields:
           - { property: id, label: domainsSets.id }
@@ -187,22 +194,23 @@ easy_admin:
 
     RestrictedContext:
       class: App\Entity\RestrictedContext
-      label: menu.restrictedContexts
       list:
         title: title.restrictedContexts
+        item_permission: ROLE_ADMIN
         max_results: 50
         fields:
           - id
           - { property: urlRegex, label: restrictedContexts.urlRegex }
       form:
+        item_permission: ROLE_ADMIN
         fields:
           - { property: urlRegex, label: restrictedContexts.urlRegex }
 
     User:
-      label: menu.users
       class: App\Entity\User
       list:
         title: title.users
+        item_permission: ROLE_ADMIN
         max_results: 50
         fields:
           - { property: username, label: users.username }
@@ -211,6 +219,7 @@ easy_admin:
           - { property: lastLogin, label: users.lastLogin }
           - { property: roles, label: users.roles }
       edit:
+        item_permission: ROLE_ADMIN
         fields:
           - { property: username, label: users.username }
           - { property: email, label: users.email }
@@ -218,6 +227,7 @@ easy_admin:
           - { property: plainPassword, label: users.plainPassword, type: text, type_options: { required: false } }
           - { property: roles, label: users.roles, type: choice, type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
       new:
+        item_permission: ROLE_ADMIN
         fields:
           - { property: username, label: users.username }
           - { property: email, label: users.email }
