@@ -58,6 +58,10 @@ You can edit .env to your liking (optional). This file should be .gitignored som
 
 #### Dev (w/ docker)
 
+##### Install and run docker
+
+[https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+
 The first run may take few minutes since images are to be built,
 composer has to install project dependencies and doctrine has to
 migrate databases and load fixtures. Subsequent runs are much faster.
