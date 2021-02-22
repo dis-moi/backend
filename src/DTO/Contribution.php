@@ -1,14 +1,17 @@
 <?php
 
-namespace AppBundle\Entity;
+namespace App\DTO;
 
-use AppBundle\Helper\NoticeIntention;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class NoticeContribution
+/**
+ * A `Contribution` is a `DTO` used to create a `Notice` and `Contributor`.
+ */
+final class Contribution
 {
-
     /**
+     * A category must have a name, might be used as an hashtag later on.
+     *
      * @var string
      *
      * @Assert\Url
@@ -33,18 +36,24 @@ class NoticeContribution
     private $message;
 
     /**
-     * @var NoticeIntention
+     * This property is filled when a user is asking a question to another contributor.
      *
-     * @Assert\Type(NoticeIntention)
+     * @var int|null
      */
-    private $intention;
+    private $toContributorId;
 
-    function __construct($contributorName, $contributorEmail, $url, $intention, $message) {
+    public function __construct($url, $contributorName, $contributorEmail, $message, $toContributorId = null)
+    {
+        $this->url = $url;
         $this->contributorName = $contributorName;
         $this->contributorEmail = $contributorEmail;
-        $this->url = $url;
-        $this->intention = $intention;
         $this->message = $message;
+        $this->toContributorId = $toContributorId;
+    }
+
+    public function getUrl(): string
+    {
+        return $this->url;
     }
 
     public function getContributorName(): string
@@ -62,17 +71,17 @@ class NoticeContribution
         return $this->message;
     }
 
-    public function getIntention(): NoticeIntention
+    public function getToContributorId(): int
     {
-        return $this->intention;
+        return $this->toContributorId;
     }
 
-    public function getUrl() : string
+    public function isAQuestion(): bool
     {
-        return $this->url;
+        return (bool) $this->toContributorId;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return "Contribution of $this->contributorName on $this->url";
     }
