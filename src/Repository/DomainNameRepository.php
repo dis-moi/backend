@@ -40,4 +40,25 @@ class DomainNameRepository extends BaseRepository
             return $newDomain;
         }
     }
+
+    /**
+     * @param string $host an hostname, for example: www.pref.okinawa.jp
+     */
+    public function findMostSpecificFromHost(string $host): ?DomainName
+    {
+        $domainParts = explode('.', $host);
+
+        $existingDomainName = null;
+        while (count($domainParts) > 0) {
+            /** @var DomainName|null $existingDomainName */
+            $existingDomainName = $this->findByName(join('.', $domainParts));
+            if ($existingDomainName) {
+                return $existingDomainName;
+            } else {
+                array_shift($domainParts);
+            }
+        }
+
+        return null;
+    }
 }

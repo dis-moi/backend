@@ -33,3 +33,8 @@ services:
     App\Domain\Service\MessagePresenter:
         arguments:
             $utmMedium: 'Dismoi_extension_navigateur'
+
+    App\Domain\Service\NoticeAssembler:
+        arguments:
+            $contributorRepository: '@App\Repository\ContributorRepository'
+            $domainNameRepository: '@App\Repository\DomainNameRepository'
