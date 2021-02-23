@@ -143,6 +143,7 @@ class Notice
     {
         $this->matchingContexts = new ArrayCollection();
         $this->relays = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
         $this->visibility = NoticeVisibility::getDefault();
         $this->expires = (new DateTimeImmutable())->modify('+1year');
     }
