@@ -12,11 +12,7 @@ class VisibilityType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'choices' => [
-                'Archived' => NoticeVisibility::ARCHIVED_VISIBILITY(),
-                'Private' => NoticeVisibility::PRIVATE_VISIBILITY(),
-                'Public' => NoticeVisibility::PUBLIC_VISIBILITY(),
-            ],
+            'choices' => NoticeVisibility::getChoices(),
             'empty_data' => NoticeVisibility::getDefault(),
         ]);
     }
