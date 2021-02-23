@@ -19,4 +19,12 @@ class NoticeVisibility extends Enum
     {
         return self::getValue();
     }
+
+    public static function getChoices(): array
+    {
+        return array_combine(
+            NoticeVisibility::getValues(),
+            NoticeVisibility::getEnumerators(),
+        );
+    }
 }
