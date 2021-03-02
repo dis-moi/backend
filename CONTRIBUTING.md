@@ -9,7 +9,7 @@ The following is a set of guidelines for contributing to DisMoi.
 These are mostly guidelines, not rules.  Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 
-## Code of conduct
+## Code of Conduct
 
 This project and everyone participating in it is governed by the [DisMoi Code of Conduct](CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code.
