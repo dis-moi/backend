@@ -81,6 +81,11 @@ final class Contribution
         return (bool) $this->toContributorId;
     }
 
+    public function getTypeString(): string
+    {
+        return $this->isAQuestion() ? 'question' : 'contribution';
+    }
+
     public function __toString(): string
     {
         return "Contribution of $this->contributorName on $this->url";

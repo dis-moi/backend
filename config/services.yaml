@@ -38,3 +38,10 @@ services:
         arguments:
             $contributorRepository: '@App\Repository\ContributorRepository'
             $domainNameRepository: '@App\Repository\DomainNameRepository'
+
+
+    App\Domain\Service\EmailComposer:
+        arguments:
+            $router: '@router'
+            $instanceName: '%env(resolve:INSTANCE_NAME)%'
+            $instanceEmail: '%env(resolve:INSTANCE_EMAIL)%'

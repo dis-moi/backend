@@ -4,22 +4,22 @@ namespace App\Domain\Service;
 
 use App\DTO\Contribution;
 use App\Entity\Notice;
-use EasyCorp\Bundle\EasyAdminBundle\Router\EasyAdminRouter;
+use ReflectionClass;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 
 class EmailComposer
 {
-    private $easyAdminRouter;
+    private $router;
     private $instanceName;
-    private $noreplyEmail;
-    private $systemEmail;
+    private $instanceEmail;
 
-    public function construct(EasyAdminRouter $easyAdminRouter, string $instanceName, string $systemEmail, string $noreplyEmail)
+    public function __construct(RouterInterface $router, string $instanceName, string $instanceEmail)
     {
-        $this->easyAdminRouter = $easyAdminRouter;
+        $this->router = $router;
         $this->instanceName = $instanceName;
-        $this->noreplyEmail = $noreplyEmail;
-        $this->systemEmail = $systemEmail;
+        $this->instanceEmail = $instanceEmail;
     }
 
     public function composeNewContributionEmail(Notice $notice, Contribution $contribution): TemplatedEmail
@@ -27,14 +27,22 @@ class EmailComposer
         $subject = $this->composeNewContributionSubject($notice, $contribution);
 
         return (new TemplatedEmail())
-            ->from($this->noreplyEmail)
-            ->to($this->systemEmail)
+            ->from($contribution->getContributorEmail())
+            ->to($this->instanceEmail)
             ->replyTo($contribution->getContributorEmail())
             ->subject($subject)
             ->htmlTemplate('emails/new_contribution.html.twig')
             ->context([
                 'notice' => $notice,
-                'noticeURL' => $this->easyAdminRouter->getEntityPath($notice, 'edit'),
+                'noticeURL' => $this->router->generate(
+                    'easyadmin',
+                    [
+                        'entity' => (new ReflectionClass($notice))->getShortName(),
+                        'id' => $notice->getId(),
+                        'action' => 'edit',
+                    ],
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                ),
             ]);
     }
 
@@ -42,12 +50,12 @@ class EmailComposer
     {
         $subject = "[{$this->instanceName}]";
         if ($contribution->isAQuestion()) {
-            $subject .= "[{$this->instanceName}] New question";
+            $subject .= ' New question';
             if ($contribution->getToContributorId()) {
                 $subject .= " to {$notice->getContributor()->getName()}";
             }
         } else {
-            $subject .= "[{$this->instanceName}] New contribution from {$contribution->getContributorName()}";
+            $subject .= " New contribution from {$contribution->getContributorName()}";
         }
 
         return $subject;
