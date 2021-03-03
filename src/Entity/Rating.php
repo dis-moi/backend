@@ -6,8 +6,8 @@ namespace App\Entity;
 
 use App\Entity\Embeddable\Context;
 use Doctrine\ORM\Mapping as ORM;
-use InvalidArgumentException;
 use function in_array;
+use InvalidArgumentException;
 
 /**
  * @ORM\Table(name="rating")
@@ -97,9 +97,6 @@ class Rating
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getType(): string
     {
         return $this->type;
@@ -127,9 +124,6 @@ class Rating
         return $this;
     }
 
-    /**
-     * @return Context
-     */
     public function getContext(): Context
     {
         return $this->context;
