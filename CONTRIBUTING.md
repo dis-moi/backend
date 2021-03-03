@@ -70,6 +70,9 @@ migrate databases and load fixtures. Subsequent runs are much faster.
 $ docker-compose up
 ```
 
+A [Mailhog](https://github.com/mailhog/MailHog) service is available for email testing in `dev` environment at:
+[http://localhost:8025/](http://localhost:8025/)
+
 #### Aliases
 
 Some aliases are conveniently made available... 
