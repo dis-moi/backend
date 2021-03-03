@@ -71,7 +71,7 @@ final class Contribution
         return $this->message;
     }
 
-    public function getToContributorId(): int
+    public function getToContributorId(): ?int
     {
         return $this->toContributorId;
     }
