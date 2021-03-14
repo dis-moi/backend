@@ -138,6 +138,12 @@ class Notice
      * @var int
      */
     private $pinnedSort;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="externalId", type="string", length=25, nullable=true)
+     */
+    private $externalId;
 
     public function __construct()
     {
@@ -474,6 +480,18 @@ class Notice
     public function setPinnedSort(int $pinnedSort): Notice
     {
         $this->pinnedSort = $pinnedSort;
+
+        return $this;
+    }
+
+    public function getExternalId(): ?string
+    {
+        return $this->externalId;
+    }
+
+    public function setExternalId(string $externalId): Notice
+    {
+        $this->externalId = $externalId;
 
         return $this;
     }
