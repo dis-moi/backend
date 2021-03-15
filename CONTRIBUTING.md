@@ -115,7 +115,7 @@ We also use [PHP CS Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) to 
 
 ### Git Commit Messages
 
-We use [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/) messages guidelines
+We use [conventional commit](https://www.conventionalcommits.org/en/v1.0.0/#summary) messages guidelines
 
 Each commit message consists of a **header**, a **body** and a **footer**.  The header has a special
 format that includes a **type**, a **scope** and a **subject**:
@@ -127,6 +127,8 @@ format that includes a **type**, a **scope** and a **subject**:
 <BLANK LINE>
 <footer>
 ```
+
+List of types: `fix`, `feat`, `build`, `chore`, `ci`, `docs`, `style`, `refactor`, `perf`, `test`.
 
 The **header** is mandatory and the **scope** of the header is optional.
 
