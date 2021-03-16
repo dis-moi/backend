@@ -31,7 +31,7 @@ class NoticeAssembler
         ;
     }
 
-    public function assembleContributor(Contribution $contribution): Contributor
+    public function assembleContributor(Contribution $contribution): ?Contributor
     {
         if ($contribution->isAQuestion()) {
             if ($contribution->getToContributorId()) {
@@ -44,6 +44,8 @@ class NoticeAssembler
 
                 return $questionedContributor;
             }
+
+            return null;
         }
 
         // @todo /!\ Nothing here prevent a user to impersonate another one /!\

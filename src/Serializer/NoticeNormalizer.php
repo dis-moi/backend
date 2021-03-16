@@ -78,7 +78,7 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements NormalizerIn
                 return $this->normalizer->normalize($contributor, $format, $context);
             })->toArray();
         } else {
-            $base['contributorId'] = $notice->getContributor()->getId();
+            $base['contributorId'] = $notice->getContributor() ? $notice->getContributor()->getId() : null;
             $base['relayersIds'] = $notice->getRelayers()->map(static function (Contributor $contributor) {
                 return $contributor->getId();
             })->toArray();

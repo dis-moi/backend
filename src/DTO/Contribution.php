@@ -10,8 +10,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 final class Contribution
 {
     /**
-     * A category must have a name, might be used as an hashtag later on.
-     *
      * @var string
      *
      * @Assert\Url
@@ -42,13 +40,19 @@ final class Contribution
      */
     private $toContributorId;
 
-    public function __construct($url, $contributorName, $contributorEmail, $message, $toContributorId = null)
+    /**
+     * @var bool
+     */
+    private $question;
+
+    public function __construct($url, $contributorName, $contributorEmail, $message, $toContributorId = null, $question = false)
     {
         $this->url = $url;
         $this->contributorName = $contributorName;
         $this->contributorEmail = $contributorEmail;
         $this->message = $message;
         $this->toContributorId = $toContributorId;
+        $this->question = $question;
     }
 
     public function getUrl(): string
@@ -78,7 +82,7 @@ final class Contribution
 
     public function isAQuestion(): bool
     {
-        return (bool) $this->toContributorId;
+        return $this->question;
     }
 
     public function getTypeString(): string
