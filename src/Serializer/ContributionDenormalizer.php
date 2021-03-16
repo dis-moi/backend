@@ -14,12 +14,16 @@ class ContributionDenormalizer implements DenormalizerInterface
 
     public function denormalize($data, $class, $format = null, array $context = []): Contribution
     {
+        $toContributorId = $data['toContributorId'] ?? null;
+        $question = isset($data['question']) ? (bool) $data['question'] : (bool) $toContributorId;
+
         return new Contribution(
             $data['url'],
             $data['contributor']['name'],
             $data['contributor']['email'],
             $data['message'],
-            $data['toContributorId'] ?? null
+            $toContributorId,
+            $question,
         );
     }
 }
