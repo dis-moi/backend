@@ -33,7 +33,7 @@ retest-no-deprecation:
 	$(EXEC_PHP_ND) bin/phpunit
 
 cs-fix:
-	$(COMPOSER) fix
+	$(COMPOSER) fix-cs
 
 stop:
 	docker-compose stop
