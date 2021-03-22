@@ -35,6 +35,9 @@ retest-no-deprecation:
 cs-fix:
 	$(COMPOSER) fix-cs
 
+cs-check:
+	$(COMPOSER) check-cs
+
 stop:
 	docker-compose stop
 
