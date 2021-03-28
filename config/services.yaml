@@ -33,5 +33,17 @@ services:
         arguments:
             $utmMedium: 'Dismoi_extension_navigateur'
 
+    App\Domain\Service\NoticeAssembler:
+        arguments:
+            $contributorRepository: '@App\Repository\ContributorRepository'
+            $domainNameRepository: '@App\Repository\DomainNameRepository'
+
+
+    App\Domain\Service\EmailComposer:
+        arguments:
+            $router: '@router'
+            $instanceName: '%env(resolve:INSTANCE_NAME)%'
+            $instanceEmail: '%env(resolve:INSTANCE_EMAIL)%'
+
     App\Command\UpdateCaptainFactNoticesCommand:
         $contributorId: '%env(DISMOI_CAPTAINFACT_CONTRIBUTOR_ID)%'

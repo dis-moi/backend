@@ -53,6 +53,10 @@ class DomainFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($searchEnginesSet);
         $this->addReference('search_engines_domains_set', $searchEnginesSet);
 
+        $okinawa = new DomainName('pref.okinawa.jp');
+        $manager->persist($okinawa);
+        $this->addReference('okinawa_domain', $okinawa);
+
         $manager->flush();
     }
 

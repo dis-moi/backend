@@ -58,7 +58,7 @@ class Notice
 
     /**
      * @ORM\ManyToOne(targetEntity=Contributor::class, inversedBy="notices", cascade={"persist"}, fetch="EAGER")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $contributor;
 
@@ -149,6 +149,7 @@ class Notice
     {
         $this->matchingContexts = new ArrayCollection();
         $this->relays = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
         $this->visibility = NoticeVisibility::getDefault();
         $this->expires = (new DateTimeImmutable())->modify('+1year');
     }

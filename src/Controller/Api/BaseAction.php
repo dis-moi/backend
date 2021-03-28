@@ -14,9 +14,8 @@ abstract class BaseAction
         $this->serializer = $serializer;
     }
 
-    protected function createResponse($content, $serializerOptions = [])
+    protected function createResponse($content, $serializerOptions = [], $status = 200)
     {
-        $status = 200;
         $headers = [];
         $json = $this->serialize($content, $serializerOptions);
 

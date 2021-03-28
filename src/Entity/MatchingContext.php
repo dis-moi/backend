@@ -61,7 +61,7 @@ class MatchingContext
     /**
      * @var Collection
      *
-     * @ORM\ManyToMany(targetEntity="DomainName", inversedBy="matchingContexts")
+     * @ORM\ManyToMany(targetEntity="DomainName", inversedBy="matchingContexts", cascade={"persist"})
      * @ORM\JoinTable(name="matching_context_domain_name",
      *   joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
      *   inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}

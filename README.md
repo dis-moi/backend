@@ -1,5 +1,5 @@
 DisMoi Backend
-================
+==============
 
 [![Build Status](https://semaphoreci.com/api/v1/projects/1ab935cc-487c-4be9-92a0-b0c90098cd58/1038377/shields_badge.svg)](https://semaphoreci.com/lmem/kraft-backend)
 
@@ -13,23 +13,29 @@ To lean more about the uses cases, visits the :fr: [**DisMoi** Website](https://
 
 This the backend API and backoffice serving [**DisMoi** Extension](https://github.com/dis-moi/extension).
 
-## Open API
+
+## Open API
 
 API is [described](./docs/openapi.json) as Open API specification.
 
 API is explorable on [Swagger Hub](https://app.swaggerhub.com/apis/DisMoi/Notices)
 
+
 ## Contributing
 
-You’re welcome to help ! Please read the [**DisMoi** Contributing Guidelines](CONTRIBUTING.md).
+You’re welcome to help ! Please read the [**DisMoi** Contributing Guidelines](./CONTRIBUTING.md).
+
 
 ## Follow us
+
 - 🌐 Web: https://www.dismoi.io
 - 🐦 Twitter: https://twitter.com/DisMoiCompagnon
 
-## LICENSE
 
-[GNU AGPL v3](LICENSE)
+## License
+
+[GNU AGPL v3](./LICENSE)
+
 > Copyright (C) 2020 INSITU SAS
 > 
 > This program is free software: you can redistribute it and/or modify

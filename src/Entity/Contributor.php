@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Domain\Model\Enum\CategoryName;
+use App\Entity\Ability\VichFilenamer;
 use App\Helper\ImageUploadable;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -27,6 +28,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Contributor implements ImageUploadable
 {
+    use VichFilenamer;
+
     /**
      * @var int
      *
@@ -142,6 +145,7 @@ class Contributor implements ImageUploadable
      * @var string
      * @ORM\Column(name="email", type="string", length=255, unique=true, nullable=true)
      * @Assert\Length(max="255")
+     * @Assert\Email
      */
     private $email;
 

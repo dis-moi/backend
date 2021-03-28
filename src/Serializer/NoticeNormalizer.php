@@ -72,13 +72,13 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements NormalizerIn
             'modified' => self::formatDateTime($notice->getUpdated()),
         ];
 
-        if ($context[NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS]) {
+        if ($context[NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS] ?? false) {
             $base['contributor'] = $this->normalizer->normalize($notice->getContributor(), $format, $context);
             $base['relayers'] = $notice->getRelayers()->map(function (Contributor $contributor) use ($format, $context) {
                 return $this->normalizer->normalize($contributor, $format, $context);
             })->toArray();
         } else {
-            $base['contributorId'] = $notice->getContributor()->getId();
+            $base['contributorId'] = $notice->getContributor() ? $notice->getContributor()->getId() : null;
             $base['relayersIds'] = $notice->getRelayers()->map(static function (Contributor $contributor) {
                 return $contributor->getId();
             })->toArray();

@@ -67,13 +67,14 @@
         "symfony/browser-kit": "4.4.*",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "friendsofphp/php-cs-fixer": "^2.16",
-        "rector/rector": "^0.8.15"
+        "rector/rector": "^0.8.15",
+        "brainmaestro/composer-git-hooks": "^2.8"
     },
     "conflict": {
         "symfony/symfony": "*"
     },
     "scripts": {
-        "fix": [
+        "fix-cs": [
             "php-cs-fixer fix"
         ],
         "auto-scripts": {
@@ -86,6 +87,9 @@
         "symfony": {
             "require": "4.4.*"
         },
-        "symfony-assets-install": "relative"
+        "symfony-assets-install": "relative",
+        "hooks": {
+            "pre-commit": ["php-cs-fixer fix"]
+        }
     }
 }
