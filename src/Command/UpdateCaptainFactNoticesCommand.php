@@ -13,29 +13,26 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class UpdateCaptainFactNoticesCommand.
- *
- * TODO
- * format des videos youtube a gerer (XXXXXX = youtubeId) :
- * - https://www.youtube.com/watch?v=XXXXXX
- * - https://www.youtube.com/embed/XXXXXX (TO CONFIRM)
- *
- * format de la page de redirection captain fact (YYYYYY = hashId)
- * - https://captainfact.io/videos/YYYYYY
  */
 class UpdateCaptainFactNoticesCommand extends Command
 {
     protected static $defaultName = 'app:notices:update:captainfact';
 
-    public static $settingKey = 'CF';
-    public static $noticeExternalIdPrefix = 'CF_';
+    const NOTICE_EXTERNAL_ID_PREFIX = 'CF_';
 
     private $httpClient;
     private $entityManager;
+    private $contributorId;
 
-    public function __construct(HttpClientInterface $httpClient, EntityManagerInterface $entityManager)
+    private $contributor;
+    private $noticesExternalIds;
+    private $output;
+
+    public function __construct(HttpClientInterface $httpClient, EntityManagerInterface $entityManager, $contributorId)
     {
         $this->httpClient = $httpClient;
         $this->entityManager = $entityManager;
+        $this->contributorId = $contributorId;
         parent::__construct();
     }
 
@@ -46,172 +43,267 @@ class UpdateCaptainFactNoticesCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('Fetching Captain Fact\'s GraphQL API...');
-        $timestamp = time();
+        $this->output = $output;
+        $startTimestamp = time();
 
-        // Get CF contributor's id
+        // Load CaptainFact contributor
         try {
-            $settings = json_decode(
-                $this
-                    ->entityManager
-                    ->find('App\Entity\Setting', self::$settingKey)
-                    ->getValue(),
-                true
-            );
+            $this->loadCaptainFactContributor();
         } catch (Exception $e) {
-            $output->writeln('Error: unable to load CF settings');
+            $this->output->writeln('Error: you have to set the DISMOI_CAPTAINFACT_CONTRIBUTOR_ID environment variable.');
 
             return;
         }
 
-        // Get CF contributor
-        $contributor = $this
-            ->entityManager
-            ->find('App\Entity\Contributor', (int) $settings['contributorId']);
-
-        // Read current external IDs of CF notices
-        $noticesIds = array_flip(
-            array_column(
-                $this
-                    ->entityManager
-                    ->createQuery("SELECT DISTINCT n.externalId FROM App\Entity\Notice n WHERE n.contributor=:contributor AND n.externalId LIKE :externalIdPattern")
-                    ->setParameter('contributor', $contributor)
-                    ->setParameter('externalIdPattern', self::$noticeExternalIdPrefix.'%')
-                    ->getScalarResult(),
-                'externalId'
-            )
-        );
+        // Load Existing CaptainFact notices
+        $this->loadExternalIdsOfNoticesForCaptainFactContributor();
 
         // CF API calls: loop on online videos and create/update notices for worthy ones
+        $pageIndex = 1;
         $creationCount = 0;
         $updateCount = 0;
-        $archiveCount = 0;
-
-        $pageIndex = 1;
+        $firstIndexOfLastPage = 0;
         do {
-            $output->writeln(sprintf('Loading videos page %d...', $pageIndex));
+            // Fetch videos page
+            $content = $this->fetchVideosForPage($pageIndex);
 
-            $response = $this->httpClient->request(
-                'POST',
-                'https://graphql.captainfact.io/graphiql',
-                [
-                    'headers' => [
-                        'Accept' => 'application/json',
-                    ],
-                    'body' => [
-                        'query' => sprintf('
-                            {videos(offset:%d) {
-                                totalEntries,
-                                entries {
-                                    id, hashId, title, youtubeId, url,
-                                    statements {
-                                        id, text,
-                                        comments {
-                                            id, approve, text, score
-                                        }
-                                    }
-                                }
-                            }
-                        }', $pageIndex),
-                    ],
-                ]
-            );
-            $statusCode = $response->getStatusCode();
-            if (200 != $statusCode) {
-                $output->writeln(sprintf('API status code %d', $statusCode));
-
-                return;
+            // hack: the API gives the last page idefinitely and we don't want it
+            if ($content['data']['videos']['entries'][0]['id'] == $firstIndexOfLastPage) {
+                break;
             }
-            $content = $response->toArray();
+            $firstIndexOfLastPage = $content['data']['videos']['entries'][0]['id'];
 
+            // For each eligible entry, create or update a notice
             $entriesCount = count($content['data']['videos']['entries']);
             for ($entryIndex = 0; $entryIndex < $entriesCount; ++$entryIndex) {
                 $entry = $content['data']['videos']['entries'][$entryIndex];
 
-                // Determine if this entry deserves a notice
-                $minCommentsCount = 3;
-                $minVotesCounts = 1;
-
-                $commentsCount = 0;
-                $votesCount = 0;
-                $deserves = false;
-
-                for ($statementIndex = 0; $statementIndex < count($entry['statements']); ++$statementIndex) {
-                    $commentsCount += count($entry['statements'][$statementIndex]['comments']);
-                    if ($commentsCount >= $minCommentsCount) {
-                        $deserves = true;
-                    } else {
-                        for ($k = 0; $k < count($entry['statements'][$statementIndex]['comments']); ++$k) {
-                            $votesCount += $entry['statements'][$statementIndex]['comments'][$k]['score'];
-                            if ($votesCount >= $minVotesCounts) {
-                                $deserves = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-                if ($deserves) {
-                    // Create the matching context
-                    $matchingContexts = [];
-                    $matchingContext = new MatchingContext();
-                    $matchingContext->setUrlRegex('https://www.youtube.com/watch?v='.$entry['youtubeId'].'(&.*)?$');
-
-                    // Create the message
-                    $message = 'Cette vidéo est en cours de fact-checking collaboratif sur CaptainFact ('.$commentsCount.' commentaire'.(($commentsCount) ? 's' : '').' au '.date('d/m/Y').'). <a href="https://captainfact.io/videos/'.$entry['hashId'].'">Voir les résultats</a>';
-
-                    if (isset($noticesIds[self::$noticeExternalIdPrefix.$entry['id']])) {
-                        // Update an existing notice
-                        $notices = $this
-                            ->entityManager
-                            ->createQuery("SELECT n FROM App\Entity\Notice n WHERE n.contributor=:contributor AND n.externalId=:externalId")
-                            ->setParameter('contributor', $contributor)
-                            ->setParameter('externalId', self::$noticeExternalIdPrefix.$entry['id'])
-                            ->getResult();
-                        for ($noticeIndex = 0; $noticeIndex < count($notices); ++$noticeIndex) {
-                            $notices[$noticeIndex]->setMessage($message);
-                            $notices[$noticeIndex]->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
-                            $this
-                                ->entityManager
-                                ->persist($notices[$noticeIndex]);
-                        }
-                        unset($noticesIds[self::$noticeExternalIdPrefix.$entry['id']]);
-
-                        $output->writeln(sprintf('... update entry %d', $entry['id']));
-                        ++$updateCount;
-                    } else {
-                        // Create a new notice
-                        $notice = new Notice();
-                        $notice->setContributor($contributor);
-                        $notice->setExternalId(self::$noticeExternalIdPrefix.$entry['id']);
-                        $notice->addMatchingContext($matchingContext);
-                        $notice->setMessage($message);
-                        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
-                        $this
-                            ->entityManager
-                            ->persist($notice);
-
-                        $output->writeln(sprintf('... create entry %d', $entry['id']));
-                        ++$creationCount;
-                    }
-                } else {
-                    $output->writeln(sprintf('... ignore entry %d', $entry['id']));
+                $sourcesCount = 0;
+                if ($this->isEntryEligible($entry, $sourcesCount)) {
+                    $this->computeEntry($entry, $sourcesCount, $creationCount, $updateCount);
                 }
             }
-            $this
-                ->entityManager
-                ->flush();
 
             ++$pageIndex;
-        } while (0 != $entriesCount);
+        } while (0 != $entriesCount); /* stop if there weren't any entries in this page */
+        $this->output->writeln('No more entries to load.');
 
         // Disable (set visibility = archived) current notices for unworthy or disabled videos
-        while (count($noticesIds) > 0) {
-            $noticeExternalId = array_shift($noticesIds);
+        $archiveCount = 0;
+        $this->disableNoticesWithExternalIds($archiveCount);
+
+        $this->output->writeln(sprintf('Done in '.(time() - $startTimestamp).' seconds. %d notice(s) created, %d updated, %d archived.', $creationCount, $updateCount, $archiveCount));
+    }
+
+    /**
+     * Method getCaptainFactContributor
+     * Get contributor defined in environment variable set in set::ENV_KEY.
+     */
+    protected function loadCaptainFactContributor()
+    {
+        if (0 == (int) $this->contributorId) {
+            throw new Exception();
+        }
+
+        $this->contributor = $this
+            ->entityManager
+            ->find('App\Entity\Contributor', (int) $this->contributorId);
+    }
+
+    /**
+     * Method loadExternalIdsOfNoticesForCaptainFactContributor
+     * Get externalId of existing notices for the given contributor.
+     */
+    protected function loadExternalIdsOfNoticesForCaptainFactContributor()
+    {
+        try {
+            $this->noticesExternalIds = array_flip(
+                array_column(
+                    $this
+                        ->entityManager
+                        ->createQuery("SELECT DISTINCT n.externalId FROM App\Entity\Notice n WHERE n.contributor=:contributor AND n.externalId LIKE :externalIdPattern")
+                        ->setParameter('contributor', $this->contributor)
+                        ->setParameter('externalIdPattern', self::NOTICE_EXTERNAL_ID_PREFIX.'%')
+                        ->getScalarResult(),
+                    'externalId'
+                )
+            );
+        } catch (Exception $e) {
+            return [];
+        }
+    }
+
+    /**
+     * Method fetchVideosForPage
+     * Fetch a page of videos from CaptainFact API.
+     */
+    protected function fetchVideosForPage($pageIndex)
+    {
+        $this->output->writeln(sprintf('Loading videos page %d...', $pageIndex));
+
+        $response = $this->httpClient->request(
+            'POST',
+            'https://graphql.captainfact.io/graphiql',
+            [
+                'headers' => [
+                    'Accept' => 'application/json',
+                ],
+                'body' => [
+                    'query' => sprintf('
+                        {videos(offset:%d) {
+                            totalEntries,
+                            entries {
+                                id,
+                                hashId,
+                                title,
+                                youtubeId,
+                                url,
+                                statements {
+                                    id, text,
+                                    comments {
+                                        id,
+                                        approve,
+                                        text,
+                                        score,
+                                        source {
+                                            id
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }', $pageIndex),
+                ],
+            ]
+        );
+        $statusCode = $response->getStatusCode();
+        if (200 != $statusCode) {
+            throw new Exception(sprintf('API status code %d', $statusCode));
+        }
+
+        return $response->toArray();
+    }
+
+    /**
+     * Method isEntryEligible
+     * Check if entry deserves a notice: if there is at least $minSourcesCount sources, or $minSourcesCountWithMinScore if one of them scores at least $minScore.
+     */
+    protected function isEntryEligible($entry, &$sourcesCount)
+    {
+        $minSourcesCount = 8;
+        $minScore = 1;
+        $minSourcesCountWithMinScore = 5;
+
+        $hasScoredSource = false;
+        $deserves = false;
+
+        for ($statementIndex = 0; $statementIndex < count($entry['statements']); ++$statementIndex) {
+            for ($commentIndex = 0; $commentIndex < count($entry['statements'][$statementIndex]['comments']); ++$commentIndex) {
+                ++$sourcesCount;
+
+                if ($sourcesCount >= $minSourcesCount) {
+                    $deserves = true;
+                } elseif (!$deserves) {
+                    if ($entry['statements'][$statementIndex]['comments'][$commentIndex]['score'] >= $minScore) {
+                        $hasScoredSource = true;
+                    }
+                    if ($hasScoredSource && ($sourcesCount >= $minSourcesCountWithMinScore)) {
+                        $deserves = true;
+                    }
+                }
+            }
+        }
+
+        return $deserves;
+    }
+
+    /**
+     * Method computeEntry
+     * Create or update a notice with the given entry.
+     */
+    protected function computeEntry($entry, $sourcesCount, &$creationCount, &$updateCount)
+    {
+        $matchingContexts = [];
+        $matchingContext = new MatchingContext();
+        $matchingContext->setUrlRegex('https://www.youtube.com/watch?v='.$entry['youtubeId'].'(&.*)?$');
+
+        $message = 'Cette vidéo est en cours de fact-checking collaboratif sur CaptainFact ('.$sourcesCount.' commentaire'.(($sourcesCount) ? 's' : '').' sourcés'.(($sourcesCount) ? 's' : '').' au '.date('d/m/Y').'). <a href="https://captainfact.io/videos/'.$entry['hashId'].'">Voir les résultats</a>';
+
+        if (isset($this->noticesExternalIds[self::NOTICE_EXTERNAL_ID_PREFIX.$entry['id']])) {
+            $this->updateNoticesWithExternalId($entry['id'], $this->contributor, $matchingContext, $message);
+            ++$updateCount;
+
+            // Remove this external id from the remaining existing notices
+            unset($this->noticesExternalIds[self::NOTICE_EXTERNAL_ID_PREFIX.$entry['id']]);
+        } else {
+            $this->createNoticeWithExternalId($entry['id'], $this->contributor, $matchingContext, $message);
+            ++$creationCount;
+        }
+
+        $this
+            ->entityManager
+            ->flush();
+    }
+
+    /**
+     * Method createNoticeForExternalId
+     * Create a notice with the given parameters.
+     */
+    protected function createNoticeWithExternalId($externalId, $contributor, $matchingContext, $message)
+    {
+        $this->output->writeln(sprintf('... create entry with id %d', $externalId));
+
+        $notice = new Notice();
+        $notice->setExternalId(self::NOTICE_EXTERNAL_ID_PREFIX.$externalId);
+        $notice->setContributor($contributor);
+        $notice->addMatchingContext($matchingContext);
+        $notice->setMessage($message);
+        $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+
+        $this
+            ->entityManager
+            ->persist($notice);
+    }
+
+    /**
+     * Method updateNoticesForExternalId
+     * Update the notice with the given externalId with the the given parameters.
+     */
+    protected function updateNoticesWithExternalId($externalId, $contributor, $matchingContext, $message)
+    {
+        $this->output->writeln(sprintf('... update entry with id %d', $externalId));
+
+        $notices = $this
+            ->entityManager
+            ->createQuery("SELECT n FROM App\Entity\Notice n WHERE n.contributor=:contributor AND n.externalId=:externalId")
+            ->setParameter('contributor', $contributor)
+            ->setParameter('externalId', self::NOTICE_EXTERNAL_ID_PREFIX.$externalId)
+            ->getResult();
+
+        for ($noticeIndex = 0; $noticeIndex < count($notices); ++$noticeIndex) {
+            $notices[$noticeIndex]->setMessage($message);
+            $notices[$noticeIndex]->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+
+            $this
+                ->entityManager
+                ->persist($notices[$noticeIndex]);
+        }
+    }
+
+    /**
+     * Method disableNoticesWithExternalIds
+     * Update the remaining notices to set their visibility to archived.
+     */
+    protected function disableNoticesWithExternalIds(&$archiveCount)
+    {
+        while (count($this->noticesExternalIds) > 0) {
+            $noticeExternalId = array_shift($this->noticesExternalIds);
             $notices = $this
                 ->entityManager
                 ->createQuery("SELECT n FROM App\Entity\Notice n WHERE n.externalId=:eid")
                 ->setParameter('eid', $noticeExternalId)
                 ->getResult();
+
             for ($noticeIndex = 0; $noticeIndex < count($notices); ++$noticeIndex) {
                 $notices[$noticeIndex]->setVisibility(NoticeVisibility::ARCHIVED_VISIBILITY());
                 $this
@@ -219,13 +311,12 @@ class UpdateCaptainFactNoticesCommand extends Command
                     ->persist($notices[$noticeIndex]);
             }
 
-            $output->writeln(sprintf('... archive entry %s', substr($noticeExternalId, -3)));
+            $this->output->writeln(sprintf('... archive entry %s', substr($noticeExternalId, -3)));
             ++$archiveCount;
         }
+
         $this
             ->entityManager
             ->flush();
-
-        $output->writeln(sprintf('Done in '.(time() - $timestamp).' seconds. %d notice(s) created, %d updated, %d archived.', $creationCount, $updateCount, $archiveCount));
     }
 }
