@@ -13,17 +13,6 @@ final class Version20210311221700 extends AbstractMigration
     {
         $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('
-            CREATE TABLE setting (
-                k VARCHAR(15) NOT NULL,
-                v VARCHAR(255) NOT NULL,
-                PRIMARY KEY (k)
-            )
-            DEFAULT CHARACTER SET UTF8
-            COLLATE UTF8_unicode_ci
-            ENGINE = InnoDB
-        ');
-        
         $this->addSql('ALTER TABLE notice ADD externalId VARCHAR(25) NULL');
         $this->addSql('CREATE INDEX IDX_NOTICE_EXTERNALID ON notice (externalId)');
     }
@@ -31,8 +20,6 @@ final class Version20210311221700 extends AbstractMigration
     public function down(Schema $schema): void
     {
         $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
-
-        $this->addSql('DROP TABLE setting');
 
         $this->addSql('DROP INDEX IDX_NOTICE_EXTERNALID ON notice');
         $this->addSql('ALTER TABLE notice DROP externalId');
