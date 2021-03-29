@@ -46,4 +46,4 @@ services:
             $instanceEmail: '%env(resolve:INSTANCE_EMAIL)%'
 
     App\Command\UpdateCaptainFactNoticesCommand:
-        $contributorId: '%env(DISMOI_CAPTAINFACT_CONTRIBUTOR_ID)%'
+        $contributorId: '%env(int:DISMOI_CAPTAINFACT_CONTRIBUTOR_ID)%'

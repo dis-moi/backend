@@ -96,8 +96,8 @@ class UpdateCaptainFactNoticesCommand extends Command
     }
 
     /**
-     * Method getCaptainFactContributor
-     * Get contributor defined in environment variable set in set::ENV_KEY.
+     * Method loadCaptainFactContributor
+     * Load contributor defined in environment variable set in set::ENV_KEY.
      */
     protected function loadCaptainFactContributor()
     {
@@ -112,7 +112,7 @@ class UpdateCaptainFactNoticesCommand extends Command
 
     /**
      * Method loadExternalIdsOfNoticesForCaptainFactContributor
-     * Get externalId of existing notices for the given contributor.
+     * Load externalId of existing notices for the given contributor.
      */
     protected function loadExternalIdsOfNoticesForCaptainFactContributor()
     {
@@ -129,7 +129,7 @@ class UpdateCaptainFactNoticesCommand extends Command
                 )
             );
         } catch (Exception $e) {
-            return [];
+            return;
         }
     }
 
@@ -137,7 +137,7 @@ class UpdateCaptainFactNoticesCommand extends Command
      * Method fetchVideosForPage
      * Fetch a page of videos from CaptainFact API.
      */
-    protected function fetchVideosForPage($pageIndex)
+    protected function fetchVideosForPage($pageIndex): array
     {
         $this->output->writeln(sprintf('Loading videos page %d...', $pageIndex));
 
@@ -188,7 +188,7 @@ class UpdateCaptainFactNoticesCommand extends Command
      * Method isEntryEligible
      * Check if entry deserves a notice: if there is at least $minSourcesCount sources, or $minSourcesCountWithMinScore if one of them scores at least $minScore.
      */
-    protected function isEntryEligible($entry, &$sourcesCount)
+    protected function isEntryEligible($entry, &$sourcesCount): bool
     {
         $minSourcesCount = 8;
         $minScore = 1;
