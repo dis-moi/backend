@@ -26,7 +26,6 @@ menu:
   domainsSets: Groupes de domaines
   contributors: Contributeurs
   users: Utilisateurs
-  settings: Paramètres
 
 # Easy Admin Pages
 title:
@@ -38,7 +37,6 @@ title:
   domainsSets: Groupes de domaines
   contributors: Contributeurs
   users: Utilisateurs
-  settings: Paramètres des contributions automatisées
 
 # Entities properties
 notices:
@@ -133,10 +131,6 @@ users:
   plainPassword: Mot de passe
   lastLogin: Dernière connexion
   roles: Rôles
-
-settings:
-  key: clé
-  value: valeur
 
 # Easy Admin
 form.label.delete: Supprimer l’image ?
