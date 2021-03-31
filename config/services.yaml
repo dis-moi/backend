@@ -29,7 +29,6 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-
     App\Domain\Service\MessagePresenter:
         arguments:
             $utmMedium: 'Dismoi_extension_navigateur'
@@ -45,3 +44,6 @@ services:
             $router: '@router'
             $instanceName: '%env(resolve:INSTANCE_NAME)%'
             $instanceEmail: '%env(resolve:INSTANCE_EMAIL)%'
+
+    App\Command\UpdateCaptainFactNoticesCommand:
+        $contributorId: '%env(int:DISMOI_CAPTAINFACT_CONTRIBUTOR_ID)%'

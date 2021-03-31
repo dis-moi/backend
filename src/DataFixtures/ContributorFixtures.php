@@ -51,6 +51,14 @@ class ContributorFixtures extends Fixture
         $this->addReference('contributor_lazy', $contributor);
         $manager->persist($contributor);
 
+        $contributor = new Contributor();
+        $contributor->setName('CaptainFact');
+        $contributor->setIntro('Contributeur avec contributions automatisées');
+        $contributor->setWebsite('captainfact.io/');
+        $contributor->addCategory(CategoryName::CULTURE);
+        $this->addReference('contributor_captainfact', $contributor);
+        $manager->persist($contributor);
+
         $manager->flush();
     }
 }
