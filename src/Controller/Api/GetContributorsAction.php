@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Repository\ContributorRepository;
-use App\Serializer\NormalizerOptions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -35,6 +34,6 @@ class GetContributorsAction extends BaseAction
             throw new NotFoundHttpException('No contributors exist');
         }
 
-        return $this->createResponse($contributors, [NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS => false]);
+        return $this->createResponse($contributors);
     }
 }
