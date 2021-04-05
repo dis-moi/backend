@@ -99,6 +99,13 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
         $exampleNotice = $pinnedNotices->first() ?: $contributor->getPublicNotices()->first();
         $relays = $contributor->getPublicRelays();
 
+        $starred = $exampleNotice && $exampleNotice->getMatchingContexts() ? [/* Deprecated */
+            'exampleMatchingUrl' => $exampleNotice->getExampleMatchingUrl(),
+            'noticeId' => $exampleNotice->getId(),
+            'noticeUrl' => $this->noticeUrlGenerator->generate($exampleNotice),
+            'screenshot' => $this->getImageAbsoluteUrl($exampleNotice, 'screenshotFile'),
+        ] : null;
+
         return [
             'id' => $contributor->getId(),
             'name' => $contributor->getName(),
@@ -112,9 +119,21 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
             'preview' => $this->getImageAbsoluteUrl($contributor, 'previewImageFile'),
             'contributions' => $contributor->getNoticesCount(),
             'contribution' => [
-                'example' => $this->normalizer->normalize($exampleNotice, $format, [NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS => false]),
-                'pinnedNotices' => $pinnedNotices->map(function (Notice $notice) use ($format) {
-                    return $this->normalizer->normalize($notice, $format, [NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS => false]);
+                'example' => $starred, /* Deprecated */
+                'starred' => $starred, /* Deprecated */
+                'pinnedNotices' => $pinnedNotices->map(function (Notice $notice) {
+                    return [
+                        'sort' => $notice->getPinnedSort(),
+                        'id' => $notice->getId(),
+                        'url' => $this->noticeUrlGenerator->generate($notice),
+                        'strippedMessage' => $this->messagePresenter->strip($notice->getMessage()),
+                        'exampleMatchingUrl' => $notice->getExampleMatchingUrl(),
+                        'noticeId' => $notice->getId(), // @deprecated
+                        'noticeUrl' => $this->noticeUrlGenerator->generate($notice), // @deprecated
+                        'screenshot' => $this->getImageAbsoluteUrl($notice, 'screenshotFile'),
+                        'created' => NoticeNormalizer::formatDateTime($notice->getCreated()),
+                        'modified' => NoticeNormalizer::formatDateTime($notice->getUpdated()),
+                    ];
                 })->toArray(),
                 'numberOfPublishedNotices' => $contributor->getNoticesCount(),
             ],
