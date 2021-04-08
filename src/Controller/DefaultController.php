@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Notice;
@@ -9,9 +11,13 @@ use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
+    /**
+     * @var RatingRepository
+     */
     protected $ratingRepository;
 
     /**
@@ -27,7 +33,7 @@ class DefaultController extends Controller
      *
      * @throws Exception
      */
-    public function debug_sentry()
+    public function debug_sentry(): void
     {
         throw new Exception('My first Sentry error!');
     }
@@ -35,7 +41,7 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
@@ -46,7 +52,7 @@ class DefaultController extends Controller
     /**
      * @Route("/notice-graph/{id}", name="notice_graph", options={"expose"=true})
      */
-    public function noticeGraphAction(Request $request, Notice $notice)
+    public function noticeGraphAction(Request $request, Notice $notice): Response
     {
         $badgeData = $this->ratingRepository
             ->getGraphDataByNoticeTypes($notice, [Rating::BADGE]);

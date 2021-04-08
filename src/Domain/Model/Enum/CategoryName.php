@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Model\Enum;
 
 use MabeEnum\Enum;
@@ -9,12 +11,15 @@ use MabeEnum\Enum;
  */
 class CategoryName extends Enum
 {
-    const CONSO = 'Conso';
-    const CULTURE = 'Culture & Société';
-    const MILITANT = 'Militant';
-    const DIVERS = 'Divers';
+    public const CONSO = 'Conso';
+    public const CULTURE = 'Culture & Société';
+    public const MILITANT = 'Militant';
+    public const DIVERS = 'Divers';
 
-    public static function getChoices()
+    /**
+     * @return array<string, string>
+     */
+    public static function getChoices(): array
     {
         return array_flip(self::getConstants());
     }

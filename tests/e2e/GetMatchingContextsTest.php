@@ -39,7 +39,10 @@ class GetMatchingContextsTest extends BaseApiE2eTestCase
         $this->assertMatchingContextsAllHaveValidNoticeUrls($payload);
     }
 
-    private function assertMatchingContextsAllHaveValidNoticeUrls($matchingContexts)
+    /**
+     * @param array<string, mixed> $matchingContexts
+     */
+    private function assertMatchingContextsAllHaveValidNoticeUrls(array $matchingContexts): void
     {
         foreach ($matchingContexts as $matchingContext) {
             self::assertRegExp('/^http.*\/api\/v3\/notices\/.*$/', $matchingContext['noticeUrl']);

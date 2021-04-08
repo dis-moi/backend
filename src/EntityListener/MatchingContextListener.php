@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EntityListener;
 
 use App\Entity\MatchingContext;
@@ -9,12 +11,12 @@ class MatchingContextListener
 {
     use UpdateNoticeTrait;
 
-    public function prePersist(MatchingContext $matchingContext, LifecycleEventArgs $event = null)
+    public function prePersist(MatchingContext $matchingContext, LifecycleEventArgs $event = null): void
     {
         $this->updateNotice($matchingContext->getNotice());
     }
 
-    public function preUpdate(MatchingContext $matchingContext, LifecycleEventArgs $event = null)
+    public function preUpdate(MatchingContext $matchingContext, LifecycleEventArgs $event = null): void
     {
         $this->updateNotice($matchingContext->getNotice());
     }

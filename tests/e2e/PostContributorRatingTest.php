@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\e2e;
 
 use App\Entity\Contributor;
 
 class PostContributorRatingTest extends BaseApiE2eTestCase
 {
-    public function testPostContributorRating()
+    public function testPostContributorRating(): void
     {
         /** @var Contributor $contributor */
         $contributor = $this->referenceRepository->getReference('john_doe');

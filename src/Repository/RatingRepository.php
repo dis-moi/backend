@@ -1,23 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Notice;
 use App\Entity\Rating;
 use App\Service\DateInterval;
 use App\Service\DateTimeImmutable;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Persistence\ManagerRegistry;
 
-class RatingRepository extends BaseRepository
+class RatingRepository extends ServiceEntityRepository
 {
+    /**
+     * @var DateInterval
+     */
     private $dateInterval;
 
+    /**
+     * @var \DateTimeImmutable
+     */
     private $from;
+
+    /**
+     * @var \DateTimeImmutable
+     */
     private $to;
 
-    public function __construct(EntityManagerInterface $entityManager, DateTimeImmutable $dateTime, DateInterval $dateInterval)
+    public function __construct(ManagerRegistry $registry, DateTimeImmutable $dateTime, DateInterval $dateInterval)
     {
-        parent::__construct($entityManager);
+        parent::__construct($registry, Rating::class);
 
         $this->dateInterval = $dateInterval;
 
@@ -25,9 +38,14 @@ class RatingRepository extends BaseRepository
         $this->to = $dateTime->today();
     }
 
+    /**
+     * @param string[] $types
+     *
+     * @return array<string, mixed>
+     */
     private function getDataByNoticeTypes(Notice $notice, array $types): array
     {
-        $qb = $this->repository->createQueryBuilder('r')
+        $qb = $this->createQueryBuilder('r')
             ->select('DATE_FORMAT(r.context.datetime, \'%Y-%m-%d\') AS gDate, r.type AS gType, COUNT(r.id) AS count');
 
         $qb->addGroupBy('gDate')
@@ -52,6 +70,9 @@ class RatingRepository extends BaseRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @return int[]
+     */
     public function getGraphDataByNoticeBalanceType(Notice $notice, string $typeUp, string $typeDown): array
     {
         $items = $this->getDataByNoticeTypes($notice, [$typeUp, $typeDown]);
@@ -59,6 +80,11 @@ class RatingRepository extends BaseRepository
         return $this->extractDailyCount($items, [$typeUp]);
     }
 
+    /**
+     * @param string[] $types
+     *
+     * @return int[]
+     */
     public function getGraphDataByNoticeTypes(Notice $notice, array $types): array
     {
         return $this->extractDailyCount(
@@ -67,11 +93,17 @@ class RatingRepository extends BaseRepository
         );
     }
 
-    private static function formatDate(\DateTimeInterface $date)
+    private static function formatDate(\DateTimeInterface $date): string
     {
         return $date->format('Y-m-d');
     }
 
+    /**
+     * @param array<string, mixed> $items
+     * @param string[]             $typesUp
+     *
+     * @return int[]
+     */
     private function extractDailyCount(array $items, array $typesUp): array
     {
         $from = $this->from;
@@ -79,7 +111,7 @@ class RatingRepository extends BaseRepository
 
         $countsPerDate = array_reduce($items, function ($acc, $curr) use ($typesUp) {
             $date = $curr['gDate'];
-            $count = (in_array($curr['gType'], $typesUp) ? +1 : -1) * $curr['count'];
+            $count = (\in_array($curr['gType'], $typesUp, true) ? +1 : -1) * $curr['count'];
 
             return array_merge($acc, [$date => $count + ($acc[$date] ?? 0)]);
         }, []);
@@ -92,7 +124,12 @@ class RatingRepository extends BaseRepository
         });
     }
 
-    private function fillDateRange(\DateTimeImmutable $from, \DateTimeInterface $to, $fillWith, $range = []): array
+    /**
+     * @param mixed[] $range
+     *
+     * @return mixed[]
+     */
+    private function fillDateRange(\DateTimeImmutable $from, \DateTimeInterface $to, callable $fillWith, array $range = []): array
     {
         $nextRange = array_merge($range, [self::formatDate($from) => $fillWith($from)]);
 
@@ -104,10 +141,5 @@ class RatingRepository extends BaseRepository
                 $nextRange
             )
             : $nextRange;
-    }
-
-    public function getClassName(): string
-    {
-        return Rating::class;
     }
 }

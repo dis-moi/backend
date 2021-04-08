@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use DateTime;
@@ -23,9 +25,9 @@ class Extension
     private $id;
 
     /**
-     * @var PersistentCollection
+     * @var PersistentCollection<Subscription>
      * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="extension", orphanRemoval=true)
-     * @ORM\OrderBy({"created" = "DESC"})
+     * @ORM\OrderBy({"created"="DESC"})
      */
     private $subscriptions;
 
@@ -54,12 +56,15 @@ class Extension
         return $this->id;
     }
 
+    /**
+     * @return PersistentCollection<Subscription>
+     */
     public function getSubscriptions(): PersistentCollection
     {
         return $this->subscriptions;
     }
 
-    public function confirm()
+    public function confirm(): void
     {
         $this->updated = new DateTime('now');
     }

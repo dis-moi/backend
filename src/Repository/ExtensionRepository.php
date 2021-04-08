@@ -1,23 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Extension;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class ExtensionRepository extends BaseRepository
+class ExtensionRepository extends ServiceEntityRepository
 {
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($entityManager);
+        parent::__construct($registry, Extension::class);
     }
 
-    public function getClassName()
-    {
-        return Extension::class;
-    }
-
-    public function findOrCreate(string $id)
+    public function findOrCreate(string $id): Extension
     {
         return parent::find($id) ?: new Extension($id);
     }

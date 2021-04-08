@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\Ability;
 
 use Exception;
@@ -16,9 +18,9 @@ trait VichFilenamer
      * Filenames are generated once, so changing the implementation of this should not cause trouble
      * for existing contributors.
      *
-     * @return string A random string of 32 alphanumerical latin characters matching ^[a-zA-Z0-9]{32}$
-     *
      * @throws Exception
+     *
+     * @return string A random string of 32 alphanumerical latin characters matching ^[a-zA-Z0-9]{32}$
      */
     public function getGeneratedFilename(): string
     {
@@ -35,9 +37,9 @@ trait VichFilenamer
      * @param int    $length     How many characters do we want?
      * @param string $characters A string of all possible characters to select from
      *
-     * @return string A string made of $length characters taken at random from from $characters
-     *
      * @throws Exception
+     *
+     * @return string A string made of $length characters taken at random from from $characters
      */
     private function makeRandomString(
         int $length = 64,

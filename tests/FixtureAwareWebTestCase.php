@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
@@ -28,7 +30,7 @@ abstract class FixtureAwareWebTestCase extends WebTestCase
         $this->loadFixtures();
     }
 
-    protected function loadFixtures()
+    protected function loadFixtures(): void
     {
         $doctrine = self::$container->get('doctrine');
         /** @var EntityManagerInterface $entityManager */
@@ -49,7 +51,7 @@ abstract class FixtureAwareWebTestCase extends WebTestCase
         $entityManager->getConnection()->query(sprintf('SET FOREIGN_KEY_CHECKS=1'));
     }
 
-    protected static function assertEqualHtml($expected, $actual)
+    protected static function assertEqualHtml(string $expected, string $actual): void
     {
         $from = ['/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/> </s'];
         $to = ['>',            '<',            '\\1',      '><'];

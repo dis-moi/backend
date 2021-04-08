@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EntityListener;
 
 use App\Entity\Notice;
@@ -10,12 +12,12 @@ class NoticeListener
     use UpdateNoticeTrait;
     use CreateNoticeTrait;
 
-    public function prePersist(Notice $notice, LifecycleEventArgs $event = null)
+    public function prePersist(Notice $notice, LifecycleEventArgs $event = null): void
     {
         $this->createNotice($notice);
     }
 
-    public function preUpdate(Notice $notice, LifecycleEventArgs $event = null)
+    public function preUpdate(Notice $notice, LifecycleEventArgs $event = null): void
     {
         $this->updateNotice($notice);
     }

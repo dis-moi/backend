@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Serializer;
 
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -11,6 +13,7 @@ class EntityWithImageNormalizer
      * @var UploaderHelper
      */
     protected $uploader;
+
     /**
      * @var RequestStack
      */
@@ -22,12 +25,12 @@ class EntityWithImageNormalizer
         $this->requestStack = $requestStack;
     }
 
-    public function getImageAbsoluteUrl($entity, string $field): ?string
+    public function getImageAbsoluteUrl(object $entity, string $field): ?string
     {
         if ($this->uploader->asset($entity, $field)) {
             return $this->requestStack->getCurrentRequest()->getSchemeAndHttpHost().$this->uploader->asset($entity, $field);
-        } else {
-            return null;
         }
+
+        return null;
     }
 }

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\e2e;
 
 use App\Entity\Notice;
 
 class GetNoticeTest extends BaseApiE2eTestCase
 {
-    public function testGetNotice()
+    public function testGetNotice(): void
     {
         /** @var Notice $notice */
         $notice = $this->referenceRepository->getReference('notice_type_ecology');
@@ -24,7 +26,7 @@ with <a href="https://bulles.fr?utm_medium=Dismoi_extension_navigateur" target="
         $this->assertEquals(0, $payload['ratings']['dislikes']);
     }
 
-    public function testFailGetDisabledNotice()
+    public function testFailGetDisabledNotice(): void
     {
         /** @var Notice $notice */
         $notice = $this->referenceRepository->getReference('notice_disabled');
@@ -33,7 +35,7 @@ with <a href="https://bulles.fr?utm_medium=Dismoi_extension_navigateur" target="
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testFailGetPrivateNotice()
+    public function testFailGetPrivateNotice(): void
     {
         /** @var Notice $notice */
         $notice = $this->referenceRepository->getReference('notice_private');
@@ -42,7 +44,7 @@ with <a href="https://bulles.fr?utm_medium=Dismoi_extension_navigateur" target="
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testFailGetArchivedNotice()
+    public function testFailGetArchivedNotice(): void
     {
         /** @var Notice $notice */
         $notice = $this->referenceRepository->getReference('notice_type_ecology_archived');
@@ -51,7 +53,7 @@ with <a href="https://bulles.fr?utm_medium=Dismoi_extension_navigateur" target="
         $this->assertEquals(404, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testFailGetUnpublishedNotice()
+    public function testFailGetUnpublishedNotice(): void
     {
         /** @var Notice $notice */
         $notice = $this->referenceRepository->getReference('notice_expired_unpublished');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Api;
 
 use App\Repository\ContributorRepository;
@@ -13,7 +15,14 @@ use Symfony\Component\Serializer\SerializerInterface;
 // TODO: Remove when not used anymore
 class PostContributorRatingAction extends BaseAction
 {
+    /**
+     * @var ContributorRepository
+     */
     protected $contributorRepository;
+
+    /**
+     * @var EntityManagerInterface
+     */
     protected $entityManager;
 
     public function __construct(SerializerInterface $serializer, ContributorRepository $contributorRepository, EntityManagerInterface $entityManager)
@@ -27,7 +36,7 @@ class PostContributorRatingAction extends BaseAction
      * @Route("/contributors/{id}/ratings")
      * @Method("POST")
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         return new JsonResponse('', 204, [], true);
     }

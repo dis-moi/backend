@@ -15,16 +15,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PinnedNoticesType extends EasyAdminAutocompleteType
 {
+    /**
+     * @var int[]
+     */
     private $givenNoticeIds;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
         $builder
-          ->addEventListener(FormEvents::PRE_SUBMIT, function (PreSubmitEvent $event) {
+          ->addEventListener(FormEvents::PRE_SUBMIT, function (PreSubmitEvent $event): void {
               $this->givenNoticeIds = $event->getData()['autocomplete'];
           })
-            ->addEventListener(FormEvents::SUBMIT, function (SubmitEvent $event) {
+            ->addEventListener(FormEvents::SUBMIT, function (SubmitEvent $event): void {
                 $form = $event->getForm();
 
                 /** @var ArrayCollection $formData */
@@ -41,7 +44,7 @@ class PinnedNoticesType extends EasyAdminAutocompleteType
             });
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

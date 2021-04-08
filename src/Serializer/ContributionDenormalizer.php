@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Serializer;
 
 use App\DTO\Contribution;
@@ -12,6 +14,12 @@ class ContributionDenormalizer implements DenormalizerInterface
         return Contribution::class === $type;
     }
 
+    /**
+     * @param mixed[]    $context
+     * @param mixed|null $format
+     * @param mixed      $data
+     * @param mixed      $class
+     */
     public function denormalize($data, $class, $format = null, array $context = []): Contribution
     {
         $toContributorId = $data['toContributorId'] ?? null;

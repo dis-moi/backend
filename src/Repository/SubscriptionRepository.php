@@ -1,31 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Subscription;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
-class SubscriptionRepository extends BaseRepository
+class SubscriptionRepository extends ServiceEntityRepository
 {
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($entityManager);
-    }
-
-    public function getClassName()
-    {
-        return Subscription::class;
+        parent::__construct($registry, Subscription::class);
     }
 
     /**
-     * @return Subscription?
-     *
      * @throws NonUniqueResultException
+     *
+     * @return Subscription?
      */
-    public function findOne(string $extensionId, string $contributorId)
+    public function findOne(string $extensionId, int $contributorId)
     {
-        return $this->repository->createQueryBuilder('s')
+        return $this->createQueryBuilder('s')
       ->select('s')
       ->leftJoin('s.contributor', 'contributor')
       ->where('s.extension = :extensionId')

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\DomainName;
@@ -10,7 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class DomainFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $disMoiDomain = new DomainName('dismoi.io');
         $manager->persist($disMoiDomain);

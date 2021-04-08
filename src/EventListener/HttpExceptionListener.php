@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /**
  * Created by PhpStorm.
  * User: insitu
@@ -15,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class HttpExceptionListener
 {
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(GetResponseForExceptionEvent $event): void
     {
         $exception = $event->getException();
 
@@ -28,7 +30,7 @@ class HttpExceptionListener
         }
     }
 
-    private function isJsonRequest(Request $request)
+    private function isJsonRequest(Request $request): bool
     {
         return 'json' === $request->getContentType();
     }

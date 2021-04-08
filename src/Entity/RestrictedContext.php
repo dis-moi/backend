@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -27,7 +29,7 @@ class RestrictedContext
      *
      * @ORM\Column(name="urlRegex", type="string", length=255)
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $urlRegex;
 
@@ -42,7 +44,7 @@ class RestrictedContext
     /**
      * Set urlRegex.
      */
-    public function setUrlRegex(string $urlRegex): RestrictedContext
+    public function setUrlRegex(string $urlRegex): self
     {
         $this->urlRegex = $urlRegex;
 

@@ -1,17 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Api;
 
 use App\Repository\ContributorRepository;
 use App\Serializer\NormalizerOptions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class GetContributorAction extends BaseAction
 {
+    /**
+     * @var ContributorRepository
+     */
     protected $repository;
 
     public function __construct(SerializerInterface $serializer, ContributorRepository $repository)
@@ -25,10 +31,10 @@ class GetContributorAction extends BaseAction
      * @Route("/contributors/{id}")
      * @Method("GET")
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         $id = $request->get('id', null);
-        $contributor = $this->repository->getOne($id);
+        $contributor = $this->repository->getOne((int) $id);
 
         if (!$contributor) {
             throw new NotFoundHttpException('Contributor not found.');

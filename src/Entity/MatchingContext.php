@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\EntityListener\MatchingContextListener;
@@ -9,19 +11,24 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-function flatten(array $array)
+/**
+ * @param array<array<mixed>> $array
+ *
+ * @return array<mixed>
+ */
+function flatten(array $array): array
 {
     $return = [];
-    array_walk_recursive($array, function ($a) use (&$return) {
+    array_walk_recursive($array, function ($a) use (&$return): void {
         $return[] = $a;
     });
 
     return $return;
 }
 
-function escape(string $dn, ?Escaper $e)
+function escape(string $dn, ?Escaper $e): string
 {
-    return is_null($e) ? $dn : $e::escape($dn);
+    return null === $e ? $dn : $e::escape($dn);
 }
 
 /**
@@ -63,10 +70,10 @@ class MatchingContext
      *
      * @ORM\ManyToMany(targetEntity="DomainName", inversedBy="matchingContexts", cascade={"persist"})
      * @ORM\JoinTable(name="matching_context_domain_name",
-     *   joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
-     *   inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
-     *   )
-     * @ORM\OrderBy({"name" = "ASC"})
+     *     joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
+     * )
+     * @ORM\OrderBy({"name"="ASC"})
      */
     private $domainNames;
 
@@ -75,10 +82,10 @@ class MatchingContext
      *
      * @ORM\ManyToMany(targetEntity="DomainsSet", inversedBy="matchingContexts")
      * @ORM\JoinTable(name="matching_context_domains_set",
-     *   joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
-     *   inverseJoinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")}
-     *   )
-     * @ORM\OrderBy({"name" = "ASC"})
+     *     joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")}
+     * )
+     * @ORM\OrderBy({"name"="ASC"})
      */
     private $domainsSets;
 
@@ -87,7 +94,7 @@ class MatchingContext
      *
      * @ORM\Column(name="urlRegex", type="text")
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank
      */
     private $urlRegex;
 
@@ -128,15 +135,13 @@ class MatchingContext
 
     /**
      * Get id.
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function setExampleUrl(string $exampleUrl = null): MatchingContext
+    public function setExampleUrl(string $exampleUrl = null): self
     {
         $this->exampleUrl = $exampleUrl;
 
@@ -148,14 +153,12 @@ class MatchingContext
         return $this->exampleUrl;
     }
 
-    /**`
-     * Set urlRegex
-     *
-     * @param string $urlRegex
+    /** `
+     * Set urlRegex.
      *
      * @return MatchingContext
      */
-    public function setUrlRegex($urlRegex): self
+    public function setUrlRegex(string $urlRegex): self
     {
         $this->urlRegex = $urlRegex;
 
@@ -173,7 +176,7 @@ class MatchingContext
     public function getFullUrlRegex(Escaper $escaper = null): string
     {
         $domains = $this->getAllRelatedDomains();
-        if (0 === count($domains)) {
+        if (0 === \count($domains)) {
             return $this->urlRegex;
         }
 
@@ -186,11 +189,9 @@ class MatchingContext
     }
 
     /**
-     * @param string|null $excludeUrlRegex
-     *
      * @return MatchingContext
      */
-    public function setExcludeUrlRegex($excludeUrlRegex): self
+    public function setExcludeUrlRegex(?string $excludeUrlRegex): self
     {
         $this->excludeUrlRegex = $excludeUrlRegex;
 
@@ -217,11 +218,9 @@ class MatchingContext
     /**
      * Set description.
      *
-     * @param string|null $description
-     *
      * @return MatchingContext
      */
-    public function setDescription($description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -260,7 +259,7 @@ class MatchingContext
 
     public function __toString(): string
     {
-        return (is_null($this->getDescription())) ? 'you must set a description' : $this->getDescription();
+        return (null === $this->getDescription()) ? 'you must set a description' : $this->getDescription();
     }
 
     /**
@@ -272,11 +271,9 @@ class MatchingContext
     }
 
     /**
-     * @param string $querySelector
-     *
      * @return MatchingContext
      */
-    public function setQuerySelector($querySelector): self
+    public function setQuerySelector(string $querySelector): self
     {
         $this->querySelector = $querySelector;
 
@@ -291,10 +288,7 @@ class MatchingContext
         return $this->xpath;
     }
 
-    /**
-     * @param string $xpath
-     */
-    public function setXpath($xpath)
+    public function setXpath(string $xpath): void
     {
         $this->xpath = $xpath;
     }

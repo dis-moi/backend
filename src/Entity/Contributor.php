@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Domain\Model\Enum\CategoryName;
 use App\Entity\Ability\VichFilenamer;
 use App\Helper\ImageUploadable;
 use DateTime;
@@ -106,17 +105,24 @@ class Contributor implements ImageUploadable
     private $previewImageFile;
 
     /**
+     * @var Collection<Notice>
+     *
      * @ORM\OneToMany(targetEntity="Notice", mappedBy="contributor")
-     * @ORM\OrderBy({"updated" = "ASC"})
+     * @ORM\OrderBy({"updated"="ASC"})
      */
     private $notices;
 
     /**
+     * @var ArrayCollection<Subscription>
+     *
      * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor", orphanRemoval=true)
-     * @ORM\OrderBy({"created" = "DESC"})
+     * @ORM\OrderBy({"created"="DESC"})
      */
     private $subscriptions;
 
+    /**
+     * @var int
+     */
     private $activeSubscriptionsCount = 0;
 
     /**
@@ -137,7 +143,7 @@ class Contributor implements ImageUploadable
      * @var DateTime
      *
      * Needed to trigger forced update when an avatar is uploaded
-     * @ORM\Column(name="updated_at", type="datetime", nullable = true)
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
      */
     private $updatedAt;
 
@@ -156,32 +162,27 @@ class Contributor implements ImageUploadable
      */
     private $website;
 
-    /** @var ArrayCollection|
-     *
+    /**
+     * @var ArrayCollection<Pin>
      * @ORM\OneToMany(targetEntity=Pin::class, mappedBy="contributor", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\OrderBy({"sort"="ASC"})
      */
     private $pins;
 
     /**
-     * @var Collection
+     * @var ArrayCollection<Relay>
      *
      * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="relayedBy", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $relayedNotices;
 
     /**
-     * @var array
-     *
-     * @see CategoryName
+     * @var string[]
      *
      * @ORM\Column(name="categories", type="simple_array", nullable=true)
      */
     private $categories = [];
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->notices = new ArrayCollection();
@@ -190,7 +191,7 @@ class Contributor implements ImageUploadable
         $this->subscriptions = new ArrayCollection();
     }
 
-    private function markUpdated(): Contributor
+    private function markUpdated(): self
     {
         $this->updatedAt = new DateTime('now');
 
@@ -208,7 +209,7 @@ class Contributor implements ImageUploadable
     /**
      * Set name.
      */
-    public function setName(?string $name): Contributor
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -223,7 +224,7 @@ class Contributor implements ImageUploadable
         return $this->name;
     }
 
-    public function setTitle(?string $title): Contributor
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -235,7 +236,7 @@ class Contributor implements ImageUploadable
         return $this->title;
     }
 
-    public function setIntro(?string $intro): Contributor
+    public function setIntro(?string $intro): self
     {
         $this->intro = $intro;
 
@@ -247,7 +248,7 @@ class Contributor implements ImageUploadable
         return $this->intro;
     }
 
-    public function setImage(?string $image): Contributor
+    public function setImage(?string $image): self
     {
         $this->image = $image;
 
@@ -259,7 +260,7 @@ class Contributor implements ImageUploadable
         return $this->image;
     }
 
-    public function setImageFile(?File $image = null): Contributor
+    public function setImageFile(?File $image = null): self
     {
         $this->imageFile = $image;
         // VERY IMPORTANT:
@@ -285,7 +286,7 @@ class Contributor implements ImageUploadable
     /**
      * Add notice.
      */
-    public function addNotice(Notice $notice): Contributor
+    public function addNotice(Notice $notice): self
     {
         $this->notices[] = $notice;
 
@@ -295,7 +296,7 @@ class Contributor implements ImageUploadable
     /**
      * Remove notice.
      */
-    public function removeNotice(Notice $notice): Contributor
+    public function removeNotice(Notice $notice): self
     {
         $this->notices->removeElement($notice);
 
@@ -307,9 +308,6 @@ class Contributor implements ImageUploadable
         return $this->notices;
     }
 
-    /*
-     * @return int
-     */
     public function getActiveSubscriptionsCount(): int
     {
         return $this->activeSubscriptionsCount;
@@ -320,10 +318,7 @@ class Contributor implements ImageUploadable
         return $this->enabled;
     }
 
-    /**
-     * @param bool $enabled
-     */
-    public function setEnabled($enabled): Contributor
+    public function setEnabled(bool $enabled): self
     {
         $this->enabled = $enabled;
 
@@ -333,7 +328,7 @@ class Contributor implements ImageUploadable
     /**
      * ⚠ Should not be used outside of repo.
      */
-    public function setActiveSubscriptionsCount(int $activeSubscriptionsCount): Contributor
+    public function setActiveSubscriptionsCount(int $activeSubscriptionsCount): self
     {
         $this->activeSubscriptionsCount = $activeSubscriptionsCount;
 
@@ -345,7 +340,7 @@ class Contributor implements ImageUploadable
         return $this->email;
     }
 
-    public function setEmail(?string $email): Contributor
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -357,7 +352,7 @@ class Contributor implements ImageUploadable
         return $this->website;
     }
 
-    public function setWebsite(?string $website): Contributor
+    public function setWebsite(?string $website): self
     {
         $this->website = $website;
 
@@ -369,14 +364,14 @@ class Contributor implements ImageUploadable
         return $this->bannerImage;
     }
 
-    public function setBannerImage(?string $bannerImage): Contributor
+    public function setBannerImage(?string $bannerImage): self
     {
         $this->bannerImage = $bannerImage;
 
         return $this;
     }
 
-    public function setBannerImageFile(?File $bannerImage = null): Contributor
+    public function setBannerImageFile(?File $bannerImage = null): self
     {
         $this->bannerImageFile = $bannerImage;
         if ($bannerImage) {
@@ -391,7 +386,7 @@ class Contributor implements ImageUploadable
         return $this->bannerImageFile;
     }
 
-    public function setPreviewImage(?string $previewImage): Contributor
+    public function setPreviewImage(?string $previewImage): self
     {
         $this->previewImage = $previewImage;
 
@@ -403,7 +398,7 @@ class Contributor implements ImageUploadable
         return $this->previewImage;
     }
 
-    public function setPreviewImageFile(?File $previewImage = null): Contributor
+    public function setPreviewImageFile(?File $previewImage = null): self
     {
         $this->previewImageFile = $previewImage;
 
@@ -426,14 +421,17 @@ class Contributor implements ImageUploadable
         });
     }
 
-    public function getPublicRelays(): Collection
+    public function getPublicRelays(): ArrayCollection
     {
         return $this->getRelayedNotices()->filter(static function (Notice $notice) {
             return $notice->hasPublicVisibility();
         });
     }
 
-    public function getPublicNoticesWithRelays(): ?array
+    /**
+     * @return Notice[]
+     */
+    public function getPublicNoticesWithRelays(): array
     {
         return array_merge(
             $this->getPublicNotices()->toArray(),
@@ -443,14 +441,13 @@ class Contributor implements ImageUploadable
 
     public function getNoticesCount(): int
     {
-        if ($notices = $this->getPublicNotices()) {
-            return $notices->count();
-        }
-
-        return 0;
+        return $this->getPublicNotices()->count();
     }
 
-    public function getPinnedNotices(): ArrayCollection
+    /**
+     * @return Collection<Notice>
+     */
+    public function getPinnedNotices(): Collection
     {
         return $this->pins
             ->matching(new Criteria(null, ['sort' => Criteria::ASC]))
@@ -459,13 +456,17 @@ class Contributor implements ImageUploadable
             });
     }
 
-    public function setPinnedNotices(ArrayCollection $givenNotices): Contributor
+    /**
+     * @param ArrayCollection<Notice> $givenNotices
+     *
+     * @return $this
+     */
+    public function setPinnedNotices(ArrayCollection $givenNotices): self
     {
         if ($givenNotices->count() > 5) {
             throw new InvalidArgumentException('No more than 5 pinned notices by contributor please');
         }
 
-        /** @var Notice $givenNotice */
         foreach ($givenNotices as $givenNotice) {
             $existingPin = $this->pins
                 ->filter(function (Pin $existingPin) use ($givenNotice) {
@@ -494,21 +495,21 @@ class Contributor implements ImageUploadable
         return $this;
     }
 
-    public function getRelayedNotices(): Collection
+    public function getRelayedNotices(): ArrayCollection
     {
         return $this->relayedNotices->map(static function (Relay $relay) {
             return $relay->getNotice();
         });
     }
 
-    public function addRelayedNotice(Notice $notice): Contributor
+    public function addRelayedNotice(Notice $notice): self
     {
         $this->relayedNotices[] = new Relay($this, $notice);
 
         return $this;
     }
 
-    public function removeRelayedNotice(Notice $notice): Contributor
+    public function removeRelayedNotice(Notice $notice): self
     {
         $this->relayedNotices->removeElement(current(array_filter($this->relayedNotices->toArray(), static function (Relay $relay) use ($notice) {
             return $relay->getNotice()->getId() === $notice->getId();
@@ -517,6 +518,9 @@ class Contributor implements ImageUploadable
         return $this;
     }
 
+    /**
+     * @return string[]
+     */
     public function getCategories(): array
     {
         return $this->categories;
@@ -524,7 +528,7 @@ class Contributor implements ImageUploadable
 
     public function addCategory(string $categoryName): void
     {
-        if (!in_array($categoryName, $this->categories)) {
+        if (!\in_array($categoryName, $this->categories, true)) {
             $this->categories[] = $categoryName;
         }
     }
@@ -539,6 +543,9 @@ class Contributor implements ImageUploadable
         );
     }
 
+    /**
+     * @param string[] $categories
+     */
     public function setCategories(array $categories): void
     {
         $this->categories = $categories;

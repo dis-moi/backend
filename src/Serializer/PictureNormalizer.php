@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Serializer;
 
 use App\Serializer\Serializable\Picture;
@@ -33,7 +35,7 @@ class PictureNormalizer implements NormalizerInterface, NormalizerAwareInterface
         $this->cacheManager = $cacheManager;
     }
 
-    public function setNormalizer(NormalizerInterface $normalizer)
+    public function setNormalizer(NormalizerInterface $normalizer): void
     {
         $this->normalizer = $normalizer;
     }
@@ -43,6 +45,13 @@ class PictureNormalizer implements NormalizerInterface, NormalizerAwareInterface
         return $data instanceof Picture;
     }
 
+    /**
+     * @param string  $format
+     * @param mixed[] $context
+     * @param mixed   $object
+     *
+     * @return mixed[]
+     */
     public function normalize($object, $format = null, array $context = []): array
     {
         if (!($object instanceof Picture)) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Controller\AdminController;
@@ -14,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MatchingContextType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('exampleUrl', TextType::class, [
@@ -31,7 +33,7 @@ class MatchingContextType extends AbstractType
                 ],
                 'choice_attr' => function (DomainsSet $domainsSet) {
                     return [
-                        'data-domains' => join(',', array_map(
+                        'data-domains' => implode(',', array_map(
                             function (DomainName $domainName) {
                                 return $domainName->getPrettyName();
                             },
@@ -66,11 +68,10 @@ class MatchingContextType extends AbstractType
             ->add('description', TextType::class, [
                 'required' => false,
                 'label' => 'matchingContexts.description',
-            ])
-        ;
+            ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => 'App\Entity\MatchingContext',

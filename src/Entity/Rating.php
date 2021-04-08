@@ -6,7 +6,6 @@ namespace App\Entity;
 
 use App\Entity\Embeddable\Context;
 use Doctrine\ORM\Mapping as ORM;
-use function in_array;
 use InvalidArgumentException;
 
 /**
@@ -41,6 +40,8 @@ class Rating
     private $id;
 
     /**
+     * @var Notice
+     *
      * @ORM\ManyToOne(targetEntity="Notice", inversedBy="ratings")
      */
     private $notice;
@@ -79,18 +80,12 @@ class Rating
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getNotice()
+    public function getNotice(): Notice
     {
         return $this->notice;
     }
 
-    /**
-     * @param mixed $notice
-     */
-    public function setNotice($notice): Rating
+    public function setNotice(Notice $notice): self
     {
         $this->notice = $notice;
 
@@ -102,9 +97,9 @@ class Rating
         return $this->type;
     }
 
-    public function setType(string $type): Rating
+    public function setType(string $type): self
     {
-        if (!in_array($type, [
+        if (!\in_array($type, [
             self::DISMISS,
             self::UNDISMISS,
             self::LIKE,
@@ -116,7 +111,7 @@ class Rating
             self::UNFOLD,
             self::OUTBOUND_CLICK,
             self::REPORT,
-        ])) {
+        ], true)) {
             throw new InvalidArgumentException(sprintf('Invalid value given for feedback type : %s', $type));
         }
         $this->type = $type;
@@ -129,7 +124,7 @@ class Rating
         return $this->context;
     }
 
-    public function setContext(Context $context): Rating
+    public function setContext(Context $context): self
     {
         $this->context = $context;
 
@@ -141,7 +136,7 @@ class Rating
         return $this->reason;
     }
 
-    public function setReason(string $reason): Rating
+    public function setReason(string $reason): self
     {
         $this->reason = $reason;
 

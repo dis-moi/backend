@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Domain\Service;
 
 use App\Domain\Service\MessagePresenter;
@@ -9,56 +11,59 @@ const UTM_MEDIUM = 'UTM_MEDIUM';
 
 class MessagePresenterTest extends TestCase
 {
+    /**
+     * @var MessagePresenter
+     */
     private $messagePresenter;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->messagePresenter = new MessagePresenter(UTM_MEDIUM);
     }
 
-    public function test_convert_newline_to_paragraph_converts_single_line()
+    public function testConvertNewlineToParagraphConvertsSingleLine(): void
     {
         $content = 'My simple content';
         $this->assertEqualHtml('<p>My simple content</p>', $this->messagePresenter->present($content));
     }
 
-    public function test_convert_newline_to_line_break_converts_regular_multi_lines()
+    public function testConvertNewlineToLineBreakConvertsRegularMultiLines(): void
     {
         $content = "My simple content\nWith some other content. ";
         $expectedContent = '<p>My simple content<br />With some other content. </p>';
         $this->assertEqualHtml($expectedContent, $this->messagePresenter->present($content));
     }
 
-    public function test_convert_newline_to_line_break_works_with_crlf_multi_lines()
+    public function testConvertNewlineToLineBreakWorksWithCrlfMultiLines(): void
     {
         $content = "My simple content\r\nWith some other content. ";
         $expectedContent = '<p>My simple content<br />With some other content. </p>';
         $this->assertEqualHtml($expectedContent, $this->messagePresenter->present($content));
     }
 
-    public function test_convert_newline_to_line_break_works_with_cr_multi_lines()
+    public function testConvertNewlineToLineBreakWorksWithCrMultiLines(): void
     {
         $content = "My simple content\rWith some other content. ";
         $expectedContent = '<p>My simple content<br />With some other content. </p>';
         $this->assertEqualHtml($expectedContent, $this->messagePresenter->present($content));
     }
 
-    public function test_convert_2_new_lines_to_paragraph_converts_regular_multi_lines()
+    public function testConvert2NewLinesToParagraphConvertsRegularMultiLines(): void
     {
         $content = "My simple content\n\nWith some other content. ";
         $expectedContent = '<p>My simple content</p><p>With some other content. </p>';
         $this->assertEqualHtml($expectedContent, $this->messagePresenter->present($content));
     }
 
-    public function test_convert_3_new_lines_to_paragraph_converts_regular_multi_lines()
+    public function testConvert3NewLinesToParagraphConvertsRegularMultiLines(): void
     {
         $content = "My simple content\n\n\nWith some other content. ";
         $expectedContent = '<p>My simple content</p><p>With some other content. </p>';
         $this->assertEqualHtml($expectedContent, $this->messagePresenter->present($content));
     }
 
-    public function testItAddsTargetBlankAttributeToLink()
+    public function testItAddsTargetBlankAttributeToLink(): void
     {
         $this->assertEqualHtml(
             $this->messagePresenter->present('<a href="https://lmem.net">lmem</a>'),
@@ -66,7 +71,7 @@ class MessagePresenterTest extends TestCase
         );
     }
 
-    public function testItConvertsUrlToLink()
+    public function testItConvertsUrlToLink(): void
     {
         $textFullUrl = 'Un lien vers https://lmem.net/jeanmichel?ilenveut&bien=1&de=plus';
         $this->assertEqualHtml(
@@ -112,7 +117,7 @@ class MessagePresenterTest extends TestCase
         );
     }
 
-    public function testItOverwritesUtmMediumIfExisting()
+    public function testItOverwritesUtmMediumIfExisting(): void
     {
         $textFullUrl = 'Un lien vers https://lmem.net/jeanmichel?ilenveut&utm_source=duckduckgo&utm_medium=some_medium&utm_term=search&bien=1&de=plus';
         $this->assertEqualHtml(
@@ -121,7 +126,7 @@ class MessagePresenterTest extends TestCase
         );
     }
 
-    protected function assertEqualHtml($expected, $actual)
+    protected function assertEqualHtml(string $expected, string $actual): void
     {
         $from = ['/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s', '/> </s'];
         $to = ['>',            '<',            '\\1',      '><'];

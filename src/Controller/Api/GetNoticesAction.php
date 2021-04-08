@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Api;
 
 use App\Repository\NoticeRepository;
 use App\Serializer\NormalizerOptions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -27,16 +30,16 @@ class GetNoticesAction extends BaseAction
      * @Route("/notices")
      * @Method("GET")
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         $contributorId = $request->get('contributor', null);
         $limit = $request->get('limit', 1000);
         $offset = $request->get('offset', 0);
 
         if ($contributorId) {
-            $notices = $this->repository->getPageByContributor($contributorId, $limit, $offset);
+            $notices = $this->repository->getPageByContributor($contributorId, (int) $limit, (int) $offset);
         } else {
-            $notices = $this->repository->getPage($limit, $offset);
+            $notices = $this->repository->getPage((int) $limit, (int) $offset);
         }
 
         if (!is_iterable($notices)) {

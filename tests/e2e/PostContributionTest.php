@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\e2e;
 
 use App\Entity\Contributor;
@@ -7,14 +9,14 @@ use App\Helper\NoticeVisibility;
 
 class PostContributionTest extends BaseApiE2eTestCase
 {
-    public function testPostContribution()
+    public function testPostContribution(): void
     {
         $content = json_encode([
             'url' => 'https://www.dismoi.io/confidentialite',
             'contributor' => [
                 'name' => 'Johan Dufour',
                 'email' => 'johan@dismoi.io',
-             ],
+            ],
             'message' => 'I would prefer seeing a markdown explaining the technical perspectives on the matter.',
          ]);
 
@@ -25,7 +27,7 @@ class PostContributionTest extends BaseApiE2eTestCase
         $this->assertEquals(NoticeVisibility::DRAFT_VISIBILITY, $notice->visibility);
     }
 
-    public function testPostQuestion()
+    public function testPostQuestion(): void
     {
         /** @var Contributor $contributor */
         $contributor = $this->referenceRepository->getReference('john_doe');
@@ -47,7 +49,7 @@ class PostContributionTest extends BaseApiE2eTestCase
         $this->assertEquals(NoticeVisibility::QUESTION_VISIBILITY, $notice->visibility);
     }
 
-    public function testPostQuestionWithoutQuestionFlag()
+    public function testPostQuestionWithoutQuestionFlag(): void
     {
         /** @var Contributor $contributor */
         $contributor = $this->referenceRepository->getReference('john_doe');
@@ -68,7 +70,7 @@ class PostContributionTest extends BaseApiE2eTestCase
         $this->assertEquals(NoticeVisibility::QUESTION_VISIBILITY, $notice->visibility);
     }
 
-    public function testPostQuestionToNonexistentContributor()
+    public function testPostQuestionToNonexistentContributor(): void
     {
         $content = json_encode([
             'url' => 'https://www.dismoi.io/confidentialite',
@@ -85,7 +87,7 @@ class PostContributionTest extends BaseApiE2eTestCase
         $this->assertEquals(422, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testPostQuestionToNobody()
+    public function testPostQuestionToNobody(): void
     {
         $content = json_encode([
             'url' => 'https://www.dismoi.io/confidentialite',

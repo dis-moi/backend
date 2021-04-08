@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Controller\Api;
 
 use App\Controller\Api\GetNoticeAction;
@@ -12,7 +14,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class GetNoticeActionTest extends TestCase
 {
-    public function test__invoke()
+    public function testInvoke(): void
     {
         $expectedResult = new JsonResponse('json', 200, [], true);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Extension;
@@ -8,7 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class ExtensionFixtures extends Fixture
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $extension1 = new Extension('EXT1');
         $extension1->confirm();

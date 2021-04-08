@@ -1,0 +1,17 @@
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+parameters:
+    level: 6
+    checkGenericClassInNonGenericObjectType: false
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - tests/bootstrap.php
+    autoload_files:
+        - bin/.phpunit/phpunit/vendor/autoload.php
+    ignoreErrors:
+        - '#Call to an undefined static method App\\Helper\\NoticeVisibility::[A-Z0-9\\_]+\(\)#'
+        - '#Method [a-zA-Z0-9\\_]+::buildForm\(\) has parameter \$builder with no value type specified in iterable type Symfony\\Component\\Form\\FormBuilderInterface\.(.*)#'
+        - '#Method [a-zA-Z0-9\\_]+::buildForm\(\) has parameter \$options with no value type specified in iterable type array\.#'

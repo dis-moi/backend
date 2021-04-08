@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\Embeddable;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -35,37 +37,24 @@ class Context
      */
     private $geolocation;
 
-    /**
-     * @param string $url
-     * @param string $geolocation
-     */
-    public function __construct(\DateTime $datetime, $url, $geolocation)
+    public function __construct(\DateTime $datetime, string $url, string $geolocation)
     {
         $this->datetime = $datetime;
         $this->url = $url;
         $this->geolocation = $geolocation;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDatetime()
+    public function getDatetime(): \DateTime
     {
         return $this->datetime;
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @return string
-     */
-    public function getGeolocation()
+    public function getGeolocation(): string
     {
         return $this->geolocation;
     }

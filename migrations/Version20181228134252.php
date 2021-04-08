@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
@@ -7,7 +9,7 @@ use Doctrine\DBAL\Schema\Schema;
 
 class Version20181228134252 extends AbstractMigration
 {
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
@@ -24,7 +26,7 @@ class Version20181228134252 extends AbstractMigration
      * Retrieve `recommendation_criterion` table data & setup new notice *-1 Type w/ the first criterion/type found
      * then delete the table.
      */
-    public function postUp(Schema $schema)
+    public function postUp(Schema $schema): void
     {
         $data = $this->connection->createQueryBuilder()->select('*')
             ->from('recommendation_criterion', 'rc')
@@ -50,7 +52,7 @@ class Version20181228134252 extends AbstractMigration
         $this->connection->exec('CREATE INDEX IDX_480D45C2C54C8C93 ON notice (notice_type_id)');
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');

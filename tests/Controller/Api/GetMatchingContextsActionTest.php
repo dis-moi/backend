@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Controller\Api;
 
 use App\Controller\Api\GetMatchingContextsAction;
@@ -11,7 +13,10 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class GetMatchingContextsActionTest extends TestCase
 {
-    public function invokeData()
+    /**
+     * @return mixed[]
+     */
+    public function invokeData(): array
     {
         return [
             [null],
@@ -21,8 +26,10 @@ class GetMatchingContextsActionTest extends TestCase
 
     /**
      * @dataProvider invokeData
+     *
+     * @param mixed[] $contributors
      */
-    public function test__invoke($contributors)
+    public function testInvoke(?array $contributors): void
     {
         $expectedResult = new JsonResponse('json', 200, [], true);
 

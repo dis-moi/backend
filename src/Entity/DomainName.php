@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -50,9 +52,9 @@ class DomainName
      *
      * @ORM\ManyToMany(targetEntity="MatchingContext", mappedBy="domainNames")
      * @ORM\JoinTable(name="matching_context_domain_name",
-     *   joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
-     *   inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
-     *   )
+     *     joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
+     * )
      */
     private $matchingContexts;
 
@@ -61,10 +63,10 @@ class DomainName
      *
      * @ORM\ManyToMany(targetEntity="DomainsSet", mappedBy="domains")
      * @ORM\JoinTable(name="domains_set_domain",
-     *   joinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")},
-     *   inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
-     *   )
-     * @ORM\OrderBy({"name" = "ASC"})
+     *     joinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
+     * )
+     * @ORM\OrderBy({"name"="ASC"})
      */
     private $sets;
 
@@ -85,10 +87,8 @@ class DomainName
 
     /**
      * Get id.
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -131,7 +131,10 @@ class DomainName
         return $this;
     }
 
-    public function getNotices()
+    /**
+     * @return Notice[]
+     */
+    public function getNotices(): array
     {
         return array_map(function (MatchingContext $mc) {
             return $mc->getNotice();
@@ -143,7 +146,7 @@ class DomainName
         return $this->path;
     }
 
-    public function setPath(?string $path): DomainName
+    public function setPath(?string $path): self
     {
         $this->path = $path;
 

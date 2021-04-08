@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Serializer;
 
 use App\Entity\MatchingContext;
@@ -10,7 +12,14 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class MatchingContextNormalizer implements NormalizerInterface
 {
+    /**
+     * @var RouterInterface
+     */
     protected $router;
+
+    /**
+     * @var PregEscaper
+     */
     protected $escaper;
 
     public function __construct(RouterInterface $router, PregEscaper $escaper)
@@ -24,6 +33,13 @@ class MatchingContextNormalizer implements NormalizerInterface
         return $data instanceof MatchingContext;
     }
 
+    /**
+     * @param mixed[]    $context
+     * @param mixed|null $format
+     * @param mixed      $matchingContext
+     *
+     * @return mixed[]
+     */
     public function normalize($matchingContext, $format = null, array $context = []): array
     {
         if (!($matchingContext instanceof MatchingContext)) {

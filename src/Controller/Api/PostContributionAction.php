@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Api;
 
 use App\Domain\Service\EmailComposer;
@@ -19,9 +21,24 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class PostContributionAction extends BaseAction
 {
+    /**
+     * @var EntityManagerInterface
+     */
     protected $entityManager;
+
+    /**
+     * @var NoticeAssembler
+     */
     protected $noticeAssembler;
+
+    /**
+     * @var MailerInterface
+     */
     private $mailer;
+
+    /**
+     * @var EmailComposer
+     */
     private $emailComposer;
 
     public function __construct(

@@ -1,20 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\DomainName;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
-class DomainNameRepository extends BaseRepository
+class DomainNameRepository extends ServiceEntityRepository
 {
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($entityManager);
-    }
-
-    public function getClassName()
-    {
-        return DomainName::class;
+        parent::__construct($registry, DomainName::class);
     }
 
     /**
@@ -22,9 +20,9 @@ class DomainNameRepository extends BaseRepository
      */
     public function findByName(string $domainName): ?DomainName
     {
-        return $this->repository->findOneBy([
-      'name' => $domainName,
-    ]);
+        return $this->findOneBy([
+            'name' => $domainName,
+        ]);
     }
 
     public function findOrCreate(string $domainName): DomainName
@@ -32,13 +30,12 @@ class DomainNameRepository extends BaseRepository
         $existing = $this->findByName($domainName);
         if ($existing) {
             return $existing;
-        } else {
-            $newDomain = new DomainName($domainName);
-            $this->entityManager->persist($newDomain);
-            $this->entityManager->flush();
-
-            return $newDomain;
         }
+        $newDomain = new DomainName($domainName);
+        $this->getEntityManager()->persist($newDomain);
+        $this->getEntityManager()->flush();
+
+        return $newDomain;
     }
 
     /**
@@ -49,14 +46,13 @@ class DomainNameRepository extends BaseRepository
         $domainParts = explode('.', $host);
 
         $existingDomainName = null;
-        while (count($domainParts) > 0) {
+        while (\count($domainParts) > 0) {
             /** @var DomainName|null $existingDomainName */
-            $existingDomainName = $this->findByName(join('.', $domainParts));
+            $existingDomainName = $this->findByName(implode('.', $domainParts));
             if ($existingDomainName) {
                 return $existingDomainName;
-            } else {
-                array_shift($domainParts);
             }
+            array_shift($domainParts);
         }
 
         return null;

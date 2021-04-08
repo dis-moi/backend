@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\e2e;
 
 use App\Entity\Notice;
 
 class PostNoticeRatingTest extends BaseApiE2eTestCase
 {
-    public function testPostNoticeRating()
+    public function testPostNoticeRating(): void
     {
         /** @var Notice $notice */
         $notice = $this->referenceRepository->getReference('notice_type_ecology');
@@ -25,7 +27,7 @@ class PostNoticeRatingTest extends BaseApiE2eTestCase
         $this->assertEquals(204, $this->client->getResponse()->getStatusCode());
     }
 
-    public function testPostNoticeRatingWrongType()
+    public function testPostNoticeRatingWrongType(): void
     {
         /** @var Notice $notice */
         $notice = $this->referenceRepository->getReference('notice_type_ecology');

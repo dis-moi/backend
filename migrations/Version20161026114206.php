@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\Migrations;
 
 use Doctrine\DBAL\Migrations\AbstractMigration;
@@ -10,7 +12,7 @@ use Doctrine\DBAL\Schema\Schema;
  */
 class Version20161026114206 extends AbstractMigration
 {
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needsv
         $this->addSql('CREATE TABLE resource_copy LIKE resource');
@@ -23,7 +25,7 @@ class Version20161026114206 extends AbstractMigration
         $this->addSql('INSERT INTO alternative(recommendation_id, label, urlToRedirect) SELECT recommendation_id, label, url  FROM resource_copy;');
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
         $this->addSql('DELETE FROM resource');
         $this->addSql('INSERT resource SELECT * FROM resource_copy');

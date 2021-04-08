@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use DateTime;
@@ -31,7 +33,7 @@ class Relay
     /**
      * @var Notice
      *
-     * @ORM\ManyToOne(targetEntity=Notice::class,inversedBy="relays", fetch="EAGER")
+     * @ORM\ManyToOne(targetEntity=Notice::class, inversedBy="relays", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      * @ORM\Id
      */
@@ -40,7 +42,7 @@ class Relay
     /**
      * @var DateTime
      *
-     * @ORM\Column(name="relayed_at",type="datetime")
+     * @ORM\Column(name="relayed_at", type="datetime")
      */
     private $relayedAt;
 
@@ -61,7 +63,7 @@ class Relay
         return $this->relayedBy;
     }
 
-    public function setRelayedBy(Contributor $relayedBy): Relay
+    public function setRelayedBy(Contributor $relayedBy): self
     {
         $this->relayedBy = $relayedBy;
 
@@ -73,7 +75,7 @@ class Relay
         return $this->notice;
     }
 
-    public function setNotice(Notice $notice): Relay
+    public function setNotice(Notice $notice): self
     {
         $this->notice = $notice;
 
@@ -85,7 +87,7 @@ class Relay
         return $this->relayedAt;
     }
 
-    public function setRelayedAt(DateTime $relayedAt): Relay
+    public function setRelayedAt(DateTime $relayedAt): self
     {
         $this->relayedAt = $relayedAt;
 

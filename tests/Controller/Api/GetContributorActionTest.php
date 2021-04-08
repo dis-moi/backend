@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Controller\Api;
 
 use App\Controller\Api\GetContributorAction;
+use App\Entity\Contributor;
 use App\Repository\ContributorRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,7 +14,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class GetContributorActionTest extends TestCase
 {
-    public function test__invoke()
+    public function testInvoke(): void
     {
         $expectedResult = new JsonResponse('json', 200, [], true);
 
@@ -27,12 +30,14 @@ class GetContributorActionTest extends TestCase
         $request->expects($this->once())->method('get')
             ->with('id')->willReturn(42);
 
+        $contributorMock = $this->createMock(Contributor::class);
+
         $repository->expects($this->once())->method('getOne')
             ->with(42)
-            ->willReturn('contributor');
+            ->willReturn($contributorMock);
 
         $serializer->expects($this->once())->method('serialize')
-            ->with('contributor')
+            ->with($contributorMock)
             ->willReturn('json');
 
         $action = new GetContributorAction($serializer, $repository);

@@ -18,6 +18,12 @@ class RatingDenormalizer implements DenormalizerInterface
         return Rating::class === $type;
     }
 
+    /**
+     * @param mixed[]    $context
+     * @param mixed|null $format
+     * @param mixed      $data
+     * @param mixed      $class
+     */
     public function denormalize($data, $class, $format = null, array $context = []): Rating
     {
         $notice = $context['notice'];
