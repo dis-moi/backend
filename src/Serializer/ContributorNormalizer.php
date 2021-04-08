@@ -78,14 +78,16 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
      * Normalizes an object into a set of arrays/scalars.
      *
      * @param mixed   $contributor Contributor to normalize
-     * @param ?string $format      Format the normalization result will be encoded as
-     * @param array   $context     Context options for the normalizer
+     * @param string  $format      Format the normalization result will be encoded as
+     * @param mixed[] $context     Context options for the normalizer
      *
      * @throws InvalidArgumentException   Occurs when the object given is not a supported type for the normalizer
      * @throws CircularReferenceException Occurs when the normalizer detects a circular reference when no circular
      *                                    reference handler can fix it
      * @throws LogicException             Occurs when the normalizer is not called in an expected context
      * @throws ExceptionInterface         Occurs for all the other cases of errors
+     *
+     * @return mixed[]
      */
     public function normalize($contributor, $format = null, array $context = []): array
     {
@@ -111,7 +113,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
             'contributions' => $contributor->getNoticesCount(),
             'contribution' => [
                 'example' => $this->normalizer->normalize($exampleNotice, $format, [NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS => false]),
-                'pinnedNotices' => $pinnedNotices->map(function (Notice $notice) use ($format, $context) {
+                'pinnedNotices' => $pinnedNotices->map(function (Notice $notice) use ($format) {
                     return $this->normalizer->normalize($notice, $format, [NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS => false]);
                 })->toArray(),
                 'numberOfPublishedNotices' => $contributor->getNoticesCount(),
@@ -122,9 +124,9 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
             'noticesUrls' => array_values($contributor->getPublicNotices()->map(function (Notice $notice) {
                 return $this->noticeUrlGenerator->generate($notice);
             })->toArray()),
-            'relayedNoticesUrls' => $relays ? $relays->map(function (Notice $notice) {
+            'relayedNoticesUrls' => $relays->map(function (Notice $notice) {
                 return $this->noticeUrlGenerator->generate($notice);
-            })->toArray() : null,
+            })->toArray(),
             'categories' => $contributor->getCategories(),
         ];
     }

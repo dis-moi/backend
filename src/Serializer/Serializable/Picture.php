@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Serializer\Serializable;
 
 use App\Entity\Contributor;
@@ -7,7 +9,14 @@ use App\Helper\ImageUploadable;
 
 class Picture
 {
+    /**
+     * @var ImageUploadable
+     */
     private $uploadable;
+
+    /**
+     * @var Thumb[]
+     */
     private $thumbs;
 
     private function __construct(ImageUploadable $uploadable)
@@ -20,7 +29,7 @@ class Picture
         return new self($contributor);
     }
 
-    public function getUploadable()
+    public function getUploadable(): ImageUploadable
     {
         return $this->uploadable;
     }
@@ -32,6 +41,9 @@ class Picture
         return $this;
     }
 
+    /**
+     * @return Thumb[]
+     */
     public function getThumbs(): array
     {
         return $this->thumbs;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Domain\Factory\CategoryFactory;
@@ -18,32 +20,30 @@ class CategoryRepository implements ObjectRepository
         $this->categories = CategoryFactory::createAll();
     }
 
-    public function find($id)
+    /** @phpstan-ignore-next-line */
+    public function find($id): void
     {
         throw new \Exception('Unimplemented method.');
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         return $this->categories;
     }
 
-    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null)
+    /** @phpstan-ignore-next-line */
+    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): void
     {
-        // TODO: Implement findBy() method.
         throw new \Exception('Unimplemented method.');
     }
 
-    public function findOneBy(array $criteria)
+    /** @phpstan-ignore-next-line */
+    public function findOneBy(array $criteria): void
     {
-        // TODO: Implement findOneBy() method.
         throw new \Exception('Unimplemented method.');
     }
 
-    /**
-     * @return string
-     */
-    public function getClassName()
+    public function getClassName(): string
     {
         return Category::class;
     }

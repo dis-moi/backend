@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Api;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -7,6 +9,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 abstract class BaseAction
 {
+    /**
+     * @var SerializerInterface
+     */
     protected $serializer;
 
     public function __construct(SerializerInterface $serializer)
@@ -14,7 +19,11 @@ abstract class BaseAction
         $this->serializer = $serializer;
     }
 
-    protected function createResponse($content, $serializerOptions = [], $status = 200)
+    /**
+     * @param mixed[]|object $content
+     * @param mixed[]        $serializerOptions
+     */
+    protected function createResponse($content, array $serializerOptions = [], int $status = 200): JsonResponse
     {
         $headers = [];
         $json = $this->serialize($content, $serializerOptions);
@@ -22,7 +31,11 @@ abstract class BaseAction
         return new JsonResponse($json, $status, $headers, true);
     }
 
-    protected function serialize($content, $serializerOptions = [])
+    /**
+     * @param mixed   $content
+     * @param mixed[] $serializerOptions
+     */
+    protected function serialize($content, $serializerOptions = []): string
     {
         return $this->serializer->serialize($content, 'json', $serializerOptions);
     }

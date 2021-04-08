@@ -12,8 +12,8 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20200129093917 extends AbstractMigration
 {
-    const BEFORE = 'choisir.lmem.net';
-    const AFTER = 'lmem.net';
+    public const BEFORE = 'choisir.lmem.net';
+    public const AFTER = 'lmem.net';
 
     public function up(Schema $schema): void
     {

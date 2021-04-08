@@ -1,11 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
+use App\Entity\Contributor;
 use App\Entity\MatchingContext;
 use App\Entity\Notice;
 use App\Helper\NoticeVisibility;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,17 +22,39 @@ class UpdateCaptainFactNoticesCommand extends Command
 {
     protected static $defaultName = 'app:notices:update:captainfact';
 
-    const NOTICE_EXTERNAL_ID_PREFIX = 'CF_';
+    public const NOTICE_EXTERNAL_ID_PREFIX = 'CF_';
 
+    /**
+     * @var HttpClientInterface
+     */
     private $httpClient;
+
+    /**
+     * @var EntityManagerInterface
+     */
     private $entityManager;
+
+    /**
+     * @var int
+     */
     private $contributorId;
 
+    /**
+     * @var Contributor
+     */
     private $contributor;
+
+    /**
+     * @var array<string, string>
+     */
     private $noticesExternalIds;
+
+    /**
+     * @var OutputInterface
+     */
     private $output;
 
-    public function __construct(HttpClientInterface $httpClient, EntityManagerInterface $entityManager, $contributorId)
+    public function __construct(HttpClientInterface $httpClient, EntityManagerInterface $entityManager, int $contributorId)
     {
         $this->httpClient = $httpClient;
         $this->entityManager = $entityManager;
@@ -36,12 +62,12 @@ class UpdateCaptainFactNoticesCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Update the Captain Fact auto-generated notices based on Captain Fact\'s GraphQL API');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->output = $output;
         $startTimestamp = time();
@@ -52,7 +78,7 @@ class UpdateCaptainFactNoticesCommand extends Command
         } catch (Exception $e) {
             $this->output->writeln('Error: you have to set the DISMOI_CAPTAINFACT_CONTRIBUTOR_ID environment variable.');
 
-            return;
+            return 1;
         }
 
         // Load Existing CaptainFact notices
@@ -74,7 +100,7 @@ class UpdateCaptainFactNoticesCommand extends Command
             $firstIndexOfLastPage = $content['data']['videos']['entries'][0]['id'];
 
             // For each eligible entry, create or update a notice
-            $entriesCount = count($content['data']['videos']['entries']);
+            $entriesCount = \count($content['data']['videos']['entries']);
             for ($entryIndex = 0; $entryIndex < $entriesCount; ++$entryIndex) {
                 $entry = $content['data']['videos']['entries'][$entryIndex];
 
@@ -85,7 +111,7 @@ class UpdateCaptainFactNoticesCommand extends Command
             }
 
             ++$pageIndex;
-        } while (0 != $entriesCount); /* stop if there weren't any entries in this page */
+        } while (0 != $entriesCount); // stop if there weren't any entries in this page
         $this->output->writeln('No more entries to load.');
 
         // Disable (set visibility = archived) current notices for unworthy or disabled videos
@@ -93,13 +119,15 @@ class UpdateCaptainFactNoticesCommand extends Command
         $this->disableNoticesWithExternalIds($archiveCount);
 
         $this->output->writeln(sprintf('Done in '.(time() - $startTimestamp).' seconds. %d notice(s) created, %d updated, %d archived.', $creationCount, $updateCount, $archiveCount));
+
+        return 0;
     }
 
     /**
      * Method loadCaptainFactContributor
      * Load contributor defined in environment variable set in set::ENV_KEY.
      */
-    protected function loadCaptainFactContributor()
+    protected function loadCaptainFactContributor(): void
     {
         if (0 == (int) $this->contributorId) {
             throw new Exception();
@@ -114,7 +142,7 @@ class UpdateCaptainFactNoticesCommand extends Command
      * Method loadExternalIdsOfNoticesForCaptainFactContributor
      * Load externalId of existing notices for the given contributor.
      */
-    protected function loadExternalIdsOfNoticesForCaptainFactContributor()
+    protected function loadExternalIdsOfNoticesForCaptainFactContributor(): void
     {
         try {
             $this->noticesExternalIds = array_flip(
@@ -128,7 +156,7 @@ class UpdateCaptainFactNoticesCommand extends Command
                     'externalId'
                 )
             );
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return;
         }
     }
@@ -136,8 +164,10 @@ class UpdateCaptainFactNoticesCommand extends Command
     /**
      * Method fetchVideosForPage
      * Fetch a page of videos from CaptainFact API.
+     *
+     * @return mixed[]
      */
-    protected function fetchVideosForPage($pageIndex): array
+    protected function fetchVideosForPage(int $pageIndex): array
     {
         $this->output->writeln(sprintf('Loading videos page %d...', $pageIndex));
 
@@ -188,7 +218,7 @@ class UpdateCaptainFactNoticesCommand extends Command
      * Method isEntryEligible
      * Check if entry deserves a notice: if there is at least $minSourcesCount sources, or $minSourcesCountWithMinScore if one of them scores at least $minScore.
      */
-    protected function isEntryEligible($entry, &$sourcesCount): bool
+    protected function isEntryEligible(object $entry, int &$sourcesCount): bool
     {
         $minSourcesCount = 8;
         $minScore = 1;
@@ -197,8 +227,8 @@ class UpdateCaptainFactNoticesCommand extends Command
         $hasScoredSource = false;
         $deserves = false;
 
-        for ($statementIndex = 0; $statementIndex < count($entry['statements']); ++$statementIndex) {
-            for ($commentIndex = 0; $commentIndex < count($entry['statements'][$statementIndex]['comments']); ++$commentIndex) {
+        for ($statementIndex = 0; $statementIndex < \count($entry['statements']); ++$statementIndex) {
+            for ($commentIndex = 0; $commentIndex < \count($entry['statements'][$statementIndex]['comments']); ++$commentIndex) {
                 ++$sourcesCount;
 
                 if ($sourcesCount >= $minSourcesCount) {
@@ -221,7 +251,7 @@ class UpdateCaptainFactNoticesCommand extends Command
      * Method computeEntry
      * Create or update a notice with the given entry.
      */
-    protected function computeEntry($entry, $sourcesCount, &$creationCount, &$updateCount)
+    protected function computeEntry(object $entry, int $sourcesCount, int &$creationCount, int &$updateCount): void
     {
         $matchingContexts = [];
         $matchingContext = new MatchingContext();
@@ -249,7 +279,7 @@ class UpdateCaptainFactNoticesCommand extends Command
      * Method createNoticeForExternalId
      * Create a notice with the given parameters.
      */
-    protected function createNoticeWithExternalId($externalId, $contributor, $matchingContext, $message)
+    protected function createNoticeWithExternalId(string $externalId, Contributor $contributor, MatchingContext $matchingContext, string $message): void
     {
         $this->output->writeln(sprintf('... create entry with id %d', $externalId));
 
@@ -269,7 +299,7 @@ class UpdateCaptainFactNoticesCommand extends Command
      * Method updateNoticesForExternalId
      * Update the notice with the given externalId with the the given parameters.
      */
-    protected function updateNoticesWithExternalId($externalId, $contributor, $matchingContext, $message)
+    protected function updateNoticesWithExternalId(string $externalId, Contributor $contributor, MatchingContext $matchingContext, string $message): void
     {
         $this->output->writeln(sprintf('... update entry with id %d', $externalId));
 
@@ -280,7 +310,7 @@ class UpdateCaptainFactNoticesCommand extends Command
             ->setParameter('externalId', self::NOTICE_EXTERNAL_ID_PREFIX.$externalId)
             ->getResult();
 
-        for ($noticeIndex = 0; $noticeIndex < count($notices); ++$noticeIndex) {
+        for ($noticeIndex = 0; $noticeIndex < \count($notices); ++$noticeIndex) {
             $notices[$noticeIndex]->setMessage($message);
             $notices[$noticeIndex]->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
 
@@ -294,9 +324,9 @@ class UpdateCaptainFactNoticesCommand extends Command
      * Method disableNoticesWithExternalIds
      * Update the remaining notices to set their visibility to archived.
      */
-    protected function disableNoticesWithExternalIds(&$archiveCount)
+    protected function disableNoticesWithExternalIds(int &$archiveCount): void
     {
-        while (count($this->noticesExternalIds) > 0) {
+        while (\count($this->noticesExternalIds) > 0) {
             $noticeExternalId = array_shift($this->noticesExternalIds);
             $notices = $this
                 ->entityManager
@@ -304,7 +334,7 @@ class UpdateCaptainFactNoticesCommand extends Command
                 ->setParameter('eid', $noticeExternalId)
                 ->getResult();
 
-            for ($noticeIndex = 0; $noticeIndex < count($notices); ++$noticeIndex) {
+            for ($noticeIndex = 0; $noticeIndex < \count($notices); ++$noticeIndex) {
                 $notices[$noticeIndex]->setVisibility(NoticeVisibility::ARCHIVED_VISIBILITY());
                 $this
                     ->entityManager

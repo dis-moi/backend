@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Contributor;
@@ -12,7 +14,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class NoticeFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $johnDoe = $this->getReference('john_doe');
         $janeDoe = $this->getReference('jane_doe');

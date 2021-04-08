@@ -1,19 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Contributor;
 use App\Repository\ContributorRepository;
 use App\Repository\NoticeRepository;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder as DoctrineQueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController as BaseAdminController;
 use EasyCorp\Bundle\EasyAdminBundle\Event\EasyAdminEvents;
 use EasyCorp\Bundle\EasyAdminBundle\Search\QueryBuilder;
-use FOS\UserBundle\Doctrine\UserManager;
+use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Pagerfanta\Pagerfanta;
-use Symfony\Component\Routing\Router;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 
 class AdminController extends BaseAdminController
@@ -23,7 +27,7 @@ class AdminController extends BaseAdminController
      */
     protected $contributorRepository;
     /**
-     * @var UserManager
+     * @var UserManagerInterface
      */
     private $userManager;
     /**
@@ -31,7 +35,7 @@ class AdminController extends BaseAdminController
      */
     private $queryBuilder;
     /**
-     * @var Router
+     * @var RouterInterface
      */
     private $router;
     /**
@@ -48,7 +52,7 @@ class AdminController extends BaseAdminController
         $this->noticeRepository = $noticeRepository;
     }
 
-    protected function autocompleteAction()
+    protected function autocompleteAction(): JsonResponse
     {
         $parameterBag = $this->request->query;
 
@@ -76,29 +80,27 @@ class AdminController extends BaseAdminController
     }
 
     // Override User CRUD
-    public function createNewUserEntity()
+    public function createNewUserEntity(): UserInterface
     {
         return $this->userManager->createUser();
     }
 
-    public function prePersistUserEntity($user)
+    public function prePersistUserEntity(UserInterface $user): void
     {
-        $this->userManager->updateUser($user, false);
+        $this->userManager->updateUser($user);
     }
 
-    public function preUpdateUserEntity($user)
+    public function preUpdateUserEntity(UserInterface $user): void
     {
-        $this->userManager->updateUser($user, false);
+        $this->userManager->updateUser($user);
     }
 
-    // Override Notice Search
-    // Jalil: Override but does the same as super-class ?
-    protected function createNoticeSearchQueryBuilder($entityClass, $searchQuery, array $searchableFields, $sortField = null, $sortDirection = null, $dqlFilter = null)
-    {
-        return $this->queryBuilder->createSearchQueryBuilder($this->entity, $searchQuery, $sortField, $sortDirection, $dqlFilter);
-    }
-
-    protected function findAll($entityClass, $page = 1, $maxPerPage = 15, $sortField = null, $sortDirection = null, $dqlFilter = null)
+    /**
+     * {@inheritdoc}
+     *
+     * @return Pagerfanta<mixed>
+     */
+    protected function findAll($entityClass, $page = 1, $maxPerPage = 15, $sortField = null, $sortDirection = null, $dqlFilter = null): Pagerfanta
     {
         if (Contributor::class !== $entityClass) {
             return parent::findAll($entityClass, $page, $maxPerPage, $sortField, $sortDirection, $dqlFilter);
@@ -113,6 +115,9 @@ class AdminController extends BaseAdminController
         return $paginator;
     }
 
+    /**
+     * @return mixed|RedirectResponse
+     */
     public function searchNoticeAction()
     {
         $query = trim($this->request->query->get('query'));
@@ -131,8 +136,8 @@ class AdminController extends BaseAdminController
             $searchableFields,
             $this->request->query->get('page', 1),
             $this->entity['list']['max_results'],
-            isset($this->entity['search']['sort']['field']) ? $this->entity['search']['sort']['field'] : $this->request->query->get('sortField'),
-            isset($this->entity['search']['sort']['direction']) ? $this->entity['search']['sort']['direction'] : $this->request->query->get('sortDirection'),
+            $this->entity['search']['sort']['field'] ?? $this->request->query->get('sortField'),
+            $this->entity['search']['sort']['direction'] ?? $this->request->query->get('sortDirection'),
             $this->entity['search']['dql_filter']
         );
         $fields = $this->entity['list']['fields'];
@@ -151,17 +156,17 @@ class AdminController extends BaseAdminController
         return $this->executeDynamicMethod('render<EntityName>Template', ['search', $this->entity['templates']['list'], $parameters]);
     }
 
-    public static function getDomainNameQueryBuilder(EntityRepository $er)
+    public static function getDomainNameQueryBuilder(EntityRepository $er): DoctrineQueryBuilder
     {
         return $er->createQueryBuilder('domain_name')->orderBy('domain_name.name', 'ASC');
     }
 
-    public static function getAllContributorsQueryBuilder(EntityRepository $er)
+    public static function getAllContributorsQueryBuilder(EntityRepository $er): DoctrineQueryBuilder
     {
         return $er->createQueryBuilder('contributor')->orderBy('contributor.name', 'ASC');
     }
 
-    public static function getDomainsSetQueryBuilder(EntityRepository $er)
+    public static function getDomainsSetQueryBuilder(EntityRepository $er): DoctrineQueryBuilder
     {
         return $er->createQueryBuilder('domains_set')->orderBy('domains_set.name', 'ASC');
     }

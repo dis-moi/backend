@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Domain\Service;
 
 use App\Domain\Service\NoticeAssembler;
@@ -14,9 +16,12 @@ use PHPUnit\Framework\TestCase;
 
 class NoticeAssemblerTest extends TestCase
 {
+    /**
+     * @var NoticeAssembler
+     */
     private $noticeAssembler;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $contributorRepository = $this->getMockBuilder(ContributorRepository::class)
@@ -25,23 +30,20 @@ class NoticeAssemblerTest extends TestCase
 
         $contributorRepository
             ->expects($this->atLeast(1))->method('findOneBy')
-            ->willReturn(new Contributor())
-        ;
+            ->willReturn(new Contributor());
 
         $domainNameRepository = $this->getMockBuilder(DomainNameRepository::class)
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
         $domainNameRepository
             ->expects($this->atLeast(1))
             ->method('findMostSpecificFromHost')
-            ->willReturn(null)
-        ;
+            ->willReturn(null);
 
         $this->noticeAssembler = new NoticeAssembler($contributorRepository, $domainNameRepository);
     }
 
-    public function test_instances_types()
+    public function testInstancesTypes(): void
     {
         $contribution = new Contribution(
             'https://www.dismoi.io/confidentialite',

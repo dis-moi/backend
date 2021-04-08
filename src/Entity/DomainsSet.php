@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -36,24 +38,24 @@ class DomainsSet
     private $name;
 
     /**
-     * @var Collection
+     * @var Collection<MatchingContext>
      *
      * @ORM\ManyToMany(targetEntity="MatchingContext", mappedBy="domainsSets")
      * @ORM\JoinTable(name="matching_context_domains_set",
-     *   joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
-     *   inverseJoinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")}
-     *   )
+     *     joinColumns={@ORM\JoinColumn(name="matching_context_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")}
+     * )
      */
     private $matchingContexts;
 
     /**
-     * @var Collection
+     * @var Collection<DomainName>
      *
      * @ORM\ManyToMany(targetEntity="DomainName", inversedBy="sets")
      * @ORM\JoinTable(name="domains_set_domain",
-     *   joinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")},
-     *   inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
-     *   )
+     *     joinColumns={@ORM\JoinColumn(name="domains_set_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
+     * )
      * @ORM\OrderBy({"name"="ASC"})
      */
     private $domains;
@@ -75,20 +77,16 @@ class DomainsSet
 
     /**
      * Get id.
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * Get name.
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -120,7 +118,10 @@ class DomainsSet
         return $this->domains;
     }
 
-    public function getNotices()
+    /**
+     * @return Notice[]
+     */
+    public function getNotices(): array
     {
         return array_map(function (MatchingContext $mc) {
             return $mc->getNotice();

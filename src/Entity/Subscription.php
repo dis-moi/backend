@@ -89,8 +89,7 @@ class Subscription
         return
       $this->created->diff($now, true)->days < self::DAYS_TO_BE_CONSIDERED_ACTIVE
       ||
-      $this->updated->diff($now, true)->days < self::DAYS_TO_BE_CONSIDERED_ACTIVE
-    ;
+      $this->updated->diff($now, true)->days < self::DAYS_TO_BE_CONSIDERED_ACTIVE;
     }
 
     public static function getFreshnessDate(): DateTime

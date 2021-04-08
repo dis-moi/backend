@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Controller\Api;
 
 use App\Controller\Api\PostNoticeRatingAction;
@@ -13,7 +15,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class PostNoticeRatingActionTest extends TestCase
 {
-    public function test__invoke()
+    public function testInvoke(): void
     {
         $notice = $this->getMockBuilder(Notice::class)
             ->getMock();

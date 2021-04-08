@@ -13,6 +13,11 @@ class ArrayHelper
     {
     }
 
+    /**
+     * @param mixed[] $collection
+     *
+     * @return mixed
+     */
     public static function find(array $collection, callable $predicate)
     {
         return current(

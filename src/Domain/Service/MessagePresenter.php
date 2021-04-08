@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Service;
 
+use League\Uri\Contracts\UriInterface;
 use League\Uri\Uri;
 use League\Uri\UriModifier;
-use function Sentry\captureException;
+use Psr\Http\Message\UriInterface as Psr7UriInterface;
 use Throwable;
 use Youthweb\UrlLinker\UrlLinker;
+use function Sentry\captureException;
 
 class MessagePresenter
 {
@@ -15,9 +19,6 @@ class MessagePresenter
      */
     private $utmMedium;
 
-    /**
-     * MessagePresenter constructor.
-     */
     public function __construct(string $utmMedium)
     {
         $this->utmMedium = $utmMedium;
@@ -27,17 +28,15 @@ class MessagePresenter
     {
         $message = $this->convertNewLinesToParagraphs($message);
         $message = $this->addLinksToUrls($message);
-        $message = $this->addTargetBlankAndUtmToLinks($message);
 
-        return $message;
+        return $this->addTargetBlankAndUtmToLinks($message);
     }
 
     public function strip(string $message): string
     {
         $message = strip_tags($message);
-        $message = $this->convertNewLinesToParagraphs($message);
 
-        return $message;
+        return $this->convertNewLinesToParagraphs($message);
     }
 
     private function convertNewLinesToParagraphs(string $content): string
@@ -73,12 +72,7 @@ class MessagePresenter
         return $urlLinker->linkUrlsInTrustedHtml($message);
     }
 
-    /**
-     * @param $url
-     *
-     * @return escaped $url
-     */
-    private function escapeHtml($url)
+    private function escapeHtml(string $url): string
     {
         $flags = ENT_COMPAT | ENT_HTML401;
         $encoding = ini_get('default_charset');
@@ -87,7 +81,10 @@ class MessagePresenter
         return htmlspecialchars($url, $flags, $encoding, $double_encode);
     }
 
-    private function setUtmForUrl($url)
+    /**
+     * @return UriInterface|Psr7UriInterface
+     */
+    private function setUtmForUrl(string $url)
     {
         try {
             return UriModifier::mergeQuery(
@@ -97,5 +94,7 @@ class MessagePresenter
         } catch (Throwable $e) {
             captureException($e);
         }
+
+        return Uri::createFromString(trim($url));
     }
 }

@@ -21,7 +21,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * Notice.
  *
  * @ORM\Table(name="notice")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\NoticeRepository")
  * @ORM\EntityListeners({NoticeListener::class})
  * @Vich\Uploadable
  */
@@ -37,11 +37,15 @@ class Notice
     private $id;
 
     /**
+     * @var ?string
+     *
      * @ORM\Column(name="visibility", type="string", options={"default"="private"})
      */
     private $visibility;
 
     /**
+     * @var ArrayCollection<MatchingContext>
+     *
      * @ORM\OneToMany(targetEntity=MatchingContext::class, mappedBy="notice", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=false)
      *
@@ -57,6 +61,8 @@ class Notice
     private $excludeUrlRegex;
 
     /**
+     * @var Contributor
+     *
      * @ORM\ManyToOne(targetEntity=Contributor::class, inversedBy="notices", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -77,7 +83,7 @@ class Notice
     private $note;
 
     /**
-     * @var ArrayCollection
+     * @var ArrayCollection<Rating>
      *
      * @ORM\OneToMany(targetEntity=Rating::class, mappedBy="notice", cascade={"persist", "remove"}, orphanRemoval=true)
      */
@@ -138,6 +144,7 @@ class Notice
      * @var int
      */
     private $pinnedSort;
+
     /**
      * @var string
      *
@@ -150,16 +157,13 @@ class Notice
         $this->matchingContexts = new ArrayCollection();
         $this->relays = new ArrayCollection();
         $this->ratings = new ArrayCollection();
-        $this->visibility = NoticeVisibility::getDefault();
+        $this->visibility = NoticeVisibility::getDefault()->getValue();
         $this->expires = (new DateTimeImmutable())->modify('+1year');
     }
 
-    /**
-     * @return \Closure
-     */
-    public static function equals(Notice $notice)
+    public static function equals(self $notice): \Closure
     {
-        return static function (Notice $other) use ($notice) {
+        return static function (self $other) use ($notice) {
             return $notice->getId() === $other->getId();
         };
     }
@@ -174,7 +178,7 @@ class Notice
         return $this->id;
     }
 
-    public function setMessage(string $message): Notice
+    public function setMessage(string $message): self
     {
         $this->message = strip_tags((new \HTMLPurifier())->purify($message), '<p><a>');
 
@@ -186,7 +190,7 @@ class Notice
         return $this->message;
     }
 
-    public function addMatchingContext(MatchingContext $matchingContext): Notice
+    public function addMatchingContext(MatchingContext $matchingContext): self
     {
         $matchingContext->setNotice($this);
 
@@ -195,7 +199,7 @@ class Notice
         return $this;
     }
 
-    public function removeMatchingContext(MatchingContext $matchingContext)
+    public function removeMatchingContext(MatchingContext $matchingContext): void
     {
         $this->matchingContexts->removeElement($matchingContext);
     }
@@ -210,7 +214,7 @@ class Notice
         return sprintf('(id:%d) [%s] %s', $this->getId(), $this->getContributor(), StringHelper::truncate($this->getMessage(), 45));
     }
 
-    public function setContributor(Contributor $contributor = null): Notice
+    public function setContributor(Contributor $contributor = null): self
     {
         $this->contributor = $contributor;
 
@@ -234,7 +238,7 @@ class Notice
     /**
      * @throw InvalidArgumentException
      */
-    public function setVisibility(NoticeVisibility $visibility): Notice
+    public function setVisibility(NoticeVisibility $visibility): self
     {
         $this->visibility = $visibility->getValue();
 
@@ -256,7 +260,7 @@ class Notice
         return $this->note;
     }
 
-    public function setNote(?string $note)
+    public function setNote(?string $note): void
     {
         $this->note = $note;
     }
@@ -320,45 +324,45 @@ class Notice
         return $balance > 0 ? $balance : 0;
     }
 
-    public function addRating(Rating $rating): Notice
+    public function addRating(Rating $rating): self
     {
         $this->ratings[] = $rating;
 
         return $this;
     }
 
-    public function removeRating(Rating $rating)
+    public function removeRating(Rating $rating): void
     {
         $this->ratings->removeElement($rating);
     }
 
-    public function getCreated(): ?\DateTime
+    public function getCreated(): ?DateTime
     {
         return $this->created;
     }
 
-    public function setCreated(\DateTime $created)
+    public function setCreated(DateTime $created): void
     {
         $this->created = $created;
         $this->setUpdated($created);
     }
 
-    public function getUpdated(): ?\DateTime
+    public function getUpdated(): ?DateTime
     {
         return $this->updated;
     }
 
-    public function setUpdated(\DateTime $updated)
+    public function setUpdated(DateTime $updated): void
     {
         $this->updated = $updated;
     }
 
-    public function getExpires(): ?\DateTimeInterface
+    public function getExpires(): ?DateTimeInterface
     {
         return $this->expires;
     }
 
-    public function setExpires(\DateTime $expires = null)
+    public function setExpires(DateTime $expires = null): void
     {
         $this->expires = $expires;
     }
@@ -368,7 +372,7 @@ class Notice
         return $this->unpublishedOnExpiration;
     }
 
-    public function setUnpublishedOnExpiration(bool $unpublishedOnExpiration)
+    public function setUnpublishedOnExpiration(bool $unpublishedOnExpiration): void
     {
         $this->unpublishedOnExpiration = $unpublishedOnExpiration;
     }
@@ -381,9 +385,6 @@ class Notice
         return $this->excludeUrlRegex;
     }
 
-    /**
-     * @param string? $excludeUrlRegex
-     */
     public function setExcludeUrlRegex(?string $excludeUrlRegex): void
     {
         $this->excludeUrlRegex = $excludeUrlRegex;
@@ -394,7 +395,7 @@ class Notice
         return $this->screenshot;
     }
 
-    public function setScreenshot(?string $screenshot): Notice
+    public function setScreenshot(?string $screenshot): self
     {
         $this->screenshot = $screenshot;
 
@@ -406,7 +407,7 @@ class Notice
         return $this->screenshotFile;
     }
 
-    public function setScreenshotFile(?File $screenshotFile): Notice
+    public function setScreenshotFile(?File $screenshotFile): self
     {
         $this->screenshotFile = $screenshotFile;
         if ($screenshotFile) {
@@ -433,9 +434,9 @@ class Notice
             ->first();
         if ($first) {
             return $first->getExampleUrl();
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     public function getRelayers(): Collection
@@ -445,14 +446,14 @@ class Notice
         });
     }
 
-    public function addRelayer(Contributor $contributor): Notice
+    public function addRelayer(Contributor $contributor): self
     {
         $this->relays[] = new Relay($contributor, $this);
 
         return $this;
     }
 
-    public function removeRelayer(Contributor $contributor): Notice
+    public function removeRelayer(Contributor $contributor): self
     {
         $this->relays->removeElement(
             current(
@@ -478,7 +479,7 @@ class Notice
         return $this->pinnedSort;
     }
 
-    public function setPinnedSort(int $pinnedSort): Notice
+    public function setPinnedSort(int $pinnedSort): self
     {
         $this->pinnedSort = $pinnedSort;
 
@@ -490,7 +491,7 @@ class Notice
         return $this->externalId;
     }
 
-    public function setExternalId(string $externalId): Notice
+    public function setExternalId(string $externalId): self
     {
         $this->externalId = $externalId;
 

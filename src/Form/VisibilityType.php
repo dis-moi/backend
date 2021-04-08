@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Helper\NoticeVisibility;
@@ -9,7 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class VisibilityType extends AbstractType
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'choices' => NoticeVisibility::getChoices(),
@@ -17,10 +19,7 @@ class VisibilityType extends AbstractType
         ]);
     }
 
-    /**
-     * @return string
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return ChoiceType::class;
     }

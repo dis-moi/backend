@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Service;
 
 use App\Entity\Contributor;
-use App\Entity\Extension;
 use App\Entity\Subscription;
 use App\Repository\ContributorRepository;
 use App\Repository\ExtensionRepository;
@@ -43,20 +44,18 @@ class SubscriptionsTrackingService
     }
 
     /**
-     * @param string[] $contributorIds
+     * @param int[] $contributorIds
      *
      * @throws NonUniqueResultException
      */
-    public function refreshSubscriptions(string $extensionId, array $contributorIds)
+    public function refreshSubscriptions(string $extensionId, array $contributorIds): void
     {
-        /*
-         * @var Extension
-         */
+        // @var Extension
         if ($extension = $this->extensionRepository->find($extensionId)) {
             $extension->confirm();
             $existingSubscriptions = $extension->getSubscriptions();
             foreach ($existingSubscriptions as $existingSubscription) {
-                if (!in_array($existingSubscription->getContributor()->getId(), $contributorIds)) {
+                if (!\in_array($existingSubscription->getContributor()->getId(), $contributorIds, true)) {
                     $this->entityManager->remove($existingSubscription);
                 }
             }
@@ -64,7 +63,7 @@ class SubscriptionsTrackingService
 
         foreach ($contributorIds as $contributorId) {
             /**
-             * @var Contributor
+             * @var Contributor|null
              */
             $contributor = $this->contributorRepository->find($contributorId);
             if (!$contributor) {
@@ -72,7 +71,7 @@ class SubscriptionsTrackingService
             }
 
             /**
-             * @var Subscription
+             * @var Subscription|null
              */
             $subscription = $this->subscriptionRepository->findOne($extensionId, $contributorId);
             if ($subscription) {

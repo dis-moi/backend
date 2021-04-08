@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Repository\MatchingContextRepository;
@@ -10,7 +12,14 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class AdminApiController
 {
+    /**
+     * @var MatchingContextRepository
+     */
     protected $repository;
+
+    /**
+     * @var SerializerInterface
+     */
     protected $serializer;
 
     public function __construct(SerializerInterface $serializer, MatchingContextRepository $repository)
@@ -23,7 +32,7 @@ class AdminApiController
     /**
      * @Route("/matchingcontexts")
      */
-    public function getMatchingcontextsAction()
+    public function getMatchingcontextsAction(): JsonResponse
     {
         $matchingContexts = $this->repository->findAllWithPrivateVisibility();
 

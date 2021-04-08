@@ -16,7 +16,14 @@ class Thumb
     private const LARGE_FILTER = 'l_thumb';
     private const EXTRA_LARGE_FILTER = 'xl_thumb';
 
+    /**
+     * @var string
+     */
     private $name;
+
+    /**
+     * @var string
+     */
     private $filter;
 
     private function __construct(string $name)

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Subscription;
@@ -9,7 +11,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class SubscriptionFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $subscription1 = new Subscription($this->getReference('john_doe'), $this->getReference('extension_1'));
         $subscription1->confirm();

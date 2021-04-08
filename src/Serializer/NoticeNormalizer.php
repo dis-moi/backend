@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Serializer;
 
 use App\Domain\Service\MessagePresenter;
@@ -39,7 +41,7 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements NormalizerIn
     /**
      * Sets the owning Normalizer object.
      */
-    public function setNormalizer(NormalizerInterface $normalizer)
+    public function setNormalizer(NormalizerInterface $normalizer): void
     {
         $this->normalizer = $normalizer;
     }
@@ -49,6 +51,13 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements NormalizerIn
         return $data instanceof Notice;
     }
 
+    /**
+     * @param mixed[]    $context
+     * @param mixed|null $format
+     * @param mixed      $notice
+     *
+     * @return mixed[]
+     */
     public function normalize($notice, $format = null, array $context = []): array
     {
         if (!($notice instanceof Notice)) {

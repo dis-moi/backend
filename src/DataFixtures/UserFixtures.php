@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\User;
@@ -17,12 +19,12 @@ class UserFixtures extends Fixture implements FixtureInterface, ContainerAwareIn
      */
     private $container;
 
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(ContainerInterface $container = null): void
     {
         $this->container = $container;
     }
 
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $userManager = $this->container->get('fos_user.user_manager');
 
@@ -44,7 +46,7 @@ class UserFixtures extends Fixture implements FixtureInterface, ContainerAwareIn
         $manager->flush();
     }
 
-    public function getOrder()
+    public function getOrder(): int
     {
         return 2;
     }

@@ -68,7 +68,8 @@
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "friendsofphp/php-cs-fixer": "^2.16",
         "rector/rector": "^0.8.15",
-        "brainmaestro/composer-git-hooks": "^2.8"
+        "brainmaestro/composer-git-hooks": "^2.8",
+        "phpstan/phpstan": "^0.12.83"
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -89,7 +90,7 @@
         },
         "symfony-assets-install": "relative",
         "hooks": {
-            "pre-commit": ["php-cs-fixer fix"]
+            "pre-commit": ["php-cs-fixer fix", "phpstan analyse"]
         }
     }
 }

@@ -19,7 +19,7 @@ final class Version20200116112234 extends AbstractMigration
         $this->addSql('ALTER TABLE subscription ADD CONSTRAINT FK_SubscriptionExtension FOREIGN KEY (extension_id) REFERENCES extension(id)');
     }
 
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
         $this->addSql('ALTER TABLE subscription DROP FOREIGN KEY FK_SubscriptionContributor');
         $this->addSql('ALTER TABLE subscription DROP FOREIGN KEY FK_SubscriptionExtension');

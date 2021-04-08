@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\MatchingContext;
@@ -9,7 +11,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class MatchingContextFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $matchingContext = new MatchingContext();
         $matchingContext->setExampleUrl('http://site-ecologique.fr');

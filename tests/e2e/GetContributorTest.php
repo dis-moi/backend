@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\e2e;
 
 use App\Entity\Contributor;
@@ -7,7 +9,7 @@ use App\Entity\Notice;
 
 class GetContributorTest extends BaseApiE2eTestCase
 {
-    public function testGetContributor()
+    public function testGetContributor(): void
     {
         /** @var Contributor $contributor */
         $contributor = $this->referenceRepository->getReference('john_doe');
@@ -35,7 +37,7 @@ class GetContributorTest extends BaseApiE2eTestCase
         $this->assertNotContains($privateNotice->getId(), $noticesIds);
     }
 
-    public function testFailGetDisabledNotice()
+    public function testFailGetDisabledNotice(): void
     {
         /** @var Contributor $contributor */
         $contributor = $this->referenceRepository->getReference('contributor_disabled');

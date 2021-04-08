@@ -41,7 +41,7 @@ class Pin
     /**
      * @var int
      *
-     * @ORM\Column(name="sort",type="integer")
+     * @ORM\Column(name="sort", type="integer")
      */
     private $sort;
 
@@ -62,7 +62,7 @@ class Pin
         return $this->contributor;
     }
 
-    public function setContributor(Contributor $contributor): Pin
+    public function setContributor(Contributor $contributor): self
     {
         $this->contributor = $contributor;
 
@@ -74,7 +74,7 @@ class Pin
         return $this->notice;
     }
 
-    public function setNotice(Notice $notice): Pin
+    public function setNotice(Notice $notice): self
     {
         $this->notice = $notice;
 
@@ -86,7 +86,7 @@ class Pin
         return $this->sort;
     }
 
-    public function setSort(int $sort): Pin
+    public function setSort(int $sort): self
     {
         $this->sort = $sort;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Embeddable\Context;
@@ -11,7 +13,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class RatingFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         /** @var Notice $notice */
         $notice = $this->getReference('notice_type_ecology');
@@ -29,25 +31,25 @@ class RatingFixtures extends Fixture implements DependentFixtureInterface
 
         $notice = $this->getReference('notice_liked');
         foreach ([
-                     Rating::LIKE, Rating::LIKE, Rating::LIKE,
-                     Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY,
-                 ] as $type) {
+            Rating::LIKE, Rating::LIKE, Rating::LIKE,
+            Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY,
+        ] as $type) {
             $rating = new Rating($notice, $type, new Context(new \DateTime('-1 month'), 'url', 'geoloc'), 'reason');
             $manager->persist($rating);
         }
         $notice = $this->getReference('notice_displayed');
         foreach ([
-                     Rating::LIKE, Rating::LIKE,
-                     Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY,
-                 ] as $type) {
+            Rating::LIKE, Rating::LIKE,
+            Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY,
+        ] as $type) {
             $rating = new Rating($notice, $type, new Context(new \DateTime('-1 month'), 'url', 'geoloc'), 'reason');
             $manager->persist($rating);
         }
         $notice = $this->getReference('notice_liked_displayed');
         foreach ([
-                     Rating::LIKE, Rating::LIKE, Rating::LIKE,
-                     Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY,
-                 ] as $type) {
+            Rating::LIKE, Rating::LIKE, Rating::LIKE,
+            Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY, Rating::DISPLAY,
+        ] as $type) {
             $rating = new Rating($notice, $type, new Context(new \DateTime('-1 month'), 'url', 'geoloc'), 'reason');
             $manager->persist($rating);
         }

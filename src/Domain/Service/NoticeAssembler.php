@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Service;
 
 use App\DTO\Contribution;
@@ -14,7 +16,14 @@ use InvalidArgumentException;
 
 class NoticeAssembler
 {
+    /**
+     * @var ContributorRepository
+     */
     private $contributorRepository;
+
+    /**
+     * @var DomainNameRepository
+     */
     private $domainNameRepository;
 
     public function __construct(ContributorRepository $contributorRepository, DomainNameRepository $domainNameRepository)
@@ -27,15 +36,14 @@ class NoticeAssembler
     {
         return self::assembleNotice($contribution)
             ->setContributor(self::assembleContributor($contribution))
-            ->addMatchingContext(self::assembleMatchingContext($contribution))
-        ;
+            ->addMatchingContext(self::assembleMatchingContext($contribution));
     }
 
     public function assembleContributor(Contribution $contribution): ?Contributor
     {
         if ($contribution->isAQuestion()) {
             if ($contribution->getToContributorId()) {
-                /** @var Contributor $questionedContributor */
+                /** @var Contributor|null $questionedContributor */
                 $questionedContributor = $this->contributorRepository->find($contribution->getToContributorId());
 
                 if (!$questionedContributor) {
@@ -48,8 +56,8 @@ class NoticeAssembler
             return null;
         }
 
-        // @todo /!\ Nothing here prevent a user to impersonate another one /!\
-        /** @var Contributor $existingContributor */
+        /** @todo /!\ Nothing here prevent a user to impersonate another one /!\ */
+        /** @var Contributor|null $existingContributor */
         $existingContributor = $this->contributorRepository->findOneBy(['email' => $contribution->getContributorEmail()]);
         if ($existingContributor) {
             return $existingContributor;
@@ -58,8 +66,7 @@ class NoticeAssembler
         return (new Contributor())
             ->setName($contribution->getContributorName())
             ->setEmail($contribution->getContributorEmail())
-            ->setEnabled(true)
-        ;
+            ->setEnabled(true);
     }
 
     public function assembleMatchingContext(Contribution $contribution): MatchingContext
@@ -73,8 +80,7 @@ class NoticeAssembler
             ->setUrlRegex($url['path'])
             ->setExampleUrl($contribution->getUrl())
             ->addDomainName($this->assembleDomainName($contribution))
-            ->setDescription("Draft posted by {$contribution->getContributorName()} from the extension.")
-        ;
+            ->setDescription("Draft posted by {$contribution->getContributorName()} from the extension.");
     }
 
     public function assembleDomainName(Contribution $contribution): DomainName

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Api;
 
 use App\Domain\Model\Enum\CategoryName;
 use App\Repository\CategoryRepository;
-use App\Repository\NoticeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -14,7 +16,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class GetCategoriesAction extends BaseAction
 {
     /**
-     * @var NoticeRepository
+     * @var CategoryRepository
      */
     private $repository;
 
@@ -28,7 +30,7 @@ class GetCategoriesAction extends BaseAction
      * @Route("/categories")
      * @Method("GET")
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         $categories = CategoryName::getConstants();
 

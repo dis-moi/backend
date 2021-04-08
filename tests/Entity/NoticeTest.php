@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Entity;
 
 use App\Entity\Contributor;
@@ -24,12 +26,12 @@ class NoticeTest extends FixtureAwareWebTestCase
         $this->_entityManager = self::$container->get('doctrine')->getManager();
     }
 
-    protected function _getReference(string $name)
+    protected function _getReference(string $name): object
     {
         return $this->referenceRepository->getReference($name);
     }
 
-    public function testUpdated()
+    public function testUpdated(): void
     {
         /** @var Notice $notice */
         $notice = $this->_getReference('notice_type_ecology');
@@ -53,7 +55,7 @@ class NoticeTest extends FixtureAwareWebTestCase
         $this->assertGreaterThan($currentDatetime, $persistedNotice->getUpdated());
     }
 
-    public function testCreated()
+    public function testCreated(): void
     {
         /** @var Contributor $contributor */
         $contributor = $this->_getReference('contributor2');
@@ -76,11 +78,11 @@ class NoticeTest extends FixtureAwareWebTestCase
         $this->assertInstanceOf(DateTime::class, $created);
     }
 
-    public function testAddRelayer()
+    public function testAddRelayer(): void
     {
         /** @var Notice $notice */
         $notice = $this->_getReference('notice_type_ecology');
-        /** @var Contributor $contributor */
+        /** @var Contributor $contributor2 */
         $contributor2 = $this->_getReference('contributor2');
         $notice->addRelayer($contributor2);
         $this->_entityManager->flush();
@@ -90,7 +92,7 @@ class NoticeTest extends FixtureAwareWebTestCase
         $this->assertEquals(1, $persistedNotice->getRelayersCount());
     }
 
-    public function testRemoveRelayer()
+    public function testRemoveRelayer(): void
     {
         /** @var Notice $notice */
         $notice = $this->_getReference('notice_liked_displayed');

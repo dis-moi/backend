@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Service;
 
 use App\DTO\Contribution;
@@ -11,8 +13,19 @@ use Symfony\Component\Routing\RouterInterface;
 
 class EmailComposer
 {
+    /**
+     * @var RouterInterface
+     */
     private $router;
+
+    /**
+     * @var string
+     */
     private $instanceName;
+
+    /**
+     * @var string
+     */
     private $instanceEmail;
 
     public function __construct(RouterInterface $router, string $instanceName, string $instanceEmail)

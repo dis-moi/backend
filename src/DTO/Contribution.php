@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DTO;
 
 use Symfony\Component\Validator\Constraints as Assert;
@@ -45,7 +47,7 @@ final class Contribution
      */
     private $question;
 
-    public function __construct($url, $contributorName, $contributorEmail, $message, $toContributorId = null, $question = false)
+    public function __construct(string $url, string $contributorName, string $contributorEmail, string $message, int $toContributorId = null, bool $question = false)
     {
         $this->url = $url;
         $this->contributorName = $contributorName;

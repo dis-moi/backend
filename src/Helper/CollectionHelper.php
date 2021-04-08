@@ -16,6 +16,8 @@ class CollectionHelper
     }
 
     /**
+     * @param Collection<mixed> $collection
+     *
      * @return mixed
      */
     public static function find(Collection $collection, callable $predicate)

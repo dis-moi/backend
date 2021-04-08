@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Api;
 
 use App\Domain\Service\SubscriptionsTrackingService;
@@ -28,7 +30,7 @@ class PostSubscriptionsAction extends BaseAction
      * @Route("/subscriptions/{extensionId}")
      * @Method("POST")
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
         $extensionId = $request->get('extensionId', null);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Domain\Model;
 
 use Doctrine\Common\Inflector\Inflector;
@@ -27,7 +29,7 @@ class Category
         $this->name = $name;
     }
 
-    public function getHashtag()
+    public function getHashtag(): string
     {
         return ucfirst(Inflector::camelize($this->getName()));
     }
@@ -37,7 +39,7 @@ class Category
         return '#'.$this->getHashtag();
     }
 
-    public static function createFromName($name): self
+    public static function createFromName(string $name): self
     {
         $category = new self();
         $category->setName($name);
