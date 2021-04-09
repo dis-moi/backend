@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Entity\Contributor;
+use App\Entity\DomainName;
 use App\Entity\MatchingContext;
 use App\Entity\Notice;
 use App\Helper\NoticeVisibility;
@@ -23,6 +24,7 @@ class UpdateCaptainFactNoticesCommand extends Command
     protected static $defaultName = 'app:notices:update:captainfact';
 
     public const NOTICE_EXTERNAL_ID_PREFIX = 'CF_';
+    public const YOUTUBE_DOMAIN_NAME = 'www.youtube.com';
 
     /**
      * @var HttpClientInterface
@@ -48,6 +50,11 @@ class UpdateCaptainFactNoticesCommand extends Command
      * @var array<string, string>
      */
     private $noticesExternalIds;
+
+    /**
+     * @var DomainName
+     */
+    private $youtubeDomainName;
 
     /**
      * @var OutputInterface
@@ -83,6 +90,9 @@ class UpdateCaptainFactNoticesCommand extends Command
 
         // Load Existing CaptainFact notices
         $this->loadExternalIdsOfNoticesForCaptainFactContributor();
+        
+        // Load Youtube Domain Name
+        $this->loadYoutubeDomainName();
 
         // CF API calls: loop on online videos and create/update notices for worthy ones
         $pageIndex = 1;
@@ -164,6 +174,34 @@ class UpdateCaptainFactNoticesCommand extends Command
             return;
         }
     }
+    
+    /**
+     * Method loadYoutubeDomainName
+     * Load youtube domain name or create it if necessary
+     */
+    protected function loadYoutubeDomainName(): void
+    {
+        $this->youtubeDomainName = $this
+            ->entityManager
+            ->createQuery("SELECT dn FROM App\Entity\DomainName dn WHERE dn.name=:name")
+            ->setParameter('name', self::YOUTUBE_DOMAIN_NAME)
+            ->getResult();
+
+        if (!$this->youtubeDomainName) {
+            $this->output->writeln('Youtube domain name needs to be created');
+            
+            $this->youtubeDomainName = new DomainName();
+            $this->youtubeDomainName->setName(self::YOUTUBE_DOMAIN_NAME);
+            
+            $this
+                ->entityManager
+                ->persist($this->youtubeDomainName);
+            
+            $this
+                ->entityManager
+                ->flush();
+        }
+    }
 
     /**
      * Method fetchVideosForPage
@@ -226,6 +264,10 @@ class UpdateCaptainFactNoticesCommand extends Command
      */
     protected function isEntryEligible(array $entry, int &$sourcesCount): bool
     {
+        // No need to go further is there isn't any associated video
+        if ($entry['youtubeId'] == '')
+            return false;
+        
         $minSourcesCount = 8;
         $minScore = 1;
         $minSourcesCountWithMinScore = 5;
@@ -263,7 +305,10 @@ class UpdateCaptainFactNoticesCommand extends Command
     {
         $matchingContexts = [];
         $matchingContext = new MatchingContext();
-        $matchingContext->setUrlRegex('https://www.youtube.com/watch?v='.$entry['youtubeId'].'(&.*)?$');
+        $matchingContext->addDomainName($this->youtubeDomainName);
+        $matchingContext->setUrlRegex('/watch\?v='.$entry['youtubeId'].'.*');
+        $matchingContext->setExampleUrl('https://www.youtube.com/watch?v='.$entry['youtubeId']);
+        $matchingContext->setDescription('Vidéo Youtube');
 
         $message = 'Cette vidéo est en cours de fact-checking collaboratif sur CaptainFact ('.$sourcesCount.' commentaire'.(($sourcesCount) ? 's' : '').' sourcé'.(($sourcesCount) ? 's' : '').' au '.date('d/m/Y').'). <a href="https://captainfact.io/videos/'.$entry['hashId'].'">Voir les résultats</a>';
 
