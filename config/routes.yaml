@@ -1,4 +1,4 @@
 api_v3:
-  resource: ../src/Controller/Api/
+  resource: ../src/Controller/Api/V3/
   type:     annotation
   prefix:   /api/v3

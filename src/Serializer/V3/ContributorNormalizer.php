@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Serializer;
+namespace App\Serializer\V3;
 
 use App\Domain\Service\MessagePresenter;
 use App\Domain\Service\NoticeUrlGenerator;
@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\Exception\CircularReferenceException;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
@@ -22,7 +23,7 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 /**
  * Class ContributorNormalizer.
  */
-class ContributorNormalizer extends EntityWithImageNormalizer implements NormalizerInterface, NormalizerAwareInterface
+class ContributorNormalizer extends EntityWithImageNormalizer implements ContextAwareNormalizerInterface, NormalizerAwareInterface
 {
     /**
      * @var NormalizerInterface
@@ -57,12 +58,15 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
     /**
      * Checks whether the given class is supported for normalization by this normalizer.
      *
-     * @param mixed         $data   Data to normalize
-     * @param string | null $format The format being (de-)serialized from or into
+     * @param mixed         $data    Data to normalize
+     * @param string | null $format  The format being (de-)serialized from or into
+     * @param mixed[]       $context
      */
-    public function supportsNormalization($data, $format = null): bool
+    public function supportsNormalization($data, $format = null, $context = []): bool
     {
-        return $data instanceof Contributor;
+        $version = $context[NormalizerOptions::VERSION] ?? null;
+
+        return $data instanceof Contributor && 3 === $version;
     }
 
     private static function avatarWithThumbs(Contributor $contributor): Picture
@@ -94,7 +98,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
         if (!($contributor instanceof Contributor)) {
             throw new InvalidArgumentException('The normalized object must be of type Contributor');
         }
-
+        $context[NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS] = false;
         $pinnedNotices = $contributor->getPinnedNotices();
         $exampleNotice = $pinnedNotices->first() ?: $contributor->getPublicNotices()->first();
         $relays = $contributor->getPublicRelays();
@@ -112,9 +116,9 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Normali
             'preview' => $this->getImageAbsoluteUrl($contributor, 'previewImageFile'),
             'contributions' => $contributor->getNoticesCount(),
             'contribution' => [
-                'example' => $this->normalizer->normalize($exampleNotice, $format, [NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS => false]),
-                'pinnedNotices' => $pinnedNotices->map(function (Notice $notice) use ($format) {
-                    return $this->normalizer->normalize($notice, $format, [NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS => false]);
+                'example' => $this->normalizer->normalize($exampleNotice, $format, $context),
+                'pinnedNotices' => $pinnedNotices->map(function (Notice $notice) use ($context, $format) {
+                    return $this->normalizer->normalize($notice, $format, $context);
                 })->toArray(),
                 'numberOfPublishedNotices' => $contributor->getNoticesCount(),
             ],

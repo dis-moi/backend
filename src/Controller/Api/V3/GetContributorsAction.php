@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\V3;
 
 use App\Repository\ContributorRepository;
-use App\Serializer\NormalizerOptions;
+use App\Serializer\V3\NormalizerOptions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

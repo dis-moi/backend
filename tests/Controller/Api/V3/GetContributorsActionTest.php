@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Controller\Api;
+namespace App\Tests\Controller\Api\V3;
 
-use App\Controller\Api\GetContributorsAction;
+use App\Controller\Api\V3\GetContributorsAction;
 use App\Repository\ContributorRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;

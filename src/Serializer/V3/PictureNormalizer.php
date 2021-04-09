@@ -2,17 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Serializer;
+namespace App\Serializer\V3;
 
 use App\Serializer\Serializable\Picture;
 use App\Serializer\Serializable\Thumb;
 use Liip\ImagineBundle\Imagine\Cache\CacheManager;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
-class PictureNormalizer implements NormalizerInterface, NormalizerAwareInterface
+class PictureNormalizer implements ContextAwareNormalizerInterface, NormalizerAwareInterface
 {
     /**
      * @var NormalizerInterface
@@ -40,9 +41,16 @@ class PictureNormalizer implements NormalizerInterface, NormalizerAwareInterface
         $this->normalizer = $normalizer;
     }
 
-    public function supportsNormalization($data, $format = null): bool
+    /**
+     * @param mixed   $data
+     * @param string  $format
+     * @param mixed[] $context
+     */
+    public function supportsNormalization($data, $format = null, $context = []): bool
     {
-        return $data instanceof Picture;
+        $version = $context[NormalizerOptions::VERSION] ?? null;
+
+        return $data instanceof Picture && 3 === $version;
     }
 
     /**

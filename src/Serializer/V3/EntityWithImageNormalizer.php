@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Serializer;
+namespace App\Serializer\V3;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
