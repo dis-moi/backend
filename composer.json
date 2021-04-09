@@ -57,7 +57,15 @@
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
         "symfony/apache-pack": "^1.0",
-        "ezyang/htmlpurifier": "^4.13"
+        "ezyang/htmlpurifier": "^4.13",
+        "api-platform/core": "^2.6",
+        "symfony/expression-language": "4.4.*",
+        "symfony/proxy-manager-bridge": "4.4.*",
+        "doctrine/annotations": "^1.0",
+        "phpdocumentor/reflection-docblock": "^5.2",
+        "symfony/property-access": "4.4.*",
+        "symfony/property-info": "4.4.*",
+        "symfony/serializer": "4.4.*"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.1.7",
