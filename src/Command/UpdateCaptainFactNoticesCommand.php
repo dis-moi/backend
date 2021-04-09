@@ -76,7 +76,7 @@ class UpdateCaptainFactNoticesCommand extends Command
         try {
             $this->loadCaptainFactContributor();
         } catch (Exception $e) {
-            $this->output->writeln('Error: you have to set the DISMOI_CAPTAINFACT_CONTRIBUTOR_ID environment variable.');
+            $this->output->writeln($e->getMessage());
 
             return 1;
         }
@@ -130,12 +130,16 @@ class UpdateCaptainFactNoticesCommand extends Command
     protected function loadCaptainFactContributor(): void
     {
         if (0 == (int) $this->contributorId) {
-            throw new Exception();
+            throw new Exception('You have to set the DISMOI_CAPTAINFACT_CONTRIBUTOR_ID environment variable.');
         }
 
         $this->contributor = $this
             ->entityManager
             ->find('App\Entity\Contributor', (int) $this->contributorId);
+
+        if (!$this->contributor) {
+            throw new Exception("Contributor with id $this->contributorId was not found.");
+        }
     }
 
     /**
@@ -217,8 +221,10 @@ class UpdateCaptainFactNoticesCommand extends Command
     /**
      * Method isEntryEligible
      * Check if entry deserves a notice: if there is at least $minSourcesCount sources, or $minSourcesCountWithMinScore if one of them scores at least $minScore.
+     *
+     * @param mixed[] $entry
      */
-    protected function isEntryEligible(object $entry, int &$sourcesCount): bool
+    protected function isEntryEligible(array $entry, int &$sourcesCount): bool
     {
         $minSourcesCount = 8;
         $minScore = 1;
@@ -250,8 +256,10 @@ class UpdateCaptainFactNoticesCommand extends Command
     /**
      * Method computeEntry
      * Create or update a notice with the given entry.
+     *
+     * @param mixed[] $entry
      */
-    protected function computeEntry(object $entry, int $sourcesCount, int &$creationCount, int &$updateCount): void
+    protected function computeEntry(array $entry, int $sourcesCount, int &$creationCount, int &$updateCount): void
     {
         $matchingContexts = [];
         $matchingContext = new MatchingContext();
