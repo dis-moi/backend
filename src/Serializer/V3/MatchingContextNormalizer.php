@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Serializer;
+namespace App\Serializer\V3;
 
 use App\Entity\MatchingContext;
 use App\Helper\PregEscaper;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 
-class MatchingContextNormalizer implements NormalizerInterface
+class MatchingContextNormalizer implements ContextAwareNormalizerInterface
 {
     /**
      * @var RouterInterface
@@ -28,8 +28,15 @@ class MatchingContextNormalizer implements NormalizerInterface
         $this->escaper = $escaper;
     }
 
-    public function supportsNormalization($data, $format = null): bool
+    /**
+     * @param mixed   $data
+     * @param string  $format
+     * @param mixed[] $context
+     */
+    public function supportsNormalization($data, $format = null, $context = []): bool
     {
+        $version = $context[NormalizerOptions::VERSION] ?? null;
+
         return $data instanceof MatchingContext;
     }
 
@@ -50,7 +57,7 @@ class MatchingContextNormalizer implements NormalizerInterface
             'id' => $matchingContext->getId(),
             'noticeId' => $matchingContext->getNotice()->getId(),
             'noticeUrl' => $this->router->generate(
-                'app_api_getnoticeaction__invoke',
+                'app_api_v3_getnoticeaction__invoke',
                 ['id' => $matchingContext->getNotice()->getId()],
                 RouterInterface::ABSOLUTE_URL),
             'urlRegex' => $matchingContext->getFullUrlRegex($this->escaper),

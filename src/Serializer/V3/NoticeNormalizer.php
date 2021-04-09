@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Serializer;
+namespace App\Serializer\V3;
 
 use App\Domain\Service\MessagePresenter;
 use App\Domain\Service\NoticeUrlGenerator;
@@ -10,11 +10,12 @@ use App\Entity\Contributor;
 use App\Entity\Notice;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
+use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
-class NoticeNormalizer extends EntityWithImageNormalizer implements NormalizerInterface, NormalizerAwareInterface
+class NoticeNormalizer extends EntityWithImageNormalizer implements ContextAwareNormalizerInterface, NormalizerAwareInterface
 {
     /**
      * @var NormalizerInterface
@@ -46,9 +47,16 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements NormalizerIn
         $this->normalizer = $normalizer;
     }
 
-    public function supportsNormalization($data, $format = null): bool
+    /**
+     * @param mixed   $data
+     * @param string  $format
+     * @param mixed[] $context
+     */
+    public function supportsNormalization($data, $format = null, $context = []): bool
     {
-        return $data instanceof Notice;
+        $version = $context[NormalizerOptions::VERSION] ?? null;
+
+        return $data instanceof Notice && 3 === $version;
     }
 
     /**

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\V3;
 
 use App\Repository\ContributorRepository;
 use Doctrine\ORM\EntityManagerInterface;

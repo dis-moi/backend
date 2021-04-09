@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\V3;
 
 use App\Entity\Rating;
 use App\Repository\NoticeRepository;
+use App\Serializer\V3\NormalizerOptions;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -48,7 +49,10 @@ class PostNoticeRatingAction extends BaseAction
         }
 
         try {
-            $rating = $this->serializer->deserialize($request->getContent(), Rating::class, 'json', ['notice' => $notice]);
+            $rating = $this->serializer->deserialize($request->getContent(), Rating::class, 'json', [
+                'notice' => $notice,
+                NormalizerOptions::VERSION => 3,
+            ]);
         } catch (\Exception $e) {
             throw new UnprocessableEntityHttpException($e->getMessage(), $e);
         }
