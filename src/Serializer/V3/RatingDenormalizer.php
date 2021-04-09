@@ -2,20 +2,28 @@
 
 declare(strict_types=1);
 
-namespace App\Serializer;
+namespace App\Serializer\V3;
 
 use App\Entity\Embeddable\Context;
 use App\Entity\Notice;
 use App\Entity\Rating;
 use DateTime;
 use LogicException;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 
-class RatingDenormalizer implements DenormalizerInterface
+class RatingDenormalizer implements ContextAwareDenormalizerInterface
 {
-    public function supportsDenormalization($data, $type, $format = null): bool
+    /**
+     * @param mixed   $data
+     * @param string  $type
+     * @param string  $format
+     * @param mixed[] $context
+     */
+    public function supportsDenormalization($data, $type, $format = null, $context = []): bool
     {
-        return Rating::class === $type;
+        $version = $context[NormalizerOptions::VERSION] ?? null;
+
+        return Rating::class === $type && 3 === $version;
     }
 
     /**

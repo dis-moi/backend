@@ -2,17 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\Serializer;
+namespace App\Serializer\V3;
 
 use App\Entity\RestrictedContext;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 
-class RestrictedContextNormalizer implements NormalizerInterface
+class RestrictedContextNormalizer implements ContextAwareNormalizerInterface
 {
-    public function supportsNormalization($data, $format = null): bool
+    /**
+     * @param mixed   $data
+     * @param string  $format
+     * @param mixed[] $context
+     */
+    public function supportsNormalization($data, $format = null, $context = []): bool
     {
-        return $data instanceof RestrictedContext;
+        $version = $context[NormalizerOptions::VERSION] ?? null;
+
+        return $data instanceof RestrictedContext && 3 === $version;
     }
 
     /**
