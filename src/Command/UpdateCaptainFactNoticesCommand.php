@@ -265,7 +265,7 @@ class UpdateCaptainFactNoticesCommand extends Command
         $matchingContext = new MatchingContext();
         $matchingContext->setUrlRegex('https://www.youtube.com/watch?v='.$entry['youtubeId'].'(&.*)?$');
 
-        $message = 'Cette vidéo est en cours de fact-checking collaboratif sur CaptainFact ('.$sourcesCount.' commentaire'.(($sourcesCount) ? 's' : '').' sourcés'.(($sourcesCount) ? 's' : '').' au '.date('d/m/Y').'). <a href="https://captainfact.io/videos/'.$entry['hashId'].'">Voir les résultats</a>';
+        $message = 'Cette vidéo est en cours de fact-checking collaboratif sur CaptainFact ('.$sourcesCount.' commentaire'.(($sourcesCount) ? 's' : '').' sourcé'.(($sourcesCount) ? 's' : '').' au '.date('d/m/Y').'). <a href="https://captainfact.io/videos/'.$entry['hashId'].'">Voir les résultats</a>';
 
         if (isset($this->noticesExternalIds[self::NOTICE_EXTERNAL_ID_PREFIX.$entry['id']])) {
             $this->updateNoticesWithExternalId($entry['id'], $this->contributor, $matchingContext, $message);
