@@ -14,9 +14,9 @@ abstract class BaseApiE2eTestCase extends FixtureAwareWebTestCase
     protected function makeApiRequest(string $url): array
     {
         $this->client->request('GET', $url);
-        $this->assertEquals(200, $this->client->getResponse()->getStatusCode(), $url);
-
         $response = $this->client->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode(), $url);
         $this->assertTrue($response->headers->contains('Content-Type', 'application/json'));
 
         return json_decode($response->getContent(), true);

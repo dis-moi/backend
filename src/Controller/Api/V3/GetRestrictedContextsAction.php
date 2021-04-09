@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\V3;
 
 use App\Repository\RestrictedContextRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

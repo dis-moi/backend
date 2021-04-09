@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Controller\Api;
+namespace App\Tests\Controller\Api\V3;
 
-use App\Controller\Api\PostNoticeRatingAction;
+use App\Controller\Api\V3\PostNoticeRatingAction;
 use App\Entity\Notice;
 use App\Entity\Rating;
 use App\Repository\NoticeRepository;
@@ -40,7 +40,7 @@ class PostNoticeRatingActionTest extends TestCase
             ->willReturn($notice);
 
         $serializer->expects($this->once())->method('deserialize')
-            ->with('foo', Rating::class, 'json', ['notice' => $notice])
+            ->with('foo', Rating::class, 'json', ['notice' => $notice, 'version' => 3])
             ->willReturn('rating');
 
         $action = new PostNoticeRatingAction($serializer, $noticeRepository, $entityManager);

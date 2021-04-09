@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Controller\Api;
+namespace App\Tests\Controller\Api\V3;
 
-use App\Controller\Api\GetNoticeAction;
+use App\Controller\Api\V3\GetNoticeAction;
 use App\Entity\Notice;
 use App\Repository\NoticeRepository;
 use PHPUnit\Framework\TestCase;

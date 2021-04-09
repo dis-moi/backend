@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Controller\Api;
+namespace App\Tests\Controller\Api\V3;
 
-use App\Controller\Api\GetMatchingContextsAction;
+use App\Controller\Api\V3\GetMatchingContextsAction;
 use App\Repository\MatchingContextRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
