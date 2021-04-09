@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\EntityListener\NoticeListener;
 use App\Helper\NoticeVisibility;
 use App\Helper\StringHelper;
+use Closure;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -14,32 +17,78 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Notice.
+ * A Notice holds a message written/contributed by a Contributor about a web page
+ * or a set of web pages selected by the matching contexts.
+ * This is the main content of the application.
  *
  * @ORM\Table(name="notice")
  * @ORM\Entity(repositoryClass="App\Repository\NoticeRepository")
  * @ORM\EntityListeners({NoticeListener::class})
  * @Vich\Uploadable
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}},
+ *     itemOperations={
+ *         "get"={
+ *             "normalization_context"={"groups"={"read"}},
+ *         },
+ *         "delete"={
+ *             "access_control"="is_granted('can_delete', object)",
+ *         },
+ *     },
+ *     collectionOperations={
+ *         "get"={
+ *             "normalization_context"={"groups"={"read"}},
+ *         },
+ *         "post"={
+ *             "denormalization_context"={"groups"={"create"}},
+ *         },
+ *     },
+ * )
  */
 class Notice
 {
+    // Goutte: Should we add <b><em><sup><sub> here as well?
+    public const ALLOWED_TAGS = '<p><a>';
+
     /**
-     * @var int
+     * A unique, incremental, numerical identifier for the Notice.
      *
+     * @var int
+     * @Groups({"read"})
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @ApiProperty(
+     *     openapiContext={
+     *         "example": 42,
+     *     },
+     * )
      */
     private $id;
 
     /**
-     * @var ?string
+     * The visibility of the Notice.  See `NoticeVisibility`
+     * for an enumeration of the allowed values:
+     *   - "public": anyone may view this Notice
+     *   - "private": Notice is only visible to Contributor
+     *   - "archived": ???
+     *   - "draft": Notice is only visible to Contributor, pending publication
+     *   - "question": ???
      *
-     * @ORM\Column(name="visibility", type="string", options={"default"="private"})
+     * @var ?string
+     * @Groups({"read", "create"})
+     * @ORM\Column(
+     *     name="visibility",
+     *     type="string",
+     *     options={
+     *         "default"=NoticeVisibility::PRIVATE_VISIBILITY,
+     *     },
+     * )
      */
     private $visibility;
 
@@ -53,6 +102,7 @@ class Notice
      */
     private $matchingContexts;
 
+    // Goutte: Is this still used?  Isn't it in matchingContexts?  Can anyone document?
     /**
      * @var string
      *
@@ -61,16 +111,22 @@ class Notice
     private $excludeUrlRegex;
 
     /**
+     * The Contributor who submitted the Notice.
      * @var Contributor
      *
+     * @Groups({"read"})
      * @ORM\ManyToOne(targetEntity=Contributor::class, inversedBy="notices", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumn(nullable=true)
      */
     private $contributor;
 
     /**
+     * The message attached to the Notice, ie. what the user wants to read,
+     * the main content of DisMoi, the added value, etc.  It is HTML,
+     * and is "purified", ie. is stripped of HTML tags not in ALLOWED_TAGS.
      * @var string
      *
+     * @Groups({"read", "create"})
      * @ORM\Column(name="message", type="text")
      */
     private $message;
@@ -92,6 +148,7 @@ class Notice
     /**
      * @var DateTime
      *
+     * @Groups({"read"})
      * @ORM\Column(type="datetime")
      */
     private $updated;
@@ -99,6 +156,7 @@ class Notice
     /**
      * @var DateTime
      *
+     * @Groups({"read"})
      * @ORM\Column(type="datetime")
      */
     private $created;
@@ -180,7 +238,7 @@ class Notice
 
     public function setMessage(string $message): self
     {
-        $this->message = strip_tags((new \HTMLPurifier())->purify($message), '<p><a>');
+        $this->message = strip_tags((new \HTMLPurifier())->purify($message), self::ALLOWED_TAGS);
 
         return $this;
     }
