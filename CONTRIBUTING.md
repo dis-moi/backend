@@ -1,9 +1,9 @@
-# Contributing to DisMoi backend
+# Contributing to DisMoi Backend
 
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
 
 
-This is a pretty basic Symfony/EasyAdmin application
+This is a pretty basic Symfony/EasyAdmin application with bits from ApiPlatform.
 
 The following is a set of guidelines for contributing to DisMoi. 
 These are mostly guidelines, not rules.  Use your best judgment, and feel free to propose changes to this document in a pull request.
@@ -73,6 +73,12 @@ migrate databases and load fixtures. Subsequent runs are much faster.
 
 ```shell script
 $ docker-compose up
+```
+
+or, with a non-root docker user:
+
+```shell script
+$ CURRENT_UID=$(id -u):$(id -g) docker-compose up
 ```
 
 A [Mailhog](https://github.com/mailhog/MailHog) service is available for email testing in `dev` environment at:
