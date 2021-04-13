@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\V3;
 
 use App\Domain\Service\EmailComposer;
 use App\Domain\Service\NoticeAssembler;
 use App\DTO\Contribution;
+use App\Serializer\V3\NormalizerOptions;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use InvalidArgumentException;
@@ -66,7 +67,9 @@ class PostContributionAction extends BaseAction
     {
         try {
             // FIXME should we validate the data somewhere else? Have to check sanitization out...
-            $contribution = $this->serializer->deserialize($request->getContent(), Contribution::class, 'json');
+            $contribution = $this->serializer->deserialize($request->getContent(), Contribution::class, 'json', [
+                NormalizerOptions::VERSION => 3,
+            ]);
             if (!($contribution instanceof Contribution)) {
                 throw new InvalidArgumentException('Unable to process raw contribution data.');
             }

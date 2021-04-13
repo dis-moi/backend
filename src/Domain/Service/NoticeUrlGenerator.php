@@ -21,6 +21,6 @@ class NoticeUrlGenerator
 
     public function generate(Notice $notice): string
     {
-        return $this->router->generate('app_api_getnoticeaction__invoke', ['id' => $notice->getId()], RouterInterface::ABSOLUTE_URL);
+        return $this->router->generate('app_api_v3_getnoticeaction__invoke', ['id' => $notice->getId()], RouterInterface::ABSOLUTE_URL);
     }
 }

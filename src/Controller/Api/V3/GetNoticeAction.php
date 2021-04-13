@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\V3;
 
-use App\Repository\ContributorRepository;
-use App\Serializer\NormalizerOptions;
+use App\Repository\NoticeRepository;
+use App\Serializer\V3\NormalizerOptions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,14 +13,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class GetContributorAction extends BaseAction
+class GetNoticeAction extends BaseAction
 {
     /**
-     * @var ContributorRepository
+     * @var NoticeRepository
      */
     protected $repository;
 
-    public function __construct(SerializerInterface $serializer, ContributorRepository $repository)
+    public function __construct(SerializerInterface $serializer, NoticeRepository $repository)
     {
         parent::__construct($serializer);
 
@@ -28,18 +28,18 @@ class GetContributorAction extends BaseAction
     }
 
     /**
-     * @Route("/contributors/{id}")
+     * @Route("/notices/{id}")
      * @Method("GET")
      */
     public function __invoke(Request $request): JsonResponse
     {
         $id = $request->get('id', null);
-        $contributor = $this->repository->getOne((int) $id);
+        $notice = $this->repository->getOne((int) $id);
 
-        if (!$contributor) {
-            throw new NotFoundHttpException('Contributor not found.');
+        if (!$notice) {
+            throw new NotFoundHttpException('Notice not found.');
         }
 
-        return $this->createResponse($contributor, [NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS => false]);
+        return $this->createResponse($notice, [NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS => true]);
     }
 }

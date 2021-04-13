@@ -2,16 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\Serializer;
+namespace App\Serializer\V3;
 
 use App\DTO\Contribution;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 
-class ContributionDenormalizer implements DenormalizerInterface
+class ContributionDenormalizer implements ContextAwareDenormalizerInterface
 {
-    public function supportsDenormalization($data, $type, $format = null): bool
+    /**
+     * @param mixed   $data
+     * @param string  $type
+     * @param string  $format
+     * @param mixed[] $context
+     */
+    public function supportsDenormalization($data, $type, $format = null, array $context = []): bool
     {
-        return Contribution::class === $type;
+        $version = $context[NormalizerOptions::VERSION] ?? null;
+
+        return Contribution::class === $type && 3 === $version;
     }
 
     /**

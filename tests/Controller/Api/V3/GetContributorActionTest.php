@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Controller\Api;
+namespace App\Tests\Controller\Api\V3;
 
-use App\Controller\Api\GetContributorAction;
+use App\Controller\Api\V3\GetContributorAction;
 use App\Entity\Contributor;
 use App\Repository\ContributorRepository;
 use PHPUnit\Framework\TestCase;

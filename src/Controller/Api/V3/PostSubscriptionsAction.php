@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Api;
+namespace App\Controller\Api\V3;
 
 use App\Domain\Service\SubscriptionsTrackingService;
 use Exception;
