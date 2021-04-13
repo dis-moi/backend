@@ -90,7 +90,7 @@ class UpdateCaptainFactNoticesCommand extends Command
 
         // Load Existing CaptainFact notices
         $this->loadExternalIdsOfNoticesForCaptainFactContributor();
-        
+
         // Load Youtube Domain Name
         $this->loadYoutubeDomainName();
 
@@ -174,10 +174,10 @@ class UpdateCaptainFactNoticesCommand extends Command
             return;
         }
     }
-    
+
     /**
      * Method loadYoutubeDomainName
-     * Load youtube domain name or create it if necessary
+     * Load youtube domain name or create it if necessary.
      */
     protected function loadYoutubeDomainName(): void
     {
@@ -189,14 +189,14 @@ class UpdateCaptainFactNoticesCommand extends Command
 
         if (!$this->youtubeDomainName) {
             $this->output->writeln('Youtube domain name needs to be created');
-            
+
             $this->youtubeDomainName = new DomainName();
             $this->youtubeDomainName->setName(self::YOUTUBE_DOMAIN_NAME);
-            
+
             $this
                 ->entityManager
                 ->persist($this->youtubeDomainName);
-            
+
             $this
                 ->entityManager
                 ->flush();
@@ -265,9 +265,9 @@ class UpdateCaptainFactNoticesCommand extends Command
     protected function isEntryEligible(array $entry, int &$sourcesCount): bool
     {
         // No need to go further is there isn't any associated video
-        if ($entry['youtubeId'] == '')
+        if ('' == $entry['youtubeId']) {
             return false;
-        
+        }
         $minSourcesCount = 8;
         $minScore = 1;
         $minSourcesCountWithMinScore = 5;
