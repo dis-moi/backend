@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Tests\e2e;
@@ -9,8 +10,7 @@ use App\Helper\CollectionHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class GetContributorsTest
- * @package App\Tests\e2e
+ * Class GetContributorsTest.
  */
 class GetContributorsTest extends BaseApiE2eTestCase
 {
@@ -62,7 +62,7 @@ class GetContributorsTest extends BaseApiE2eTestCase
 
         $fetchedContributors = $payload;
 
-        $fetchedFamousContributor = CollectionHelper::find(new ArrayCollection($fetchedContributors), static function ($contributor) { return $contributor['name'] === 'Famous Contributor'; });
+        $fetchedFamousContributor = CollectionHelper::find(new ArrayCollection($fetchedContributors), static function ($contributor) { return 'Famous Contributor' === $contributor['name']; });
         $fetchedFirstPinnedNotice = $fetchedFamousContributor['contribution']['pinnedNotices'][0];
 
         /** @var MatchingContext $mc */
