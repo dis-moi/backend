@@ -294,11 +294,16 @@ class Notice
     }
 
     /**
-     * @throw InvalidArgumentException
+     * @param NoticeVisibility|string $visibility
+     * @return $this
      */
-    public function setVisibility(NoticeVisibility $visibility): self
+    public function setVisibility($visibility): self
     {
-        $this->visibility = $visibility->getValue();
+        if ($visibility instanceof NoticeVisibility) {
+            $this->visibility = $visibility->getValue();
+        } else {
+            $this->visibility = $visibility;
+        }
 
         return $this;
     }
