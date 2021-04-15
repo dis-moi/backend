@@ -219,7 +219,7 @@ class Notice
         $this->expires = (new DateTimeImmutable())->modify('+1year');
     }
 
-    public static function equals(self $notice): \Closure
+    public static function equals(self $notice): Closure
     {
         return static function (self $other) use ($notice) {
             return $notice->getId() === $other->getId();
