@@ -310,7 +310,7 @@ class Notice
 
     public function hasPublicVisibility(): bool
     {
-        return $this->getVisibility() === NoticeVisibility::PUBLIC_VISIBILITY();
+        return $this->getVisibility() === NoticeVisibility::PUBLIC_VISIBILITY;
     }
 
     public function isUnpublished(): bool

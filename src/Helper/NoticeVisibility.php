@@ -16,7 +16,7 @@ class NoticeVisibility extends Enum
 
     public static function getDefault(): self
     {
-        return self::PUBLIC_VISIBILITY();
+        return self::PUBLIC_VISIBILITY;
     }
 
     public function __toString()
