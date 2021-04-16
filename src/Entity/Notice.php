@@ -121,9 +121,9 @@ class Notice
     private $contributor;
 
     /**
-     * The message attached to the Notice, ie. what the user wants to read,
-     * the main content of DisMoi, the added value, etc.  It is HTML,
-     * and is "purified", ie. is stripped of HTML tags not in ALLOWED_TAGS.
+     * The raw message attached to the Notice,
+     * as given by the contributor.  It is unsafe to read from it,
+     * prefer reading from `strippedMessage`.
      * @var string
      *
      * @Groups({"read", "create"})
@@ -146,14 +146,16 @@ class Notice
     private $ratings;
 
     /**
+     * Latest update date of the notice.
      * @var DateTime
      *
-     * @Groups({"read"})
+     * Groups({"read"}) → see getModified()
      * @ORM\Column(type="datetime")
      */
     private $updated;
 
     /**
+     * Creation date of the notice.
      * @var DateTime
      *
      * @Groups({"read"})
@@ -210,6 +212,7 @@ class Notice
      */
     private $externalId;
 
+
     public function __construct()
     {
         $this->matchingContexts = new ArrayCollection();
@@ -218,6 +221,35 @@ class Notice
         $this->visibility = NoticeVisibility::getDefault()->getValue();
         $this->expires = (new DateTimeImmutable())->modify('+1year');
     }
+
+    /**
+     * Last modification date of the notice.
+     *
+     * This "property" exists here for ApiPlatform documentation.
+     *
+     * @Groups({"read"})
+     * @ApiProperty(
+     *     readable=true,
+     *     writable=false,
+     * )
+     */
+    public function getModified(): DateTime { return $this->getUpdated(); }
+
+    /**
+     * The message attached to the Notice, ie. what the user wants to read,
+     * the main content of DisMoi, the added value, etc.  It is HTML,
+     * and is "purified", ie. is stripped of HTML tags not in ALLOWED_TAGS.
+     *
+     * This "property" exists here for ApiPlatform documentation.
+     *
+     * @Groups({"read"})
+     * @ApiProperty(
+     *     readable=true,
+     *     writable=false,
+     * )
+     * @return string
+     */
+    public function getStrippedMessage(): string { return $this->getMessage(); }
 
     public static function equals(self $notice): Closure
     {
