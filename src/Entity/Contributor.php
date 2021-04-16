@@ -30,6 +30,7 @@ class Contributor implements ImageUploadable
     use VichFilenamer;
 
     /**
+     * A unique, incremental, numerical identifier for the Contributor.
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
