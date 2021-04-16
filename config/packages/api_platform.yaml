@@ -1,12 +1,14 @@
 api_platform:
+    show_webby: false
+    title: DisMoi OpenAPI
     description: |
-        OpenAPI documentation and sandbox for DisMoi (_Tell Me_ in french),
-        a FLOSS web annotations project to turn the tide of the opinion wars back in favor of the users.
+        OpenAPI documentation and _sandbox_ for **DisMoi** (_Tell Me_ in french),
+        a FLOSS web annotations project to turn the tide of the opinion wars back in favor of the internauts.
 
         - [Official Website](https://www.dismoi.io/)
         - [Source Code](https://github.com/dis-moi)
         - [Report Issues](https://github.com/dis-moi/backend/issues) (_please!_)
-    version: 0.0.0
+    version: 4.0.0
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
     patch_formats:
