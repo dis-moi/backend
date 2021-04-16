@@ -122,7 +122,7 @@ class MatchingContext
     /**
      * @var string an XPath expression
      *
-     * @ORM\Column(name="xpath", type="string", length=255, nullable=true)
+     * @ORM\Column(name="xpath", type="text", nullable=true)
      */
     private $xpath;
 
