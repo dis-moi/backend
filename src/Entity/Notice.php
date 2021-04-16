@@ -159,6 +159,13 @@ class Notice
      * @var DateTime
      *
      * @Groups({"read"})
+     * @ApiProperty(
+     *     readable=true,
+     *     writable=false,
+     *     openapiContext={
+     *         "example": "2021-04-16T14:59:37+02:00",
+     *     },
+     * )
      * @ORM\Column(type="datetime")
      */
     private $created;
@@ -231,6 +238,7 @@ class Notice
      * @ApiProperty(
      *     readable=true,
      *     writable=false,
+     *     example="2021-03-21T14:42:00+02:00"
      * )
      */
     public function getModified(): DateTime { return $this->getUpdated(); }
