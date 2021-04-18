@@ -9,6 +9,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\EntityListener\NoticeListener;
 use App\Helper\NoticeVisibility;
 use App\Helper\StringHelper;
+use App\Serializer\V3\NormalizerOptions;
 use Closure;
 use DateTime;
 use DateTimeImmutable;
@@ -31,10 +32,16 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\EntityListeners({NoticeListener::class})
  * @Vich\Uploadable
  * @ApiResource(
- *     normalizationContext={"groups"={"read"}},
+ *     normalizationContext={
+ *         "groups"={"read"},
+ *         NormalizerOptions::VERSION=4,
+ *     },
  *     itemOperations={
  *         "get"={
- *             "normalization_context"={"groups"={"read"}},
+ *             "normalization_context"={
+ *                 "groups"={"read"},
+ *                 NormalizerOptions::VERSION=4,
+ *             },
  *         },
  *         "delete"={
  *             "access_control"="is_granted('can_delete', object)",
@@ -42,10 +49,16 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *     },
  *     collectionOperations={
  *         "get"={
- *             "normalization_context"={"groups"={"read"}},
+ *             "normalization_context"={
+ *                 "groups"={"read"},
+ *                 NormalizerOptions::VERSION=4,
+ *             },
  *         },
  *         "post"={
- *             "denormalization_context"={"groups"={"create"}},
+ *             "denormalization_context"={
+ *                 "groups"={"create"},
+ *                 NormalizerOptions::VERSION=4,
+ *             },
  *         },
  *     },
  * )
@@ -59,10 +72,10 @@ class Notice
      * A unique, incremental, numerical identifier for the Notice.
      *
      * @var int
-     * @Groups({"read"})
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"read"})
      * @ApiProperty(
      *     openapiContext={
      *         "example": 42,
@@ -81,7 +94,11 @@ class Notice
      *   - "question": ???
      *
      * @var ?string
-     * @Groups({"read", "create"})
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
      * @ORM\Column(
      *     name="visibility",
      *     type="string",
@@ -103,6 +120,7 @@ class Notice
     private $matchingContexts;
 
     // Goutte: Is this still used?  Isn't it in matchingContexts?  Can anyone document?
+    //         Lutangar says it's probably legacy.
     /**
      * @var string
      *
@@ -122,7 +140,7 @@ class Notice
 
     /**
      * The raw message attached to the Notice,
-     * as given by the contributor.  It is unsafe to read from it,
+     * as given by the Contributor.  It is unsafe to read from it,
      * prefer reading from `strippedMessage`.
      * @var string
      *
@@ -146,7 +164,7 @@ class Notice
     private $ratings;
 
     /**
-     * Latest update date of the notice.
+     * Latest update date of the notice, serialized in the ISO8601 format.
      * @var DateTime
      *
      * Groups({"read"}) → see getModified()
@@ -155,7 +173,7 @@ class Notice
     private $updated;
 
     /**
-     * Creation date of the notice.
+     * Creation date of the notice, serialized in the ISO8601 format.
      * @var DateTime
      *
      * @Groups({"read"})
@@ -171,8 +189,19 @@ class Notice
     private $created;
 
     /**
-     * @var DateTimeInterface
+     * Expiration date of the notice, in the ISO8601 format.
      *
+     * @var DateTimeInterface
+     * @Groups({
+     *     "read",
+     *     "create",
+     *     "update",
+     * })
+     * @ApiProperty(
+     *     openapiContext={
+     *         "example": "2031-11-05T00:00:00+02:00",
+     *     },
+     * )
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $expires;
@@ -230,7 +259,7 @@ class Notice
     }
 
     /**
-     * Last modification date of the notice.
+     * Last modification date of the notice, serialized in the ISO8601 format.
      *
      * This "property" exists here for ApiPlatform documentation.
      *
@@ -258,6 +287,36 @@ class Notice
      * @return string
      */
     public function getStrippedMessage(): string { return $this->getMessage(); }
+
+    /**
+     * Amount of likes the Notice has received.
+     *
+     * @Groups({"read"})
+     * @ApiProperty(
+     *     readable=true,
+     *     writable=false,
+     * )
+     * @return int
+     */
+    public function getLikes(): int
+    {
+        return $this->getLikedRatingCount();
+    }
+
+    /**
+     * Amount of dislikes the Notice has received.
+     *
+     * @Groups({"read"})
+     * @ApiProperty(
+     *     readable=true,
+     *     writable=false,
+     * )
+     * @return int
+     */
+    public function getDislikes(): int
+    {
+        return $this->getDislikedRatingCount();
+    }
 
     public static function equals(self $notice): Closure
     {
