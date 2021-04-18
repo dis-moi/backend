@@ -9,6 +9,7 @@ use App\Domain\Service\NoticeUrlGenerator;
 use App\Entity\Notice;
 use App\Serializer\V3\EntityWithImageNormalizer;
 use App\Serializer\V3\NormalizerOptions;
+use App\Serializer\V4\Ability\Versioning;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
@@ -24,6 +25,9 @@ class NoticeNormalizer
 //        ContextAwareDenormalizerInterface,
         NormalizerAwareInterface
 {
+
+    use Versioning;
+
     /**
      * @var NormalizerInterface
      */
@@ -59,15 +63,15 @@ class NoticeNormalizer
     }
 
     /**
-     * @param mixed   $data
-     * @param string  $format
+     * @param mixed $data
+     * @param string $format
      * @param mixed[] $context
+     * @return bool
      */
     public function supportsNormalization($data, $format = null, $context = []): bool
     {
-        $version = $context[NormalizerOptions::VERSION] ?? null;
-
-        return $data instanceof Notice && 4 === $version;
+        $skip = $context['skip_notice_normalizer'] ?? false;
+        return $data instanceof Notice && $this->isForV4($context) && ! $skip;
     }
 
     /**
@@ -85,35 +89,21 @@ class NoticeNormalizer
             throw new InvalidArgumentException();
         }
 
-        $base = [
-            'id' => $notice->getId(),
-            'url' => $this->noticeUrlGenerator->generate($notice),
+        $context['skip_notice_normalizer'] = true;
+        $base = $this->normalizer->normalize($notice, $format, $context);
+        $extra = [
+            'visibility' => $notice->getVisibility()->getValue(),
             'message' => $this->messagePresenter->present($notice->getMessage()),
             'strippedMessage' => $this->messagePresenter->strip($notice->getMessage()),
-            'visibility' => $notice->getVisibility()->getValue(),
-            'exampleMatchingUrl' => $notice->getExampleMatchingUrl(),
             'screenshot' => $this->getImageAbsoluteUrl($notice, 'screenshotFile'),
-//            'ratings' => [
-//                'likes' => $notice->getLikedRatingCount(),
-//                'dislikes' => $notice->getDislikedRatingCount(),
-//            ],
-            'created' => self::formatDateTime($notice->getCreated()),
-            'modified' => self::formatDateTime($notice->getUpdated()),
         ];
+        return array_merge($base, $extra);
 
-//        if ($context[NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS] ?? false) {
-//            $base['contributor'] = $this->normalizer->normalize($notice->getContributor(), $format, $context);
-//            $base['relayers'] = $notice->getRelayers()->map(function (Contributor $contributor) use ($format, $context) {
-//                return $this->normalizer->normalize($contributor, $format, $context);
-//            })->toArray();
-//        } else {
-//            $base['contributorId'] = $notice->getContributor() ? $notice->getContributor()->getId() : null;
-//            $base['relayersIds'] = $notice->getRelayers()->map(static function (Contributor $contributor) {
-//                return $contributor->getId();
-//            })->toArray();
-//        }
+//        'ratings' => [
+//            'likes' => $notice->getLikedRatingCount(),
+//            'dislikes' => $notice->getDislikedRatingCount(),
+//        ],
 
-        return $base;
     }
 
     public static function formatDateTime(\DateTime $datetime): string
