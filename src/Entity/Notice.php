@@ -144,7 +144,11 @@ class Notice
      * prefer reading from `strippedMessage`.
      * @var string
      *
-     * @Groups({"read", "create"})
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
      * @ORM\Column(name="message", type="text")
      */
     private $message;
