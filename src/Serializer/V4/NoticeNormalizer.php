@@ -5,21 +5,17 @@ declare(strict_types=1);
 namespace App\Serializer\V4;
 
 use App\Domain\Service\MessagePresenter;
-use App\Domain\Service\NoticeUrlGenerator;
 use App\Entity\Notice;
-use App\Serializer\V3\EntityWithImageNormalizer;
-use App\Serializer\V3\NormalizerOptions;
+use App\Serializer\V4\Ability\Normalizing;
+use App\Serializer\V4\Ability\Uploading;
 use App\Serializer\V4\Ability\Versioning;
-use Symfony\Component\HttpFoundation\RequestStack;
+use App\Serializer\V4\NormalizerOptions as NormalizerOptionsV4;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 class NoticeNormalizer
-    extends EntityWithImageNormalizer
     implements
         ContextAwareNormalizerInterface,
 //        ContextAwareDenormalizerInterface,
@@ -27,16 +23,8 @@ class NoticeNormalizer
 {
 
     use Versioning;
-
-    /**
-     * @var NormalizerInterface
-     */
-    protected $normalizer;
-
-    /**
-     * @var NoticeUrlGenerator
-     */
-    protected $noticeUrlGenerator;
+    use Normalizing;
+    use Uploading;
 
     /**
      * @var MessagePresenter
@@ -44,22 +32,9 @@ class NoticeNormalizer
     private $messagePresenter;
 
     public function __construct(
-        NoticeUrlGenerator $noticeUrlGenerator,
-        MessagePresenter $messagePresenter,
-        UploaderHelper $uploader,
-        RequestStack $requestStack
+        MessagePresenter $messagePresenter
     ) {
-        parent::__construct($uploader, $requestStack);
-        $this->noticeUrlGenerator = $noticeUrlGenerator;
         $this->messagePresenter = $messagePresenter;
-    }
-
-    /**
-     * Sets the owning Normalizer object.
-     */
-    public function setNormalizer(NormalizerInterface $normalizer): void
-    {
-        $this->normalizer = $normalizer;
     }
 
     /**
@@ -70,7 +45,7 @@ class NoticeNormalizer
      */
     public function supportsNormalization($data, $format = null, $context = []): bool
     {
-        $skip = $context['skip_notice_normalizer'] ?? false;
+        $skip = $context[NormalizerOptionsV4::SKIP_NOTICE] ?? false;
         return $data instanceof Notice && $this->isForV4($context) && ! $skip;
     }
 
@@ -89,7 +64,7 @@ class NoticeNormalizer
             throw new InvalidArgumentException();
         }
 
-        $context['skip_notice_normalizer'] = true;
+        $context[NormalizerOptionsV4::SKIP_NOTICE] = true;
         $base = $this->normalizer->normalize($notice, $format, $context);
         $extra = [
             'visibility' => $notice->getVisibility()->getValue(),
@@ -97,19 +72,10 @@ class NoticeNormalizer
             'strippedMessage' => $this->messagePresenter->strip($notice->getMessage()),
             'screenshot' => $this->getImageAbsoluteUrl($notice, 'screenshotFile'),
         ];
+
         return array_merge($base, $extra);
-
-//        'ratings' => [
-//            'likes' => $notice->getLikedRatingCount(),
-//            'dislikes' => $notice->getDislikedRatingCount(),
-//        ],
-
     }
 
-    public static function formatDateTime(\DateTime $datetime): string
-    {
-        return $datetime->format('c');
-    }
 
 //    /**
 //     * {@inheritdoc}
