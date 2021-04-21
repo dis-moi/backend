@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Ability\VichFilenamer;
+use App\Entity\User;  // used by annotations
 use App\Helper\ImageUploadable;
+use App\Serializer\V3\NormalizerOptions;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,6 +27,37 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity
  * @Vich\Uploadable
  * @UniqueEntity("name")
+ * @ApiResource(
+ *     normalizationContext={
+ *         "groups"={"read"},
+ *         NormalizerOptions::VERSION=4,
+ *     },
+ *     itemOperations={
+ *         "get"={
+ *             "normalization_context"={
+ *                 "groups"={"read"},
+ *                 NormalizerOptions::VERSION=4,
+ *             },
+ *         },
+ *         "delete"={
+ *             "access_control"="is_granted('can_delete', object)",
+ *         },
+ *     },
+ *     collectionOperations={
+ *         "get"={
+ *             "normalization_context"={
+ *                 "groups"={"read"},
+ *                 NormalizerOptions::VERSION=4,
+ *             },
+ *         },
+ *         "post"={
+ *             "denormalization_context"={
+ *                 "groups"={"create"},
+ *                 NormalizerOptions::VERSION=4,
+ *             },
+ *         },
+ *     },
+ * )
  */
 class Contributor implements ImageUploadable
 {
@@ -183,6 +217,16 @@ class Contributor implements ImageUploadable
      * @ORM\Column(name="categories", type="simple_array", nullable=true)
      */
     private $categories = [];
+
+    /**
+     * @var ArrayCollection<User>
+     * @ORM\ManyToMany(
+     *     targetEntity=User::class,
+     *     mappedBy="hats",
+     *     cascade={"persist"},
+     * )
+     */
+    private $impersonators;
 
     public function __construct()
     {
