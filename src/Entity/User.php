@@ -32,7 +32,7 @@ class User extends BaseUser
      * @var ArrayCollection<Contributor>
      * @ORM\ManyToMany(
      *     targetEntity=Contributor::class,
-     *     mappedBy="impersonators",
+     *     inversedBy="impersonators",
      *     cascade={"persist"},
      * )
      */
