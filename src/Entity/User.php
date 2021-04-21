@@ -52,15 +52,21 @@ class User extends BaseUser
         return $this->hats;
     }
 
-    public function addHat(Contributor $contributor)
+    public function addHat(Contributor $contributor): self
     {
-        $this->hats->add($contributor);
+        if ( ! $this->hats->contains($contributor)) {
+            $this->hats->add($contributor);
+        }
+
+        return $this;
     }
 
-    public function removeHat(Contributor $contributor)
+    public function removeHat(Contributor $contributor): self
     {
         if ($this->hats->contains($contributor)) {
             $this->hats->removeElement($contributor);
         }
+
+        return $this;
     }
 }
