@@ -28,10 +28,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @UniqueEntity("name")
  * @ApiResource(
- *     normalizationContext={
- *         "groups"={"read"},
- *         NormalizerOptions::VERSION=4,
- *     },
  *     itemOperations={
  *         "get"={
  *             "normalization_context"={
@@ -39,24 +35,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                 NormalizerOptions::VERSION=4,
  *             },
  *         },
- *         "delete"={
- *             "access_control"="is_granted('can_delete', object)",
- *         },
  *     },
- *     collectionOperations={
- *         "get"={
- *             "normalization_context"={
- *                 "groups"={"read"},
- *                 NormalizerOptions::VERSION=4,
- *             },
- *         },
- *         "post"={
- *             "denormalization_context"={
- *                 "groups"={"create"},
- *                 NormalizerOptions::VERSION=4,
- *             },
- *         },
- *     },
+ *     collectionOperations={},
  * )
  */
 class Contributor implements ImageUploadable
@@ -219,6 +199,9 @@ class Contributor implements ImageUploadable
     private $categories = [];
 
     /**
+     * The list of Users that may impersonate this Contributor.
+     * Some users with the appropriate roles may also impersonate without being referenced explicitly here. (admins)
+     *
      * @var ArrayCollection<User>
      * @ORM\ManyToMany(
      *     targetEntity=User::class,
@@ -234,6 +217,7 @@ class Contributor implements ImageUploadable
         $this->pins = new ArrayCollection();
         $this->relayedNotices = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
+        $this->impersonators = new ArrayCollection();
     }
 
     private function markUpdated(): self
@@ -594,5 +578,33 @@ class Contributor implements ImageUploadable
     public function setCategories(array $categories): void
     {
         $this->categories = $categories;
+    }
+
+    /**
+     * @return ArrayCollection<User>
+     */
+    public function getImpersonators(): ArrayCollection
+    {
+        return $this->impersonators;
+    }
+
+    public function addImpersonator(User $user): self
+    {
+        if ( ! $this->impersonators->contains($user)) {
+            $this->impersonators->add($user);
+            $user->addHat($this);  // update inverse
+        }
+
+        return $this;
+    }
+
+    public function removeImpersonator(User $user): self
+    {
+        if ($this->impersonators->contains($user)) {
+            $this->impersonators->removeElement($user);
+            $user->removeHat($this);  // update inverse
+        }
+
+        return $this;
     }
 }
