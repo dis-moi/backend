@@ -225,6 +225,9 @@
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.1"
     },
+    "lcobucci/jwt": {
+        "version": "3.4.5"
+    },
     "league/uri": {
         "version": "6.3.0"
     },
@@ -233,6 +236,18 @@
     },
     "league/uri-interfaces": {
         "version": "2.1.0"
+    },
+    "lexik/jwt-authentication-bundle": {
+        "version": "2.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "5b2157bcd5778166a5696e42f552ad36529a07a6"
+        },
+        "files": [
+            "config/packages/lexik_jwt_authentication.yaml"
+        ]
     },
     "liip/imagine-bundle": {
         "version": "1.8",
@@ -258,6 +273,9 @@
     },
     "monolog/monolog": {
         "version": "1.25.5"
+    },
+    "namshi/jose": {
+        "version": "7.2.3"
     },
     "nelmio/cors-bundle": {
         "version": "1.5",
@@ -640,6 +658,9 @@
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.18.1"
+    },
+    "symfony/polyfill-php56": {
+        "version": "v1.20.0"
     },
     "symfony/polyfill-php70": {
         "version": "v1.18.1"

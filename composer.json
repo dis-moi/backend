@@ -65,7 +65,8 @@
         "phpdocumentor/reflection-docblock": "^5.2",
         "symfony/property-access": "4.4.*",
         "symfony/property-info": "4.4.*",
-        "symfony/serializer": "4.4.*"
+        "symfony/serializer": "4.4.*",
+        "lexik/jwt-authentication-bundle": "^2.11"
     },
     "require-dev": {
         "symfony/phpunit-bridge": "^5.1.7",
