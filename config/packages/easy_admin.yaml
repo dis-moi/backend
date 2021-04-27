@@ -71,6 +71,13 @@ easy_admin:
           - { property: matchingContexts, label: notices.matchingContexts }
           - { property: expires, label: notices.expires }
           - { property: unpublishedOnExpiration, label: notices.unpublishedOnExpiration }
+          - { property: badgedRatingCount, label: notices.badgedRatingCount }
+          - { property: displayedRatingCount, label: notices.displayedRatingCount, css_class: 'graphable column-displayedRatingCount' }
+          - { property: unfoldedRatingCount, label: notices.unfoldedRatingCount, css_class: 'graphable column-unfoldedRatingCount' }
+          - { property: clickedRatingCount, label: notices.clickedRatingCount, css_class: 'graphable column-clickedRatingCount' }
+          - { property: likedRatingCount, label: notices.likedRatingCount, css_class: 'graphable column-likedRatingCount' }
+          - { property: dislikedRatingCount, label: notices.dislikedRatingCount, css_class: 'graphable column-dislikedRatingCount' }
+          - { property: dismissedRatingCount, label: notices.dismissedRatingCount, css_class: 'graphable column-dismissedRatingCount' }
       form: &noticeForm
         fields:
           - { type: group, label: notices.groups.publication, icon: comments, columns: 8 }

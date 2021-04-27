@@ -59,6 +59,18 @@ class DomainFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($okinawa);
         $this->addReference('okinawa_domain', $okinawa);
 
+        $testsMenantDomain = new DomainName('tests.menant-benjamin.fr');
+        $manager->persist($testsMenantDomain);
+        $this->addReference('tests_menant_domain', $testsMenantDomain);
+
+        $lbcDomain = new DomainName('leboncoin.fr');
+        $manager->persist($lbcDomain);
+        $this->addReference('lbc_domain', $lbcDomain);
+
+        $lequipe = new DomainName('lequipe.fr');
+        $manager->persist($lequipe);
+        $this->addReference('lequipe_domain', $lequipe);
+
         $manager->flush();
     }
 
