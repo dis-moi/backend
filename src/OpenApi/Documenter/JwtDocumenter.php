@@ -71,7 +71,7 @@ class JwtDocumenter implements DocumenterInterface
                 ['Authentication'],  // tags
                 [ // responses
                     Response::HTTP_OK => [
-                        'description' => 'Get a Json Web Token (JWT).  Use this token in your requests headers: `Authorization: Bearer {token}`.',
+                        'description' => "Get a Json Web Token (JWT).  Use this token in your requests headers: `Authorization: Bearer {token}`.",
                         'content' => [
                             'application/json' => [
                                 'schema' => [
@@ -88,7 +88,14 @@ class JwtDocumenter implements DocumenterInterface
                     ],
                 ],
                 "Returns an authentication token (JWT) from login credentials.",
-                "Creating notices require authentication.  The Token returned is a [JWT](https://jwt.io/) valid for ten hours.",
+                "
+Usage of this API require authentication.
+The Token returned is a [JWT](https://jwt.io/) valid for ten hours.
+
+Use this token in the `Authorization` header, prefixed by `Bearer `,
+like so: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9…`.
+You may use the `Authorize 🔒` button in the sandbox to do this, if you're using the sandbox.
+                ",
                 null,
                 [],
                 new RequestBody(

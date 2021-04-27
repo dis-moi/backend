@@ -1,3 +1,7 @@
+# This route needs no Controller, it will be caught by Security.
 authentication_token:
+    # We use the `_jwt` semantics instead of a more explicit `login` or `authorize`
+    # because the OAS ecosystem is still young and some third-parties (vendors) expect `_jwt`.
+    # Ideally there would be aliases, but I don't know how to make one easily.
     path: /api/v4/_jwt
     methods: ['POST']
