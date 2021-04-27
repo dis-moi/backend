@@ -95,6 +95,17 @@ $ aphp bin/console assets:install web
 $ dMigrate && dLoad
 ```
 
+#### Json Web Token
+
+Override the value of the environment variable `JWT_PASSPHRASE`, for example in `env.local`, and then run:
+
+```shell script
+$ generateJwt
+```
+
+It will generate the keys for that password as files in `config/jwt/`.
+
+
 #### Tests
 
 Setup and migrate the test database and run phpunit:
