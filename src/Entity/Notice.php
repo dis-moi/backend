@@ -45,7 +45,7 @@ use App\Security\NoticeVoter;  // used by annotations
  *             },
  *         },
  *         "delete"={
- *             "access_control"="is_granted(NoticeVoter::CAN_DELETE, object)",
+ *             "access_control"="is_granted('can_delete', object)",
  *         },
  *     },
  *     collectionOperations={
@@ -60,7 +60,7 @@ use App\Security\NoticeVoter;  // used by annotations
  *                 "groups"={"create"},
  *                 NormalizerOptions::VERSION=4,
  *             },
- *             "access_control"="is_granted(NoticeVoter::CAN_CREATE, object)",
+ *             "access_control"="is_granted('can_create', object)",
  *         },
  *     },
  * )
@@ -134,7 +134,11 @@ class Notice
      * The Contributor who submitted the Notice.
      * @var Contributor
      *
-     * @Groups({"read"})
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
      * @ORM\ManyToOne(targetEntity=Contributor::class, inversedBy="notices", cascade={"persist"}, fetch="EAGER")
      * @ORM\JoinColumn(nullable=true)
      */
