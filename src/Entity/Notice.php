@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use App\Security\NoticeVoter;  // used by annotations
 
 /**
  * A Notice holds a message written/contributed by a Contributor about a web page
@@ -44,7 +45,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *             },
  *         },
  *         "delete"={
- *             "access_control"="is_granted('can_delete', object)",
+ *             "access_control"="is_granted(NoticeVoter::CAN_DELETE, object)",
  *         },
  *     },
  *     collectionOperations={
@@ -59,6 +60,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                 "groups"={"create"},
  *                 NormalizerOptions::VERSION=4,
  *             },
+ *             "access_control"="is_granted(NoticeVoter::CAN_CREATE, object)",
  *         },
  *     },
  * )
