@@ -4,10 +4,6 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    openapi_documentation_extra:
-        servers:
-            - url: https://dismoi.fr
-              description: Server of Dismoi
 
 services:
     # default configuration for services in *this* file
@@ -53,24 +49,11 @@ services:
             $instanceName: '%env(resolve:INSTANCE_NAME)%'
             $instanceEmail: '%env(resolve:INSTANCE_EMAIL)%'
 
-    # Decorate the docs normalizer to add our custom doc tidbits
-#    App\Swagger\SwaggerDecorator:
-#        decorates: 'api_platform.swagger.normalizer.documentation'
-#        arguments:
-#            - '@App\Swagger\SwaggerDecorator.inner'
-#            - !tagged 'oas_documenter'
-#            - '%api_documentation_extras_oas_v2%'
-#            - '%api_documentation_extras_oas_v3%'
-#        autoconfigure: false
-
     App\OpenApi\OpenApiFactory:
         decorates: 'api_platform.openapi.factory'
         arguments:
             $factory: '@App\OpenApi\OpenApiFactory.inner'
             $documenters: !tagged 'openapi_documenter'
-            $extra: '%openapi_documentation_extra%'
-
-
 
     App\Command\UpdateCaptainFactNoticesCommand:
         $contributorId: '%env(int:DISMOI_CAPTAINFACT_CONTRIBUTOR_ID)%'
