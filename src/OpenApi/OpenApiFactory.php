@@ -13,10 +13,10 @@ use App\OpenApi\DocumenterInterface;
 
 
 /**
- * Extends the documentation with any Services tagged as `oas_documenter`.
+ * Extends the documentation with any Services tagged as `openapi_documenter`.
  * Which, in our current configuration, means implementing `DocumenterInterface`.
  *
- * Class SwaggerDecorator
+ * Class OpenApiFactory
  * @package App\Swagger
  */
 final class OpenApiFactory implements OpenApiFactoryInterface
@@ -33,15 +33,9 @@ final class OpenApiFactory implements OpenApiFactoryInterface
      */
     private $documenters;
 
-    /**
-     * @var array
-     */
-    private $extra_data;
-
     public function __construct(
         OpenApiFactoryInterface $factory,
-        iterable $documenters,
-        array $extra
+        iterable $documenters
     ) {
 //        $documenters_array = (array) $documenters;  // NOPE, DON'T
         $documenters_array = array();
@@ -55,46 +49,7 @@ final class OpenApiFactory implements OpenApiFactoryInterface
 
         $this->factory = $factory;
         $this->documenters = $documenters_array;
-        $this->extra_data = $extra;
     }
-
-
-
-//    public function supportsNormalization($data, $format = null)
-//    {
-//        print("HOYYYYYYYYYYYYYY\n");
-//        die("fffffffffffffffffffffffffWHAT");
-//        return $this->decorated->supportsNormalization($data, $format);
-//    }
-//
-//    public function normalize($object, $format = null, array $context = [])
-//    {
-////        die("fffffffffffffffffffffffff");
-////        dump($format);
-////        "json"
-//
-////        dump($context);
-////        array:2 [
-////          "spec_version" => 2
-////          "api_gateway" => false
-////        ]
-//
-//        $docs = $this->decorated->normalize($object, $format, $context);
-//
-//        foreach ($this->documenters as $documenter) {
-//            /** @var DocumenterInterface $documenter */
-//            $docs = $documenter->document($docs, $object, $format, $context);
-//        }
-//
-//        if (2 == $context['spec_version']) {
-//            $docs = array_merge_recursive($docs, $this->extra_v2);
-//        }
-//        if (3 == $context['spec_version']) {
-//            $docs = array_merge_recursive($docs, $this->extra_v3);
-//        }
-//
-//        return $docs;
-//    }
 
     /**
      * Creates an OpenApi class.
