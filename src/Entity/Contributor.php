@@ -588,9 +588,14 @@ class Contributor implements ImageUploadable
         return $this->impersonators;
     }
 
+    public function hasImpersonator(User $user): bool
+    {
+        return $this->impersonators->contains($user);
+    }
+
     public function addImpersonator(User $user): self
     {
-        if ( ! $this->impersonators->contains($user)) {
+        if ( ! $this->hasImpersonator($user)) {
             $this->impersonators->add($user);
             $user->addHat($this);  // update inverse
         }
