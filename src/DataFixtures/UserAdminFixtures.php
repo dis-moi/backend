@@ -4,25 +4,19 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\DataFixtures\Ability\Container;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+
 
 class UserAdminFixtures extends Fixture implements FixtureInterface, ContainerAwareInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
 
-    public function setContainer(ContainerInterface $container = null): void
-    {
-        $this->container = $container;
-    }
+    use Container;
 
     public function load(ObjectManager $manager): void
     {
