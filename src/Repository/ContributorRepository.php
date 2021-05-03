@@ -41,7 +41,7 @@ class ContributorRepository extends ServiceEntityRepository
      */
     public static function mergeActiveSubscriptionsCountWithContributor(?array $result): ?Contributor
     {
-        if (!$result || !$result[0]) {
+        if ( ! $result || ! $result[0]) {
             return null;
         }
 

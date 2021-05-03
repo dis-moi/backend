@@ -62,7 +62,7 @@ class PictureNormalizer implements ContextAwareNormalizerInterface, NormalizerAw
      */
     public function normalize($object, $format = null, array $context = []): array
     {
-        if (!($object instanceof Picture)) {
+        if ( ! ($object instanceof Picture)) {
             throw new InvalidArgumentException();
         }
         $path = $this->uploader->asset($object->getUploadable(), 'imageFile');

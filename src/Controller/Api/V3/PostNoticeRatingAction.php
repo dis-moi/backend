@@ -44,7 +44,7 @@ class PostNoticeRatingAction extends BaseAction
         $id = $request->get('id', null);
         $notice = $this->noticeRepository->getOne((int) $id);
 
-        if (!$notice) {
+        if ( ! $notice) {
             throw new NotFoundHttpException('Notice not found.');
         }
 

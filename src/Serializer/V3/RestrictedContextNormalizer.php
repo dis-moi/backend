@@ -31,7 +31,7 @@ class RestrictedContextNormalizer implements ContextAwareNormalizerInterface
      */
     public function normalize($object, $format = null, array $context = []): array
     {
-        if (!($object instanceof RestrictedContext)) {
+        if ( ! ($object instanceof RestrictedContext)) {
             throw new InvalidArgumentException();
         }
 

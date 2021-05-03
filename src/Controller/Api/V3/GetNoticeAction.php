@@ -36,7 +36,7 @@ class GetNoticeAction extends BaseAction
         $id = $request->get('id', null);
         $notice = $this->repository->getOne((int) $id);
 
-        if (!$notice) {
+        if ( ! $notice) {
             throw new NotFoundHttpException('Notice not found.');
         }
 

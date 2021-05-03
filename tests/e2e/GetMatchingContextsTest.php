@@ -15,7 +15,7 @@ class GetMatchingContextsTest extends BaseApiE2eTestCase
         $this->assertMatchingContextsAllHaveValidNoticeUrls($payload);
 
         $mcWithXPath = ArrayHelper::find($payload, function ($matchingContext) {
-            return !empty($matchingContext['xpath']);
+            return ! empty($matchingContext['xpath']);
         });
         self::assertNotNull($mcWithXPath);
     }

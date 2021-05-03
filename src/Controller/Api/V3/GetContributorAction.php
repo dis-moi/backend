@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Api\V3;
 
 use App\Repository\ContributorRepository;
-use App\Serializer\V3\NormalizerOptions;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,7 +35,7 @@ class GetContributorAction extends BaseAction
         $id = $request->get('id', null);
         $contributor = $this->repository->getOne((int) $id);
 
-        if (!$contributor) {
+        if ( ! $contributor) {
             throw new NotFoundHttpException('Contributor not found.');
         }
 

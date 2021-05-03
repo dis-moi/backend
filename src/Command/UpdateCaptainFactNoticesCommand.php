@@ -147,7 +147,7 @@ class UpdateCaptainFactNoticesCommand extends Command
             ->entityManager
             ->find('App\Entity\Contributor', (int) $this->contributorId);
 
-        if (!$this->contributor) {
+        if ( ! $this->contributor) {
             throw new Exception("Contributor with id $this->contributorId was not found.");
         }
     }
@@ -187,7 +187,7 @@ class UpdateCaptainFactNoticesCommand extends Command
             ->setParameter('name', self::YOUTUBE_DOMAIN_NAME)
             ->getResult();
 
-        if (!$this->youtubeDomainName) {
+        if ( ! $this->youtubeDomainName) {
             $this->output->writeln('Youtube domain name needs to be created');
 
             $this->youtubeDomainName = new DomainName();
@@ -284,7 +284,7 @@ class UpdateCaptainFactNoticesCommand extends Command
 
                 if ($sourcesCount >= $minSourcesCount) {
                     $deserves = true;
-                } elseif (!$deserves) {
+                } elseif ( ! $deserves) {
                     if ($entry['statements'][$statementIndex]['comments'][$commentIndex]['score'] >= $minScore) {
                         $hasScoredSource = true;
                     }
