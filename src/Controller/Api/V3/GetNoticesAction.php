@@ -42,7 +42,7 @@ class GetNoticesAction extends BaseAction
             $notices = $this->repository->getPage((int) $limit, (int) $offset);
         }
 
-        if (!is_iterable($notices)) {
+        if ( ! is_iterable($notices)) {
             throw new NotFoundHttpException('No notices found');
         }
 

@@ -49,7 +49,7 @@ class MatchingContextNormalizer implements ContextAwareNormalizerInterface
      */
     public function normalize($matchingContext, $format = null, array $context = []): array
     {
-        if (!($matchingContext instanceof MatchingContext)) {
+        if ( ! ($matchingContext instanceof MatchingContext)) {
             throw new InvalidArgumentException();
         }
 

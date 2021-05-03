@@ -46,7 +46,7 @@ class NoticeAssembler
                 /** @var Contributor|null $questionedContributor */
                 $questionedContributor = $this->contributorRepository->find($contribution->getToContributorId());
 
-                if (!$questionedContributor) {
+                if ( ! $questionedContributor) {
                     throw new InvalidArgumentException("Questioned contributor doesn't exist.");
                 }
 
@@ -72,7 +72,7 @@ class NoticeAssembler
     public function assembleMatchingContext(Contribution $contribution): MatchingContext
     {
         $url = parse_url($contribution->getUrl());
-        if (!$url) {
+        if ( ! $url) {
             throw new InvalidArgumentException("Unable to parse URL `{$contribution->getUrl()}`.");
         }
 

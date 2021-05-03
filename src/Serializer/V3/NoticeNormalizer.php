@@ -68,7 +68,7 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements ContextAware
      */
     public function normalize($notice, $format = null, array $context = []): array
     {
-        if (!($notice instanceof Notice)) {
+        if ( ! ($notice instanceof Notice)) {
             throw new InvalidArgumentException();
         }
 

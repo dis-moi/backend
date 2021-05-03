@@ -36,7 +36,7 @@ class GetContributorAction extends BaseAction
         $id = $request->get('id', null);
         $contributor = $this->repository->getOne((int) $id);
 
-        if (!$contributor) {
+        if ( ! $contributor) {
             throw new NotFoundHttpException('Contributor not found.');
         }
 

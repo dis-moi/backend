@@ -370,7 +370,7 @@ class Notice
 
     public function getVisibility(): ?NoticeVisibility
     {
-        if (!$this->visibility) {
+        if ( ! $this->visibility) {
             return NoticeVisibility::getDefault();
         }
 

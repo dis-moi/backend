@@ -70,7 +70,7 @@ class PostContributionAction extends BaseAction
             $contribution = $this->serializer->deserialize($request->getContent(), Contribution::class, 'json', [
                 NormalizerOptions::VERSION => 3,
             ]);
-            if (!($contribution instanceof Contribution)) {
+            if ( ! ($contribution instanceof Contribution)) {
                 throw new InvalidArgumentException('Unable to process raw contribution data.');
             }
 

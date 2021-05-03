@@ -34,7 +34,7 @@ class GetCategoriesAction extends BaseAction
     {
         $categories = CategoryName::getConstants();
 
-        if (!is_iterable($categories)) {
+        if ( ! is_iterable($categories)) {
             throw new NotFoundHttpException('No categories found');
         }
 

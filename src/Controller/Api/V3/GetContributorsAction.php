@@ -31,7 +31,7 @@ class GetContributorsAction extends BaseAction
     {
         $contributors = $this->repository->getAllEnabledWithAtLeastOneContribution();
 
-        if (!$contributors) {
+        if ( ! $contributors) {
             throw new NotFoundHttpException('No contributors exist');
         }
 

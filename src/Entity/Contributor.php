@@ -516,7 +516,7 @@ class Contributor implements ImageUploadable
             $inGiven = $givenNotices->filter(function (Notice $givenNotice) use ($existingPin) {
                 return $givenNotice->getId() === $existingPin->getNotice()->getId();
             })->first();
-            if (!$inGiven) {
+            if ( ! $inGiven) {
                 $this->pins->removeElement($existingPin);
             }
         }
@@ -557,7 +557,7 @@ class Contributor implements ImageUploadable
 
     public function addCategory(string $categoryName): void
     {
-        if (!\in_array($categoryName, $this->categories, true)) {
+        if ( ! \in_array($categoryName, $this->categories, true)) {
             $this->categories[] = $categoryName;
         }
     }

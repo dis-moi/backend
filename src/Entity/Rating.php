@@ -99,7 +99,7 @@ class Rating
 
     public function setType(string $type): self
     {
-        if (!\in_array($type, [
+        if ( ! \in_array($type, [
             self::DISMISS,
             self::UNDISMISS,
             self::LIKE,
