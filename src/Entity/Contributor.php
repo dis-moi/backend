@@ -45,6 +45,7 @@ class Contributor implements ImageUploadable
 
     /**
      * A unique, incremental, numerical identifier for the Contributor.
+     *
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -200,7 +201,7 @@ class Contributor implements ImageUploadable
 
     /**
      * The list of Users that may impersonate this Contributor.
-     * Some users with the appropriate roles may also impersonate without being referenced explicitly here. (admins)
+     * Some users with the appropriate roles may also impersonate without being referenced explicitly here. (admins).
      *
      * @var ArrayCollection<User>
      * @ORM\ManyToMany(

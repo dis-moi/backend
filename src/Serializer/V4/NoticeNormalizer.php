@@ -15,12 +15,8 @@ use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 
-class NoticeNormalizer
-    implements
-        ContextAwareNormalizerInterface,
-        NormalizerAwareInterface
+class NoticeNormalizer implements ContextAwareNormalizerInterface, NormalizerAwareInterface
 {
-
     use Versioning;
     use Normalizing;
     use Uploading;
@@ -37,25 +33,26 @@ class NoticeNormalizer
     }
 
     /**
-     * @param mixed $data
-     * @param string $format
+     * @param mixed   $data
+     * @param string  $format
      * @param mixed[] $context
-     * @return bool
      */
     public function supportsNormalization($data, $format = null, $context = []): bool
     {
         $skip = $context[NormalizerOptionsV4::SKIP_NOTICE] ?? false;
-        return $data instanceof Notice && $this->isForV4($context) && ! $skip;
+
+        return $data instanceof Notice && $this->isForV4($context) && !$skip;
     }
 
     /**
-     * @param mixed[] $context
+     * @param mixed[]    $context
      * @param mixed|null $format
-     * @param mixed $notice
+     * @param mixed      $notice
      *
-     * @return mixed[]
      * @throws InvalidArgumentException
      * @throws ExceptionInterface
+     *
+     * @return mixed[]
      */
     public function normalize($notice, $format = null, array $context = []): array
     {
@@ -74,5 +71,4 @@ class NoticeNormalizer
 
         return array_merge($base, $extra);
     }
-
 }
