@@ -6,7 +6,7 @@ use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
 /**
- * Add a relation between users and contributors.
+ * ManyToMany between Contributors and Users to allow Users to impersonate Contributors
  */
 final class Version20210430133028 extends AbstractMigration
 {
