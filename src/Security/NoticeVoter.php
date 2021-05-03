@@ -26,7 +26,7 @@ class NoticeVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        if (!($subject instanceof Notice)) {
+        if ( ! ($subject instanceof Notice)) {
             return false;
         }
 
@@ -44,7 +44,7 @@ class NoticeVoter extends Voter
     {
         $user = $token->getUser();
 
-        if (!($user instanceof User)) {
+        if ( ! ($user instanceof User)) {
             return false;
         }
 

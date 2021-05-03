@@ -32,38 +32,6 @@ use App\Security\NoticeVoter;  // used by annotations
  * @ORM\Entity(repositoryClass="App\Repository\NoticeRepository")
  * @ORM\EntityListeners({NoticeListener::class})
  * @Vich\Uploadable
- * @ApiResource(
- *     normalizationContext={
- *         "groups"={"read"},
- *         NormalizerOptions::VERSION=4,
- *     },
- *     itemOperations={
- *         "get"={
- *             "normalization_context"={
- *                 "groups"={"read"},
- *                 NormalizerOptions::VERSION=4,
- *             },
- *         },
- *         "delete"={
- *             "access_control"="is_granted('can_delete', object)",
- *         },
- *     },
- *     collectionOperations={
- *         "get"={
- *             "normalization_context"={
- *                 "groups"={"read"},
- *                 NormalizerOptions::VERSION=4,
- *             },
- *         },
- *         "post"={
- *             "denormalization_context"={
- *                 "groups"={"create"},
- *                 NormalizerOptions::VERSION=4,
- *             },
- *             "access_control"="is_granted('can_create', object)",
- *         },
- *     },
- * )
  */
 class Notice
 {
@@ -74,6 +42,7 @@ class Notice
      * A unique, incremental, numerical identifier for the Notice.
      *
      * @var int
+     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
