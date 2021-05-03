@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\OpenApi\Documenter\Ability;
 
-
 use Symfony\Contracts\Translation\TranslatorInterface;
-
 
 trait TranslatorAbility
 {
@@ -14,9 +13,6 @@ trait TranslatorAbility
      */
     protected $translator;
 
-    /**
-     * @return TranslatorInterface
-     */
     public function getTranslator(): TranslatorInterface
     {
         return $this->translator;
@@ -24,7 +20,6 @@ trait TranslatorAbility
 
     /**
      * @required
-     * @param TranslatorInterface $translator
      */
     public function setTranslator(TranslatorInterface $translator): void
     {
@@ -72,11 +67,12 @@ trait TranslatorAbility
      * @param string|null $domain     The domain for the message or null to use the default
      * @param string|null $locale     The locale or null to use the default
      *
-     * @return string The translated string
-     *
      * @throws \InvalidArgumentException If the locale contains invalid characters
+     *
+     * @return string The translated string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null) {
+    public function trans($id, array $parameters = [], $domain = null, $locale = null)
+    {
         return $this->getTranslator()->trans($id, $parameters, $domain, $locale);
     }
 }

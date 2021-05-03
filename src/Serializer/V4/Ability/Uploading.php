@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Serializer\V4\Ability;
 
-
 use Symfony\Component\HttpFoundation\RequestStack;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
-
 
 trait Uploading
 {
@@ -23,7 +21,8 @@ trait Uploading
 
     /**
      * @required
-     * @param UploaderHelper $uploader Service injected by the DIC.
+     *
+     * @param UploaderHelper $uploader service injected by the DIC
      */
     public function setUploader(UploaderHelper $uploader): void
     {
@@ -32,7 +31,8 @@ trait Uploading
 
     /**
      * @required
-     * @param RequestStack $requestStack Service injected by the DIC.
+     *
+     * @param RequestStack $requestStack service injected by the DIC
      */
     public function setRequestStack(RequestStack $requestStack): void
     {
@@ -56,5 +56,4 @@ trait Uploading
 
         return null;
     }
-
 }
