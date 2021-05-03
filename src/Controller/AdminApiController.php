@@ -36,7 +36,7 @@ class AdminApiController
     {
         $matchingContexts = $this->repository->findAllWithPrivateVisibility();
 
-        if (!$matchingContexts) {
+        if ( ! $matchingContexts) {
             throw new NotFoundHttpException('No matching contexts exists');
         }
 

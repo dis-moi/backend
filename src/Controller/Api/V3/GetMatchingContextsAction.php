@@ -34,12 +34,12 @@ class GetMatchingContextsAction extends BaseAction
     public function __invoke(Request $request): JsonResponse
     {
         $contributors = $request->get('contributors', null);
-        if (!empty($contributors) && \is_string($contributors)) {
+        if ( ! empty($contributors) && \is_string($contributors)) {
             $contributors = explode(',', rtrim(ltrim($contributors, '['), ']'));
         }
         $matchingContexts = $this->repository->findAllPublicMatchingContext($contributors);
 
-        if (!\is_array($matchingContexts)) {
+        if ( ! \is_array($matchingContexts)) {
             throw new NotFoundHttpException('No matching contexts exists');
         }
 

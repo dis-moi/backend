@@ -55,7 +55,7 @@ class SubscriptionsTrackingService
             $extension->confirm();
             $existingSubscriptions = $extension->getSubscriptions();
             foreach ($existingSubscriptions as $existingSubscription) {
-                if (!\in_array($existingSubscription->getContributor()->getId(), $contributorIds, true)) {
+                if ( ! \in_array($existingSubscription->getContributor()->getId(), $contributorIds, true)) {
                     $this->entityManager->remove($existingSubscription);
                 }
             }
@@ -66,7 +66,7 @@ class SubscriptionsTrackingService
              * @var Contributor|null
              */
             $contributor = $this->contributorRepository->find($contributorId);
-            if (!$contributor) {
+            if ( ! $contributor) {
                 throw new DomainException("Contributor $contributorId does not exist");
             }
 

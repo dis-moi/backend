@@ -59,7 +59,7 @@ class AdminController extends BaseAdminController
         $entity = $parameterBag->get('entity');
         $query = $parameterBag->get('query');
 
-        if ('Notice' !== $entity || !$parameterBag->get('contributor_id')) {
+        if ('Notice' !== $entity || ! $parameterBag->get('contributor_id')) {
             return parent::autocompleteAction();
         }
 

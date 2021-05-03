@@ -41,7 +41,7 @@ class NoticeNormalizer implements ContextAwareNormalizerInterface, NormalizerAwa
     {
         $skip = $context[NormalizerOptionsV4::SKIP_NOTICE] ?? false;
 
-        return $data instanceof Notice && $this->isForV4($context) && !$skip;
+        return $data instanceof Notice && $this->isForV4($context) && ! $skip;
     }
 
     /**

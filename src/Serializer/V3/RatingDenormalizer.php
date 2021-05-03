@@ -35,7 +35,7 @@ class RatingDenormalizer implements ContextAwareDenormalizerInterface
     public function denormalize($data, $class, $format = null, array $context = []): Rating
     {
         $notice = $context['notice'];
-        if (!$notice || !$notice instanceof Notice) {
+        if ( ! $notice || ! $notice instanceof Notice) {
             throw new LogicException('RatingDenormalizer->denormalize must be called with a Notice instance in the context.');
         }
 

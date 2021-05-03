@@ -21,7 +21,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use App\Security\NoticeVoter;  // used by annotations
 
 /**
  * A Notice holds a message written/contributed by a Contributor about a web page
@@ -401,7 +400,7 @@ class Notice
 
     public function getVisibility(): ?NoticeVisibility
     {
-        if (!$this->visibility) {
+        if ( ! $this->visibility) {
             return NoticeVisibility::getDefault();
         }
 

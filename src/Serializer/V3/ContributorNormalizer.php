@@ -95,7 +95,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Context
      */
     public function normalize($contributor, $format = null, array $context = []): array
     {
-        if (!($contributor instanceof Contributor)) {
+        if ( ! ($contributor instanceof Contributor)) {
             throw new InvalidArgumentException('The normalized object must be of type Contributor');
         }
         $context[NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS] = false;
@@ -116,7 +116,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Context
             'title' => $contributor->getTitle(),
             'website' => $contributor->getWebsite(),
             'intro' => $contributor->getIntro() ? $this->messagePresenter->present($contributor->getIntro()) : null,
-            'avatar' => !empty($contributor->getImage()) ?
+            'avatar' => ! empty($contributor->getImage()) ?
                 $this->normalizer->normalize(self::avatarWithThumbs($contributor), $format, $context) :
                 null,
             'banner' => $this->getImageAbsoluteUrl($contributor, 'bannerImageFile'),
