@@ -34,7 +34,10 @@ class UserFixtures extends Fixture implements FixtureInterface, ContainerAwareIn
         $manager->flush();
     }
 
-    public function getDependencies()
+    /**
+     * @return array<string>
+     */
+    public function getDependencies(): array
     {
         return [
             ContributorFixtures::class,
