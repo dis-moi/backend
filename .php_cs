@@ -67,6 +67,7 @@ return PhpCsFixer\Config::create()
         'no_unset_on_property' => true,
         'no_useless_else' => true,
         'no_useless_return' => true,
+        'not_operator_with_space' => true,
         'ordered_imports' => [
             'imports_order' => [
                 'class',
