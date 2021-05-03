@@ -12,10 +12,8 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 
-
 class UserAdminFixtures extends Fixture implements FixtureInterface, ContainerAwareInterface
 {
-
     use Container;
 
     public function load(ObjectManager $manager): void

@@ -1,11 +1,8 @@
 <?php
 
-
 declare(strict_types=1);
 
-
 namespace App\OpenApi\Documenter;
-
 
 use ApiPlatform\Core\OpenApi\Model\Operation;
 use ApiPlatform\Core\OpenApi\Model\PathItem;
@@ -15,21 +12,13 @@ use App\OpenApi\Documenter\Ability\TranslatorAbility;
 use App\OpenApi\DocumenterInterface;
 use Symfony\Component\HttpFoundation\Response;
 
-
 /** @noinspection PhpUnused */
-
-
 class JwtDocumenter implements DocumenterInterface
 {
-
     use TranslatorAbility;
 
     /**
      * Adds custom data to the $openapi and returns it, or a copy of it.
-     *
-     * @param OpenApi $openApi
-     * @param array $context
-     * @return OpenApi
      */
     public function document(OpenApi $openApi, array $context = []): OpenApi
     {
@@ -50,12 +39,12 @@ class JwtDocumenter implements DocumenterInterface
                 'username' => [
                     'type' => 'string',
                     'example' => 'john@dismoi.fr',
-                    'description' => 'The username you chose during registration.'
+                    'description' => 'The username you chose during registration.',
                 ],
                 'password' => [
                     'type' => 'string',
                     'example' => 'red horse stapler xkcd yahoo',
-                    'description' => 'The password you chose during registration.  '
+                    'description' => 'The password you chose during registration.  ',
                 ],
             ],
         ]);
@@ -71,7 +60,7 @@ class JwtDocumenter implements DocumenterInterface
                 ['Authentication'],  // tags
                 [ // responses
                     Response::HTTP_OK => [
-                        'description' => "Get a Json Web Token (JWT).  Use this token in your requests headers: `Authorization: Bearer {token}`.",
+                        'description' => 'Get a Json Web Token (JWT).  Use this token in your requests headers: `Authorization: Bearer {token}`.',
                         'content' => [
                             'application/json' => [
                                 'schema' => [
@@ -87,7 +76,7 @@ class JwtDocumenter implements DocumenterInterface
                         'description' => 'Unauthorized credentials.',
                     ],
                 ],
-                "Returns an authentication token (JWT) from login credentials.",
+                'Returns an authentication token (JWT) from login credentials.',
                 "
 Usage of this API require authentication.
 The Token returned is a [JWT](https://jwt.io/) valid for ten hours.
@@ -122,8 +111,6 @@ You may use the `Authorize 🔒` button in the sandbox to do this, if you're usi
      * You may use the ORDER_XXX constants for this, if you wish.
      * When two or more documenters have the same order,
      * they are applied in the lexicographical order of their class name/.
-     *
-     * @return int
      */
     public function getOrder(): int
     {

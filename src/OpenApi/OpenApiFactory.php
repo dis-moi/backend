@@ -1,4 +1,5 @@
 <?php
+
 /** @noinspection PhpUnusedAliasInspection */
 /** @noinspection PhpUnused */
 
@@ -8,27 +9,25 @@ namespace App\OpenApi;
 
 use ApiPlatform\Core\OpenApi\Factory\OpenApiFactoryInterface;
 use ApiPlatform\Core\OpenApi\OpenApi;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use App\OpenApi\DocumenterInterface;
-
 
 /**
  * Extends the documentation with any Services tagged as `openapi_documenter`.
  * Which, in our current configuration, means implementing `DocumenterInterface`.
  *
  * Class OpenApiFactory
- * @package App\Swagger
  */
 final class OpenApiFactory implements OpenApiFactoryInterface
 {
     /**
-     * Usually a ApiPlatform\Core\OpenApi\Factory\OpenApiFactory
-     * @var OpenApiFactoryInterface $factory
+     * Usually a ApiPlatform\Core\OpenApi\Factory\OpenApiFactory.
+     *
+     * @var OpenApiFactoryInterface
      */
     private $factory;
 
     /**
      * A collection of documenters, each with its own responsibility.
+     *
      * @var DocumenterInterface[]
      */
     private $documenters;
@@ -38,7 +37,7 @@ final class OpenApiFactory implements OpenApiFactoryInterface
         iterable $documenters
     ) {
 //        $documenters_array = (array) $documenters;  // NOPE, DON'T
-        $documenters_array = array();
+        $documenters_array = [];
         foreach ($documenters as $documenter) {
             $documenters_array[] = $documenter;
         }
@@ -53,8 +52,6 @@ final class OpenApiFactory implements OpenApiFactoryInterface
 
     /**
      * Creates an OpenApi class.
-     * @param array $context
-     * @return OpenApi
      */
     public function __invoke(array $context = []): OpenApi
     {
