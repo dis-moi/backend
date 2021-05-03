@@ -6,7 +6,6 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Ability\VichFilenamer;
-use App\Entity\User;  // used by annotations
 use App\Helper\ImageUploadable;
 use App\Serializer\V3\NormalizerOptions;
 use DateTime;
