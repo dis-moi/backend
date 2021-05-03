@@ -38,7 +38,7 @@ class PostContributionTest extends BaseApiE2eTestCase
                 'email' => 'johan@dismoi.io',
             ],
             'message' => 'I would prefer seeing a markdown explaining the technical perspectives on the matter.',
-            'toContributorId' => $contributor->getId(),
+            'toContributorId' => (string) $contributor->getId(),
             'question' => true,
         ]);
 
@@ -60,7 +60,7 @@ class PostContributionTest extends BaseApiE2eTestCase
                 'email' => 'johan@dismoi.io',
             ],
             'message' => "I'm not explicitly saying it's a question but, yet it is.",
-            'toContributorId' => $contributor->getId(),
+            'toContributorId' => (string) $contributor->getId(),
         ]);
 
         $this->client->request('POST', '/api/v3/contributions', [], [], [], $content);
@@ -79,7 +79,7 @@ class PostContributionTest extends BaseApiE2eTestCase
                 'email' => 'johan@dismoi.io',
             ],
             'message' => 'I had a question to a non-existent contributor...',
-            'toContributorId' => 0xBAADF00D,
+            'toContributorId' => (string) 0xBAADF00D,
             'question' => true,
         ]);
 
