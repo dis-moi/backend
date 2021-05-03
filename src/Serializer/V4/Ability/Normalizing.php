@@ -1,14 +1,13 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Serializer\V4\Ability;
-
 
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 trait Normalizing
 {
-
     /**
      * @var NormalizerInterface
      */
