@@ -6,7 +6,6 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Ability\VichFilenamer;
-// used by annotations
 use App\Helper\ImageUploadable;
 use App\Serializer\V3\NormalizerOptions;
 use DateTime;
@@ -21,7 +20,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * Contributor.
+ * Contributors are the main actors of our domain, whereas User is reserved for authentication shenanigans.
+ * Contributors emit Notices.
+ * Every Contributor should at have at least one User that can impersonate it.
  *
  * @ORM\Table(name="contributor")
  * @ORM\Entity
@@ -228,17 +229,11 @@ class Contributor implements ImageUploadable
         return $this;
     }
 
-    /**
-     * Get id.
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     */
     public function setName(?string $name): self
     {
         $this->name = $name;
@@ -246,9 +241,6 @@ class Contributor implements ImageUploadable
         return $this;
     }
 
-    /**
-     * Get name.
-     */
     public function getName(): ?string
     {
         return $this->name;
@@ -582,7 +574,7 @@ class Contributor implements ImageUploadable
     }
 
     /**
-     * @return ArrayCollection<User>
+     * @return ArrayCollection<User> Those that may act as this Contributor.
      */
     public function getImpersonators(): ArrayCollection
     {
