@@ -80,7 +80,7 @@ class Notice
      * @Groups({"read"})
      * @ApiProperty(
      *     openapiContext={
-     *         "example": 42,
+     *         "example"=42,
      *     },
      * )
      */
@@ -132,6 +132,7 @@ class Notice
 
     /**
      * The Contributor who submitted the Notice.
+     *
      * @var Contributor
      *
      * @Groups({
@@ -148,6 +149,7 @@ class Notice
      * The raw message attached to the Notice,
      * as given by the Contributor.  It is unsafe to read from it,
      * prefer reading from `strippedMessage`.
+     *
      * @var string
      *
      * @Groups({
@@ -175,6 +177,7 @@ class Notice
 
     /**
      * Latest update date of the notice, serialized in the ISO8601 format.
+     *
      * @var DateTime
      *
      * Groups({"read"}) → see getModified()
@@ -184,6 +187,7 @@ class Notice
 
     /**
      * Creation date of the notice, serialized in the ISO8601 format.
+     *
      * @var DateTime
      *
      * @Groups({"read"})
@@ -191,7 +195,7 @@ class Notice
      *     readable=true,
      *     writable=false,
      *     openapiContext={
-     *         "example": "2021-04-16T14:59:37+02:00",
+     *         "example"="2021-04-16T14:59:37+02:00",
      *     },
      * )
      * @ORM\Column(type="datetime")
@@ -209,7 +213,7 @@ class Notice
      * })
      * @ApiProperty(
      *     openapiContext={
-     *         "example": "2031-11-05T00:00:00+02:00",
+     *         "example"="2031-11-05T00:00:00+02:00",
      *     },
      * )
      * @ORM\Column(type="datetime", nullable=true)
@@ -258,7 +262,6 @@ class Notice
      */
     private $externalId;
 
-
     public function __construct()
     {
         $this->matchingContexts = new ArrayCollection();
@@ -280,7 +283,10 @@ class Notice
      *     example="2021-03-21T14:42:00+02:00"
      * )
      */
-    public function getModified(): DateTime { return $this->getUpdated(); }
+    public function getModified(): DateTime
+    {
+        return $this->getUpdated();
+    }
 
     /**
      * The message attached to the Notice, ie. what the user wants to read,
@@ -294,9 +300,11 @@ class Notice
      *     readable=true,
      *     writable=false,
      * )
-     * @return string
      */
-    public function getStrippedMessage(): string { return $this->getMessage(); }
+    public function getStrippedMessage(): string
+    {
+        return $this->getMessage();
+    }
 
     /**
      * Amount of likes the Notice has received.
@@ -306,7 +314,6 @@ class Notice
      *     readable=true,
      *     writable=false,
      * )
-     * @return int
      */
     public function getLikes(): int
     {
@@ -321,7 +328,6 @@ class Notice
      *     readable=true,
      *     writable=false,
      * )
-     * @return int
      */
     public function getDislikes(): int
     {
@@ -404,6 +410,7 @@ class Notice
 
     /**
      * @param NoticeVisibility|string $visibility
+     *
      * @return $this
      */
     public function setVisibility($visibility): self

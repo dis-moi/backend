@@ -26,7 +26,7 @@ class NoticeVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        if ( ! ($subject instanceof Notice)) {
+        if (!($subject instanceof Notice)) {
             return false;
         }
 
@@ -44,14 +44,14 @@ class NoticeVoter extends Voter
     {
         $user = $token->getUser();
 
-        if ( ! ($user instanceof User)) {
+        if (!($user instanceof User)) {
             return false;
         }
 
         /** @var Notice $notice */
         $notice = $subject;
 
-        if (in_array($attribute, [self::CAN_CREATE, self::CAN_UPDATE, self::CAN_DELETE])) {
+        if (\in_array($attribute, [self::CAN_CREATE, self::CAN_UPDATE, self::CAN_DELETE], true)) {
             if ($notice->getContributor()->hasImpersonator($user)) {
                 return true;
             }
