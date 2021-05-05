@@ -24,7 +24,11 @@ interface DocumenterInterface
     public const ORDER_AFTER = 1;
 
     /**
-     * Adds custom data to the $openapi and returns it, or a copy of it.
+     * Adds custom data to the $openApi and returns it, or a copy of it.
+     *
+     * @param OpenApi              $openApi The object as provided by ApiPlatform or previous Documenters.
+     * @param array<string, mixed> $context A context provided by ApiPlatform, with not much in it.
+     * @return OpenApi You may return the input $openApi after modifications, or a copy of it.
      */
     public function document(OpenApi $openApi, array $context = []): OpenApi;
 
