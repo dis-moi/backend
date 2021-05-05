@@ -38,7 +38,8 @@ class NoticeVoter extends Voter
      * It is safe to assume that $attribute and $subject already passed the "supports()" method check.
      *
      * @param string $attribute
-     * @param mixed $subject
+     * @param mixed  $subject
+     *
      * @return bool True if we can, false if we can't
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool

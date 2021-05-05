@@ -35,7 +35,7 @@ final class OpenApiFactory implements OpenApiFactoryInterface
     /**
      * OpenApiFactory constructor.
      *
-     * @param OpenApiFactoryInterface $factory Original service we're wrapping
+     * @param OpenApiFactoryInterface       $factory     Original service we're wrapping
      * @param iterable<DocumenterInterface> $documenters List of tagged services
      */
     public function __construct(
@@ -60,7 +60,6 @@ final class OpenApiFactory implements OpenApiFactoryInterface
      * Creates an OpenApi class.
      *
      * @param array<string, mixed> $context Context provided by ApiPlatform
-     * @return OpenApi
      */
     public function __invoke(array $context = []): OpenApi
     {

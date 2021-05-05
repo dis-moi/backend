@@ -19,9 +19,8 @@ class JwtDocumenter implements DocumenterInterface
 
     /**
      * Adds custom data to the $openapi and returns it, or a copy of it.
-     * @param OpenApi              $openApi
+     *
      * @param array<string, mixed> $context Context from parent
-     * @return OpenApi
      */
     public function document(OpenApi $openApi, array $context = []): OpenApi
     {
