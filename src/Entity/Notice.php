@@ -90,9 +90,9 @@ class Notice
      * for an enumeration of the allowed values:
      *   - "public": anyone may view this Notice
      *   - "private": Notice is only visible to Contributor
-     *   - "archived": ???
+     *   - "archived": A deleted notice because it wasn't relevant anymore
      *   - "draft": Notice is only visible to Contributor, pending publication
-     *   - "question": ???
+     *   - "question": A question asked by a someone on a webpage.  A question is not publicly visible.
      *
      * @var ?string
      * @Groups({
