@@ -114,6 +114,20 @@ Setup and migrate the test database and run phpunit:
 $ runtests
 ```
 
+or 
+
+```shell script
+$ make test-no-deprecation
+```
+
+#### Lint
+
+```shell script
+$ aphp vendor/bin/php-cs-fixer fix
+$ aphp vendor/bin/phpstan analyse
+```
+
+
 #### Admin Access
 
 [http://localhost:8088](http://localhost:8088)
