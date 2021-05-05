@@ -43,3 +43,6 @@ stop:
 
 down:
 	docker-compose down
+
+jwt:
+	$(SYMFONY) lexik:jwt:generate-keypair
