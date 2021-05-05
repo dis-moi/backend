@@ -8,13 +8,19 @@ use App\Serializer\V3\NormalizerOptions;
 
 trait Versioning
 {
-    public function getVersionFromContext(array $context)
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function getVersionFromContext(array $context): ?int
     {
         // we could also grab it from url prefix as a fallback
         return $context[NormalizerOptions::VERSION] ?? null;
     }
 
-    public function isForV4(array $context)
+    /**
+     * @param array<string, mixed> $context
+     */
+    public function isForV4(array $context): bool
     {
         return 4 === $this->getVersionFromContext($context);
     }
