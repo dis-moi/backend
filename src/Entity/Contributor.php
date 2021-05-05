@@ -574,7 +574,7 @@ class Contributor implements ImageUploadable
     }
 
     /**
-     * @return ArrayCollection<User> Those that may act as this Contributor.
+     * @return ArrayCollection<User> those that may act as this Contributor
      */
     public function getImpersonators(): ArrayCollection
     {
