@@ -77,7 +77,7 @@ class NoticeAssembler
         }
 
         return (new MatchingContext())
-            ->setUrlRegex($url['path'])
+            ->setUrlRegex(((array) $url)['path'] ?? '')
             ->setExampleUrl($contribution->getUrl())
             ->addDomainName($this->assembleDomainName($contribution))
             ->setDescription("Draft posted by {$contribution->getContributorName()} from the extension.");
@@ -86,12 +86,22 @@ class NoticeAssembler
     public function assembleDomainName(Contribution $contribution): DomainName
     {
         $url = parse_url($contribution->getUrl());
+        if (!$url) {
+            throw new InvalidArgumentException("Unable to parse URL `{$contribution->getUrl()}`.");
+        }
+
+        $host = ((array) $url)['host'];
+
+        if (!$host) {
+            throw new InvalidArgumentException("URL has no host `{$contribution->getUrl()}`.");
+        }
+
         $existingDomainName = $this->domainNameRepository->findMostSpecificFromHost($url['host']);
         if ($existingDomainName) {
             return $existingDomainName;
         }
 
-        return new DomainName($url['host']);
+        return new DomainName($host);
     }
 
     public static function assembleNotice(Contribution $contribution): Notice
