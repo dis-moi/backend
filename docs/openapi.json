@@ -317,6 +317,26 @@
           "required": true
         }
       }
+    },
+    "/contributions": {
+      "post": {
+        "summary": "post a new contribution",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref" : "#/components/schemas/ContributionDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The server successfully recorded the contribution."
+          }
+        }
+      }
     }
   },
   "tags": [
@@ -834,6 +854,70 @@
           "unsubscribe",
           "report"
         ]
+      },
+      "ContributionDTO": {
+        "title": "Contribution DTO for posting",
+        "type": "object",
+        "properties": {
+          "url": {
+            "title": "URL",
+            "description": "URL that will trigger this contribution",
+            "type": "string",
+            "example": "https://example.com"
+          },
+          "contributor": {
+            "title": "Contributor",
+            "description": "Contributor informations",
+            "type": "object",
+            "properties": {
+              "name": {
+                "title": "Name",
+                "description": "Display name of the contributor, will be shown on profile and contributions",
+                "type": "string",
+                "example": "John Doe"
+              },
+              "email": {
+                "title": "E-mail",
+                "description": "The e-mail for the contributor account",
+                "type": "string",
+                "example": "john@doe.com"
+              }
+            },
+            "required": ["name", "email"],
+            "example": {
+              "name": "John Doe",
+              "email": "john@doe.com"
+            }
+          },
+          "message": {
+            "title": "Message",
+            "description": "Message to be triggered on the URL",
+            "type": "string",
+            "example": "Caution with this website, authenticity seems doubtful."
+          },
+          "question": {
+            "title": "Question",
+            "description": "Is that a standard contribution or a question ?",
+            "type": "boolean",
+            "example": false
+          },
+          "toContributorId": {
+            "title": "To Contributor Id",
+            "description": "If this is a `question`, specify which contributor to question",
+            "type": "number",
+            "example": 42
+          }
+        },
+        "required": ["url", "contributor", "message", "question"],
+        "example": {
+          "url": "https://example.org/",
+          "contributor": {
+            "name": "John Doe",
+            "email": "john@doe.com"
+          },
+          "message": "Caution with this website, authenticity seems doubtful.",
+          "question": false
+        }
       },
       "contribution": {
         "title": "contribution infos",
