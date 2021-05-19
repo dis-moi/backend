@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\EntityListener\MatchingContextListener;
 use App\Helper\Escaper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -32,27 +34,74 @@ function escape(string $dn, ?Escaper $e): string
 }
 
 /**
- * MatchingContext.
+ * A MatchingContext pinpoints a set of web pages on the internet.
+ * A MatchingContext can also pinpoint to parts of them, though xpath.
+ * A MatchingContext exists for a single Notice.
  *
  * @ORM\Table(name="matching_context")
  * @ORM\Entity
  * @ORM\EntityListeners({MatchingContextListener::class})
+ * @ApiResource(
+ *     normalizationContext={
+ *         "groups"={"read"},
+ *         NormalizerOptions::VERSION=4,
+ *     },
+ *     itemOperations={
+ *         "get"={
+ *             "normalization_context"={
+ *                 "groups"={"read"},
+ *                 NormalizerOptions::VERSION=4,
+ *             },
+ *         },
+ *     },
+ *     collectionOperations={
+ *         "get"={
+ *             "normalization_context"={
+ *                 "groups"={"read"},
+ *                 NormalizerOptions::VERSION=4,
+ *             },
+ *         },
+ *         "post"={
+ *             "denormalization_context"={
+ *                 "groups"={"create"},
+ *                 NormalizerOptions::VERSION=4,
+ *             },
+ *             "access_control"="is_granted('can_create', object)",
+ *         },
+ *     },
+ * )
  */
 class MatchingContext
 {
     /**
+     * An incremental, unique identifier for this matching context.
+     *
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({
+     *     "create",
+     * })
+     * @ApiProperty(
+     *     openapiContext={
+     *         "example"=42,
+     *     },
+     * )
      */
     private $id;
 
     /**
+     * This Notice this Matching Context tries to pinpoint on the Internet.
+     *
      * @var Notice
      *
      * @ORM\ManyToOne(targetEntity="Notice", inversedBy="matchingContexts", fetch="EAGER")
+     * @Groups({
+     *     "create",
+     *     "read",
+     * })
      */
     private $notice;
 
@@ -62,6 +111,11 @@ class MatchingContext
      * @ORM\Column(name="exampleUrl", type="text", nullable=true)
      *
      * @Assert\Url
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
      */
     private $exampleUrl;
 
