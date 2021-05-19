@@ -137,6 +137,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Context
                         'screenshot' => $this->getImageAbsoluteUrl($notice, 'screenshotFile'),
                         'created' => NoticeNormalizer::formatDateTime($notice->getCreated()),
                         'modified' => NoticeNormalizer::formatDateTime($notice->getUpdated()),
+                        'locale' => $notice->getLocale(),
                     ];
                 })->toArray(),
                 'numberOfPublishedNotices' => $contributor->getNoticesCount(),
@@ -151,6 +152,7 @@ class ContributorNormalizer extends EntityWithImageNormalizer implements Context
                 return $this->noticeUrlGenerator->generate($notice);
             })->toArray(),
             'categories' => $contributor->getCategories(),
+            'locale' => $contributor->getLocale(),
         ];
     }
 }

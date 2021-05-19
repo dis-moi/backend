@@ -268,6 +268,14 @@ class Notice
      */
     private $externalId;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="locale", type="string", length=255, nullable=true)
+     * @Assert\Length(max="255")
+     */
+    private $locale;
+
     public function __construct()
     {
         $this->matchingContexts = new ArrayCollection();
@@ -275,6 +283,18 @@ class Notice
         $this->ratings = new ArrayCollection();
         $this->visibility = NoticeVisibility::getDefault()->getValue();
         $this->expires = (new DateTimeImmutable())->modify('+1year');
+    }
+
+    public static function equals(self $notice): Closure
+    {
+        return static function (self $other) use ($notice) {
+            return $notice->getId() === $other->getId();
+        };
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     /**
@@ -292,6 +312,16 @@ class Notice
     public function getModified(): DateTime
     {
         return $this->getUpdated();
+    }
+
+    public function getUpdated(): ?DateTime
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(DateTime $updated): void
+    {
+        $this->updated = $updated;
     }
 
     /**
@@ -312,6 +342,18 @@ class Notice
         return $this->getMessage();
     }
 
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function setMessage(string $message): self
+    {
+        $this->message = strip_tags((new \HTMLPurifier())->purify($message), self::ALLOWED_TAGS);
+
+        return $this;
+    }
+
     /**
      * Amount of likes the Notice has received.
      *
@@ -324,6 +366,30 @@ class Notice
     public function getLikes(): int
     {
         return $this->getLikedRatingCount();
+    }
+
+    public function getLikedRatingCount(): int
+    {
+        return $this->getRatingBalance(Rating::LIKE, Rating::UNLIKE);
+    }
+
+    protected function getRatingBalance(string $typeUp, string $typeDown): int
+    {
+        $balance = $this->getRatingCount($typeUp) - $this->getRatingCount($typeDown);
+
+        return $balance > 0 ? $balance : 0;
+    }
+
+    protected function getRatingCount(string $type): int
+    {
+        return $this->getRatings()->filter(function (Rating $rating) use ($type) {
+            return $rating->getType() === $type;
+        })->count();
+    }
+
+    public function getRatings(): ?Collection
+    {
+        return $this->ratings;
     }
 
     /**
@@ -340,33 +406,9 @@ class Notice
         return $this->getDislikedRatingCount();
     }
 
-    public static function equals(self $notice): Closure
+    public function getDislikedRatingCount(): int
     {
-        return static function (self $other) use ($notice) {
-            return $notice->getId() === $other->getId();
-        };
-    }
-
-    private function markUpdated(): void
-    {
-        $this->updated = new DateTime('now');
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
-    public function setMessage(string $message): self
-    {
-        $this->message = strip_tags((new \HTMLPurifier())->purify($message), self::ALLOWED_TAGS);
-
-        return $this;
-    }
-
-    public function getMessage(): ?string
-    {
-        return $this->message;
+        return $this->getRatingBalance(Rating::DISLIKE, Rating::UNDISLIKE);
     }
 
     public function addMatchingContext(MatchingContext $matchingContext): self
@@ -383,14 +425,14 @@ class Notice
         $this->matchingContexts->removeElement($matchingContext);
     }
 
-    public function getMatchingContexts(): ?Collection
-    {
-        return $this->matchingContexts;
-    }
-
     public function __toString(): string
     {
         return sprintf('(id:%d) [%s] %s', $this->getId(), $this->getContributor(), StringHelper::truncate($this->getMessage(), 45));
+    }
+
+    public function getContributor(): ?Contributor
+    {
+        return $this->contributor;
     }
 
     public function setContributor(Contributor $contributor = null): self
@@ -400,9 +442,9 @@ class Notice
         return $this;
     }
 
-    public function getContributor(): ?Contributor
+    public function hasPublicVisibility(): bool
     {
-        return $this->contributor;
+        return $this->getVisibility() === NoticeVisibility::PUBLIC_VISIBILITY();
     }
 
     public function getVisibility(): ?NoticeVisibility
@@ -430,14 +472,29 @@ class Notice
         return $this;
     }
 
-    public function hasPublicVisibility(): bool
-    {
-        return $this->getVisibility() === NoticeVisibility::PUBLIC_VISIBILITY();
-    }
-
     public function isUnpublished(): bool
     {
         return null !== $this->getExpires() && $this->isUnpublishedOnExpiration() && $this->getExpires() < new DateTime('now');
+    }
+
+    public function getExpires(): ?DateTimeInterface
+    {
+        return $this->expires;
+    }
+
+    public function setExpires(DateTime $expires = null): void
+    {
+        $this->expires = $expires;
+    }
+
+    public function isUnpublishedOnExpiration(): bool
+    {
+        return $this->unpublishedOnExpiration;
+    }
+
+    public function setUnpublishedOnExpiration(bool $unpublishedOnExpiration): void
+    {
+        $this->unpublishedOnExpiration = $unpublishedOnExpiration;
     }
 
     public function getNote(): ?string
@@ -448,11 +505,6 @@ class Notice
     public function setNote(?string $note): void
     {
         $this->note = $note;
-    }
-
-    public function getRatings(): ?Collection
-    {
-        return $this->ratings;
     }
 
     public function getBadgedRatingCount(): int
@@ -475,16 +527,6 @@ class Notice
         return $this->getRatingCount(Rating::OUTBOUND_CLICK);
     }
 
-    public function getLikedRatingCount(): int
-    {
-        return $this->getRatingBalance(Rating::LIKE, Rating::UNLIKE);
-    }
-
-    public function getDislikedRatingCount(): int
-    {
-        return $this->getRatingBalance(Rating::DISLIKE, Rating::UNDISLIKE);
-    }
-
     public function getDismissedRatingCount(): int
     {
         return $this->getRatingBalance(Rating::DISMISS, Rating::UNDISMISS);
@@ -493,20 +535,6 @@ class Notice
     public function getReportedRatingCount(): int
     {
         return $this->getRatingCount(Rating::REPORT);
-    }
-
-    protected function getRatingCount(string $type): int
-    {
-        return $this->getRatings()->filter(function (Rating $rating) use ($type) {
-            return $rating->getType() === $type;
-        })->count();
-    }
-
-    protected function getRatingBalance(string $typeUp, string $typeDown): int
-    {
-        $balance = $this->getRatingCount($typeUp) - $this->getRatingCount($typeDown);
-
-        return $balance > 0 ? $balance : 0;
     }
 
     public function addRating(Rating $rating): self
@@ -530,36 +558,6 @@ class Notice
     {
         $this->created = $created;
         $this->setUpdated($created);
-    }
-
-    public function getUpdated(): ?DateTime
-    {
-        return $this->updated;
-    }
-
-    public function setUpdated(DateTime $updated): void
-    {
-        $this->updated = $updated;
-    }
-
-    public function getExpires(): ?DateTimeInterface
-    {
-        return $this->expires;
-    }
-
-    public function setExpires(DateTime $expires = null): void
-    {
-        $this->expires = $expires;
-    }
-
-    public function isUnpublishedOnExpiration(): bool
-    {
-        return $this->unpublishedOnExpiration;
-    }
-
-    public function setUnpublishedOnExpiration(bool $unpublishedOnExpiration): void
-    {
-        $this->unpublishedOnExpiration = $unpublishedOnExpiration;
     }
 
     /**
@@ -602,6 +600,11 @@ class Notice
         return $this;
     }
 
+    private function markUpdated(): void
+    {
+        $this->updated = new DateTime('now');
+    }
+
     /**
      * @deprecated use `getExampleMatchingUrl` instead
      */
@@ -613,10 +616,10 @@ class Notice
     public function getExampleMatchingUrl(): ?string
     {
         $first = $this->getMatchingContexts()
-            ->filter(function (MatchingContext $mc) {
-                return (bool) $mc->getExampleUrl();
-            })
-            ->first();
+      ->filter(function (MatchingContext $mc) {
+          return (bool) $mc->getExampleUrl();
+      })
+      ->first();
         if ($first) {
             return $first->getExampleUrl();
         }
@@ -624,11 +627,9 @@ class Notice
         return null;
     }
 
-    public function getRelayers(): Collection
+    public function getMatchingContexts(): ?Collection
     {
-        return $this->relays->map(static function (Relay $relay) {
-            return $relay->getRelayedBy();
-        });
+        return $this->matchingContexts;
     }
 
     public function addRelayer(Contributor $contributor): self
@@ -641,15 +642,15 @@ class Notice
     public function removeRelayer(Contributor $contributor): self
     {
         $this->relays->removeElement(
-            current(
-                array_filter(
-                    $this->relays->toArray(),
-                    static function (Relay $relay) use ($contributor) {
-                        return $relay->getRelayedBy()->getId() === $contributor->getId();
-                    }
-                )
-            )
-        );
+      current(
+        array_filter(
+          $this->relays->toArray(),
+          static function (Relay $relay) use ($contributor) {
+              return $relay->getRelayedBy()->getId() === $contributor->getId();
+          }
+        )
+      )
+    );
 
         return $this;
     }
@@ -657,6 +658,13 @@ class Notice
     public function getRelayersCount(): int
     {
         return $this->getRelayers()->count();
+    }
+
+    public function getRelayers(): Collection
+    {
+        return $this->relays->map(static function (Relay $relay) {
+            return $relay->getRelayedBy();
+        });
     }
 
     public function getPinnedSort(): ?int
@@ -679,6 +687,25 @@ class Notice
     public function setExternalId(string $externalId): self
     {
         $this->externalId = $externalId;
+
+        return $this;
+    }
+
+    public function getLocale(): string
+    {
+        if (isset($this->locale)) {
+            return $this->locale;
+        }
+        if ($this->getContributor()) {
+            return $this->getContributor()->getLocale();
+        }
+
+        return \Locale::getDefault();
+    }
+
+    public function setLocale(?string $locale): self
+    {
+        $this->locale = $locale;
 
         return $this;
     }
