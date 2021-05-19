@@ -120,9 +120,9 @@ class Notice
      */
     private $matchingContexts;
 
-    // Goutte: Is this still used?  Isn't it in matchingContexts?  Can anyone document?
-    //         Lutangar says it's probably legacy.
     /**
+     * A global exclude rule that applies to all matching contexts.
+     *
      * @var string
      *
      * @ORM\Column(name="excludeUrlRegex", type="text", nullable=true)
