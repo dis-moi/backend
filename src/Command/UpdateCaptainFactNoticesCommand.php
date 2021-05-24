@@ -200,6 +200,9 @@ class UpdateCaptainFactNoticesCommand extends Command
             $this
                 ->entityManager
                 ->flush();
+        } else {
+            $this->youtubeDomainName = $this->youtubeDomainName[0];
+            $this->output->writeln(sprintf('youtube id : %d', $this->youtubeDomainName->getId()));
         }
     }
 
@@ -379,8 +382,7 @@ class UpdateCaptainFactNoticesCommand extends Command
      */
     protected function disableNoticesWithExternalIds(int &$archiveCount): void
     {
-        while (\count($this->noticesExternalIds) > 0) {
-            $noticeExternalId = array_shift($this->noticesExternalIds);
+        foreach($this->noticesExternalIds as $noticeExternalId => $index) {
             $notices = $this
                 ->entityManager
                 ->createQuery("SELECT n FROM App\Entity\Notice n WHERE n.externalId=:eid")
@@ -394,7 +396,7 @@ class UpdateCaptainFactNoticesCommand extends Command
                     ->persist($notices[$noticeIndex]);
             }
 
-            $this->output->writeln(sprintf('... archive entry %s', substr($noticeExternalId, -3)));
+            $this->output->writeln(sprintf('... archive notices with external id %s', $noticeExternalId));
             ++$archiveCount;
         }
 
