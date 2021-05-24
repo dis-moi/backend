@@ -382,7 +382,7 @@ class UpdateCaptainFactNoticesCommand extends Command
      */
     protected function disableNoticesWithExternalIds(int &$archiveCount): void
     {
-        foreach($this->noticesExternalIds as $noticeExternalId => $index) {
+        foreach ($this->noticesExternalIds as $noticeExternalId => $index) {
             $notices = $this
                 ->entityManager
                 ->createQuery("SELECT n FROM App\Entity\Notice n WHERE n.externalId=:eid")
