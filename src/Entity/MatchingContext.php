@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\EntityListener\MatchingContextListener;
 use App\Helper\Escaper;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Serializer\V3\NormalizerOptions;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -149,6 +151,11 @@ class MatchingContext
      * @ORM\Column(name="urlRegex", type="text")
      *
      * @Assert\NotBlank
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
      */
     private $urlRegex;
 
@@ -156,6 +163,11 @@ class MatchingContext
      * @var string
      *
      * @ORM\Column(name="excludeUrlRegex", type="text", nullable=true)
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
      */
     private $excludeUrlRegex;
 
@@ -163,6 +175,11 @@ class MatchingContext
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
      */
     private $description;
 
@@ -170,6 +187,11 @@ class MatchingContext
      * @var string a CSS selector
      *
      * @ORM\Column(name="querySelector", type="string", length=255, nullable=true)
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
      */
     private $querySelector;
 
@@ -177,6 +199,11 @@ class MatchingContext
      * @var string an XPath expression
      *
      * @ORM\Column(name="xpath", type="text", nullable=true)
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
      */
     private $xpath;
 
