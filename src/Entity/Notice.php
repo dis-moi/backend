@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\EntityListener\NoticeListener;
 use App\Helper\NoticeVisibility;
 use App\Helper\StringHelper;
@@ -115,7 +116,13 @@ class Notice
      *
      * @ORM\OneToMany(targetEntity=MatchingContext::class, mappedBy="notice", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
      *
+     * @ApiSubresource
      * @Assert\Valid
      */
     private $matchingContexts;
