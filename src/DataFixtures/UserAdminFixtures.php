@@ -36,6 +36,21 @@ class UserAdminFixtures extends Fixture implements FixtureInterface, ContainerAw
 
         $manager->persist($user);
         $manager->flush();
+
+        /** @var User $sandboxAdmin */
+        $sandboxAdmin = $userManager->createUser();
+
+        $sandboxAdmin->setUsername('john');
+        $sandboxAdmin->setEmail('john@lmem.net');
+        $sandboxAdmin->setEnabled(true);
+        $sandboxAdmin->setRoles(['ROLE_SUPER_ADMIN']);
+
+        $password = $encoder->encodePassword('red horse stapler xkcd yahoo', $sandboxAdmin->getSalt());
+
+        $sandboxAdmin->setPassword($password);
+
+        $manager->persist($sandboxAdmin);
+        $manager->flush();
     }
 
     public function getOrder(): int
