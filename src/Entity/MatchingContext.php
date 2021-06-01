@@ -8,8 +8,8 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\EntityListener\MatchingContextListener;
 use App\Helper\Escaper;
-use Doctrine\Common\Collections\ArrayCollection;
 use App\Serializer\V3\NormalizerOptions;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -100,10 +100,11 @@ class MatchingContext
      * @var Notice
      *
      * @ORM\ManyToOne(targetEntity="Notice", inversedBy="matchingContexts", fetch="EAGER")
+     *
      * @Groups({
      *     "create",
-     *     "read",
      * })
+     * We can't read from it without max depth tweaking first
      */
     private $notice;
 
