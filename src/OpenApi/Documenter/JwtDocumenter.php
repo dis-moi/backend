@@ -40,7 +40,7 @@ class JwtDocumenter implements DocumenterInterface
             'properties' => [
                 'username' => [
                     'type' => 'string',
-                    'example' => 'john@dismoi.fr',
+                    'example' => 'john',
                     'description' => 'The username you chose during registration.',
                 ],
                 'password' => [
