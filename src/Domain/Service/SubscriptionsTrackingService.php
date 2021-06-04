@@ -50,36 +50,29 @@ class SubscriptionsTrackingService
      */
     public function refreshSubscriptions(string $extensionId, array $contributorIds): void
     {
-        // @var Extension
-        if ($extension = $this->extensionRepository->find($extensionId)) {
-            $extension->confirm();
-            $existingSubscriptions = $extension->getSubscriptions();
-            foreach ($existingSubscriptions as $existingSubscription) {
-                if ( ! \in_array($existingSubscription->getContributor()->getId(), $contributorIds, true)) {
-                    $this->entityManager->remove($existingSubscription);
-                }
+        $extension = $this->extensionRepository->findOrCreate($extensionId);
+        $extension->confirm();
+        $existingSubscriptions = $extension->getSubscriptions();
+        foreach ($existingSubscriptions as $existingSubscription) {
+            if ( ! \in_array($existingSubscription->getContributor()->getId(), $contributorIds, true)) {
+                $this->entityManager->remove($existingSubscription);
             }
         }
 
         foreach ($contributorIds as $contributorId) {
-            /**
-             * @var Contributor|null
-             */
+            /** @var Contributor|null $contributor */
             $contributor = $this->contributorRepository->find($contributorId);
             if ( ! $contributor) {
                 throw new DomainException("Contributor $contributorId does not exist");
             }
 
-            /**
-             * @var Subscription|null
-             */
+            /** @var Subscription|null $subscription */
             $subscription = $this->subscriptionRepository->findOne($extensionId, $contributorId);
             if ($subscription) {
                 $subscription->confirm();
             } else {
-                $extension = $this->extensionRepository->findOrCreate($extensionId);
-
                 $subscription = new Subscription($contributor, $extension);
+                $subscription->confirm();
                 $this->entityManager->persist($subscription);
             }
         }
