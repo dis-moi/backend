@@ -46,3 +46,9 @@ down:
 
 jwt:
 	$(SYMFONY) lexik:jwt:generate-keypair
+
+migrations-generate:
+	$(SYMFONY) doctrine:migrations:generate
+
+migrations-migrate:
+	$(SYMFONY) doctrine:migrations:migrate
