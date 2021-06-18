@@ -12,7 +12,7 @@ Available endpoints are (will be) described at https://notices.bulles.fr/api/v4/
 ## Clients
 
 Client libraries could be generated in any programming languages using the OpenApi definition file.
-The definition file is available in `Json` format at: https://notices.bulles.fr/api/v3/api/v4/docs.json
+The definition file is available in `Json` format at: https://notices.bulles.fr/api/v4/docs.json
 
 
 ## Authentication
