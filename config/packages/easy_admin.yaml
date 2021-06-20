@@ -21,6 +21,8 @@ easy_admin:
         - 'js/message_validator.js'
         - 'js/filter_table_row.js'
         - 'js/select2.js'
+  formats:
+    datetime: 'd/m/y'
   entities:
     Notice:
       class: App\Entity\Notice
@@ -32,17 +34,17 @@ easy_admin:
         fields: &noticeListFields
           - { property: id, label: notices.id, css_class: 'column-id' }
           - { property: contributor, label: notices.contributor, css_class: 'column-contributor' }
-          - { property: relayersCount, label: notices.relayers, css_class: 'column-relayers' }
-          - { property: message, label: notices.message, css_class: 'column-message' }
-          - { property: visibility, label: notices.visibility, css_class: 'column-visibility' }
           - { property: matchingContexts, label: notices.matchingContexts, css_class: 'column-matchingContexts' }
-          - { property: badgedRatingCount, label: notices.badgedRatingCount, css_class: 'graphable column-badgedRatingCount' }
-          - { property: displayedRatingCount, label: notices.displayedRatingCount, css_class: 'graphable column-displayedRatingCount' }
-          - { property: unfoldedRatingCount, label: notices.unfoldedRatingCount, css_class: 'graphable column-unfoldedRatingCount' }
-          - { property: clickedRatingCount, label: notices.clickedRatingCount, css_class: 'graphable column-clickedRatingCount' }
-          - { property: likedRatingCount, label: notices.likedRatingCount, css_class: 'graphable column-likedRatingCount' }
-          - { property: dislikedRatingCount, label: notices.dislikedRatingCount, css_class: 'graphable column-dislikedRatingCount' }
-          - { property: dismissedRatingCount, label: notices.dismissedRatingCount, css_class: 'graphable column-dismissedRatingCount' }
+          - { property: message, label: notices.message, css_class: 'column-message' }
+          - { property: relayersCount, label: notices.relayers, css_class: 'column-relayers' }
+          - { property: visibility, label: notices.visibility, css_class: 'column-visibility' }
+          - { property: badgedCount, label: notices.badgedCount, css_class: 'graphable column-badgedCount' }
+          - { property: displayedCount, label: notices.displayedCount, css_class: 'graphable column-displayedCount' }
+          - { property: unfoldedCount, label: notices.unfoldedCount, css_class: 'graphable column-unfoldedCount' }
+          - { property: clickedCount, label: notices.clickedCount, css_class: 'graphable column-clickedCount' }
+          - { property: likedCount, label: notices.likedCount, css_class: 'graphable column-likedCount' }
+          - { property: dislikedCount, label: notices.dislikedCount, css_class: 'graphable column-dislikedCount' }
+          - { property: dismissedCount, label: notices.dismissedCount, css_class: 'graphable column-dismissedCount' }
           - { property: locale, label: contributors.locale }
           - { property: expires, label: notices.expires, css_class: 'column-expires' }
           - { property: created, label: notices.created, css_class: 'column-created' }

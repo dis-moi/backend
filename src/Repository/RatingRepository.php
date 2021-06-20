@@ -38,6 +38,21 @@ class RatingRepository extends ServiceEntityRepository
         $this->to = $dateTime->today();
     }
 
+    public function getNoticeRatingsCountForType(Notice $notice, string $ratingType, ?string $ratingUndoType = null): int
+    {
+        $count = $this->count([
+            'notice' => $notice,
+            'type' => $ratingType,
+        ]);
+
+        $undoCount = $ratingUndoType ? $this->count([
+            'notice' => $notice,
+            'type' => $ratingUndoType,
+        ]) : 0;
+
+        return $count - $undoCount;
+    }
+
     /**
      * @param string[] $types
      *

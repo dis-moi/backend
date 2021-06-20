@@ -42,20 +42,20 @@ title:
 notices:
   id: id
   contributor: Contributeur
-  relayers: Relayeurs
+  relayers: 🔃
   message: Message
   visibility: Visibilité
   note: Note privée
   screenshot: Capture d’écran
   screenshot.help: "612x480 pixels, JPG, PNG"
-  matchingContexts: Ensemble de pages cibles
-  badgedRatingCount: Badge
-  displayedRatingCount: Aperçu
-  unfoldedRatingCount: Détail
-  clickedRatingCount: Hyperlien
-  likedRatingCount: Aimé
-  dislikedRatingCount: Déplu
-  dismissedRatingCount: Supprimé
+  matchingContexts: 🎯
+  badgedCount: 🟢
+  displayedCount: 🗨️
+  unfoldedCount: 👁
+  clickedCount: 🔗
+  likedCount: 👍
+  dislikedCount: 👎
+  dismissedCount: 🗑️
   created: Crée
   updated: Modifiée
   expires: Expire

@@ -1,0 +1,9 @@
+POST http://localhost:8088/api/v3/notices/1028/ratings
+Content-Type: application/json
+
+{
+  "ratingType": "badge"
+}
+
+
+###

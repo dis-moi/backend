@@ -11,6 +11,7 @@ use App\Repository\NoticeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Messenger\MessageBus;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class PostNoticeRatingActionTest extends TestCase
@@ -45,7 +46,7 @@ class PostNoticeRatingActionTest extends TestCase
 
         $action = new PostNoticeRatingAction($serializer, $noticeRepository, $entityManager);
 
-        $response = $action($request);
+        $response = $action($request, new MessageBus());
         $this->assertEquals('', $response->getContent());
         $this->assertEquals(204, $response->getStatusCode());
     }

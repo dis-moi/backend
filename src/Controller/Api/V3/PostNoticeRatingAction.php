@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Api\V3;
 
 use App\Entity\Rating;
+use App\Message\NoticeRated;
 use App\Repository\NoticeRepository;
 use App\Serializer\V3\NormalizerOptions;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 
 class PostNoticeRatingAction extends BaseAction
@@ -39,7 +41,7 @@ class PostNoticeRatingAction extends BaseAction
      * @Route("/notices/{id}/ratings")
      * @Method("POST")
      */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request, MessageBusInterface $bus): JsonResponse
     {
         $id = $request->get('id', null);
         $notice = $this->noticeRepository->getOne((int) $id);
@@ -59,6 +61,8 @@ class PostNoticeRatingAction extends BaseAction
 
         $this->entityManager->persist($rating);
         $this->entityManager->flush();
+
+        $bus->dispatch(new NoticeRated($notice));
 
         return new JsonResponse('', 204, [], true);
     }

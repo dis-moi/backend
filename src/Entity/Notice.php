@@ -182,6 +182,62 @@ class Notice
     private $ratings;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="badged_count", type="integer", nullable=false, options={"default"=0})
+     * @Groups({"create", "read", "update"})
+     */
+    private $badgedCount = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="displayed_count", type="integer", nullable=false, options={"default"=0})
+     * @Groups({"create", "read", "update"})
+     */
+    private $displayedCount = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="unfolded_count", type="integer", nullable=false, options={"default"=0})
+     * @Groups({"create", "read", "update"})
+     */
+    private $unfoldedCount = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="clicked_count", type="integer", nullable=false, options={"default"=0})
+     * @Groups({"create", "read", "update"})
+     */
+    private $clickedCount = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="liked_count", type="integer", nullable=false, options={"default"=0})
+     * @Groups({"create", "read", "update"})
+     */
+    private $likedCount = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="disliked_count", type="integer", nullable=false, options={"default"=0})
+     * @Groups({"create", "read", "update"})
+     */
+    private $dislikedCount = 0;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="dismissed_count", type="integer", nullable=false, options={"default"=0})
+     * @Groups({"create", "read", "update"})
+     */
+    private $dismissedCount = 0;
+
+    /**
      * Latest update date of the notice, serialized in the ISO8601 format.
      *
      * @var DateTime
@@ -292,6 +348,11 @@ class Notice
         };
     }
 
+    public function __toString(): string
+    {
+        return sprintf('(id:%d) [%s] %s', $this->getId(), $this->getContributor(), StringHelper::truncate($this->getMessage(), 45));
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -354,63 +415,6 @@ class Notice
         return $this;
     }
 
-    /**
-     * Amount of likes the Notice has received.
-     *
-     * @Groups({"read"})
-     * @ApiProperty(
-     *     readable=true,
-     *     writable=false,
-     * )
-     */
-    public function getLikes(): int
-    {
-        return $this->getLikedRatingCount();
-    }
-
-    public function getLikedRatingCount(): int
-    {
-        return $this->getRatingBalance(Rating::LIKE, Rating::UNLIKE);
-    }
-
-    protected function getRatingBalance(string $typeUp, string $typeDown): int
-    {
-        $balance = $this->getRatingCount($typeUp) - $this->getRatingCount($typeDown);
-
-        return $balance > 0 ? $balance : 0;
-    }
-
-    protected function getRatingCount(string $type): int
-    {
-        return $this->getRatings()->filter(function (Rating $rating) use ($type) {
-            return $rating->getType() === $type;
-        })->count();
-    }
-
-    public function getRatings(): ?Collection
-    {
-        return $this->ratings;
-    }
-
-    /**
-     * Amount of dislikes the Notice has received.
-     *
-     * @Groups({"read"})
-     * @ApiProperty(
-     *     readable=true,
-     *     writable=false,
-     * )
-     */
-    public function getDislikes(): int
-    {
-        return $this->getDislikedRatingCount();
-    }
-
-    public function getDislikedRatingCount(): int
-    {
-        return $this->getRatingBalance(Rating::DISLIKE, Rating::UNDISLIKE);
-    }
-
     public function addMatchingContext(MatchingContext $matchingContext): self
     {
         $matchingContext->setNotice($this);
@@ -425,11 +429,6 @@ class Notice
         $this->matchingContexts->removeElement($matchingContext);
     }
 
-    public function __toString(): string
-    {
-        return sprintf('(id:%d) [%s] %s', $this->getId(), $this->getContributor(), StringHelper::truncate($this->getMessage(), 45));
-    }
-
     public function getContributor(): ?Contributor
     {
         return $this->contributor;
@@ -440,11 +439,6 @@ class Notice
         $this->contributor = $contributor;
 
         return $this;
-    }
-
-    public function hasPublicVisibility(): bool
-    {
-        return $this->getVisibility() === NoticeVisibility::PUBLIC_VISIBILITY();
     }
 
     public function getVisibility(): ?NoticeVisibility
@@ -472,9 +466,9 @@ class Notice
         return $this;
     }
 
-    public function isUnpublished(): bool
+    public function hasPublicVisibility(): bool
     {
-        return null !== $this->getExpires() && $this->isUnpublishedOnExpiration() && $this->getExpires() < new DateTime('now');
+        return $this->getVisibility() === NoticeVisibility::PUBLIC_VISIBILITY();
     }
 
     public function getExpires(): ?DateTimeInterface
@@ -507,46 +501,121 @@ class Notice
         $this->note = $note;
     }
 
-    public function getBadgedRatingCount(): int
+    public function getRatings(): ?Collection
     {
-        return $this->getRatingCount(Rating::BADGE);
+        return $this->ratings;
     }
 
-    public function getDisplayedRatingCount(): int
+    /**
+     * Amount of likes the Notice has received.
+     *
+     * @Groups({"read"})
+     * @ApiProperty(
+     *     readable=true,
+     *     writable=false,
+     * )
+     */
+    public function getLikes(): int
     {
-        return $this->getRatingCount(Rating::DISPLAY);
+        return $this->getLikedCount();
     }
 
-    public function getUnfoldedRatingCount(): int
+    /**
+     * Amount of dislikes the Notice has received.
+     *
+     * @Groups({"read"})
+     * @ApiProperty(
+     *     readable=true,
+     *     writable=false,
+     * )
+     */
+    public function getDislikes(): int
     {
-        return $this->getRatingCount(Rating::UNFOLD);
+        return $this->getDislikedCount();
     }
 
-    public function getClickedRatingCount(): int
+    public function getBadgedCount(): int
     {
-        return $this->getRatingCount(Rating::OUTBOUND_CLICK);
+        return $this->badgedCount;
     }
 
-    public function getDismissedRatingCount(): int
+    public function setBadgedCount(int $count): self
     {
-        return $this->getRatingBalance(Rating::DISMISS, Rating::UNDISMISS);
-    }
-
-    public function getReportedRatingCount(): int
-    {
-        return $this->getRatingCount(Rating::REPORT);
-    }
-
-    public function addRating(Rating $rating): self
-    {
-        $this->ratings[] = $rating;
+        $this->badgedCount = $count;
 
         return $this;
     }
 
-    public function removeRating(Rating $rating): void
+    public function getDisplayedCount(): int
     {
-        $this->ratings->removeElement($rating);
+        return $this->displayedCount;
+    }
+
+    public function setDisplayedCount(int $count): self
+    {
+        $this->displayedCount = $count;
+
+        return $this;
+    }
+
+    public function getUnfoldedCount(): int
+    {
+        return $this->unfoldedCount;
+    }
+
+    public function setUnfoldedCount(int $count): self
+    {
+        $this->unfoldedCount = $count;
+
+        return $this;
+    }
+
+    public function getClickedCount(): int
+    {
+        return $this->clickedCount;
+    }
+
+    public function setClickedCount(int $count): self
+    {
+        $this->clickedCount = $count;
+
+        return $this;
+    }
+
+    public function getLikedCount(): int
+    {
+        return $this->likedCount;
+    }
+
+    public function setLikedCount(int $count): self
+    {
+        $this->likedCount = $count;
+
+        return $this;
+    }
+
+    public function getDislikedCount(): int
+    {
+        return $this->dislikedCount;
+    }
+
+    public function setDislikedCount(int $count): self
+    {
+        $this->dislikedCount = $count;
+
+        return $this;
+    }
+
+    public function getDismissedCount(): int
+    {
+        return $this->dismissedCount;
+    }
+
+    public function setDismissedCount(int $count): self
+    {
+        $this->dismissedCount = $count;
+
+        return $this;
     }
 
     public function getCreated(): ?DateTime
@@ -616,10 +685,10 @@ class Notice
     public function getExampleMatchingUrl(): ?string
     {
         $first = $this->getMatchingContexts()
-      ->filter(function (MatchingContext $mc) {
-          return (bool) $mc->getExampleUrl();
-      })
-      ->first();
+            ->filter(function (MatchingContext $mc) {
+                return (bool) $mc->getExampleUrl();
+            })
+            ->first();
         if ($first) {
             return $first->getExampleUrl();
         }
@@ -642,15 +711,15 @@ class Notice
     public function removeRelayer(Contributor $contributor): self
     {
         $this->relays->removeElement(
-      current(
-        array_filter(
-          $this->relays->toArray(),
-          static function (Relay $relay) use ($contributor) {
-              return $relay->getRelayedBy()->getId() === $contributor->getId();
-          }
-        )
-      )
-    );
+            current(
+                array_filter(
+                    $this->relays->toArray(),
+                    static function (Relay $relay) use ($contributor) {
+                        return $relay->getRelayedBy()->getId() === $contributor->getId();
+                    }
+                )
+            )
+        );
 
         return $this;
     }
