@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Notice;
+use App\Entity\Rating;
 use App\Helper\NoticeVisibility;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
@@ -80,6 +81,70 @@ class NoticeRepository extends ServiceEntityRepository
         return self::addNoticeExpirationLogic($queryBuilder, $noticeAlias)
             ->andWhere("$noticeAlias.visibility=:visibility")
             ->setParameter('visibility', NoticeVisibility::PUBLIC_VISIBILITY());
+    }
+
+    private static function addRatingsCount(QueryBuilder $queryBuilder, string $noticeAlias = 'n'): QueryBuilder
+    {
+//        $countQuery = $this->createQueryBuilder('r')
+//            ->select('COUNT(r.id)')
+//            ->from('')
+
+        return $queryBuilder
+            ->addSelect("(SUM (CASE WHEN r.type = '".Rating::BADGE."' THEN 1 ELSE 0 END )) as badgedCount")
+            ->addSelect("(SUM (CASE WHEN r.type = '".Rating::DISPLAY."' THEN 1 ELSE 0 END )) as displayedCount")
+            ->addSelect("(SUM (CASE WHEN r.type = '".Rating::UNFOLD."' THEN 1 ELSE 0 END )) as unfoldedCount")
+            ->addSelect("(SUM (CASE WHEN r.type = '".Rating::OUTBOUND_CLICK."' THEN 1 ELSE 0 END )) as clickedCount")
+            ->addSelect("(SUM (CASE WHEN r.type = '".Rating::LIKE."' THEN 1 ELSE 0 END )) as likedCount")
+            ->addSelect("(SUM (CASE WHEN r.type = '".Rating::DISLIKE."' THEN 1 ELSE 0 END )) as dislikedCount")
+            ->addSelect("(SUM (CASE WHEN r.type = '".Rating::DISMISS."' THEN 1 ELSE 0 END )) as dismissedCount")
+            ->leftJoin('n.ratings', 'r')
+            ->groupBy('n.id');
+    }
+
+    /*
+     * create index rating_id_type_index
+    on rating (id, type);
+
+     */
+
+    /**
+     * @param mixed[]|null $result
+     */
+    private static function mergeRatingsCountWithNotice(?array $result): ?Notice
+    {
+        if ( ! $result || ! $result[0]) {
+            return null;
+        }
+
+        /** @var Notice $notice */
+        $notice = $result[0];
+        $notice
+            ->setBadgedRatingCount((int) $result['badgedCount'])
+            ->setDisplayedRatingCount((int) $result['displayedCount'])
+            ->setUnfoldedRatingCount((int) $result['unfoldedCount'])
+            ->setClickedRatingCount((int) $result['clickedCount'])
+            ->setLikedRatingCount((int) $result['likedCount'])
+            ->setDislikedRatingCount((int) $result['dislikedCount'])
+            ->setDismissedRatingCount((int) $result['dismissedCount']);
+
+        return $notice;
+    }
+
+    /**
+     * @return Notice[]
+     */
+    public function getAll(?string $dqlFilter): array
+    {
+        $mainQuery = $this->createQueryBuilder('n');
+        $mainQuery = self::addRatingsCount($mainQuery);
+
+        if ($dqlFilter) {
+            $mainQuery = $mainQuery->andWhere($dqlFilter);
+        }
+
+        $resultsWithRatingsCount = $mainQuery->getQuery()->getResult();
+
+        return array_map('self::mergeRatingsCountWithNotice', $resultsWithRatingsCount);
     }
 
     /**

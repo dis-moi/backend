@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Contributor;
+use App\Entity\Notice;
 use App\Repository\ContributorRepository;
 use App\Repository\NoticeRepository;
 use Doctrine\ORM\EntityRepository;
@@ -102,17 +103,27 @@ class AdminController extends BaseAdminController
      */
     protected function findAll($entityClass, $page = 1, $maxPerPage = 15, $sortField = null, $sortDirection = null, $dqlFilter = null): Pagerfanta
     {
-        if (Contributor::class !== $entityClass) {
-            return parent::findAll($entityClass, $page, $maxPerPage, $sortField, $sortDirection, $dqlFilter);
+        if (Contributor::class === $entityClass) {
+            $contributors = $this->contributorRepository->getAll();
+
+            $paginator = new Pagerfanta(new ArrayAdapter($contributors));
+            $paginator->setMaxPerPage($maxPerPage);
+            $paginator->setCurrentPage($page);
+
+            return $paginator;
         }
 
-        $contributors = $this->contributorRepository->getAll();
+        if (Notice::class === $entityClass) {
+            $notices = $this->noticeRepository->getAll($dqlFilter);
 
-        $paginator = new Pagerfanta(new ArrayAdapter($contributors));
-        $paginator->setMaxPerPage($maxPerPage);
-        $paginator->setCurrentPage($page);
+            $paginator = new Pagerfanta(new ArrayAdapter($notices));
+            $paginator->setMaxPerPage($maxPerPage);
+            $paginator->setCurrentPage($page);
 
-        return $paginator;
+            return $paginator;
+        }
+
+        return parent::findAll($entityClass, $page, $maxPerPage, $sortField, $sortDirection, $dqlFilter);
     }
 
     /**

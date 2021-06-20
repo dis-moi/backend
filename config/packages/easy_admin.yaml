@@ -96,7 +96,7 @@ easy_admin:
       list:
         max_results: 50
         title: title.expiredNotices
-        dql_filter: 'entity.expires <= CURRENT_TIMESTAMP()'
+        dql_filter: 'n.expires <= CURRENT_TIMESTAMP()'
         fields: *noticeListFields
       form: *noticeForm
 

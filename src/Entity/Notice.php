@@ -182,6 +182,41 @@ class Notice
     private $ratings;
 
     /**
+     * @var int
+     */
+    private $badgedCount;
+
+    /**
+     * @var int
+     */
+    private $displayedCount;
+
+    /**
+     * @var int
+     */
+    private $unfoldedCount;
+
+    /**
+     * @var int
+     */
+    private $clickedCount;
+
+    /**
+     * @var int
+     */
+    private $likedCount;
+
+    /**
+     * @var int
+     */
+    private $dislikedCount;
+
+    /**
+     * @var int
+     */
+    private $dismissedCount;
+
+    /**
      * Latest update date of the notice, serialized in the ISO8601 format.
      *
      * @var DateTime
@@ -457,37 +492,86 @@ class Notice
 
     public function getBadgedRatingCount(): int
     {
-        return $this->getRatingCount(Rating::BADGE);
+        return $this->badgedCount;
+    }
+
+    public function setBadgedRatingCount(int $count): self
+    {
+        $this->badgedCount = $count;
+
+        return $this;
     }
 
     public function getDisplayedRatingCount(): int
     {
-        return $this->getRatingCount(Rating::DISPLAY);
+        return $this->displayedCount;
+    }
+
+    public function setDisplayedRatingCount(int $count): self
+    {
+        $this->displayedCount = $count;
+
+        return $this;
     }
 
     public function getUnfoldedRatingCount(): int
     {
-        return $this->getRatingCount(Rating::UNFOLD);
+        return $this->unfoldedCount;
+    }
+
+    public function setUnfoldedRatingCount(int $count): self
+    {
+        $this->unfoldedCount = $count;
+
+        return $this;
     }
 
     public function getClickedRatingCount(): int
     {
-        return $this->getRatingCount(Rating::OUTBOUND_CLICK);
+        return $this->clickedCount;
+    }
+
+    public function setClickedRatingCount(int $count): self
+    {
+        $this->clickedCount = $count;
+
+        return $this;
     }
 
     public function getLikedRatingCount(): int
     {
-        return $this->getRatingBalance(Rating::LIKE, Rating::UNLIKE);
+        return $this->likedCount;
+    }
+
+    public function setLikedRatingCount(int $count): self
+    {
+        $this->likedCount = $count;
+
+        return $this;
     }
 
     public function getDislikedRatingCount(): int
     {
-        return $this->getRatingBalance(Rating::DISLIKE, Rating::UNDISLIKE);
+        return $this->dislikedCount;
+    }
+
+    public function setDislikedRatingCount(int $count): self
+    {
+        $this->dislikedCount = $count;
+
+        return $this;
     }
 
     public function getDismissedRatingCount(): int
     {
-        return $this->getRatingBalance(Rating::DISMISS, Rating::UNDISMISS);
+        return $this->dismissedCount;
+    }
+
+    public function setDismissedRatingCount(int $count): self
+    {
+        $this->dismissedCount = $count;
+
+        return $this;
     }
 
     public function getReportedRatingCount(): int
