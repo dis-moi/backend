@@ -29,6 +29,7 @@ message
 <a href="http://link.com?foo=bar">foo</a>
 with https://bulles.fr.');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
+        $notice->setLikedCount(2);
         $this->addReference('notice_type_ecology', $notice);
         $manager->persist($notice);
 

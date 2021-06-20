@@ -82,8 +82,8 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements ContextAware
             'exampleMatchingUrl' => $notice->getExampleMatchingUrl(),
             'screenshot' => $this->getImageAbsoluteUrl($notice, 'screenshotFile'),
             'ratings' => [
-                'likes' => $notice->getLikedRatingCount(),
-                'dislikes' => $notice->getDislikedRatingCount(),
+                'likes' => $notice->getLikedCount(),
+                'dislikes' => $notice->getDislikedCount(),
             ],
             'created' => self::formatDateTime($notice->getCreated()),
             'modified' => self::formatDateTime($notice->getUpdated()),
