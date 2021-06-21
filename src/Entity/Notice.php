@@ -112,7 +112,7 @@ class Notice
     private $visibility;
 
     /**
-     * @var ArrayCollection<MatchingContext>
+     * @var Collection<MatchingContext>
      *
      * @ORM\OneToMany(targetEntity=MatchingContext::class, mappedBy="notice", cascade={"persist", "remove"}, orphanRemoval=true)
      * @ORM\JoinColumn(nullable=false)
@@ -175,7 +175,7 @@ class Notice
     private $note;
 
     /**
-     * @var ArrayCollection<Rating>
+     * @var Collection<Rating>
      *
      * @ORM\OneToMany(targetEntity=Rating::class, mappedBy="notice", cascade={"persist", "remove"}, orphanRemoval=true)
      */
