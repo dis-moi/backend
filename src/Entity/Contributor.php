@@ -130,7 +130,7 @@ class Contributor implements ImageUploadable
     private $notices;
 
     /**
-     * @var ArrayCollection<Subscription>
+     * @var Collection<Subscription>
      *
      * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="contributor", orphanRemoval=true)
      * @ORM\OrderBy({"created"="DESC"})
@@ -187,7 +187,7 @@ class Contributor implements ImageUploadable
     private $pins;
 
     /**
-     * @var ArrayCollection<Relay>
+     * @var Collection<Relay>
      *
      * @ORM\OneToMany(targetEntity=Relay::class, mappedBy="relayedBy", cascade={"persist", "remove"}, orphanRemoval=true)
      */
@@ -204,7 +204,7 @@ class Contributor implements ImageUploadable
      * The list of Users that may impersonate this Contributor.
      * Some users with the appropriate roles may also impersonate without being referenced explicitly here. (admins).
      *
-     * @var ArrayCollection<User>
+     * @var Collection<User>
      * @ORM\ManyToMany(
      *     targetEntity=User::class,
      *     mappedBy="hats",
@@ -443,7 +443,7 @@ class Contributor implements ImageUploadable
         });
     }
 
-    public function getPublicRelays(): ArrayCollection
+    public function getPublicRelays(): Collection
     {
         return $this->getRelayedNotices()->filter(static function (Notice $notice) {
             return $notice->hasPublicVisibility();
@@ -479,11 +479,11 @@ class Contributor implements ImageUploadable
     }
 
     /**
-     * @param ArrayCollection<Notice> $givenNotices
+     * @param Collection<Notice> $givenNotices
      *
      * @return $this
      */
-    public function setPinnedNotices(ArrayCollection $givenNotices): self
+    public function setPinnedNotices(Collection $givenNotices): self
     {
         if ($givenNotices->count() > 5) {
             throw new InvalidArgumentException('No more than 5 pinned notices by contributor please');
@@ -517,7 +517,7 @@ class Contributor implements ImageUploadable
         return $this;
     }
 
-    public function getRelayedNotices(): ArrayCollection
+    public function getRelayedNotices(): Collection
     {
         return $this->relayedNotices->map(static function (Relay $relay) {
             return $relay->getNotice();
@@ -574,9 +574,9 @@ class Contributor implements ImageUploadable
     }
 
     /**
-     * @return ArrayCollection<User> those that may act as this Contributor
+     * @return Collection<User> those that may act as this Contributor
      */
-    public function getImpersonators(): ArrayCollection
+    public function getImpersonators(): Collection
     {
         return $this->impersonators;
     }

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 
 /**
  * Extension.
@@ -25,7 +26,7 @@ class Extension
     private $id;
 
     /**
-     * @var PersistentCollection<Subscription>
+     * @var Collection<Subscription>
      * @ORM\OneToMany(targetEntity=Subscription::class, mappedBy="extension", orphanRemoval=true)
      * @ORM\OrderBy({"created"="DESC"})
      */
@@ -49,6 +50,7 @@ class Extension
     {
         $this->id = $id;
         $this->created = new DateTime();
+        $this->subscriptions = new ArrayCollection();
     }
 
     public function getId(): string
@@ -57,9 +59,9 @@ class Extension
     }
 
     /**
-     * @return PersistentCollection<Subscription>
+     * @return Collection<Subscription>
      */
-    public function getSubscriptions(): PersistentCollection
+    public function getSubscriptions(): Collection
     {
         return $this->subscriptions;
     }

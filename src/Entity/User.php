@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
 
@@ -28,7 +29,7 @@ class User extends BaseUser
     /**
      * Contributors this User may impersonate, that is can submit Notices as.
      *
-     * @var ArrayCollection<Contributor>
+     * @var Collection<Contributor>
      * @ORM\ManyToMany(
      *     targetEntity=Contributor::class,
      *     inversedBy="impersonators",
@@ -44,7 +45,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return ArrayCollection<Contributor>
+     * @return Collection<Contributor>
      */
     public function getHats()
     {
