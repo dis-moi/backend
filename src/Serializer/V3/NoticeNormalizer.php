@@ -87,6 +87,7 @@ class NoticeNormalizer extends EntityWithImageNormalizer implements ContextAware
             ],
             'created' => self::formatDateTime($notice->getCreated()),
             'modified' => self::formatDateTime($notice->getUpdated()),
+            'locale' => $notice->getLocale(),
         ];
 
         if ($context[NormalizerOptions::INCLUDE_CONTRIBUTORS_DETAILS] ?? false) {

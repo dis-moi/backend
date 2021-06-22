@@ -43,6 +43,7 @@ easy_admin:
           - { property: likedRatingCount, label: notices.likedRatingCount, css_class: 'graphable column-likedRatingCount' }
           - { property: dislikedRatingCount, label: notices.dislikedRatingCount, css_class: 'graphable column-dislikedRatingCount' }
           - { property: dismissedRatingCount, label: notices.dismissedRatingCount, css_class: 'graphable column-dismissedRatingCount' }
+          - { property: locale, label: contributors.locale }
           - { property: expires, label: notices.expires, css_class: 'column-expires' }
           - { property: created, label: notices.created, css_class: 'column-created' }
           - { property: updated, label: notices.updated, css_class: 'column-updated' }
@@ -58,6 +59,7 @@ easy_admin:
           - message
           - note
           - expires
+          - locale
       show: &noticeShow
         role: ROLE_ADMIN
         fields:
@@ -65,6 +67,7 @@ easy_admin:
           - { property: contributor, label: notices.contributor }
           - { property: relayers, label: notices.relayers }
           - { property: screenshot, template: 'easy_admin/vich_uploader_screenshot.html.twig', label: notices.screenshot }
+          - { property: locale, label: contributors.locale }
           - { property: note, label: notices.note }
           - { property: visibility, label: notices.visibility }
           - { property: excludeUrlRegex, label: notices.excludeUrlRegex }
@@ -76,6 +79,7 @@ easy_admin:
           - { type: group, label: notices.groups.publication, icon: comments, columns: 8 }
           - { property: message, label: notices.message }
           - { property: screenshotFile, label: notices.screenshot, type: vich_image, help: notices.screenshot.help }
+          - { property: locale, label: contributors.locale, type: 'App\Form\LocaleType', type_options: { placeholder: 'Langue par défaut du contributeur' } }
           - { type: group, label: Lifecycle, icon: recycle, columns: 4 }
           - { property: visibility, label: notices.visibility, type: 'App\Form\VisibilityType' }
           - { property: expires, label: notices.expires }
@@ -113,6 +117,7 @@ easy_admin:
           - { property: email, label: contributors.email }
           - { property: intro, label: contributors.intro }
           - { property: activeSubscriptionsCount, label: contributors.activeSubscriptionsCount }
+          - { property: locale, label: contributors.locale }
           - { property: enabled, label: contributors.enabled }
           - { property: pinnedNotice, type: object, template: 'easy_admin/notice_in_list.html.twig', label: contributors.pinnedNotice }
       form:
@@ -122,6 +127,7 @@ easy_admin:
           - { property: email, label: contributors.email }
           - { property: website, label: contributors.website }
           - { property: categories, label: contributors.categories, type: 'App\Form\CategoryNameType' }
+          - { property: locale, label: contributors.locale, type: 'App\Form\LocaleType', type_options: { placeholder: 'Choisir la lange', required: true} }
           - { type: group, label: 'profil', icon: 'paper-plane', columns: 6 }
           - { property: intro, label: contributors.intro, type: textarea }
           - { property: pinnedNotices, label: contributors.pinnedNotices, type: 'App\Form\PinnedNoticesType', type_options: { class: App\Entity\Notice, multiple: true,  label_attr: { class: 'col-lg-3' }, attr: { class: 'col-lg-9' }  } }

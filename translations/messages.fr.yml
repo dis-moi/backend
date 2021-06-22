@@ -61,6 +61,7 @@ notices:
   expires: Expire
   unpublishedOnExpiration: Dépubliée à expiration
   excludeUrlRegex: Regex d'exclusion (Pour toute la bulle)
+  locale: Langue
   groups:
     publication: Publication
     matchingContexts: Ensembles de pages cibles
@@ -123,6 +124,7 @@ contributors:
   categories: Catégories
   title: Titre
   previewImageFile: Image d'aperçu
+  locale: Langue
 
 users:
   username: Identifiant

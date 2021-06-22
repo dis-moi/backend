@@ -213,6 +213,14 @@ class Contributor implements ImageUploadable
      */
     private $impersonators;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="locale", type="string", length=255, nullable=true)
+     * @Assert\Length(max="255")
+     */
+    private $locale;
+
     public function __construct()
     {
         $this->notices = new ArrayCollection();
@@ -220,6 +228,7 @@ class Contributor implements ImageUploadable
         $this->relayedNotices = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
         $this->impersonators = new ArrayCollection();
+        $this->locale = \Locale::getDefault();
     }
 
     private function markUpdated(): self
@@ -604,5 +613,17 @@ class Contributor implements ImageUploadable
         }
 
         return $this;
+    }
+
+    public function setLocale(?string $locale): self
+    {
+        $this->locale = $locale;
+
+        return $this;
+    }
+
+    public function getLocale(): string
+    {
+        return $this->locale;
     }
 }
