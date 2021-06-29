@@ -74,8 +74,8 @@ class Contributor implements ImageUploadable
     /**
      * @var string
      *
-     * @ORM\Column(name="intro", type="string", length=255, nullable=true)
-     * @Assert\Length(max="255")
+     * @ORM\Column(name="intro", type="string", length=65535, nullable=true)
+     * @Assert\Length(max="65535")
      */
     private $intro;
 
