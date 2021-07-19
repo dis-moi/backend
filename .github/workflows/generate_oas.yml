@@ -19,7 +19,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo
-          tools: phpunit, composer:v2
+          tools: phpunit, composer:v2, symfony-cli
         env:
           update: true
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -45,7 +45,7 @@ jobs:
         run: composer install
 
       - name: Check Symfony requirements
-        run: vendor/bin/requirements-checker
+        run: symfony check:requirements
 
       - name: Check the Symfony console
         run: |
