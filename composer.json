@@ -1,5 +1,6 @@
 {
-    "name": "alemaire/craft.backend.sf",
+    "name": "dismoi/backend",
+    "description": "DisMoi backend API",
     "license": "proprietary",
     "type": "project",
     "config": {
