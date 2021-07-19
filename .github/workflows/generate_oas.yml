@@ -65,6 +65,10 @@ jobs:
         run: |
           bin/console about
 
+      - name: Run PHPUnit install to generate autoload file required by PHPStan
+        run: |
+          bin/phpunit install
+
       - name: Run PHPStan
         run: composer stan
 
