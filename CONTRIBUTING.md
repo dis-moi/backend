@@ -110,22 +110,27 @@ It will generate the keys for that password as files in `config/jwt/`.
 
 Setup and migrate the test database and run phpunit:
 
-```shell script
+```shell
 $ runtests
 ```
 
 or 
 
-```shell script
+```shell
 $ make test-no-deprecation
 ```
 
 #### Lint
 
-```shell script
-$ aphp vendor/bin/php-cs-fixer fix
-$ aphp vendor/bin/phpstan analyse
+```shell
+make lint
 ```
+
+> ...or with alias
+> ```shell script
+> $ aphp vendor/bin/php-cs-fixer fix
+> $ aphp vendor/bin/phpstan analyse
+> ```
 
 
 #### Admin Access

@@ -38,6 +38,11 @@ cs-fix:
 cs-check:
 	$(COMPOSER) check-cs
 
+stan:
+	$(COMPOSER) stan
+
+lint: cs-check stan
+
 stop:
 	docker-compose stop
 
