@@ -52,7 +52,7 @@ class JwtDocumenter implements DocumenterInterface
         ]);
 
         $jwt = new PathItem(
-            'jwt',
+            null,
             '',
             '',
             null,
