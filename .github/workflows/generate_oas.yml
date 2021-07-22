@@ -89,7 +89,7 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           path: ${{ env.GENERATOR_PATH }}
-          commit-message: ${{ github.event.pull_request.title }}
+          commit-message: ${{ github.event.pull_request.title }}-removeme
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           branch: ${{ github.event.pull_request.head.ref }}
