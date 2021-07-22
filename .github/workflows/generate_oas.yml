@@ -1,5 +1,10 @@
 name: Export Open API Specification file
-on: push
+on:
+  # Trigger the workflow on pull requests targeting the master branch
+  pull_request:
+    types: [assigned, unassigned, opened, reopened, synchronize, edited, labeled, unlabeled, edited, closed]
+    branches:
+      - master
 
 jobs:
   symfony:
