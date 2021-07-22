@@ -83,7 +83,7 @@ jobs:
 
       - name: Export Open API Specification file
         run: |
-          php bin/console api:openapi:export --yaml --output=oas.yml
+          php bin/console api:openapi:export --yaml --output=${{ env.GENERATOR_PATH }}/oas.yml
 
       - uses: peter-evans/create-pull-request@v3
         with:
