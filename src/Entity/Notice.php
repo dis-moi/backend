@@ -185,7 +185,7 @@ class Notice
      * @var int
      *
      * @ORM\Column(name="badged_count", type="integer", nullable=false, options={"default"=0})
-     * @Groups({"create", "read", "update"})
+     * @Groups({"read"})
      */
     private $badgedCount = 0;
 
@@ -195,7 +195,7 @@ class Notice
      * @var int
      *
      * @ORM\Column(name="displayed_count", type="integer", nullable=false, options={"default"=0})
-     * @Groups({"create", "read", "update"})
+     * @Groups({"read"})
      */
     private $displayedCount = 0;
 
