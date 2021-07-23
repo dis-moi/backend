@@ -190,6 +190,8 @@ class Notice
     private $badgedCount = 0;
 
     /**
+     * The number of time the notice has been displayed in a list.
+     *
      * @var int
      *
      * @ORM\Column(name="displayed_count", type="integer", nullable=false, options={"default"=0})
@@ -198,42 +200,52 @@ class Notice
     private $displayedCount = 0;
 
     /**
+     * The number of time the notice has been displayed in full.
+     *
      * @var int
      *
      * @ORM\Column(name="unfolded_count", type="integer", nullable=false, options={"default"=0})
-     * @Groups({"create", "read", "update"})
+     * @Groups({"read"})
      */
     private $unfoldedCount = 0;
 
     /**
+     * The number of time the notice has been clicked.
+     *
      * @var int
      *
      * @ORM\Column(name="clicked_count", type="integer", nullable=false, options={"default"=0})
-     * @Groups({"create", "read", "update"})
+     * @Groups({"read"})
      */
     private $clickedCount = 0;
 
     /**
+     * The number of time the notice has been liked.
+     *
      * @var int
      *
      * @ORM\Column(name="liked_count", type="integer", nullable=false, options={"default"=0})
-     * @Groups({"create", "read", "update"})
+     * @Groups({"read"})
      */
     private $likedCount = 0;
 
     /**
+     * The number of time the notice has been disliked.
+     *
      * @var int
      *
      * @ORM\Column(name="disliked_count", type="integer", nullable=false, options={"default"=0})
-     * @Groups({"create", "read", "update"})
+     * @Groups({"read"})
      */
     private $dislikedCount = 0;
 
     /**
+     * The number of time the notice has been dismissed.
+     *
      * @var int
      *
      * @ORM\Column(name="dismissed_count", type="integer", nullable=false, options={"default"=0})
-     * @Groups({"create", "read", "update"})
+     * @Groups({"read"})
      */
     private $dismissedCount = 0;
 
