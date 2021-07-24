@@ -46,4 +46,12 @@ class GetNoticesTest extends BaseApiE2eTestCase
 
         self::assertCount(4, $diff);
     }
+
+    public function testGetNoticesV4(): void
+    {
+        $this->client->request('GET', '/v4/notices');
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode());
+    }
 }

@@ -15,12 +15,10 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        api_v4_docs:
-            pattern: ^/api/v4(|/|/docs|/docs/|/docs[.][a-z0-9]+)$
-            anonymous: true
         api_v4:
-            pattern: ^/api/v4
+            pattern: ^/v4
             stateless: true
+            anonymous: true
             provider: fos_userbundle
             http_basic:
                 realm: "Authentication Desk"
@@ -28,7 +26,7 @@ security:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
             json_login:
-                check_path: /api/v4/_jwt
+                check_path: /v4/_jwt
                 username_path: username
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
