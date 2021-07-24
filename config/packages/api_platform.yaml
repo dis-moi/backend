@@ -1,4 +1,6 @@
 api_platform:
+    # @deprecated https://api-platform.com/docs/core/fosuser-bundle/
+    enable_fos_user: true
     show_webby: false
     title: DisMoi OpenAPI
     description: |
