@@ -1,0 +1,109 @@
+name: Export Open API Specification file
+on:
+  # Trigger the workflow on pull requests targeting the master branch
+  pull_request:
+    types: [assigned, unassigned, opened, reopened, synchronize, edited, labeled, unlabeled, edited, closed]
+    branches:
+      - master
+
+jobs:
+  symfony:
+    runs-on: ${{ matrix.operating-system }}
+    name: Symfony 4.4, PHP ${{ matrix.php-versions }} on ${{ matrix.operating-system }}
+    env:
+      EXTENSIONS: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo
+      CACHE_KEY: cache-v2 # can be any string, change to clear the extension cache.
+      GENERATOR_PATH: api-client-generator
+
+    strategy:
+      fail-fast: true
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ['7.3']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup cache environment
+        id: extcache
+        uses: shivammathur/cache-extensions@v1
+        with:
+          php-version: ${{ matrix.php-versions }}
+          EXTENSIONS: ${{ env.EXTENSIONS }}
+          key: ${{ env.CACHE_KEY }}
+
+      - name: Cache extensions
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.extcache.outputs.dir }}
+          key: ${{ steps.extcache.outputs.key }}
+          restore-keys: ${{ steps.extcache.outputs.key }}
+
+      - name: Setup PHP, extension and tools
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: ${{ env.EXTENSIONS }}
+          tools: phpunit, composer:v2, symfony-cli
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer install --prefer-dist
+
+      - name: Check Symfony requirements
+        run: symfony check:requirements
+
+      - name: Check the Symfony console
+        run: |
+          bin/console about
+
+      - name: Run PHPUnit install to generate autoload file required by PHPStan
+        run: |
+          bin/phpunit install
+
+      - name: Run PHPStan
+        run: composer stan
+
+      - name: Checkout generator repository
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.repository_owner }}/api-client-generator
+          token: ${{ secrets.PAT }}
+          path: ${{ env.GENERATOR_PATH }}
+
+      - name: Export Open API Specification file
+        run: |
+          php bin/console api:openapi:export --yaml --output=${{ env.GENERATOR_PATH }}/oas.yaml
+
+      - uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.PAT }}
+          path: ${{ env.GENERATOR_PATH }}
+          commit-message: ${{ github.event.pull_request.title }}-removeme
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          branch: ${{ github.event.pull_request.head.ref }}
+          title: ${{ github.event.pull_request.title }}
+          body: |
+            > ${{ github.event.pull_request.body }}
+            > Created by @${{ github.actor }} via ${{ github.event.pull_request.html_url }}
+          delete-branch: true
+          labels: ${{ join(github.event.pull_request.labels.*.name) }}
+          assignees: ${{ join(github.event.pull_request.assignees.*.login) }}
+          reviewers: ${{ join(github.event.pull_request.requested_reviewers.*.login) }}
+#          draft: true

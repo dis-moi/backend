@@ -18,4 +18,5 @@ framework:
 
     templating:
         engines: [ 'twig' ]
-
+    # @deprecated https://api-platform.com/docs/core/fosuser-bundle/
+    form: { enabled: true }

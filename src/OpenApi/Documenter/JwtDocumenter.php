@@ -52,7 +52,7 @@ class JwtDocumenter implements DocumenterInterface
         ]);
 
         $jwt = new PathItem(
-            'jwt',
+            null,
             '',
             '',
             null,
@@ -102,7 +102,7 @@ You may use the `Authorize 🔒` button in the sandbox to do this, if you're usi
                 )
             ),
         );
-        $openApi->getPaths()->addPath('/api/v4/_jwt', $jwt);
+        $openApi->getPaths()->addPath('/v4/_jwt', $jwt);
 
         return $openApi;
     }
