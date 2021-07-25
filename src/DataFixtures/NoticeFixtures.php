@@ -27,7 +27,7 @@ class NoticeFixtures extends Fixture implements DependentFixtureInterface
         $notice->setMessage('<a href="http://link2.com">baz</a>
 message
 <a href="http://link.com?foo=bar">foo</a>
-with https://bulles.fr.');
+with https://dismoi.io.');
         $notice->setVisibility(NoticeVisibility::PUBLIC_VISIBILITY());
         $notice->setLikedCount(2);
         $this->addReference('notice_type_ecology', $notice);

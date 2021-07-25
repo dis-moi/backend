@@ -355,11 +355,11 @@
   ],
   "servers": [
     {
-      "url": "https://notices.bulles.fr/api/v3",
+      "url": "https://api.dismoi.io/api/v3",
       "description": "Production server"
     },
     {
-      "url": "https://staging-notices.bulles.fr/api/v3",
+      "url": "https://staging.dismoi.io/api/v3",
       "description": "Staging server"
     }
   ],
@@ -753,13 +753,13 @@
             "subscribes": 42
           },
           "noticesUrls": [
-            "https://staging-notices.bulles.fr/api/v3/notices/21",
-            "https://staging-notices.bulles.fr/api/v3/notices/42",
-            "https://staging-notices.bulles.fr/api/v3/notices/84"
+            "https://staging.dismoi.io/api/v3/notices/21",
+            "https://staging.dismoi.io/api/v3/notices/42",
+            "https://staging.dismoi.io/api/v3/notices/84"
           ],
           "relayedNoticesUrls": [
-            "https://staging-notices.bulles.fr/api/v3/notices/31",
-            "https://staging-notices.bulles.fr/api/v3/notices/412"
+            "https://staging.dismoi.io/api/v3/notices/31",
+            "https://staging.dismoi.io/api/v3/notices/412"
           ]
         },
         "type": "object",
@@ -808,14 +808,14 @@
             "type": "array",
             "items": {
               "type": "string",
-              "example": "https://notices.bulles.fr/api/v3/notices/221"
+              "example": "https://api.dismoi.io/api/v3/notices/221"
             }
           },
           "relayedNoticesUrls": {
             "type": "array",
             "items": {
               "type": "string",
-              "example": "https://notices.bulles.fr/api/v3/notices/221"
+              "example": "https://api.dismoi.io/api/v3/notices/221"
             }
           },
           "contribution": {
