@@ -20,4 +20,4 @@ The definition file is available in `Json` format at: https://api.dismoi.io/v4/d
 > Authentication system is only available on API V4.
 
 Authentication is implemented as a _Json Web Token_ (JWT).
-Currently login via `username` + `password`. 
+Currently login via `username` + `password`.

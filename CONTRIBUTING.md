@@ -100,7 +100,7 @@ $ dMigrate && dLoad
 Override the value of the environment variable `JWT_PASSPHRASE`, for example in `env.local`, and then run:
 
 ```shell script
-$ generateJwt
+$ make jwt
 ```
 
 It will generate the keys for that password as files in `config/jwt/`.
