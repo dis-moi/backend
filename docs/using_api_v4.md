@@ -8,6 +8,7 @@
 The endpoint to publish `Notice` as an authenticated `User` is only available on API V4.
 Available endpoints are (will be) described at https://api.dismoi.io/v4/docs.html
 
+
 ## Clients
 
 Client libraries could be generated in any programming languages using the OpenApi definition file.
