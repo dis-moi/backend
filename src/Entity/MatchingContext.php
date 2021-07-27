@@ -131,6 +131,11 @@ class MatchingContext
      *     inverseJoinColumns={@ORM\JoinColumn(name="domain_name_id", referencedColumnName="id")}
      * )
      * @ORM\OrderBy({"name"="ASC"})
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
      */
     private $domainNames;
 
@@ -185,14 +190,11 @@ class MatchingContext
     private $description;
 
     /**
+     * @deprecated
+     *
      * @var string a CSS selector
      *
      * @ORM\Column(name="querySelector", type="string", length=255, nullable=true)
-     * @Groups({
-     *     "create",
-     *     "read",
-     *     "update",
-     * })
      */
     private $querySelector;
 

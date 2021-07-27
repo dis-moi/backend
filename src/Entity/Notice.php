@@ -133,6 +133,11 @@ class Notice
      * @var string
      *
      * @ORM\Column(name="excludeUrlRegex", type="text", nullable=true)
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
      */
     private $excludeUrlRegex;
 
@@ -298,6 +303,11 @@ class Notice
      * @var bool
      *
      * @ORM\Column(type="boolean")
+     * @Groups({
+     *     "read",
+     *     "create",
+     *     "update",
+     * })
      */
     private $unpublishedOnExpiration = false;
 
