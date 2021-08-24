@@ -69,8 +69,11 @@ function escape(string $dn, ?Escaper $e): string
  *                 NormalizerOptions::VERSION=4,
  *             },
  *             "access_control"="is_granted('can_create', object)",
+ *             "openapi_context"={
+ *                 "operationId"="createMatchingContextItem"
+ *             }
  *         },
- *     },
+ *     }
  * )
  */
 class MatchingContext

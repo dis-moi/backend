@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace App\OpenApi;
 
 use ApiPlatform\Core\OpenApi\Factory\OpenApiFactoryInterface;
+use ApiPlatform\Core\OpenApi\Factory\OpenApiFactory as ApiPlatformOpenApiFactory;
 use ApiPlatform\Core\OpenApi\OpenApi;
 
 /**
@@ -63,8 +64,14 @@ final class OpenApiFactory implements OpenApiFactoryInterface
      */
     public function __invoke(array $context = []): OpenApi
     {
+        var_dump($context);
+        $context[ApiPlatformOpenApiFactory::BASE_URL] = '/v4/';
         $parent = $this->factory;
         $oa = $parent($context);
+
+//        $pathItem = $oa->getPaths()->getPath('/notices');
+//        $operation = $pathItem->getGet();
+//        $operation = $pathItem->getGet();
 
         foreach ($this->documenters as $documenter) {
             /** @var DocumenterInterface $documenter */

@@ -2,3 +2,4 @@ api_platform:
     resource: .
     type: api_platform
     prefix: /v4
+    # @todo howto use the server baseUrl of OpenAPI instead?

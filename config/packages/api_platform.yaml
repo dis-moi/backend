@@ -13,8 +13,26 @@ api_platform:
     version: 4.0.0
     mapping:
         paths: ['%kernel.project_dir%/src/Entity']
+    # The list of enabled formats. The first one will be the default.
+    formats:
+        jsonld:
+            mime_types: ['application/ld+json']
+#
+#        json:
+#            mime_types: ['application/json']
+#
+#        html:
+#            mime_types: ['text/html']
+    # The list of enabled patch formats. The first one will be the default.
     patch_formats:
         json: ['application/merge-patch+json']
+    # The list of enabled error formats. The first one will be the default.
+    error_formats:
+        jsonproblem:
+            mime_types: ['application/problem+json']
+#
+#        jsonld:
+#            mime_types: ['application/ld+json']
     swagger:
         versions: [3]
         api_keys:

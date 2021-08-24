@@ -27,6 +27,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * A Notice holds a message written/contributed by a Contributor about a web page
  * or a set of web pages selected by the matching contexts.
  * This is the main content of the application.
+ * https://api-platform.com/docs/core/openapi/#changing-operations-in-the-openapi-documentation.
  *
  * @ORM\Table(name="notice")
  * @ORM\Entity(repositoryClass="App\Repository\NoticeRepository")
@@ -61,8 +62,18 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                 NormalizerOptions::VERSION=4,
  *             },
  *             "access_control"="is_granted('can_create', object)",
+ *             "openapi_context"={
+ *                 "operationId"="createNoticeItem"
+ *             }
  *         },
  *     },
+ *     subresourceOperations={
+ *         "matching_contexts_get_subresource"={
+ *             "openapi_context"={
+ *                 "operationId"="getNoticeItemMatchingContextsCollection"
+ *             }
+ *         }
+ *     }
  * )
  */
 class Notice
