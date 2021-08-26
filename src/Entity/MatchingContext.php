@@ -357,7 +357,7 @@ class MatchingContext
     /**
      * @return MatchingContext
      */
-    public function setQuerySelector(string $querySelector): self
+    public function setQuerySelector(?string $querySelector): self
     {
         $this->querySelector = $querySelector;
 
@@ -372,7 +372,7 @@ class MatchingContext
         return $this->xpath;
     }
 
-    public function setXpath(string $xpath): void
+    public function setXpath(?string $xpath): void
     {
         $this->xpath = $xpath;
     }
