@@ -46,6 +46,16 @@ class DomainFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($yahoo);
         $this->addReference('yahoo_domain', $yahoo);
 
+        $yahooFr = new DomainName('fr.yahoo.com');
+        $yahooFr->setPath('/');
+        $manager->persist($yahooFr);
+        $this->addReference('com_yahoo_fr', $yahooFr);
+
+        $yahooFrSante = new DomainName('fr.yahoo.com');
+        $yahooFrSante->setPath('/topics/sante-yahoo-france/');
+        $manager->persist($yahooFrSante);
+        $this->addReference('com_yahoo_fr_sante', $yahooFrSante);
+
         $searchEnginesSet = new DomainsSet('Search Engines');
         $searchEnginesSet->addDomain($google);
         $searchEnginesSet->addDomain($bing);
