@@ -21,6 +21,11 @@ class DomainName
     use ORMBehaviors\Timestampable\Timestampable;
 
     /**
+     * @see https://github.com/doctrine/orm/issues/4673
+     */
+    public const EMPTY_SIMPLE_ARRAY = [''];
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -68,6 +73,17 @@ class DomainName
     private $sets;
 
     /**
+     * @var string[]
+     *
+     * @ORM\Column(type="simple_array")
+     *
+     * @Assert\All({
+     *     @Assert\Regex("/^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/")
+     * })
+     */
+    private $aliases;
+
+    /**
      * Domain constructor.
      */
     public function __construct(string $name = '')
@@ -75,6 +91,7 @@ class DomainName
         $this->name = $name;
         $this->matchingContexts = new ArrayCollection();
         $this->sets = new ArrayCollection();
+        $this->aliases = self::EMPTY_SIMPLE_ARRAY;
     }
 
     public function __toString(): string
@@ -116,6 +133,45 @@ class DomainName
     public function getSets(): Collection
     {
         return $this->sets;
+    }
+
+    /**
+     * @param string[] $aliases
+     */
+    public function setAliases(array $aliases = []): self
+    {
+        $this->aliases = array_filter($aliases, static function ($alias) {
+            return '' !== $alias;
+        }) ?: self::EMPTY_SIMPLE_ARRAY;
+
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAliases(): array
+    {
+        return array_filter($this->aliases, static function ($alias) {
+            return '' !== $alias;
+        });
+    }
+
+    /**
+     * @return DomainName
+     */
+    public function addAlias(string $alias): self
+    {
+        $this->aliases = array_merge($this->aliases, [$alias]);
+
+        return $this;
+    }
+
+    public function removeAlias(string $alias): self
+    {
+        $this->aliases = array_diff($this->aliases, [$alias]);
+
+        return $this;
     }
 
     /**

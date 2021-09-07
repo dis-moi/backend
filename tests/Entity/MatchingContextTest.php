@@ -25,10 +25,10 @@ class MatchingContextTest extends FixtureAwareWebTestCase
         /** @var MatchingContext $mc */
         $mc = $this->referenceRepository->getReference('mc_with_domain_name');
         $regex = $mc->getFullUrlRegex($escaper);
-        self::assertEquals('(duckduckgo.com|www.bing.com|www.google.fr|www.qwant.com|www.yahoo.com|first.domainname.fr|second.domainname.fr)'.$mc->getUrlRegex(), $regex);
+        self::assertEquals('(duckduckgo.com|www.bing.com|www.google.fr|www.qwant.com|www.yahoo.com|first.domainname.fr|alias.first.domainname.fr|second.domainname.fr)'.$mc->getUrlRegex(), $regex);
 
         $regex = $mc->getFullUrlRegex();
-        self::assertEquals('(duckduckgo.com|www.bing.com|www.google.fr|www.qwant.com|www.yahoo.com|first.domainname.fr|second.domainname.fr)'.$mc->getUrlRegex(), $regex);
+        self::assertEquals('(duckduckgo.com|www.bing.com|www.google.fr|www.qwant.com|www.yahoo.com|first.domainname.fr|alias.first.domainname.fr|second.domainname.fr)'.$mc->getUrlRegex(), $regex);
 
         /** @var MatchingContext $mc */
         $mc = $this->referenceRepository->getReference('mc_without_domain_name');

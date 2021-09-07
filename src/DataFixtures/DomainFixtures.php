@@ -18,7 +18,13 @@ class DomainFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($disMoiDomain);
         $this->addReference('dismoi_domain', $disMoiDomain);
 
+        $youtubeDomain = new DomainName('youtube.com');
+        $youtubeDomain->addAlias('m.youtube.com');
+        $manager->persist($disMoiDomain);
+        $this->addReference('com_youtube_www', $youtubeDomain);
+
         $domainName1 = new DomainName('first.domainname.fr');
+        $domainName1->addAlias('alias.first.domainname.fr');
         $manager->persist($domainName1);
         $this->addReference('first_domain', $domainName1);
 

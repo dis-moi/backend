@@ -155,6 +155,7 @@ easy_admin:
         fields:
           - { property: name, label: domains.name }
           - { property: path, label: domains.path }
+          - { property: aliases, label: domains.aliases, help: domains.aliases.help }
       show:
         max_results: 100
         fields:
