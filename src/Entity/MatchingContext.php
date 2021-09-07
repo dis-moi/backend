@@ -266,9 +266,15 @@ class MatchingContext
 
         return '('.implode(
             '|',
-            array_map(static function (DomainName $dn) use ($escaper) {
-                return escape($dn->getFullName(), $escaper);
-            }, $domains)
+                array_reduce($domains, static function ($accumulator, DomainName $dn) use ($escaper) {
+                    return array_merge(
+                        $accumulator,
+                        [escape($dn->getFullName(), $escaper)],
+                        array_map(static function (string $alias) use ($escaper) {
+                            return escape($alias, $escaper);
+                        }, $dn->getAliases())
+                    );
+                }, [])
         ).')'.$this->urlRegex;
     }
 

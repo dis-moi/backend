@@ -85,6 +85,8 @@ domains:
   name: Nom du domaine
   path: Chemin
   sets: Groupes de domaines liés
+  aliases: Aliases
+  aliases.help: "Par exemple <i>m.youtube.com</i> pour <i>www.youtube.com</i>."
   sets.nb: Nb de groupes de domaines liés
   matchingContexts: Pages cibles liées
   matchingContexts.nb: Nb d’ensemble de pages cibles liées
