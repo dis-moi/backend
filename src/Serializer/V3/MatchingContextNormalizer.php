@@ -55,12 +55,16 @@ class MatchingContextNormalizer implements ContextAwareNormalizerInterface
 
         return array_filter([
             'id' => $matchingContext->getId(),
+            'domains' => $matchingContext->getDomains(),
             'noticeId' => $matchingContext->getNotice()->getId(),
             'noticeUrl' => $this->router->generate(
                 'app_api_v3_getnoticeaction__invoke',
                 ['id' => $matchingContext->getNotice()->getId()],
                 RouterInterface::ABSOLUTE_URL),
+            // @todo should be renamed `fullUrlRegex` in next major release
             'urlRegex' => $matchingContext->getFullUrlRegex($this->escaper),
+            // @todo should probably be named `urlRegex` in next major release
+            'urlPathRegex' => $matchingContext->getUrlRegex(),
             'excludeUrlRegex' => $matchingContext->getCompleteExcludeUrlRegex(),
             'querySelector' => $matchingContext->getQuerySelector(),
             'xpath' => $matchingContext->getXpath(),
