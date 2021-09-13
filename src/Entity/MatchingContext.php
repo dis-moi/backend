@@ -257,25 +257,39 @@ class MatchingContext
         return $this->urlRegex;
     }
 
-    public function getFullUrlRegex(Escaper $escaper = null): string
+    /**
+     * @Groups({
+     *     "read"
+     * })
+     *
+     * @return string[]
+     */
+    public function getDomains(Escaper $escaper = null): array
     {
         $domains = $this->getAllRelatedDomains();
         if (0 === \count($domains)) {
-            return $this->urlRegex;
+            return [];
         }
 
-        return '('.implode(
-            '|',
-                array_reduce($domains, static function ($accumulator, DomainName $dn) use ($escaper) {
-                    return array_merge(
+        return array_reduce($domains, static function ($accumulator, DomainName $dn) use ($escaper) {
+            return array_merge(
                         $accumulator,
                         [escape($dn->getFullName(), $escaper)],
                         array_map(static function (string $alias) use ($escaper) {
                             return escape($alias, $escaper);
                         }, $dn->getAliases())
                     );
-                }, [])
-        ).')'.$this->urlRegex;
+        }, []);
+    }
+
+    public function getFullUrlRegex(Escaper $escaper = null): string
+    {
+        $domains = $this->getDomains();
+        if (0 === \count($domains)) {
+            return $this->urlRegex;
+        }
+
+        return '('.implode('|', $domains).')'.$this->urlRegex;
     }
 
     /**
