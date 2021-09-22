@@ -210,6 +210,19 @@ class MatchingContext
      */
     private $xpath;
 
+    /**
+     * @var Product
+     *
+     * @ORM\OneToOne(targetEntity="Product", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=true)
+     * @Groups({
+     *     "create",
+     *     "read",
+     *     "update",
+     * })
+     */
+    private $product = null;
+
     public function __construct()
     {
         $this->urlRegex = '';
@@ -453,5 +466,17 @@ class MatchingContext
             )),
             $this->getDomainNames()->toArray()
         ));
+    }
+
+    public function setProduct(Product $product): self
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    public function getProduct(): ?Product
+    {
+        return $this->product;
     }
 }

@@ -24,6 +24,19 @@
     border-radius: var(--border-radius);
 }
 
+.form-group .form-group .form-group > legend + .form-widget {
+    padding-left: 10px;
+    margin-bottom: 20px;
+    background-color: var(--fieldset-bg);
+    border: var(--border-width) var(--border-style) var(--gray-400);
+    border-radius: var(--border-radius);
+}
+
+.form-group legend.col-form-label {
+    font-weight: bold;
+    font-size: medium;
+}
+
 body.edit textarea#notice_message,
 body.edit textarea#notice_note,
 body.new textarea#notice_message,

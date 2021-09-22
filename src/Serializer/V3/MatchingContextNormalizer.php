@@ -9,9 +9,16 @@ use App\Helper\PregEscaper;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-class MatchingContextNormalizer implements ContextAwareNormalizerInterface
+class MatchingContextNormalizer implements ContextAwareNormalizerInterface, NormalizerAwareInterface
 {
+    /**
+     * @var NormalizerInterface
+     */
+    protected $normalizer;
+
     /**
      * @var RouterInterface
      */
@@ -26,6 +33,11 @@ class MatchingContextNormalizer implements ContextAwareNormalizerInterface
     {
         $this->router = $router;
         $this->escaper = $escaper;
+    }
+
+    public function setNormalizer(NormalizerInterface $normalizer): void
+    {
+        $this->normalizer = $normalizer;
     }
 
     /**
@@ -68,6 +80,7 @@ class MatchingContextNormalizer implements ContextAwareNormalizerInterface
             'excludeUrlRegex' => $matchingContext->getCompleteExcludeUrlRegex(),
             'querySelector' => $matchingContext->getQuerySelector(),
             'xpath' => $matchingContext->getXpath(),
+            'product' => $this->normalizer->normalize($matchingContext->getProduct(), $format, $context),
         ]);
     }
 }

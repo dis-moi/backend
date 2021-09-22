@@ -16,6 +16,9 @@
             "src/Entity/.gitignore"
         ]
     },
+    "api-platform/schema-generator": {
+        "version": "v2.2.2"
+    },
     "beberlei/doctrineextensions": {
         "version": "v1.2.7"
     },
@@ -153,6 +156,9 @@
             "config/routes/easy_admin.yaml"
         ]
     },
+    "easyrdf/easyrdf": {
+        "version": "0.9.1"
+    },
     "egulias/email-validator": {
         "version": "2.1.22"
     },
@@ -227,6 +233,9 @@
     },
     "lcobucci/jwt": {
         "version": "3.4.5"
+    },
+    "league/html-to-markdown": {
+        "version": "4.10.0"
     },
     "league/uri": {
         "version": "6.3.0"
