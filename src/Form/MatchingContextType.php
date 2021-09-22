@@ -68,6 +68,10 @@ class MatchingContextType extends AbstractType
             ->add('description', TextType::class, [
                 'required' => false,
                 'label' => 'matchingContexts.description',
+            ])
+            ->add('product', ProductType::class, [
+                'required' => false,
+                'label' => 'matching_context.product',
             ]);
     }
 

@@ -1,0 +1,40 @@
+id:
+  generate: true
+
+namespaces:
+  entity: "App\\Entity"
+
+
+# The list of types and properties we want to use
+types:
+  Thing:
+    embeddable: false
+    properties:
+      name: ~
+      alternateName: ~
+      description: ~
+  Product:
+    parent: "Thing"
+    embeddable: false
+    properties:
+      # Force the type of the property to text
+      category:
+        range: "Text"
+        cardinality: "(0..1)"
+      offers:
+        range: "Offer"
+        embedded: true
+        columnPrefix: "offer_"
+        cardinality: "(0..1)"
+  Offer:
+    # Disable the generation of the class hierarchy for this type
+    parent: false
+    embeddable: true
+    properties:
+      # Force the type of the addressCountry property to text
+      availableAtOrFrom:
+        range: "Text"
+        cardinality: "(0..1)"
+      price:
+        range: "Number"
+        cardinality: "(0..1)"

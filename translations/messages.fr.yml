@@ -77,6 +77,19 @@ matchingContexts:
   excludeUrlRegex: Regex d'exclusion
   notice: Bulle
 
+matching_context:
+  product: Produit
+
+product:
+  name: Nom
+  category: Catégorie
+  description: Description
+  offer: Offre
+
+offer:
+  availableAtOrFrom: Ville
+  price: Prix
+
 restrictedContexts:
   urlRegex: URL Regex d’exclusion globale
 
