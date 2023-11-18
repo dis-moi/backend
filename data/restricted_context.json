@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "urlRegex": "univ.scholarvox.com.sirius.parisdescartes.fr"
+  },
+  {
+    "id": 3,
+    "urlRegex": "slack.com/messages"
+  },
+  {
+    "id": 4,
+    "urlRegex": "mail.google.com"
+  },
+  {
+    "id": 5,
+    "urlRegex": "mail.yahoo.com"
+  },
+  {
+    "id": 6,
+    "urlRegex": "messagerie.orange.fr"
+  },
+  {
+    "id": 7,
+    "urlRegex": "api.adis-assurances.com/docs/api"
+  },
+  {
+    "id": 8,
+    "urlRegex": "stafftravel.easyjet.com"
+  },
+  {
+    "id": 10,
+    "urlRegex": "www.dropbox.com/s"
+  },
+  {
+    "id": 11,
+    "urlRegex": "clients.boursorama.com/compte"
+  },
+  {
+    "id": 12,
+    "urlRegex": "https://pro.cmso.com/mabanque/pro/comptes"
+  },
+  {
+    "id": 13,
+    "urlRegex": "mail.protonmail.com/inbox"
+  },
+  {
+    "id": 14,
+    "urlRegex": "outlook.live.com/mail/0/inbox"
+  },
+  {
+    "id": 15,
+    "urlRegex": "Livejasmin.com"
+  },
+  {
+    "id": 16,
+    "urlRegex": "Pornhub.com"
+  },
+  {
+    "id": 17,
+    "urlRegex": "Xhamster.com"
+  },
+  {
+    "id": 18,
+    "urlRegex": "Xvideos.com"
+  },
+  {
+    "id": 19,
+    "urlRegex": "www.jacquieetmichel.net"
+  },
+  {
+    "id": 20,
+    "urlRegex": "www.cic.fr/banqueprivee/fr/banque/pageaccueil.html"
+  },
+  {
+    "id": 21,
+    "urlRegex": "www.finuzesptf.com/erablex/jsp/main.jsp?adh=500"
+  },
+  {
+    "id": 22,
+    "urlRegex": "https://drive.google.com/drive/u/1/folders"
+  },
+  {
+    "id": 23,
+    "urlRegex": "connected.easyjet.com"
+  },
+  {
+    "id": 24,
+    "urlRegex": "docs.google.com/presentation.*edit"
+  },
+  {
+    "id": 25,
+    "urlRegex": "keep.google.com"
+  },
+  {
+    "id": 26,
+    "urlRegex": "www.cpam35.fr/ExtranetConseillers/"
+  },
+  {
+    "id": 27,
+    "urlRegex": "www.amazon.fr/documents/download"
+  },
+  {
+    "id": 28,
+    "urlRegex": "www.amazon.fr/ap/signin"
+  },
+  {
+    "id": 29,
+    "urlRegex": "secure.ikea.com/webapp/wcs/stores/servlet/mDeliveryOptionsView"
+  },
+  {
+    "id": 30,
+    "urlRegex": "www.amazon.fr/progress-tracker/package"
+  },
+  {
+    "id": 31,
+    "urlRegex": "amazon.*buy/shipaddressselect"
+  },
+  {
+    "id": 32,
+    "urlRegex": "web.microsoftstream.com"
+  },
+  {
+    "id": 33,
+    "urlRegex": "fr.pornhubpremium.com"
+  },
+  {
+    "id": 34,
+    "urlRegex": "www.france.tv/france-2/direct.html"
+  },
+  {
+    "id": 35,
+    "urlRegex": "outlook.live.com/mail"
+  },
+  {
+    "id": 36,
+    "urlRegex": "wp-admin"
+  },
+  {
+    "id": 37,
+    "urlRegex": "drive.google.com/drive.*search"
+  },
+  {
+    "id": 38,
+    "urlRegex": "stats.lmem.net"
+  }
+]

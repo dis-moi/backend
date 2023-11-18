@@ -1,0 +1,422 @@
+[
+  {
+    "id": 1,
+    "name": "Amazon",
+    "created_at": "2020-03-21 13:11:53",
+    "updated_at": "2020-03-21 13:11:53"
+  },
+  {
+    "id": 2,
+    "name": "Média et assimilés",
+    "created_at": "2020-03-23 12:31:08",
+    "updated_at": "2020-10-26 15:54:55"
+  },
+  {
+    "id": 3,
+    "name": "Marketplaces et e-commerces généralistes",
+    "created_at": "2020-03-23 12:45:58",
+    "updated_at": "2020-07-01 17:10:34"
+  },
+  {
+    "id": 4,
+    "name": "Puériculture",
+    "created_at": "2020-03-23 12:54:47",
+    "updated_at": "2020-06-15 16:41:49"
+  },
+  {
+    "id": 5,
+    "name": "Cosmétiques conventionnels ecommerces",
+    "created_at": "2020-03-23 13:05:16",
+    "updated_at": "2020-07-17 10:40:40"
+  },
+  {
+    "id": 6,
+    "name": "Electroménager",
+    "created_at": "2020-03-23 13:16:13",
+    "updated_at": "2020-07-06 12:04:34"
+  },
+  {
+    "id": 7,
+    "name": "Vélos",
+    "created_at": "2020-03-23 15:48:55",
+    "updated_at": "2020-03-23 15:53:33"
+  },
+  {
+    "id": 8,
+    "name": "E-commerces sport",
+    "created_at": "2020-03-23 15:54:51",
+    "updated_at": "2020-07-19 17:54:15"
+  },
+  {
+    "id": 9,
+    "name": "ecommerce spécialisé high-tech",
+    "created_at": "2020-03-28 20:49:57",
+    "updated_at": "2020-06-30 10:03:47"
+  },
+  {
+    "id": 10,
+    "name": "e-commerces vendant livres hors librairies",
+    "created_at": "2020-03-29 19:21:30",
+    "updated_at": "2020-05-22 12:17:50"
+  },
+  {
+    "id": 11,
+    "name": "drive et magasins alimentaires",
+    "created_at": "2020-03-30 01:25:50",
+    "updated_at": "2020-07-31 10:44:45"
+  },
+  {
+    "id": 12,
+    "name": "Automobiles",
+    "created_at": "2020-03-30 15:50:16",
+    "updated_at": "2020-03-30 15:53:14"
+  },
+  {
+    "id": 13,
+    "name": "Média Santé",
+    "created_at": "2020-03-30 18:21:26",
+    "updated_at": "2020-03-30 18:49:27"
+  },
+  {
+    "id": 14,
+    "name": "Lingerie",
+    "created_at": "2020-03-31 10:04:13",
+    "updated_at": "2020-03-31 10:04:13"
+  },
+  {
+    "id": 15,
+    "name": "sites de compagnies low cost",
+    "created_at": "2020-03-31 22:42:12",
+    "updated_at": "2020-03-31 22:42:12"
+  },
+  {
+    "id": 16,
+    "name": "renovation énergetique à fort litige",
+    "created_at": "2020-04-03 23:47:47",
+    "updated_at": "2020-04-03 23:57:41"
+  },
+  {
+    "id": 17,
+    "name": "Linge de maison",
+    "created_at": "2020-04-06 10:14:22",
+    "updated_at": "2020-10-19 15:17:33"
+  },
+  {
+    "id": 18,
+    "name": "Vendeurs de literie (mobilier, specialistes matelas, etc.)",
+    "created_at": "2020-04-06 12:55:22",
+    "updated_at": "2020-05-06 17:27:06"
+  },
+  {
+    "id": 19,
+    "name": "Opérateurs Téléphonie (ecommerce + marketplace)",
+    "created_at": "2020-04-13 13:18:49",
+    "updated_at": "2020-07-21 10:21:49"
+  },
+  {
+    "id": 20,
+    "name": "Guides achat téléphonie",
+    "created_at": "2020-04-15 13:31:26",
+    "updated_at": "2020-05-12 15:39:35"
+  },
+  {
+    "id": 21,
+    "name": "Plateformes de livraison de repas",
+    "created_at": "2020-04-18 16:30:18",
+    "updated_at": "2020-04-18 16:30:18"
+  },
+  {
+    "id": 22,
+    "name": "Fleuristes e-commerce",
+    "created_at": "2020-04-26 21:05:24",
+    "updated_at": "2020-07-08 15:54:11"
+  },
+  {
+    "id": 23,
+    "name": "Constructeurs automobiles",
+    "created_at": "2020-04-27 12:13:03",
+    "updated_at": "2020-07-06 17:05:06"
+  },
+  {
+    "id": 24,
+    "name": "e-commerces spécialisés ameublement mobilier",
+    "created_at": "2020-05-04 16:48:09",
+    "updated_at": "2020-07-06 11:13:06"
+  },
+  {
+    "id": 25,
+    "name": "Apple et spécialistes Apple",
+    "created_at": "2020-05-12 11:17:42",
+    "updated_at": "2020-05-12 11:26:05"
+  },
+  {
+    "id": 26,
+    "name": "Sneakers et baskets (ecommerce + marketplace)",
+    "created_at": "2020-05-12 15:27:22",
+    "updated_at": "2020-05-12 16:07:04"
+  },
+  {
+    "id": 27,
+    "name": "Sites actu poker",
+    "created_at": "2020-05-13 11:03:49",
+    "updated_at": "2020-05-13 11:08:31"
+  },
+  {
+    "id": 28,
+    "name": "e-commerce spécialisés cartons (de déménagement)",
+    "created_at": "2020-06-06 17:41:28",
+    "updated_at": "2020-06-06 17:43:18"
+  },
+  {
+    "id": 29,
+    "name": "Spécialistes de la bagagerie",
+    "created_at": "2020-06-08 16:53:04",
+    "updated_at": "2020-06-09 11:05:42"
+  },
+  {
+    "id": 30,
+    "name": "e-commerces spécialisés cuisine",
+    "created_at": "2020-06-12 10:45:17",
+    "updated_at": "2020-06-12 10:45:17"
+  },
+  {
+    "id": 31,
+    "name": "Habillement bébé et enfants (sans marketplaces bébé)",
+    "created_at": "2020-06-15 12:54:52",
+    "updated_at": "2020-06-15 12:56:15"
+  },
+  {
+    "id": 32,
+    "name": "Ventes privées",
+    "created_at": "2020-06-18 18:26:54",
+    "updated_at": "2020-06-18 18:26:54"
+  },
+  {
+    "id": 33,
+    "name": "Moteurs de recherche",
+    "created_at": "2020-06-19 17:55:06",
+    "updated_at": "2020-06-19 17:55:06"
+  },
+  {
+    "id": 34,
+    "name": "Prêt-à-porter, habillement",
+    "created_at": "2020-06-23 17:41:52",
+    "updated_at": "2020-06-25 17:46:04"
+  },
+  {
+    "id": 35,
+    "name": "Google moteur de recherche",
+    "created_at": "2020-06-24 15:09:58",
+    "updated_at": "2020-06-24 15:09:58"
+  },
+  {
+    "id": 36,
+    "name": "Wikipedia",
+    "created_at": "2020-06-26 10:18:31",
+    "updated_at": "2020-06-26 10:18:31"
+  },
+  {
+    "id": 37,
+    "name": "Sites de vente de voitures d'occasion",
+    "created_at": "2020-07-07 16:15:19",
+    "updated_at": "2020-07-07 16:19:32"
+  },
+  {
+    "id": 38,
+    "name": "e-commerce football",
+    "created_at": "2020-07-19 14:08:25",
+    "updated_at": "2020-07-19 18:02:44"
+  },
+  {
+    "id": 39,
+    "name": "e-commerce vendant des chaussures (hors specialistes sneakers)",
+    "created_at": "2020-07-22 13:56:50",
+    "updated_at": "2020-08-11 11:27:34"
+  },
+  {
+    "id": 40,
+    "name": "sites de vente pharmaceutiques/parapharmaceutiques/santé",
+    "created_at": "2020-07-29 10:41:38",
+    "updated_at": "2020-07-29 10:56:50"
+  },
+  {
+    "id": 41,
+    "name": "Sites de location de voiture",
+    "created_at": "2020-08-03 17:21:23",
+    "updated_at": "2020-08-03 17:29:04"
+  },
+  {
+    "id": 42,
+    "name": "Sites de dropshipping",
+    "created_at": "2020-08-05 18:09:23",
+    "updated_at": "2020-10-28 12:10:40"
+  },
+  {
+    "id": 43,
+    "name": "Sites arnaque faux virus",
+    "created_at": "2020-08-06 16:58:20",
+    "updated_at": "2020-08-11 10:03:26"
+  },
+  {
+    "id": 44,
+    "name": "Sites de cartes cadeau",
+    "created_at": "2020-09-21 17:30:27",
+    "updated_at": "2020-09-21 17:30:27"
+  },
+  {
+    "id": 45,
+    "name": "e-commerce spécialisés piles",
+    "created_at": "2020-10-23 18:28:57",
+    "updated_at": "2020-10-23 18:28:57"
+  },
+  {
+    "id": 46,
+    "name": "Moteurs de recherche d'hôtels - acteurs dominants",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 47,
+    "name": "Magasins de jouets",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 48,
+    "name": "Décoration",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 49,
+    "name": "sites de cartes grises",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 50,
+    "name": "magasins de bijoux",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 51,
+    "name": "Fournisseurs d'électricité",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 52,
+    "name": "Fournisseurs de gaz",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 53,
+    "name": "Sites frauduleux Société Générale",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 54,
+    "name": "Bricolage",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 55,
+    "name": "Compagnies aeriennes",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 56,
+    "name": "Firebase",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 57,
+    "name": "Waze",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 58,
+    "name": "Hébergeur sites",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 59,
+    "name": "Sites de Location véhicules entre particuliers",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 60,
+    "name": "jardineries en ligne",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 61,
+    "name": "Mobilier haut de gamme",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 62,
+    "name": "Chocolatier (pas exclusivement)",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 63,
+    "name": "opticiens et accessoires lifestyle",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 64,
+    "name": "Habillement Luxe Homme exclusivement",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 65,
+    "name": "Habillement luxe Mixte",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 66,
+    "name": "sites de box",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 67,
+    "name": "Sites spécialisés chien",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 68,
+    "name": "Vins Spiritueux",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 69,
+    "name": "Chaussures luxe > 200 € - Hommes et Femmes",
+    "created_at": null,
+    "updated_at": null
+  },
+  {
+    "id": 70,
+    "name": "spécialistes cartouches d'encre",
+    "created_at": null,
+    "updated_at": null
+  }
+]
